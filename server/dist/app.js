@@ -23,4 +23,7 @@ app.use(morgan(morganFormat, {
 // basic healthCheck
 import healthCheck from "./routes/HealthCheck.routes.js";
 app.use("/api/v1/", healthCheck);
+//user authentication
+import userAuth from "./routes/user.routes.js";
+app.use("/api/v1/", userAuth);
 export default app;

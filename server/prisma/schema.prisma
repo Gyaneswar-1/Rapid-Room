@@ -12,3 +12,125 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Model 
+model Users {
+  id           Int        @id @default(autoincrement())
+  fullName     String
+  email        String     @unique
+  password     String
+  profileImage String?
+  address      Address?   @relation(fields: [addressId], references: [id])
+  addressId    Int?
+  isOwner      Boolean    @default(false)
+  bookedRooms  Booked[]
+  wishList     WishList[]
+  reviews      Review[]
+  listedHotels Hotels[]
+  createdAt    DateTime   @default(now())
+}
+
+model Hotels {
+  id          Int        @id @default(autoincrement())
+  ownerId     Int
+  owner       Users      @relation(fields: [ownerId], references: [id])
+  hotelName   String
+  description String?
+  address     Address    @relation(fields: [addressId], references: [id])
+  addressId   Int
+  perNight    Float
+  rooms       Rooms[]
+  hasParking  Boolean    @default(false)
+  hasPools    Boolean    @default(false)
+  hasWifi     Boolean    @default(false)
+  isAllBooked Boolean    @default(false)
+  reviews     Review[]
+  images      Images[]
+  createdAt   DateTime   @default(now())
+  Booked      Booked[]
+  WishList    WishList[]
+}
+
+model Address {
+  id      Int      @id @default(autoincrement())
+  street  String
+  city    String
+  state   String
+  zipCode String
+  country String
+  users   Users[]
+  hotels  Hotels[]
+}
+
+model Rooms {
+  id         Int     @id @default(autoincrement())
+  isBooked   Boolean @default(false)
+  roomNumber Int
+  hotelId    Int
+  hotel      Hotels  @relation(fields: [hotelId], references: [id])
+  checkIn DateTime @default(now())
+  checkOut DateTime @default(now())
+  Booked Booked[]
+}
+
+model Booked {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  user    Users  @relation(fields: [userId], references: [id])
+  hotelId Int
+  hotel   Hotels @relation(fields: [hotelId], references: [id])
+  roomId  Int
+  room    Rooms  @relation(fields: [roomId], references: [id])
+}
+
+model WishList {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  user    Users  @relation(fields: [userId], references: [id])
+  hotelId Int
+  hotel   Hotels @relation(fields: [hotelId], references: [id])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      Users    @relation(fields: [userId], references: [id])
+  hotelId   Int
+  hotel     Hotels   @relation(fields: [hotelId], references: [id])
+  comment   String
+  rating    Int
+  createdAt DateTime @default(now())
+}
+
+model Images {
+  id       Int    @id @default(autoincrement())
+  imageUrl String
+  hotelId  Int
+  hotel    Hotels @relation(fields: [hotelId], references: [id])
+}
+
+// Payment Entity:
+
+// ID
+// Booking ID
+// Payment Date
+// Amount
+// Payment Status (Pending, Completed, Refunded)
+
+// Message Entity:
+
+// ID
+// Sender ID
+// Receiver ID
+// Booking ID
+// Content
+// Timestamp
+
+// Notification Entity:
+
+// ID
+// User ID
+// Booking ID
+// Content
+// Timestamp
+// Status (Unread, Read)

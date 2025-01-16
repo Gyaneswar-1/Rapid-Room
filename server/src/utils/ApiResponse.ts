@@ -1,4 +1,5 @@
-export class ApiResponse {
+import { Response } from "express";
+export class ApiResponse{
     data: object;
     status: string;
     message: string;
