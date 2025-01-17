@@ -197,32 +197,34 @@ const validCountries = [
   "Zimbabwe",
 ];
 
+// validation for multer image
+const multerFileSchema = z.object({
+  fieldname: z.string(), // Name of the field in the form-data
+  originalname: z.string(), // Original name of the uploaded file
+  encoding: z.string(), // Encoding type
+  mimetype: z.enum([
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/bmp",
+    "image/webp",
+  ]), // Allowed MIME types
+  size: z.number().max(1 * 1024 * 1024, {
+    message: "File size must be less than or equal to 1MB",
+  }), // Size limit (1MB)
+  path: z.string(), // Path to the stored file
+});
+
+
+
+
 export const SignupSchema = z.object({
   fullName: z.string({ message: "Full name must be a string" }),
   email: z.string().email(),
   password: z
     .string()
     .min(8, { message: "Password atleast contain 8 character" }),
-  profileImage: z
-    .instanceof(File) // Ensures the value is a File instance
-    .refine(
-      (file) =>
-        [
-          "image/jpeg",
-          "image/png",
-          "image/gif",
-          "image/bmp",
-          "image/webp",
-        ].includes(file.type),
-      {
-        message:
-          "Only .jpg, .png, .gif, .bmp, and .webp file types are allowed",
-      }
-    )
-    .refine(
-      (file) => file.size <= 5 * 1024 * 1024, // 5MB size limit
-      { message: "File size must be less than or equal to 5MB" }
-    ).optional(),
+  profileImage: multerFileSchema.optional(),
   isOwner: z.boolean(),
   state: z.string().optional(),
   street: z.string().optional(),
