@@ -31,24 +31,55 @@ model Users {
 }
 
 model Hotels {
-  id          Int        @id @default(autoincrement())
-  ownerId     Int
-  owner       Users      @relation(fields: [ownerId], references: [id])
-  hotelName   String
-  description String?
-  address     Address    @relation(fields: [addressId], references: [id])
-  addressId   Int
-  perNight    Float
-  rooms       Rooms[]
-  hasParking  Boolean    @default(false)
-  hasPools    Boolean    @default(false)
-  hasWifi     Boolean    @default(false)
-  isAllBooked Boolean    @default(false)
-  reviews     Review[]
-  images      Images[]
-  createdAt   DateTime   @default(now())
-  Booked      Booked[]
-  WishList    WishList[]
+  id            Int        @id @default(autoincrement())
+  ownerId       Int
+  owner         Users      @relation(fields: [ownerId], references: [id])
+  hotelName     String
+  description   String?
+  address       Address    @relation(fields: [addressId], references: [id])
+  addressId     Int
+  perNight      Float
+  rooms         Rooms[]
+  numberOfRooms Int
+  hasParking    Boolean    @default(false)
+  hasPools      Boolean    @default(false)
+  hasWifi       Boolean    @default(false)
+  isAllBooked   Boolean    @default(false)
+  reviews       Review[]
+  images        Images[]
+  createdAt     DateTime   @default(now())
+  Booked        Booked[]
+  WishList      WishList[]
+  type          HotelType  @default(BEACH)
+}
+
+enum HotelType {
+  BEACH
+  CITY
+  MOUNTAIN
+  RESORT
+  BUDGET
+  LUXURY
+  AMAZING_VIEWS
+  AMAZING_POOLS
+  FARMS
+  HISTORICAL_HOMES
+  SURFING
+  BEACHFRONT
+  LAKEFRONT
+  CASTLES
+  CAMPING
+  BOATS
+  TROPICAL
+  TOP_OF_THE_WORLD
+  TOP_CITIES
+  ARCTIC
+  TREEHOUSES
+  CABINS
+  TINY_HOMES
+  ISLANDS
+  COUNTRYSIDE
+  MANSIONS
 }
 
 model Address {
@@ -57,20 +88,20 @@ model Address {
   city    String?
   state   String?
   zipCode String?
-  country String? 
+  country String?
   users   Users[]
   hotels  Hotels[]
 }
 
 model Rooms {
-  id         Int     @id @default(autoincrement())
-  isBooked   Boolean @default(false)
+  id         Int      @id @default(autoincrement())
+  isBooked   Boolean  @default(false)
   roomNumber Int
   hotelId    Int
-  hotel      Hotels  @relation(fields: [hotelId], references: [id])
-  checkIn DateTime @default(now())
-  checkOut DateTime @default(now())
-  Booked Booked[]
+  hotel      Hotels   @relation(fields: [hotelId], references: [id])
+  checkIn    DateTime @default(now())
+  checkOut   DateTime @default(now())
+  Booked     Booked[]
 }
 
 model Booked {

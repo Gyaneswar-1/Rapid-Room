@@ -12,6 +12,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
         email,
         password,
         profileImage,
+        isOwner,
         state,
         street,
         city,
@@ -46,6 +47,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
                 fullName: fullName,
                 password: hashedPassword,
                 profileImage: profileImage,
+                isOwner:isOwner,
                 address: {
                     create: {
                         state: state,

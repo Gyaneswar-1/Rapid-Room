@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import logger from "./utils/Logger.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
@@ -31,7 +32,9 @@ app.use("/api/v1/", healthCheck);
 
 //user authentication
 import userAuth from "./routes/user.routes.js";
-import cookieParser from "cookie-parser";
 app.use("/api/v1/", userAuth);
 
+//hotel CRUD
+import hotelCRUD from "./routes/Hotels.routes.js"
+app.use("/api/v1/hotel", hotelCRUD);
 export default app;

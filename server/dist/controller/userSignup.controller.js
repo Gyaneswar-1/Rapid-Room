@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import prisma from "../db/db.config.js";
 export const userSignup = async (req, res) => {
-    const { fullName, email, password, profileImage, state, street, city, zipCode, country, } = req.body;
+    const { fullName, email, password, profileImage, isOwner, state, street, city, zipCode, country, } = req.body;
     try {
         const userExists = await prisma.users.findUnique({
             where: {
@@ -24,6 +24,7 @@ export const userSignup = async (req, res) => {
                 fullName: fullName,
                 password: hashedPassword,
                 profileImage: profileImage,
+                isOwner: isOwner,
                 address: {
                     create: {
                         state: state,
@@ -41,7 +42,7 @@ export const userSignup = async (req, res) => {
         res.cookie("token", `Bearer ${token}`, { httpOnly: true, secure: true });
         return res
             .status(200)
-            .json(new ApiResponse({ token }, "success", "User signed up", 200));
+            .json(new ApiResponse({}, "success", "User signed up", 200));
     }
     catch (error) {
         return res

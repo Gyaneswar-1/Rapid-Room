@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "HotelType" AS ENUM ('BEACH', 'CITY', 'MOUNTAIN', 'RESORT', 'BUDGET', 'LUXURY', 'AMAZING_VIEWS', 'AMAZING_POOLS', 'FARMS', 'HISTORICAL_HOMES', 'SURFING', 'BEACHFRONT', 'LAKEFRONT', 'CASTLES', 'CAMPING', 'BOATS', 'TROPICAL', 'TOP_OF_THE_WORLD', 'TOP_CITIES', 'ARCTIC', 'TREEHOUSES', 'CABINS', 'TINY_HOMES', 'ISLANDS', 'COUNTRYSIDE', 'MANSIONS');
+
 -- CreateTable
 CREATE TABLE "Users" (
     "id" SERIAL NOT NULL,
@@ -20,11 +23,13 @@ CREATE TABLE "Hotels" (
     "description" TEXT,
     "addressId" INTEGER NOT NULL,
     "perNight" DOUBLE PRECISION NOT NULL,
+    "numberOfRooms" INTEGER NOT NULL,
     "hasParking" BOOLEAN NOT NULL DEFAULT false,
     "hasPools" BOOLEAN NOT NULL DEFAULT false,
     "hasWifi" BOOLEAN NOT NULL DEFAULT false,
     "isAllBooked" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "type" "HotelType" NOT NULL DEFAULT 'BEACH',
 
     CONSTRAINT "Hotels_pkey" PRIMARY KEY ("id")
 );
@@ -32,11 +37,11 @@ CREATE TABLE "Hotels" (
 -- CreateTable
 CREATE TABLE "Address" (
     "id" SERIAL NOT NULL,
-    "street" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "zipCode" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
+    "street" TEXT,
+    "city" TEXT,
+    "state" TEXT,
+    "zipCode" TEXT,
+    "country" TEXT,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
