@@ -1,8 +1,8 @@
 import Router from "express";
 import { addNewHotel } from "../controller/addNewHotel.controller.js";
 
-const router = Router();
+const hotelRouter = Router();
 
-router.post("/add",addNewHotel);
+hotelRouter.route("/add").post(addNewHotel);
 
-export default router;
+export default hotelRouter;

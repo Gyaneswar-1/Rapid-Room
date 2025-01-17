@@ -5,10 +5,10 @@ export const healthCheck = async (req: any, res: any) => {
     try {
         return res
             .status(200)
-            .json(new ApiResponse({}, "success", "successful send", 200));
+            .json(new ApiResponse(true,{}, "success", "successful send", 200));
     } catch (error) {
         return res
             .status(200)
-            .json(new ApiError({}, "Error", "Error send", 200));
+            .json(new ApiError(false,{}, "Error", "Error send", 200));
     }
 };

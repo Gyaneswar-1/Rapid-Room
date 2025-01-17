@@ -26,8 +26,8 @@ app.use(morgan(morganFormat, {
 import healthCheck from "./routes/HealthCheck.routes.js";
 app.use("/api/v1/", healthCheck);
 //user authentication
-import userAuth from "./routes/user.routes.js";
-app.use("/api/v1/", userAuth);
+import userRouter from "./routes/user.routes.js";
+app.use("/api/v1/user", userRouter);
 //hotel CRUD
 import hotelCRUD from "./routes/Hotels.routes.js";
 app.use("/api/v1/hotel", hotelCRUD);

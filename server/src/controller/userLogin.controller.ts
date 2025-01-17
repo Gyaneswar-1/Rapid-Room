@@ -5,8 +5,27 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { SigninSchema } from "@bibek-samal/traveltrove";
 
 export const userLogin = async (req: Request | any, res: Response | any) => {
+    
+    //zod input validation
+    const isValid: any = SigninSchema.safeParse(req.body);
+
+    if (isValid.success === false) {
+        return res
+            .status(400)
+            .json(
+                new ApiError(
+                    false,
+                    {},
+                    "false",
+                    isValid.error?.message || "input are invalid",
+                    400,
+                ),
+            );
+    }
+
     const { email, password } = req.body;
 
     try {
@@ -14,11 +33,11 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
             where: {
                 email: email,
             },
-            select:{
-                email:true,
-                password:true,
-                id:true,
-            }
+            select: {
+                email: true,
+                password: true,
+                id: true,
+            },
         });
 
         if (isExists === null) {
@@ -26,6 +45,7 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
                 .status(404)
                 .json(
                     new ApiError(
+                        false,
                         {},
                         "User doesNot exists",
                         "Error 404 user not found !",
@@ -43,6 +63,7 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
                 .status(500)
                 .json(
                     new ApiError(
+                        false,
                         {},
                         "Auth error",
                         "Email or password didnot matched",
@@ -67,6 +88,7 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
             .status(200)
             .json(
                 new ApiResponse(
+                    true,
                     {},
                     "Logged in",
                     "user logged in successfully",
@@ -76,6 +98,6 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
     } catch (error) {
         return res
             .status(404)
-            .json(new ApiError({}, "User doesNot exists", "Error", 404));
+            .json(new ApiError(false, {}, "User doesNot exists", "Error", 404));
     }
 };

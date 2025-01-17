@@ -34,6 +34,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                 .status(201)
                 .json(
                     new ApiResponse(
+                        false,
                         {},
                         "access",
                         "you have  access to add hotels !",
@@ -46,6 +47,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                 .status(501)
                 .json(
                     new ApiResponse(
+                        false,
                         {},
                         "no access",
                         "you have no access to add hotels !",
@@ -54,6 +56,6 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                 );
         }
     } catch (error) {
-        res.status(501).json(new ApiError({ error }));
+        res.status(501).json(new ApiError(false,{ error }));
     }
 };

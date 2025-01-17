@@ -1,17 +1,20 @@
 export class ApiError {
+    success: boolean;
     data?: object;
     status?: string;
     message?: string;
     statusCode?: number;
     constructor(
-         data: object = {},
-         status: string = 'Error',
-         message: string = 'error occured',
-         statusCode: number = 500,
+        success: boolean = false,
+        data: object = {},
+        status: string = "Error",
+        message: string = "error occured",
+        statusCode: number = 500,
     ) {
-         this.data = data;
-         this.status = status;
-         this.message = message;
-         this.statusCode = statusCode;
+        this.success = false;
+        this.data = data;
+        this.status = status;
+        this.message = message;
+        this.statusCode = statusCode;
     }
 }

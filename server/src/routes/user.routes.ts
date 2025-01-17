@@ -1,10 +1,20 @@
 import Router from "express";
 import { userSignup } from "../controller/userSignup.controller.js";
 import { userLogin } from "../controller/userLogin.controller.js";
+import { upload } from "../middleware/multer.js";
 
-const router = Router();
+const userRouter = Router();
 
-router.post("/signup", userSignup);
-router.post("/login", userLogin);
+userRouter.route("/signup").post(
+    upload.fields([ //multer middleware setup for file accesss
+        {
+            name: "profileImage", //file name coming form req object
+            maxCount: 1
+        }
+    ]),
+    userSignup);
 
-export default router;
+
+userRouter.route("/login").post(userLogin);
+
+export default userRouter;

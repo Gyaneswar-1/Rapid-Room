@@ -10,3 +10,7 @@ EXPIRY_TIME=
 # DATABASE_URL="postgresql://neondb_owner:VStMcU1FeR0E@ep-silent-wave-a19wvhvj-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
 
 DATABASE_URL=""
+
+CLOUDE_NAME=
+API_KEY=
+API_SECREATE=

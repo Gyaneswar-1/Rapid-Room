@@ -5,20 +5,60 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import prisma from "../db/db.config.js";
+import { SignupSchema } from "@bibek-samal/traveltrove";
+import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
+import { z } from "zod";
 
 export const userSignup = async (req: Request | any, res: Response | any) => {
+    
+    const userData = {
+        fullName: req.body.fullName,
+        email: req.body.email,
+        password: req.body.password,
+        profileImage:
+            req.files && req.files.profileImage
+                ? req.files.profileImage[0]
+                : undefined,
+        isOwner: req.body.isOwner === "true" ? true : false,
+        state: req.body.state,
+        street: req.body.street,
+        city: req.body.city,
+        zipCode: req.body.zipCode,
+        country: req.body.country,
+    };
+
+    //zod input validation
+    const isValid = SignupSchema.safeParse(userData);
+    
+    if (isValid.success === false) {
+        return res
+            .status(400)
+            .json(new ApiError(false, {}, "No", "input's are invalid", 400));
+    }
+
+    //upload image to cloudinary
+    const imageUrl = await upLoadOnCloudinary(
+        req.files &&
+            req.files.profileImage &&
+            req.files.profileImage[0] &&
+            req.files.profileImage[0].path
+            ? req.files.profileImage[0].path
+            : null,
+    );
+
     const {
         fullName,
         email,
         password,
-        profileImage,
         isOwner,
         state,
         street,
         city,
         zipCode,
         country,
-    } = req.body;
+    } = userData;
+
+    // doing the signup
     try {
         const userExists = await prisma.users.findUnique({
             where: {
@@ -31,6 +71,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
                 .status(500)
                 .json(
                     new ApiResponse(
+                        false,
                         {},
                         "User exists",
                         "User already exists",
@@ -46,8 +87,8 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
                 email: email,
                 fullName: fullName,
                 password: hashedPassword,
-                profileImage: profileImage,
-                isOwner:isOwner,
+                profileImage: imageUrl || "",
+                isOwner: isOwner,
                 address: {
                     create: {
                         state: state,
@@ -60,24 +101,24 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
             },
         });
 
-        const token = await jwt.sign({id:result.id,email:result.email}, process.env.JWT_SECRET!, {
-            expiresIn: process.env.EXPIRY_TIME,
+        const token = await jwt.sign(
+            { id: result.id, email: result.email },
+            process.env.JWT_SECRET!,
+            {
+                expiresIn: process.env.EXPIRY_TIME,
+            },
+        );
+        res.cookie("token", `Bearer ${token}`, {
+            httpOnly: true,
+            secure: true,
         });
-        res.cookie("token", `Bearer ${token}`, { httpOnly: true, secure: true });
 
         return res
             .status(200)
-            .json(
-                new ApiResponse(
-                    {},
-                    "success",
-                    "User signed up",
-                    200,
-                ),
-            );
+            .json(new ApiResponse(true, {}, "success", "User signed up", 200));
     } catch (error) {
         return res
             .status(500)
-            .json(new ApiError({}, "Error", "User F**ked up", 500));
+            .json(new ApiError(false, {}, "Error", "User F**ked up", 500));
     }
 };
