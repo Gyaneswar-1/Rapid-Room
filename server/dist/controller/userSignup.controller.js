@@ -35,13 +35,13 @@ export const userSignup = async (req, res) => {
                 },
             },
         });
-        const token = await jwt.sign(result, process.env.JWT_SECRET, {
+        const token = await jwt.sign({ id: result.id, email: result.email }, process.env.JWT_SECRET, {
             expiresIn: process.env.EXPIRY_TIME,
         });
-        res.cookie("token", token, { httpOnly: true, secure: true });
+        res.cookie("token", `Bearer ${token}`, { httpOnly: true, secure: true });
         return res
             .status(200)
-            .json(new ApiResponse({ result, token }, "success", "User signed up", 200));
+            .json(new ApiResponse({ token }, "success", "User signed up", 200));
     }
     catch (error) {
         return res

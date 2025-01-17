@@ -53,11 +53,11 @@ model Hotels {
 
 model Address {
   id      Int      @id @default(autoincrement())
-  street  String
-  city    String
-  state   String
-  zipCode String
-  country String
+  street  String?
+  city    String?
+  state   String?
+  zipCode String?
+  country String? 
   users   Users[]
   hotels  Hotels[]
 }
