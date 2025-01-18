@@ -11,6 +11,7 @@
   "author": "bibekgyana",
   "license": "ISC",
   "dependencies": {
+    "@bibek-samal/traveltrove": "file:",
     "zod": "^3.24.1"
   }
 }

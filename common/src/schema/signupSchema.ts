@@ -204,6 +204,7 @@ const multerFileSchema = z.object({
   encoding: z.string(), // Encoding type
   mimetype: z.enum([
     "image/jpeg",
+    "image/jpg",
     "image/png",
     "image/gif",
     "image/bmp",
