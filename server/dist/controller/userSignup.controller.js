@@ -27,13 +27,6 @@ export const userSignup = async (req, res) => {
             .status(400)
             .json(new ApiError(false, {}, "No", "input's are invalid", 400));
     }
-    //upload image to cloudinary
-    const imageUrl = await upLoadOnCloudinary(req.files &&
-        req.files.profileImage &&
-        req.files.profileImage[0] &&
-        req.files.profileImage[0].path
-        ? req.files.profileImage[0].path
-        : null);
     const { fullName, email, password, isOwner, state, street, city, zipCode, country, } = userData;
     // doing the signup
     try {
@@ -47,6 +40,13 @@ export const userSignup = async (req, res) => {
                 .status(500)
                 .json(new ApiResponse(false, {}, "User exists", "User already exists", 500));
         }
+        //upload image to cloudinary
+        const imageUrl = await upLoadOnCloudinary(req.files &&
+            req.files.profileImage &&
+            req.files.profileImage[0] &&
+            req.files.profileImage[0].path
+            ? req.files.profileImage[0].path
+            : null);
         const hashedPassword = await bcrypt.hash(password, 10);
         console.log(req.body);
         const result = await prisma.users.create({
@@ -82,5 +82,8 @@ export const userSignup = async (req, res) => {
         return res
             .status(500)
             .json(new ApiError(false, {}, "Error", "User F**ked up", 500));
+    }
+    finally {
+        prisma.$disconnect();
     }
 };

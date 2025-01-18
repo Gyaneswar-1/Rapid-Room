@@ -51,4 +51,7 @@ export const userLogin = async (req, res) => {
             .status(404)
             .json(new ApiError(false, {}, "User doesNot exists", "Error", 404));
     }
+    finally {
+        prisma.$disconnect();
+    }
 };

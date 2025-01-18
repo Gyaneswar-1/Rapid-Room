@@ -33,10 +33,10 @@ model Users {
 model Hotels {
   id            Int        @id @default(autoincrement())
   ownerId       Int
-  owner         Users      @relation(fields: [ownerId], references: [id])
+  owner         Users      @relation(fields: [ownerId], references: [id],onDelete: Cascade)
   hotelName     String
   description   String?
-  address       Address    @relation(fields: [addressId], references: [id])
+  address       Address    @relation(fields: [addressId], references: [id],onDelete: Cascade)
   addressId     Int
   perNight      Float
   rooms         Rooms[]
@@ -98,7 +98,7 @@ model Rooms {
   isBooked   Boolean  @default(false)
   roomNumber Int
   hotelId    Int
-  hotel      Hotels   @relation(fields: [hotelId], references: [id])
+  hotel      Hotels   @relation(fields: [hotelId], references: [id],onDelete: Cascade)
   checkIn    DateTime @default(now())
   checkOut   DateTime @default(now())
   Booked     Booked[]
@@ -107,27 +107,27 @@ model Rooms {
 model Booked {
   id      Int    @id @default(autoincrement())
   userId  Int
-  user    Users  @relation(fields: [userId], references: [id])
+  user    Users  @relation(fields: [userId], references: [id],onDelete: Cascade)
   hotelId Int
-  hotel   Hotels @relation(fields: [hotelId], references: [id])
+  hotel   Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
   roomId  Int
-  room    Rooms  @relation(fields: [roomId], references: [id])
+  room    Rooms  @relation(fields: [roomId], references: [id],onDelete: Cascade)
 }
 
 model WishList {
   id      Int    @id @default(autoincrement())
   userId  Int
-  user    Users  @relation(fields: [userId], references: [id])
+  user    Users  @relation(fields: [userId], references: [id],onDelete: Cascade)
   hotelId Int
-  hotel   Hotels @relation(fields: [hotelId], references: [id])
+  hotel   Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
 }
 
 model Review {
   id        Int      @id @default(autoincrement())
   userId    Int
-  user      Users    @relation(fields: [userId], references: [id])
+  user      Users    @relation(fields: [userId], references: [id],onDelete: Cascade)
   hotelId   Int
-  hotel     Hotels   @relation(fields: [hotelId], references: [id])
+  hotel     Hotels   @relation(fields: [hotelId], references: [id],onDelete: Cascade)
   comment   String
   rating    Int
   createdAt DateTime @default(now())
@@ -137,7 +137,7 @@ model Images {
   id       Int    @id @default(autoincrement())
   imageUrl String
   hotelId  Int
-  hotel    Hotels @relation(fields: [hotelId], references: [id])
+  hotel    Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
 }
 
 // Payment Entity:
