@@ -1,11 +1,8 @@
-import React from 'react'
-
+import RouterHandler from "./utils/RouterHandler.tsx";
 const App = () => {
-  return (
-    <div className="bg-red-600 text-6xl">
-      
-    </div>
-  )
-}
+  return <>
+    <RouterHandler/>
+  </>;
+};
 
-export default App
+export default App;
