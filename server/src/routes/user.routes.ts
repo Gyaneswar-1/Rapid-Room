@@ -20,7 +20,7 @@ userRouter.route("/signup").post(
 );
 
 userRouter.route("/login").post(userLogin);
-userRouter.route("/delete").delete(deleteUser);
+userRouter.route("/delete").delete(authMiddleware,deleteUser);
 
 userRouter.route("/getInfo").get(authMiddleware,getUserInformation);
 

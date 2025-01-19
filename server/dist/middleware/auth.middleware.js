@@ -27,6 +27,7 @@ export const authMiddleware = async (req, res, next) => {
                 id: true,
                 email: true,
                 fullName: true,
+                isOwner: true, //used in admin middleware
             },
         });
         if (!isExistUser) {
@@ -34,7 +35,6 @@ export const authMiddleware = async (req, res, next) => {
                 .status(401)
                 .json(new ApiError(false, {}, "Failed", "Provided token is not valid for the user", 401));
         }
-        console.log("xxx", isExistUser);
         req.user = isExistUser;
         next();
     }

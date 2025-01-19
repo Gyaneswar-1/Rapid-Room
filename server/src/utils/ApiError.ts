@@ -11,7 +11,7 @@ export class ApiError {
         message: string = "error occured",
         statusCode: number = 500,
     ) {
-        this.success = false;
+        this.success = success;
         this.data = data;
         this.status = status;
         this.message = message;
