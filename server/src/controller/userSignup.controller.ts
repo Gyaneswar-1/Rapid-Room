@@ -9,8 +9,9 @@ import { SignupSchema } from "@bibek-samal/traveltrove";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 import { z } from "zod";
 
+
+
 export const userSignup = async (req: Request | any, res: Response | any) => {
-    
     const userData = {
         fullName: req.body.fullName,
         email: req.body.email,
@@ -29,14 +30,13 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
 
     //zod input validation
     const isValid = SignupSchema.safeParse(userData);
-    
+
     if (isValid.success === false) {
         return res
             .status(400)
             .json(new ApiError(false, {}, "No", "input's are invalid", 400));
     }
 
-    
     const {
         fullName,
         email,
@@ -79,7 +79,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
                 ? req.files.profileImage[0].path
                 : null,
         );
-        
+
         const hashedPassword = await bcrypt.hash(password, 10);
         console.log(req.body);
         const result = await prisma.users.create({
@@ -120,7 +120,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
         return res
             .status(500)
             .json(new ApiError(false, {}, "Error", "User F**ked up", 500));
-    }   finally{
-        prisma.$disconnect()
+    } finally {
+        prisma.$disconnect();
     }
 };

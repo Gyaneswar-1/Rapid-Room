@@ -3,6 +3,8 @@ import { userSignup } from "../controller/userSignup.controller.js";
 import { userLogin } from "../controller/userLogin.controller.js";
 import { upload } from "../middleware/multer.js";
 import { deleteUser } from "../controller/deleteUser.controller.js";
+import { getUserInformation } from "../controller/getUserInformation.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const userRouter = Router();
 
@@ -19,5 +21,7 @@ userRouter.route("/signup").post(
 
 userRouter.route("/login").post(userLogin);
 userRouter.route("/delete").delete(deleteUser);
+
+userRouter.route("/getInfo").get(authMiddleware,getUserInformation);
 
 export default userRouter;

@@ -1,8 +1,15 @@
 import jwt from "jsonwebtoken";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { NextFunction, Request, Response } from "express";
+import { ApiError } from "../utils/ApiError.js";
+import prisma from "../db/db.config.js";
 
-export const authMiddleware = (
+interface VerifiedToken {
+    id: number;
+    email: string;
+}
+
+export const authMiddleware = async (
     req: Request | any,
     res: Response | any,
     next: NextFunction,
@@ -26,8 +33,52 @@ export const authMiddleware = (
     }
 
     try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET!);
-        req.user = verified;
+        const verified: VerifiedToken = jwt.verify(
+            token,
+            process.env.JWT_SECRET!,
+        ) as VerifiedToken;
+
+        if (!verified) {
+            return res
+                .status(401)
+                .json(
+                    new ApiError(
+                        false,
+                        {},
+                        "Failed",
+                        "User not authorized",
+                        401,
+                    ),
+                );
+        }
+
+        //check the provided token's user exist on database or not
+        const isExistUser = await prisma.users.findUnique({
+            where: {
+                id: verified.id,
+            },
+            select: {
+                id: true,
+                email: true,
+                fullName: true,
+            },
+        });
+
+        if (!isExistUser) {
+            return res
+                .status(401)
+                .json(
+                    new ApiError(
+                        false,
+                        {},
+                        "Failed",
+                        "Provided token is not valid for the user",
+                        401,
+                    ),
+                );
+        }
+
+        req.user = isExistUser;
         next();
     } catch (error) {
         return res

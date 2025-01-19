@@ -28,4 +28,7 @@ app.use("/api/v1/user", userRouter);
 //hotel CRUD
 import hotelCRUD from "./routes/Hotels.routes.js";
 app.use("/api/v1/hotel", hotelCRUD);
+//wishList routes
+import wishlist from "./routes/wishlist.routes.js";
+app.use("/api/v1/wishlist", wishlist);
 export default app;

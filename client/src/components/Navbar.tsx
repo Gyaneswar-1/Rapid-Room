@@ -4,6 +4,7 @@ function Navbar() {
   return (
     <div>
       <nav>
+
         <div className="navbar bg-base-100">
           <div className="flex-1">
             <NavLink to="/" className="btn btn-ghost text-xl" >
@@ -85,6 +86,7 @@ function Navbar() {
                   <a>Help center</a>
                 </li>
               </ul>
+              <input type="checkbox" value="bumblebee" className="toggle theme-controller" />
             </div>
           </div>
         </div>

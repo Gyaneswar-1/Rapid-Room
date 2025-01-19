@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import { ApiResponse } from "../utils/ApiResponse.js";
-export const authMiddleware = (req, res, next) => {
-    const JWT_SECRET = process.env.JWT_SECRET;
+import { ApiError } from "../utils/ApiError.js";
+import prisma from "../db/db.config.js";
+export const authMiddleware = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1] ||
         req.cookies.token?.split(" ")[1];
     console.log(token);
@@ -11,8 +12,30 @@ export const authMiddleware = (req, res, next) => {
             .json(new ApiResponse(false, {}, "Access Denied", "No token Provided!"));
     }
     try {
-        const verified = jwt.verify(token, JWT_SECRET);
-        req.user = verified;
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        if (!verified) {
+            return res
+                .status(401)
+                .json(new ApiError(false, {}, "Failed", "User not authorized", 401));
+        }
+        //check the provided token's user exist on database or not
+        const isExistUser = await prisma.users.findUnique({
+            where: {
+                id: verified.id,
+            },
+            select: {
+                id: true,
+                email: true,
+                fullName: true,
+            },
+        });
+        if (!isExistUser) {
+            return res
+                .status(401)
+                .json(new ApiError(false, {}, "Failed", "Provided token is not valid for the user", 401));
+        }
+        console.log("xxx", isExistUser);
+        req.user = isExistUser;
         next();
     }
     catch (error) {
