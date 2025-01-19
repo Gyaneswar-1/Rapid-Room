@@ -25,5 +25,6 @@ export const getAllHotels = async (req, res) => {
         return res.status(200).json(new ApiError(false, { error }, "failed"));
     }
     finally {
+        prisma.$disconnect();
     }
 };

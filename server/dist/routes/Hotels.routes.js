@@ -2,6 +2,7 @@ import Router from "express";
 import { addNewHotel } from "../controller/addNewHotel.controller.js";
 import { deleteHotel } from "../controller/deleteHotel.controller.js";
 import { getAllHotels } from "../controller/getAllHotels.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 const hotelCRUD = Router();
 hotelCRUD.route("/add").post(
 // upload.fields([
@@ -11,7 +12,7 @@ hotelCRUD.route("/add").post(
 //         maxCount: 1,
 //     },
 // ]),
-addNewHotel);
+authMiddleware, addNewHotel);
 hotelCRUD.route("/delete").delete(deleteHotel);
 hotelCRUD.route("/get").get(getAllHotels);
 export default hotelCRUD;

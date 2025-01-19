@@ -1,8 +1,13 @@
+import { getToken } from "./services/apiManage.service.ts";
 import RouterHandler from "./utils/RouterHandler.tsx";
 const App = () => {
-  return <>
-    <RouterHandler/>
-  </>;
+  console.log(getToken());
+
+  return (
+    <>
+      <RouterHandler />
+    </>
+  );
 };
 
 export default App;

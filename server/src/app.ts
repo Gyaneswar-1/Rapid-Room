@@ -4,13 +4,12 @@ import morgan from "morgan";
 import logger from "./utils/Logger.js";
 import cookieParser from "cookie-parser";
 
-
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost/5173", credentials: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(
     morgan(morganFormat, {
         stream: {
@@ -27,14 +26,17 @@ app.use(
     }),
 );
 
-
-
-
 //user authentication
 import userRouter from "./routes/user.routes.js";
 app.use("/api/v1/user", userRouter);
 
 //hotel CRUD
-import hotelCRUD from "./routes/Hotels.routes.js"
+import hotelCRUD from "./routes/Hotels.routes.js";
 app.use("/api/v1/hotel", hotelCRUD);
+
+//wishList routes
+import wishlist from "./routes/wishlist.routes.js";
+app.use("/api/v1/wishlist", wishlist);
+
 export default app;
+
