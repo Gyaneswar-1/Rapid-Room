@@ -23,10 +23,11 @@ model Users {
   address      Address?   @relation(fields: [addressId], references: [id])
   addressId    Int?
   isOwner      Boolean    @default(false)
-  bookedRooms  Booked[]
+  ReservedRooms  Reservations[]
   wishList     WishList[]
   reviews      Review[]
   listedHotels Hotels[]
+  Payments     Payments[]
   createdAt    DateTime   @default(now())
 }
 
@@ -41,16 +42,18 @@ model Hotels {
   perNight      Float
   rooms         Rooms[]
   numberOfRooms Int
+  numberOfEmptyRooms Int
   hasParking    Boolean    @default(false)
   hasPools      Boolean    @default(false)
   hasWifi       Boolean    @default(false)
-  isAllBooked   Boolean    @default(false)
+  isAllReserved   Boolean    @default(false)
   reviews       Review[]
   images        Images[]
   createdAt     DateTime   @default(now())
-  Booked        Booked[]
+  Reserved        Reservations[]
   WishList      WishList[]
   type          HotelType  @default(BEACH)
+  Payments     Payments[]
 }
 
 enum HotelType {
@@ -95,16 +98,14 @@ model Address {
 
 model Rooms {
   id         Int      @id @default(autoincrement())
-  isBooked   Boolean  @default(false)
+  isReserved   Boolean  @default(false)
   roomNumber Int
   hotelId    Int
   hotel      Hotels   @relation(fields: [hotelId], references: [id],onDelete: Cascade)
-  checkIn    DateTime @default(now())
-  checkOut   DateTime @default(now())
-  Booked     Booked[]
+  Reserved     Reservations[]
 }
 
-model Booked {
+model Reservations { //change booked to reserved
   id      Int    @id @default(autoincrement())
   userId  Int
   user    Users  @relation(fields: [userId], references: [id],onDelete: Cascade)
@@ -112,6 +113,10 @@ model Booked {
   hotel   Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
   roomId  Int
   room    Rooms  @relation(fields: [roomId], references: [id],onDelete: Cascade)
+  checkIn    DateTime @default(now())
+  reservationsDuration Int
+  checkOut   DateTime 
+  
 }
 
 model WishList {
@@ -138,6 +143,23 @@ model Images {
   imageUrl String
   hotelId  Int
   hotel    Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
+}
+
+// Data base model for fake payment
+model Payments {
+  id              Int          @id @default(autoincrement())
+  hotelId         Int          
+  userId          Int
+  amount          Float
+  paymentMethod   String       @default("UPI")
+  status          String       @default("pending") // pending, success, failed
+  paymentDate     DateTime     @default(now())
+
+  hotel     Hotels @relation(fields: [hotelId], references: [id])
+  user            Users        @relation(fields: [userId], references: [id])
+
+  @@index([hotelId])
+  @@index([userId])
 }
 
 // Payment Entity:
