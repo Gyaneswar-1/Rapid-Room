@@ -3,7 +3,7 @@ type paymentType = {
     userId: number;
     amount: number;
     paymentMethod: string;
-    status: boolean;
+    status: string;
 };
 export declare const makeFakePayment: ({ hotelId, userId, amount, paymentMethod, status, }: paymentType) => Promise<{
     success: boolean;

@@ -5,7 +5,7 @@ type paymentType = {
     userId: number;
     amount: number;
     paymentMethod: string;
-    status: boolean;
+    status: string;
 };
 
 export const makeFakePayment = async ({
@@ -15,21 +15,26 @@ export const makeFakePayment = async ({
     paymentMethod,
     status,
 }: paymentType) => {
-    const paymentRes = await prisma.payments.create({
-        data: {
-            hotelId: 123,
-            userId: 456,
-            amount: 150.0,
-            paymentMethod: "card",
-            status: "success",
-            paymentDate: new Date(),
-        },
-    });
+    try {
+        
+        const paymentRes = await prisma.payments.create({
+            data: {
+                hotelId: hotelId,
+                userId: userId,
+                amount: amount,
+                paymentMethod: paymentMethod,
+                status: status,
+                paymentDate: new Date(),
+            },
+        });
+    
+        if(!paymentRes){
+            return {success: false}
+        }
+       return {success: true};
+    } catch (error) {
 
-    if(paymentRes){
-        return {success: true}
-    }
-    else{
-        return {success: false}
+        return {success: false};
+        
     }
 };
