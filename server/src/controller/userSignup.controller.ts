@@ -7,7 +7,6 @@ import bcrypt from "bcrypt";
 import prisma from "../db/db.config.js";
 import { SignupSchema } from "@bibek-samal/traveltrove";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
-import { z } from "zod";
 
 
 

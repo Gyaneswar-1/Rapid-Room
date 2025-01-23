@@ -31,4 +31,7 @@ app.use("/api/v1/hotel", hotelCRUD);
 //wishList routes
 import wishlist from "./routes/wishlist.routes.js";
 app.use("/api/v1/wishlist", wishlist);
+//reviewRouter routes
+import reviewRouter from "./routes/review.routes.js";
+app.use("/api/v1/review", reviewRouter);
 export default app;
