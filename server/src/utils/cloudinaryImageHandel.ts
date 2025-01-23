@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 export async function upLoadOnCloudinary(filePath: any) {
-    if(!filePath || filePath === null){
+    if (!filePath || filePath === null) {
         return null;
     }
     try {
@@ -17,15 +17,31 @@ export async function upLoadOnCloudinary(filePath: any) {
             console.log("file uplod failed on cloudinary");
             return null;
         }
-        
-            return uploadRes.url;
-    } catch (error) {
 
+        return uploadRes.url;
+    } catch (error) {
         console.log("cannot upload on cloudinay", error);
         return null;
-
-    }
-    finally{
+    } finally {
         fs.unlinkSync(filePath);
+    }
+}
+
+export async function deleteOnCloudinary(imageUrl: string) {
+    const publicId = imageUrl.substring(
+        imageUrl.lastIndexOf("/") + 1,
+        imageUrl.lastIndexOf("."),
+    );
+    
+    try {
+        const deleteRes = await cloudinary.uploader.destroy(publicId);
+        if (!deleteRes) {
+            console.log("file deletion failed on cloudinary");
+            return;
+        }
+        return true;
+    } catch (error) {
+        console.log("cannot deletion failed", error);
+        return null;
     }
 }

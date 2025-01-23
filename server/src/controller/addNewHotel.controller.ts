@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
+import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 
 export const addNewHotel = async (req: Request | any, res: Response | any) => {
     const {
@@ -21,6 +22,13 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         country,
     } = req.body;
     try {
+        const imageUrls = await Promise.all(
+            req.files.map(async (file: Express.Multer.File) => {
+                const imageUrl = await upLoadOnCloudinary(file.path);
+                return imageUrl;
+            }),
+        );
+
         const trancation = await prisma.$transaction(async (prisma) => {
             //create hotel
             const hotelRes = await prisma.hotels.create({
@@ -28,12 +36,12 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                     owner: { connect: { id: req.user.id } },
                     hotelName: hotelName,
                     description: description,
-                    numberOfRooms: numberOfRooms,
-                    numberOfEmptyRooms: numberOfRooms,
-                    perNight: perNight,
-                    hasParking: hasParking,
-                    hasPools: hasPools,
-                    hasWifi: hasWifi,
+                    numberOfRooms: parseInt(numberOfRooms),
+                    numberOfEmptyRooms: parseInt(numberOfRooms),
+                    perNight: parseFloat(perNight),
+                    hasParking: Boolean(hasParking),
+                    hasPools: Boolean(hasPools),
+                    hasWifi: Boolean(hasWifi),
                     type: type,
                     address: {
                         create: {
@@ -46,8 +54,8 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                     },
                     images: {
                         createMany: {
-                            data: images.map((imageUrl: string) => ({
-                                imageUrl,
+                            data: imageUrls.map((url: string) => ({
+                                imageUrl: url,
                             })),
                         },
                     },

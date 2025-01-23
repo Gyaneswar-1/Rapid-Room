@@ -17,7 +17,6 @@ export const authMiddleware = async (
     const token: string =
         req.headers.authorization?.split(" ")[1] ||
         req.cookies.token?.split(" ")[1];
-    console.log(token);
 
     if (!token) {
         return res

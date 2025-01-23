@@ -2,6 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 import bcrypt from "bcrypt";
+import { deleteOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 export const deleteUser = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -23,14 +24,18 @@ export const deleteUser = async (req, res) => {
                 where: {
                     email: email,
                 },
+                select: {
+                    profileImage: true,
+                },
             });
+            const imageDelete = await deleteOnCloudinary(result.profileImage);
             return res
                 .status(200)
-                .json(new ApiResponse(true, result, "successfully deleted user"));
+                .json(new ApiResponse(true, { result, imageDelete }, "successfully deleted user"));
         }
         return res
             .status(401)
-            .json(new ApiResponse(false, {}, "error in password", 'failed!'));
+            .json(new ApiResponse(false, {}, "error in password", "failed!"));
     }
     catch (error) {
         return res

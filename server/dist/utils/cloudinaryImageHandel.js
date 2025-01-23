@@ -25,3 +25,18 @@ export async function upLoadOnCloudinary(filePath) {
         fs.unlinkSync(filePath);
     }
 }
+export async function deleteOnCloudinary(imageUrl) {
+    const publicId = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.lastIndexOf("."));
+    try {
+        const deleteRes = await cloudinary.uploader.destroy(publicId);
+        if (!deleteRes) {
+            console.log("file deletion failed on cloudinary");
+            return;
+        }
+        return true;
+    }
+    catch (error) {
+        console.log("cannot deletion failed", error);
+        return null;
+    }
+}

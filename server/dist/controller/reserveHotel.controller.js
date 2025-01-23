@@ -5,6 +5,7 @@ import { makeFakePayment } from "../helper/fakePayment.helper.js";
 export const reserveHotel = async (req, res) => {
     const { hotelId, reservationsDuration } = req.body;
     try {
+        //initialize the tracsactio for multiple db operation
         const trancation = await prisma.$transaction(async (prisma) => {
             // check in the hotel room is availabe or not
             const isAvailable = await prisma.hotels.findUnique({
@@ -38,7 +39,7 @@ export const reserveHotel = async (req, res) => {
                     .status(500)
                     .json(new ApiError(false, {}, "Failed", "Payment was uncussessfull", 500));
             }
-            //reserve the room
+            //reserve the room process
             // step 1 find non reserve room
             const nonReserveRoom = await prisma.rooms.findFirst({
                 where: {
