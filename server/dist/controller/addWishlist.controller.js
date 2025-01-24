@@ -2,11 +2,11 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 export const addWishlist = async (req, res) => {
-    const { userId, hotelId } = req.body;
+    const { hotelId } = req.body;
     try {
         const result = await prisma.wishList.create({
             data: {
-                userId,
+                userId: req.user.id,
                 hotelId,
             },
         });
