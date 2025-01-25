@@ -5,7 +5,7 @@ type sendEamilType = {
     subject: string;
     text: string;
 };
-export const sendEmail = (obj: sendEamilType) => {
+export const sendEmail = async (obj: sendEamilType) => {
     const mailOptions = {
         from: process.env.GOOGLE_EMAIL,
         to: obj.to,
@@ -13,5 +13,10 @@ export const sendEmail = (obj: sendEamilType) => {
         text: obj.text,
     };
 
-    return transporter.sendMail(mailOptions);
+    try {
+       await transporter.sendMail(mailOptions);
+        return { success: true };
+    } catch (error) {
+        return { success: false };
+    }
 };
