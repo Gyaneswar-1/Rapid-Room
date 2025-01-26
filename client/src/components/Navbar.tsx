@@ -1,105 +1,55 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./ThemaChanger";
-function Navbar() {
+import { NavLink } from "react-router-dom";
+const NavBar2 = () => {
   return (
-    <div>
-      <nav>
-
-        <div className="navbar bg-base-100">
-          <div className="flex-1">
-            <NavLink to="/" className="btn btn-ghost text-xl" >
-            Travel Trove              
-            </NavLink>
-          </div>
-          <div className="flex-none">
-            <button className="btn">Trove You'r home</button>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle"
-              >
-                <div className="indicator">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  <span className="badge badge-sm indicator-item">8</span>
-                </div>
-              </div>
-              <div
-                tabIndex={0}
-                className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
-              >
-                <div className="card-body">
-                  <span className="text-lg font-bold">8 Items</span>
-                  <span className="text-info">Subtotal: $999</span>
-                  <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
-                      View cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://steamuserimages-a.akamaihd.net/ugc/2206262366727932367/C0DE1573031AF35B0B2596D4F1492E4FE75828C0/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
-                  />
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li>
-                  <NavLink  to="/register" className="justify-between">
-                    Signup
-                    <span className="badge">New</span>
-                  </NavLink>
-                    <NavLink to="/login" className="justify-between" >
-                    login
-                    </NavLink>
-                  <hr />
-                </li>
-                <li>
-                  <a>Trove your home</a>
-                </li>
-                <li>
-                  <a>Help center</a>
-                </li>
-              </ul>
-              <ModeToggle></ModeToggle>
-            </div>
-          </div>
+    <nav className="bg-white border-gray-200 dark:bg-[#232D3F] sticky   top-0 z-50 shadow-zink-900 dark:shadow-none shadow-xl ">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse ">
+          <img
+            src="https://png.pngtree.com/png-clipart/20200727/original/pngtree-travel-logo-airplane-design-airplane-tickets-travel-agencies-png-image_5221805.jpg"
+            className="h-16"
+            alt="Flowbite Logo"
+          />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-blue-700 dark:text-white">
+            TravelTrove
+          </span>
+        </NavLink>
+        <div className="flex items-center md:order-2 gap-4 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <NavLink to="/signup"
+            
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Sign up
+          </NavLink>
+          <button
+            data-collapse-toggle="navbar-cta"
+            type="button"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-cta"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+          <ModeToggle />
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
-}
+};
 
-export default Navbar;
-{
-  /* <NavLink  className="active text-yellow-200">Home</NavLink>
-<NavLink  className="active text-yellow-200">Login</NavLink>
-<NavLink  className="active text-yellow-200">Register</NavLink> */
-}
-
-{/* <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" /> */}
+export default NavBar2;
