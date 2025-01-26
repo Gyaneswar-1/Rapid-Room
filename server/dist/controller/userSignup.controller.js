@@ -6,12 +6,13 @@ import prisma from "../db/db.config.js";
 import { SignupSchema } from "@bibek-samal/traveltrove";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 export const userSignup = async (req, res) => {
-    console.log(req.body);
     const userData = {
         fullName: req.body.fullName,
         email: req.body.email,
         password: req.body.password,
-        profileImage: req.files?.profileImage?.[0]?.path || null,
+        profileImage: req.files && req.files.profileImage
+            ? req.files.profileImage[0]
+            : undefined,
         isOwner: req.body.isOwner === "true" ? true : false,
         state: req.body.state,
         street: req.body.street,
@@ -19,7 +20,8 @@ export const userSignup = async (req, res) => {
         zipCode: req.body.zipCode,
         country: req.body.country,
     };
-    //zod input validation
+    console.log(userData);
+    // zod input validation
     const isValid = SignupSchema.safeParse(userData);
     if (isValid.success === false) {
         return res

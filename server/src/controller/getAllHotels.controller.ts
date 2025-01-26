@@ -7,9 +7,27 @@ export const getAllHotels = async (req: Request | any, res: Response | any) => {
     const offset = (page - 1) * limit;
 
     try {
+
         const hotels = await prisma.hotels.findMany({
             skip: Number(offset),
             take: parseInt(limit),
+            select:{
+                id:true,
+                hotelName:true,
+                perNight:true,
+                type:true,
+                address:{
+                    select:{
+                        country:true
+                    }
+                },
+                images:{
+                    select:{
+                        imageUrl:true
+                    }
+                }
+                
+            }
         });
 
         const totalHotels = await prisma.hotels.count();

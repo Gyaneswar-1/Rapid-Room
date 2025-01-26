@@ -8,6 +8,22 @@ export const getAllHotels = async (req, res) => {
         const hotels = await prisma.hotels.findMany({
             skip: Number(offset),
             take: parseInt(limit),
+            select: {
+                id: true,
+                hotelName: true,
+                perNight: true,
+                type: true,
+                address: {
+                    select: {
+                        country: true
+                    }
+                },
+                images: {
+                    select: {
+                        imageUrl: true
+                    }
+                }
+            }
         });
         const totalHotels = await prisma.hotels.count();
         const totalPages = Math.ceil(totalHotels / limit);
