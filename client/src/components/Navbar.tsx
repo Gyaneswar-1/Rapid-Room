@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-
+import { ModeToggle } from "./ThemaChanger";
 function Navbar() {
   return (
     <div>
@@ -86,7 +86,7 @@ function Navbar() {
                   <a>Help center</a>
                 </li>
               </ul>
-              <input type="checkbox" value="bumblebee" className="toggle theme-controller" />
+              <ModeToggle></ModeToggle>
             </div>
           </div>
         </div>
