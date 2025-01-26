@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import { NavLink } from "react-router-dom";
-import { z } from "zod";
+
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signupTypeFrontend } from "@bibek-samal/traveltrove";
