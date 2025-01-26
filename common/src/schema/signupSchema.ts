@@ -241,3 +241,23 @@ export const SignupSchema = z.object({
 });
 
 export type SignupType = z.infer<typeof SignupSchema>;
+
+
+export const signupSchemaFrontend = z.object({
+  fullName: z.string().min(1, { message: "Name is required" }),
+  email: z.string().email({ message: "Invalid email" }),
+  password: z.string().min(8, { message: "Password too sort" }),
+  conformPassword: z.string().min(8, { message: "password too sort" }),
+  ProfilePhoto: z
+    .instanceof(File)
+    .refine(
+      (file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type),
+      { message: "Only .jpg, .jpeg and .png file types are allowed" }
+    )
+    .refine((file) => file.size <= 2 * 1024 * 1024, {
+      message: "File size must be less than or equal to 2MB",
+    })
+    .optional(),
+});
+
+export type signupTypeFrontend = z.infer<typeof signupSchemaFrontend>;
