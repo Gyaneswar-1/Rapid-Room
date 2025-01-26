@@ -1,10 +1,12 @@
 import Layout from "../components/Layout";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SigninType } from "@bibek-samal/traveltrove";
+import { SigninAPI } from "@/services/userSignin";
 
 function Signin() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -12,9 +14,11 @@ function Signin() {
   } = useForm<SigninType>();
 
   //here you get the data
-  const onSubmit: SubmitHandler<SigninType> = (data) => {
-    console.log(data);
-    alert("hell yeah");
+  const onSubmit: SubmitHandler<SigninType> = async (data) => {
+    const result = await SigninAPI(data);
+    if (result === true) {
+      navigate("/");
+    }
   };
 
   return (

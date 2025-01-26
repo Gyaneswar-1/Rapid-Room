@@ -56,5 +56,5 @@ export default {
   daisyui: {
     themes: ["dark","bumblebee"],
   },
-  plugins: [require("daisyui"), require("tailwindcss-animate")],
+  plugins: [ require("tailwindcss-animate")],
 };

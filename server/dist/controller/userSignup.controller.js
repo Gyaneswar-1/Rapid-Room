@@ -6,13 +6,12 @@ import prisma from "../db/db.config.js";
 import { SignupSchema } from "@bibek-samal/traveltrove";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 export const userSignup = async (req, res) => {
+    console.log(req.body);
     const userData = {
         fullName: req.body.fullName,
         email: req.body.email,
         password: req.body.password,
-        profileImage: req.files && req.files.profileImage
-            ? req.files.profileImage[0]
-            : undefined,
+        profileImage: req.files?.profileImage?.[0]?.path || null,
         isOwner: req.body.isOwner === "true" ? true : false,
         state: req.body.state,
         street: req.body.street,

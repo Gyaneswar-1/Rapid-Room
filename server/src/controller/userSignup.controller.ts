@@ -8,8 +8,6 @@ import prisma from "../db/db.config.js";
 import { SignupSchema } from "@bibek-samal/traveltrove";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 
-
-
 export const userSignup = async (req: Request | any, res: Response | any) => {
     const userData = {
         fullName: req.body.fullName,
@@ -27,7 +25,8 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
         country: req.body.country,
     };
 
-    //zod input validation
+    console.log(userData);
+    // zod input validation
     const isValid = SignupSchema.safeParse(userData);
 
     if (isValid.success === false) {
