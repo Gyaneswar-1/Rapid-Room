@@ -17,6 +17,7 @@ function Signin() {
   const onSubmit: SubmitHandler<SigninType> = async (data) => {
     const result = await SigninAPI(data);
     if (result === true) {
+      localStorage.setItem("isLoggedin","true");
       navigate("/");
     }
   };

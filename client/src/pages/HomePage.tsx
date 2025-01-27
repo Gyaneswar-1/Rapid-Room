@@ -3,16 +3,27 @@ import { Card } from "@/components/reusable/Card";
 import Layout from "../components/Layout";
 import { hotelCardData } from "@/services/hotelCardData";
 import { useEffect,useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+
+  const navigateTo = useNavigate();
   const [result, setResult] = useState([]);
   useEffect(()=>{
-    async function getData(){
-      const result = await hotelCardData();
-      setResult(result)
-      
+    if(localStorage.getItem("isLoggedin") === "true"){
+      async function getData(){
+        
+        const result = await hotelCardData();
+        setResult(result)
+        
+      }
+      getData();
+      return;
+
+    }else{
+      navigateTo("/signin")
+      return;
     }
-    getData();
   },[])
   return (
     

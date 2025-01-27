@@ -18,6 +18,7 @@ function Signin() {
     console.log(data);
     const result = await SignupAPI(data);
     if (result === true) {
+      localStorage.setItem("isLoggedin","true");
       navigate("/");
     }
   };
