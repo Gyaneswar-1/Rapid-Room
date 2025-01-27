@@ -25,7 +25,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
         country: req.body.country,
     };
 
-    console.log(userData);
+    console.log("here is the user data",userData);
     // zod input validation
     const isValid = SignupSchema.safeParse(userData);
 
@@ -109,6 +109,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,
+            sameSite: "None",
         });
 
         return res

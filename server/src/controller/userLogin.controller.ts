@@ -11,7 +11,6 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
     
     //zod input validation
     const isValid: any = SigninSchema.safeParse(req.body);
-
     if (isValid.success === false) {
         return res
             .status(400)
@@ -82,6 +81,7 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,
+            sameSite: "None",
         });
 
         return res

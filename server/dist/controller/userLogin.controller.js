@@ -41,6 +41,7 @@ export const userLogin = async (req, res) => {
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,
+            sameSite: "None",
         });
         return res
             .status(200)

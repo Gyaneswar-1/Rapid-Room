@@ -15,7 +15,7 @@ function Signin() {
 
   //here you get the data
   const onSubmit: SubmitHandler<signupTypeFrontend> = async (data) => {
-    
+    console.log(data);
     const result = await SignupAPI(data);
     if (result === true) {
       navigate("/");

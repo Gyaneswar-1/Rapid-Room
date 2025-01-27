@@ -8,8 +8,8 @@ export const SignupAPI = async (data: signupTypeFrontend) => {
   formData.append("email", data.email);
   formData.append("password", data.password);
   formData.append("conformPassword", data.conformPassword);
-  if (data.ProfilePhoto) {
-    formData.append("ProfilePhoto", data.ProfilePhoto);
+  if(data.ProfilePhoto){
+    formData.append("profileImage",data.ProfilePhoto);
   }
   try {
     console.log(data);
@@ -23,4 +23,5 @@ export const SignupAPI = async (data: signupTypeFrontend) => {
     console.error(error);
     return false;
   }
+  return false
 };
