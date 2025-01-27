@@ -20,7 +20,7 @@ export const userSignup = async (req, res) => {
         zipCode: req.body.zipCode,
         country: req.body.country,
     };
-    console.log("here is the use data", userData);
+    console.log("here is the user data", userData);
     // zod input validation
     const isValid = SignupSchema.safeParse(userData);
     if (isValid.success === false) {

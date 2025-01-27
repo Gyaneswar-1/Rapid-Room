@@ -29,7 +29,7 @@ function Signin() {
         <div className=" px-4 mx-auto py-4 lg:py-6 grid place-items-center gap-8 lg:gap-16">
           <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Sign up to TraveTrove
+              Sign up to TravelTrove
             </h2>
             <form className="mt-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>
               <div>

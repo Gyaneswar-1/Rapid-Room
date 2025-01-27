@@ -17,7 +17,7 @@ function HomePage() {
   return (
     
       <Layout>
-           <div className=" flex flex-col items-center gap-9 pt-12">
+           <div className=" flex flex-col items-center dark:bg-gray-900 gap-9 pt-12">
            <div className="flex-grow flex flex-wrap justify-evenly gap-5">
           {result.map((card, index) => (
             <Card key={index} data={card} />

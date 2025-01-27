@@ -3,7 +3,9 @@ import { API } from "./API";
 
 export const hotelCardData = async () =>{
     try {
-        const result = await axios.get(`${API}/hotel/get/?page=1&limit=10`)
+        const result = await axios.get(`${API}/hotel/get/?page=1&limit=10`,{
+            withCredentials:true
+          })
         // console.log(result.data.data.hotels);
         return result.data.data.hotels;
     } catch (error) {
