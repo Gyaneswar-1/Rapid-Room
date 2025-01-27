@@ -216,9 +216,6 @@ const multerFileSchema = z.object({
   path: z.string(), // Path to the stored file
 });
 
-
-
-
 export const SignupSchema = z.object({
   fullName: z.string({ message: "Full name must be a string" }),
   email: z.string().email(),
@@ -242,21 +239,30 @@ export const SignupSchema = z.object({
 
 export type SignupType = z.infer<typeof SignupSchema>;
 
-
 export const signupSchemaFrontend = z.object({
   fullName: z.string().min(1, { message: "Name is required" }),
   email: z.string().email({ message: "Invalid email" }),
   password: z.string().min(8, { message: "Password too sort" }),
   conformPassword: z.string().min(8, { message: "password too sort" }),
-  ProfilePhoto: z
-    .instanceof(File)
+  profileImage: z
+    .custom<FileList>((val) => val instanceof FileList, {
+      message: "Invalid file input",
+    })
+    .refine((fileList) => fileList.length > 0, {
+      message: "At least one file is required",
+    })
     .refine(
-      (file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type),
+      (fileList) =>
+        Array.from(fileList).every((file) =>
+          ["image/jpeg", "image/png", "image/jpg"].includes(file.type)
+        ),
       { message: "Only .jpg, .jpeg and .png file types are allowed" }
     )
-    .refine((file) => file.size <= 2 * 1024 * 1024, {
-      message: "File size must be less than or equal to 2MB",
-    })
+    .refine(
+      (fileList) =>
+        Array.from(fileList).every((file) => file.size <= 2 * 1024 * 1024),
+      { message: "Each file must be less than or equal to 2MB" }
+    )
     .optional(),
 });
 

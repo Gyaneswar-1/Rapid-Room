@@ -5,6 +5,11 @@ import { signupTypeFrontend } from "@bibek-samal/traveltrove";
 import { SignupAPI } from "@/services/userSignup";
 
 function Signin() {
+
+
+  
+
+
   const navigate = useNavigate();
   const {
     register,
@@ -147,7 +152,7 @@ function Signin() {
                   aria-describedby="file_input_help"
                   id="file_input"
                   type="file"
-                  {...register("ProfilePhoto", {
+                  {...register("profileImage", {
                     validate: {
                       fileType: (value: any) => {
                         if (!value || value.length === 0) {

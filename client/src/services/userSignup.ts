@@ -8,20 +8,18 @@ export const SignupAPI = async (data: signupTypeFrontend) => {
   formData.append("email", data.email);
   formData.append("password", data.password);
   formData.append("conformPassword", data.conformPassword);
-  if(data.ProfilePhoto){
-    formData.append("profileImage",data.ProfilePhoto);
+
+  if (data.profileImage) {
+    formData.append("profileImage", data.profileImage[0] || null);
   }
   try {
-    console.log(data);
     await axios.post(`${API}/user/signup`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      withCredentials: true,
     });
     return true;
   } catch (error) {
     console.error(error);
     return false;
   }
-  return false
+  return false;
 };
