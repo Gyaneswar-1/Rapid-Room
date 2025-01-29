@@ -1,13 +1,14 @@
-export class ApiResponse {
+export class ApiResponse extends Response {
     success;
     data;
-    status;
+    customStatus;
     message;
     statusCode;
-    constructor(success = true, data = {}, status = 'OK', message = 'success!', statusCode = 200) {
+    constructor(success = true, data = {}, customStatus = 'OK', message = 'success!', statusCode = 200) {
+        super(); // Call the parent class constructor
         this.success = success;
         this.data = data;
-        this.status = status;
+        this.customStatus = customStatus;
         this.message = message;
         this.statusCode = statusCode;
     }

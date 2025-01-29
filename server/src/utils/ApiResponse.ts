@@ -1,21 +1,23 @@
 import { Response } from "express";
-export class ApiResponse{
+
+export class ApiResponse extends Response {
     success: boolean;
     data: object;
-    status: string;
+    customStatus: string;
     message: string;
     statusCode: number;
 
     constructor(
-        success:boolean = true,
+        success: boolean = true,
         data: object = {},
-        status: string = 'OK',
+        customStatus: string = 'OK',
         message: string = 'success!',
         statusCode: number = 200
     ) {
+        super(); // Call the parent class constructor
         this.success = success;
         this.data = data;
-        this.status = status;
+        this.customStatus = customStatus;
         this.message = message;
         this.statusCode = statusCode;
     }

@@ -15,45 +15,45 @@ datasource db {
 
 // Model 
 model Users {
-  id           Int        @id @default(autoincrement())
-  fullName     String
-  email        String     @unique
-  password     String
-  profileImage String?
-  address      Address?   @relation(fields: [addressId], references: [id])
-  addressId    Int?
-  isOwner      Boolean    @default(false)
-  ReservedRooms  Reservations[]
-  wishList     WishList[]
-  reviews      Review[]
-  listedHotels Hotels[]
-  Payments     Payments[]
-  createdAt    DateTime   @default(now())
+  id            Int            @id @default(autoincrement())
+  fullName      String
+  email         String         @unique
+  password      String
+  profileImage  String?
+  address       Address?       @relation(fields: [addressId], references: [id])
+  addressId     Int?
+  isOwner       Boolean        @default(false)
+  ReservedRooms Reservations[]
+  wishList      WishList[]
+  reviews       Review[]
+  listedHotels  Hotels[]
+  Payments      Payments[]
+  createdAt     DateTime       @default(now())
 }
 
 model Hotels {
-  id            Int        @id @default(autoincrement())
-  ownerId       Int
-  owner         Users      @relation(fields: [ownerId], references: [id],onDelete: Cascade)
-  hotelName     String
-  description   String?
-  address       Address    @relation(fields: [addressId], references: [id],onDelete: Cascade)
-  addressId     Int
-  perNight      Float
-  rooms         Rooms[]
-  numberOfRooms Int
+  id                 Int            @id @default(autoincrement())
+  ownerId            Int
+  owner              Users          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  hotelName          String
+  description        String?
+  address            Address        @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId          Int
+  perNight           Float
+  rooms              Rooms[]
+  numberOfRooms      Int
   numberOfEmptyRooms Int
-  hasParking    Boolean    @default(false)
-  hasPools      Boolean    @default(false)
-  hasWifi       Boolean    @default(false)
-  isAllReserved   Boolean    @default(false)
-  reviews       Review[]
-  images        Images[]
-  createdAt     DateTime   @default(now())
-  Reserved        Reservations[]
-  WishList      WishList[]
-  type          HotelType  @default(BEACH)
-  Payments     Payments[]
+  hasParking         Boolean        @default(false)
+  hasPools           Boolean        @default(false)
+  hasWifi            Boolean        @default(false)
+  isAllReserved      Boolean        @default(false)
+  reviews            Review[]
+  images             Images[]
+  createdAt          DateTime       @default(now())
+  Reserved           Reservations[]
+  WishList           WishList[]
+  type               HotelType      @default(BEACH)
+  Payments           Payments[]
 }
 
 enum HotelType {
@@ -86,77 +86,80 @@ enum HotelType {
 }
 
 model Address {
-  id      Int      @id @default(autoincrement())
-  street  String?
-  city    String?
-  state   String?
-  zipCode String?
-  country String?
-  users   Users[]
-  hotels  Hotels[]
+  id        Int      @id @default(autoincrement())
+  street    String?
+  city      String?
+  state     String?
+  zipCode   String?
+  country   String?
+  longitude String?
+  latitude  String?
+  users     Users[]
+  hotels    Hotels[]
 }
 
 model Rooms {
-  id         Int      @id @default(autoincrement())
-  isReserved   Boolean  @default(false)
+  id         Int            @id @default(autoincrement())
+  isReserved Boolean        @default(false)
   roomNumber Int
   hotelId    Int
-  hotel      Hotels   @relation(fields: [hotelId], references: [id],onDelete: Cascade)
-  Reserved     Reservations[]
+  hotel      Hotels         @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  Reserved   Reservations[]
 }
 
-model Reservations { //change booked to reserved
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  user    Users  @relation(fields: [userId], references: [id],onDelete: Cascade)
-  hotelId Int
-  hotel   Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
-  roomId  Int
-  room    Rooms  @relation(fields: [roomId], references: [id],onDelete: Cascade)
-  checkIn    DateTime @default(now())
+model Reservations {
+  id                   Int      @id @default(autoincrement())
+  userId               Int
+  user                 Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hotelId              Int
+  hotel                Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  roomId               Int
+  room                 Rooms    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  checkIn              DateTime @default(now())
   reservationsDuration Int
-  checkOut   DateTime 
-  
+  checkOut             DateTime
 }
 
 model WishList {
   id      Int    @id @default(autoincrement())
   userId  Int
-  user    Users  @relation(fields: [userId], references: [id],onDelete: Cascade)
+  user    Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   hotelId Int
-  hotel   Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
+  hotel   Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 }
 
 model Review {
   id        Int      @id @default(autoincrement())
   userId    Int
-  user      Users    @relation(fields: [userId], references: [id],onDelete: Cascade)
+  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   hotelId   Int
-  hotel     Hotels   @relation(fields: [hotelId], references: [id],onDelete: Cascade)
+  hotel     Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   comment   String
   rating    Int
   createdAt DateTime @default(now())
+
+  @@unique([userId, hotelId])
 }
 
 model Images {
   id       Int    @id @default(autoincrement())
   imageUrl String
   hotelId  Int
-  hotel    Hotels @relation(fields: [hotelId], references: [id],onDelete: Cascade)
+  hotel    Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 }
 
 // Data base model for fake payment
 model Payments {
-  id              Int          @id @default(autoincrement())
-  hotelId         Int          
-  userId          Int
-  amount          Float
-  paymentMethod   String       @default("UPI")
-  status          String       @default("pending") // pending, success, failed
-  paymentDate     DateTime     @default(now())
+  id            Int      @id @default(autoincrement())
+  hotelId       Int
+  userId        Int
+  amount        Float
+  paymentMethod String   @default("UPI")
+  status        String   @default("pending") // pending, success, failed
+  paymentDate   DateTime @default(now())
 
-  hotel     Hotels @relation(fields: [hotelId], references: [id])
-  user            Users        @relation(fields: [userId], references: [id])
+  hotel Hotels @relation(fields: [hotelId], references: [id])
+  user  Users  @relation(fields: [userId], references: [id])
 
   @@index([hotelId])
   @@index([userId])

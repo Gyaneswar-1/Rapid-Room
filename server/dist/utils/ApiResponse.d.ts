@@ -1,8 +1,8 @@
-export declare class ApiResponse {
+export declare class ApiResponse extends Response {
     success: boolean;
     data: object;
-    status: string;
+    customStatus: string;
     message: string;
     statusCode: number;
-    constructor(success?: boolean, data?: object, status?: string, message?: string, statusCode?: number);
+    constructor(success?: boolean, data?: object, customStatus?: string, message?: string, statusCode?: number);
 }
