@@ -5,6 +5,7 @@ import { upload } from "../middleware/multer.js";
 import { getAllHotels } from "../controller/getAllHotels.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 import { isAdminMiddleware } from "../middleware/isAdmin.middleware.js";
+import { getHotelById } from "../controller/getHotelById.controller.js";
 
 const hotelCRUD = Router();
 
@@ -20,5 +21,6 @@ hotelCRUD
     .route("/delete")
     .delete(authMiddleware, isAdminMiddleware, deleteHotel);
 hotelCRUD.route("/get").get(authMiddleware, getAllHotels);
+hotelCRUD.route("/get/:id").get(authMiddleware, getHotelById);
 
 export default hotelCRUD;

@@ -15,15 +15,26 @@ export const getAllHotels = async (req, res) => {
                 type: true,
                 address: {
                     select: {
-                        country: true
-                    }
+                        country: true,
+                        city: true,
+                    },
+                },
+                reviews: {
+                    select: {
+                        rating: true,
+                    },
+                },
+                WishList: {
+                    select: {
+                        hotelId: true,
+                    },
                 },
                 images: {
                     select: {
                         imageUrl: true
                     }
                 }
-            }
+            },
         });
         const totalHotels = await prisma.hotels.count();
         const totalPages = Math.ceil(totalHotels / limit);
