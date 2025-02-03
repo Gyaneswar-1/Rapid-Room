@@ -1,11 +1,10 @@
-import RouterHandler from "./utils/RouterHandler.tsx";
-const App = () => {
-
+import RouterHandler from "./router/RouterHandler";
+function App() {
   return (
-    <>
+    <div>
       <RouterHandler />
-    </>
+    </div>
   );
-};
+}
 
 export default App;

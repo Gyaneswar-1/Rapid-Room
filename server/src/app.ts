@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import logger from "./utils/Logger.js";
 import cookieParser from "cookie-parser";
+import passport from "./config/passport.js";
 
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin:["http://localhost:5173"], credentials: true }));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use(
     morgan(morganFormat, {
@@ -27,9 +29,15 @@ app.use(
     }),
 );
 
+
+
 //user authentication
 import userRouter from "./routes/user.routes.js";
 app.use("/api/v1/user", userRouter);
+
+import socialAuth from "./routes/socialAuth.routes.js";
+app.use("/api/v1",socialAuth)
+
 
 //hotel CRUD
 import hotelCRUD from "./routes/Hotels.routes.js";
