@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdClose, IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
+import facebookLogo from "../../assets/icons/facebook.logo.png";
+import googleLogo from "../../assets/icons/google.logo.png";
 
 interface SigninProps {
   closeSignin: () => void;
@@ -44,6 +45,9 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
                 placeholder="Email"
               />
 
+              <p className="mt-3 text-sm italic text-red-600">
+                this is not a true Email
+              </p>
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                 Email
               </span>
@@ -57,6 +61,10 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="password"
               />
+              <p className="mt-3 text-sm italic text-red-600">
+                this is not a right password
+              </p>
+
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                 password
               </span>
@@ -81,20 +89,20 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
           </div>
           <div className="social-login  h-22 w-full flex md:flex-row flex-col md:gap-0 gap-2 items-center justify-between text-neutral-200">
             <button
-              onClick={handleGoogleLogin}
               className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500  border-2 w-full md:h-fit md:w-fit p-2.5 "
+              onClick={handleGoogleLogin}
             >
-              <span className="text-2xl ">
-                <FaGoogle />
+              <span className="h-6 w-6">
+                <img src={googleLogo} alt="" />
               </span>
               Login with google
             </button>
             <button
-              onClick={handleFacebookLogin}
               className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500 border-2 w-full md:h-fit md:w-fit p-2.5 "
+              onClick={handleFacebookLogin}
             >
-              <span className="text-2xl">
-                <FaFacebook />
+              <span className="h-6 w-6">
+                <img src={facebookLogo} alt="" />
               </span>
               Login with facebook
             </button>

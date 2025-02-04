@@ -18,6 +18,8 @@ export const authMiddleware = async (
         req.headers.authorization?.split(" ")[1] ||
         req.cookies.token?.split(" ")[1];
 
+        console.log("token: " + token);
+        
     if (!token) {
         return res
             .status(401)

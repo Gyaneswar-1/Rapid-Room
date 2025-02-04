@@ -10,7 +10,7 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            callbackURL: "http://localhost:3000/auth/google/callback",
+            callbackURL: "http://localhost:3000/api/v1/google/callback",
         },
         async (
             accessToken: string,
@@ -29,6 +29,7 @@ passport.use(
                             email: profile.emails[0].value,
                             password: "google",
                             fullName: profile.displayName,
+                            profileImage: profile.photos?.[0]?.value || null,
                         },
                     });
                 }
@@ -41,7 +42,7 @@ passport.use(
                     },
                 );
 
-                done(null, { token });
+                done(null, token);
             } catch (error) {
                 return done(error);
             }
@@ -56,8 +57,8 @@ passport.use(
         {
             clientID: process.env.FB_APP_ID!,
             clientSecret: process.env.FB_APP_SECRET!,
-            callbackURL: "http://localhost:3000/auth/facebook/callback",
-            profileFields: ["id", "displayName", "emails"],
+            callbackURL: "http://localhost:3000/api/v1/facebook/callback",
+            profileFields: ["id", "displayName", "photos", "emails"],
         },
         async (
             accessToken: string,
@@ -73,9 +74,10 @@ passport.use(
                 if (!user) {
                     user = await prisma.users.create({
                         data: {
-                            email: profile.emails[0].value,
-                            password: "google",
                             fullName: profile.displayName,
+                            email: profile.emails?.[0]?.value || null,
+                            profileImage: profile.photos?.[0]?.value || null,
+                            password: "facebook",
                         },
                     });
                 }
@@ -88,7 +90,7 @@ passport.use(
                     },
                 );
 
-                done(null, { token });
+                done(null, token);
             } catch (error) {
                 return done(error);
             }

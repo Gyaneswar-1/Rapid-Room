@@ -1,7 +1,2 @@
-import axios from "axios";
 
-const api = axios.create({
-    baseURL:"http://localhost:3000/auth/"
-})
-
-export const googleAuth = (code:any) =>api.get(`/google?code=${code}`)
+export const API="http://localhost:3000/api/v1"

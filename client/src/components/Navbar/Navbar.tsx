@@ -1,11 +1,11 @@
 import Search from "./Search";
 import UserMenu from "./UserMenu";
-import MainLogo from "../../images/MainLogo.png";
+import MainLogo from "../../assets/images/MainLogo.png";
 import Categories from "./Categories";
 
 function Navbar() {
   return (
-    <div className=" fixed w-full bg-white z-11 shadow-sm">
+    <div className=" fixed w-full bg-white z-11 shadow-sm ">
       <div className=" py-4 border-b-[1px]">
         <div
           className="max-w-[2520px]

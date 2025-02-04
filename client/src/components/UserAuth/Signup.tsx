@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { IoMdClose, IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
+import facebookLogo from "../../assets/icons/facebook.logo.png"
+import googleLogo from "../../assets/icons/google.logo.png"
 
 interface SignupProps {
   closeSignup: () => void;
   email: string;
 }
 
-const Signup: React.FC<SignupProps> = ({ closeSignup,email }) => {
+
+const handleGoogleLogin = () => {
+  window.open("http://localhost:3000/api/v1/auth/google", "_self");
+};
+
+const handleFacebookLogin = () => {
+  window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
+};
+
+
+const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -36,6 +47,9 @@ const Signup: React.FC<SignupProps> = ({ closeSignup,email }) => {
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="Fullname"
               />
+              <p className="mt-3 text-sm italic text-red-600">
+                not the real fullname
+              </p>
 
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                 Fullname
@@ -51,6 +65,9 @@ const Signup: React.FC<SignupProps> = ({ closeSignup,email }) => {
                 placeholder="Email"
                 defaultValue={email}
               />
+              <p className="mt-3 text-sm italic text-red-600">
+                this is not a true Email
+              </p>
 
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                 Email
@@ -65,6 +82,10 @@ const Signup: React.FC<SignupProps> = ({ closeSignup,email }) => {
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="password"
               />
+              <p className="mt-3 text-sm italic text-red-600">
+                this error password
+              </p>
+
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                 password
               </span>
@@ -88,21 +109,21 @@ const Signup: React.FC<SignupProps> = ({ closeSignup,email }) => {
             </span>
           </div>
           <div className="social-login  h-22 w-full flex md:flex-row flex-col md:gap-0 gap-2 items-center justify-between text-neutral-200">
-            <button className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500  border-2 w-full md:h-fit md:w-fit p-2.5 ">
-              <span className="text-2xl ">
-                <FaGoogle />
+            <button className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500  border-2 w-full md:h-fit md:w-fit p-2.5 " onClick={handleFacebookLogin}>
+              <span className="h-6 w-6">
+                <img src={googleLogo} alt="" />
               </span>
               Login with google
             </button>
-            <button className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500 border-2 w-full md:h-fit md:w-fit p-2.5 ">
-              <span className="text-2xl">
-                <FaFacebook />
+            <button className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500 border-2 w-full md:h-fit md:w-fit p-2.5 " onClick={handleFacebookLogin}>
+              <span className="h-6 w-6">
+                <img src={facebookLogo} alt="" />
               </span>
               Login with facebook
             </button>
           </div>
           <p className="flex justify-center md:pt-0 pt-12">
-            already have an account{" "}
+            already have an account
             <a href="" className="text-blue-700 underline-offset-1 underline">
               Signin ?
             </a>

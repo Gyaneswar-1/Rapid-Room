@@ -20,7 +20,7 @@ hotelCRUD
 hotelCRUD
     .route("/delete")
     .delete(authMiddleware, isAdminMiddleware, deleteHotel);
-hotelCRUD.route("/get").get(authMiddleware, getAllHotels);
+hotelCRUD.route("/get").get( getAllHotels);
 hotelCRUD.route("/get/:id").get(authMiddleware, getHotelById);
 
 export default hotelCRUD;
