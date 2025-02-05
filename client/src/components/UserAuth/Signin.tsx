@@ -2,6 +2,8 @@ import { useState } from "react";
 import { IoMdClose, IoMdEye, IoMdEyeOff } from "react-icons/io";
 import facebookLogo from "../../assets/icons/facebook.logo.png";
 import googleLogo from "../../assets/icons/google.logo.png";
+import { SigninType } from "@bibek-samal/traveltrove";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface SigninProps {
   closeSignin: () => void;
@@ -21,6 +23,16 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+   //react-hook form actions
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<SigninType>();
+    const onSubmit: SubmitHandler<SigninType> = (data) => {console.log(data)};
+
+
   return (
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
       <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
@@ -34,7 +46,7 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
           Welcome back to <span className="text-teal-600 ">RapidRoom</span>
         </h1>
         <div className=" h-full w-full p-12">
-          <form action="" className=" flex flex-col gap-9">
+          <form  onSubmit={handleSubmit(onSubmit)} className=" flex flex-col gap-9">
             <label
               htmlFor="Email"
               className="relative block rounded-md h-12  text-xl p-2 border border-neutral-800 shadow-xs focus-within:border-teal-600 focus-within:ring-1 focus-within:ring-teal-600"
@@ -43,10 +55,17 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
                 type="text"
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="Email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+                    message: "Email must be a valid Gmail address",
+                  },
+                })}
               />
 
               <p className="mt-3 text-sm italic text-red-600">
-                this is not a true Email
+                {errors.email && errors.email.message}
               </p>
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                 Email
@@ -60,9 +79,19 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
                 type={showPassword ? "text" : "password"}
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="password"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Password is required",
+                  },
+                  pattern: {
+                    value: /^\S+$/, // Ensures no spaces
+                    message: "Password cannot contain spaces",
+                  },
+                })}
               />
               <p className="mt-3 text-sm italic text-red-600">
-                this is not a right password
+                {errors.password && errors.password.message}
               </p>
 
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
