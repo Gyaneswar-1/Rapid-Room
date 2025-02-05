@@ -23,7 +23,7 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
   };
   return (
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
-      <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl ">
+      <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
         <button
           onClick={closeSignin}
           className="text-xl cursor-pointer w-full flex items-end justify-end px-5 py-4"

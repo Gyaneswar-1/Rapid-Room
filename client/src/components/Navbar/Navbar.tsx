@@ -29,7 +29,7 @@ function Navbar() {
           <Search />
           <UserMenu />
         </div>
-        <Categories/>
+        <Categories />
       </div>
     </div>
   );

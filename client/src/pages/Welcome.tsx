@@ -65,8 +65,8 @@ function Welcome() {
             <hr />
           </nav>
         </div>
-        <div className="Welcome-textPage  bg-scroll  w-full bg-[url(https://plus.unsplash.com/premium_photo-1661964071015-d97428970584?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] relative bg-cover bg-center bg-dark-overlay bg-no-repeat ">
-          <div className="w-full h-full py-32 backdrop-blur-sm backdrop-brightness-70 flex  items-center justify-center ">
+        <div className="Welcome-textPage  bg-scroll  w-full bg-[url(https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720)] relative bg-cover bg-center bg-dark-overlay bg-no-repeat ">
+          <div className="w-full h-full py-32 backdrop-blur-[2px] backdrop-brightness-70 flex  items-center justify-center ">
             <section className="">
               <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
                 <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">

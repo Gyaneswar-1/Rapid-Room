@@ -1,6 +1,6 @@
-PORT=
-JWT_SECRET=
-EXPIRY_TIME=
+PORT=3000
+JWT_SECRET=okok
+EXPIRY_TIME=11d
 # Environment variables declared in this file are automatically made available to Prisma.
 # See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
 
@@ -9,13 +9,15 @@ EXPIRY_TIME=
 
 # DATABASE_URL="postgresql://neondb_owner:VStMcU1FeR0E@ep-silent-wave-a19wvhvj-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
 
-DATABASE_URL=""
+DATABASE_URL="postgresql://postgres:755049@localhost:5432/TravelTrove?schema=public"
 
-CLOUDE_NAME=
-API_KEY=
-API_SECREATE=
-GOOGLE_EMAIL=
-GOOGLE_PASSWORD=
+CLOUDE_NAME=dhhsuoxfz
+API_KEY=535525677415792
+API_SECREATE=6wWnOKXQZ-hbYEuQQTABn3vBwJw
+
+
+GOOGLE_EMAIL=traveltrove3@gmail.com
+GOOGLE_PASSWORD="xfis vzuo ocri twlx"
 
 traveltrove3@gmail.com
-traveltrove5342@69
+traveltrove5342@69;;;
