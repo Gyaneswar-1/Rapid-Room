@@ -4,9 +4,11 @@ import { Hotel } from "../pages/Home";
 
 
 
-function Card({ image, hotelName, perNight, type, address }: Hotel) {
+function Card({ image, hotelName, perNight, type, address, onclick, id }: Hotel) {
   return (
-    <div className="h-fit md:w-80 w-72  rounded-2xl bg-neutral-100 text-black shadow-xl">
+    <div className="h-fit md:w-80 w-72 cursor-pointer rounded-2xl bg-neutral-100 text-black shadow-xl"
+    onClick={onclick}
+    >
       <div className="relative h-70 md:w-80 w-72  p-2 items-center">
         <button className="absolute top-0 right-0 m-2 text-2xl p-3">
           <FcLike />

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { IoMdClose, IoMdEye, IoMdEyeOff } from "react-icons/io";
-import facebookLogo from "../../assets/icons/facebook.logo.png"
-import googleLogo from "../../assets/icons/google.logo.png"
+import facebookLogo from "../../assets/icons/facebook.logo.png";
+import googleLogo from "../../assets/icons/google.logo.png";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { signupTypeFrontend } from "@bibek-samal/traveltrove";
 
 interface SignupProps {
   closeSignup: () => void;
   email: string;
 }
-
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
@@ -17,13 +18,22 @@ const handleFacebookLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
 };
 
-
 const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  
+  //react-hook form actions
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<signupTypeFrontend>();
+  const onSubmit: SubmitHandler<signupTypeFrontend> = (data) => {};
+
   return (
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
       <div className="flex flex-col items-center  signup-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl ">
@@ -37,7 +47,10 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
           Welcome To <span className="text-teal-600 ">RapidRoom</span>
         </h1>
         <div className=" h-full w-full p-12">
-          <form action="" className=" flex flex-col gap-9">
+          <form
+            className=" flex flex-col gap-9"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <label
               htmlFor="Fullname"
               className="relative block rounded-md h-12  text-xl p-2 border border-neutral-800 shadow-xs focus-within:border-teal-600 focus-within:ring-1 focus-within:ring-teal-600"
@@ -46,9 +59,16 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
                 type="text"
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="Fullname"
+                {...register("fullName", {
+                  required: "Name is required",
+                  pattern: {
+                    value: /^[A-Za-z\s]+$/,
+                    message: "Only letters and spaces are allowed",
+                  },
+                })}
               />
               <p className="mt-3 text-sm italic text-red-600">
-                not the real fullname
+                {errors.fullName && errors.fullName.message}
               </p>
 
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -64,9 +84,16 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="Email"
                 defaultValue={email}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+                    message: "Email must be a valid Gmail address",
+                  },
+                })}
               />
               <p className="mt-3 text-sm italic text-red-600">
-                this is not a true Email
+                {errors.email && errors.email.message}
               </p>
 
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -81,9 +108,23 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
                 type={showPassword ? "text" : "password"}
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="password"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Password is required",
+                  },
+                  minLength: {
+                    value: 8,
+                    message: "Password is too sort",
+                  },
+                  pattern: {
+                    value: /^\S+$/, // Ensures no spaces
+                    message: "Password cannot contain spaces",
+                  },
+                })}
               />
               <p className="mt-3 text-sm italic text-red-600">
-                this error password
+                {errors.password && errors.password.message}
               </p>
 
               <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-neutral-200 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -97,6 +138,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
                 {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
               </button>
             </label>
+
             <input
               type="submit"
               className="bg-teal-600 h-11 rounded-md text-neutral-200 focus:ring-3 cursor-pointer focus:ring-teal-900"
@@ -109,13 +151,19 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
             </span>
           </div>
           <div className="social-login  h-22 w-full flex md:flex-row flex-col md:gap-0 gap-2 items-center justify-between text-neutral-200">
-            <button className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500  border-2 w-full md:h-fit md:w-fit p-2.5 " onClick={handleFacebookLogin}>
+            <button
+              className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500  border-2 w-full md:h-fit md:w-fit p-2.5 "
+              onClick={handleFacebookLogin}
+            >
               <span className="h-6 w-6">
                 <img src={googleLogo} alt="" />
               </span>
               Login with google
             </button>
-            <button className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500 border-2 w-full md:h-fit md:w-fit p-2.5 " onClick={handleFacebookLogin}>
+            <button
+              className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500 border-2 w-full md:h-fit md:w-fit p-2.5 "
+              onClick={handleFacebookLogin}
+            >
               <span className="h-6 w-6">
                 <img src={facebookLogo} alt="" />
               </span>

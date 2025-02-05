@@ -5,10 +5,9 @@ import { Request,Response } from "express";
 
 export const getHotelById = async (req:Request,res:Response|any) =>{
     try {
-        
         const result = await prisma.hotels.findUnique({
             where: {
-                id: parseInt(req.params.id)
+                id: parseInt(req.params.hotelId)
             },
             select:{
                 id:true,

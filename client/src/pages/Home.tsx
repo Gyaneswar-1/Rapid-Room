@@ -3,6 +3,7 @@ import BottomNav from "../components/BottomNav";
 import Card from "../components/Card";
 import Navbar from "../components/Navbar/Navbar";
 import { getHotels } from "../service/getHotels.service";
+import { useNavigate } from "react-router-dom";
 
 interface Address {
   country: string;
@@ -10,16 +11,19 @@ interface Address {
 }
 
 export interface Hotel {
+  id: number;
   hotelName: string;
   perNight: number;
   type: string;
   address: Address;
   // images: string[];
   image: string;
+  onclick: ()=> void;
 }
 
 function Home({ data }: any) {
   const [hotelsData, setHotelsData] = useState<Hotel[]>([]);
+  const navigate = useNavigate();
 
   async function getHotelsData() {
     const result = await getHotels(1, 10);
@@ -45,6 +49,7 @@ function Home({ data }: any) {
           {hotelsData.map((data, index) => {
             return (
               <Card
+                id={data.id}
                 key={index}
                 //  image={data.images}
                 hotelName={data.hotelName}
@@ -54,6 +59,7 @@ function Home({ data }: any) {
                 image={
                   "https://a0.muscache.com/im/pictures/454710cc-6052-4669-9019-d347e87d9a26.jpg?im_w=1200&im_format=avif"
                 }
+                onclick={()=>{navigate(`/book-hotel?hotelId=${data.id}`)}}
               />
             );
           })}

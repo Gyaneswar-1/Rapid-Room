@@ -147,8 +147,8 @@ export default function AboutWithCheckout() {
           </div>
         </div>
       </div>
-      <div className=" md:py-4 h-max border border-gray-300 rounded-xl p-4 sticky top-0 shadow-2xl">
-        <div className="card flex flex-col gap-4">
+      <div className=" relative ">
+        <div className="card sticky md:top-32 rounded-xl flex flex-col gap-4 w-full h-max shadow-2xl p-4">
           <div className="price text-2xl font-semibold tracking-wide">
             ₹30000 night
           </div>
