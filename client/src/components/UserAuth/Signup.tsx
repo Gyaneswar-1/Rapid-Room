@@ -4,6 +4,9 @@ import facebookLogo from "../../assets/icons/facebook.logo.png";
 import googleLogo from "../../assets/icons/google.logo.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signupTypeFrontend } from "@bibek-samal/traveltrove";
+import { NavLink } from "react-router-dom";
+import { signupManual } from "../../service/exportServices";
+import { useNavigate } from "react-router-dom";
 
 interface SignupProps {
   closeSignup: () => void;
@@ -20,19 +23,27 @@ const handleFacebookLogin = () => {
 
 const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  
   //react-hook form actions
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<signupTypeFrontend>();
-  const onSubmit: SubmitHandler<signupTypeFrontend> = (data) => {};
+  const onSubmit: SubmitHandler<signupTypeFrontend> = async(data) => {
+    const res = await signupManual(data);
+    if(res.success === true){
+      navigate("/home");
+    }
+    else{
+      navigate("/");
+    }
+  };
 
   return (
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
@@ -172,9 +183,12 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
           </div>
           <p className="flex justify-center md:pt-0 pt-12">
             already have an account
-            <a href="" className="text-blue-700 underline-offset-1 underline">
+            <NavLink
+              to="/"
+              className="text-blue-700 underline-offset-1 underline"
+            >
               Signin ?
-            </a>
+            </NavLink>
           </p>
         </div>
       </div>

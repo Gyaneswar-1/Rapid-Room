@@ -4,6 +4,8 @@ import facebookLogo from "../../assets/icons/facebook.logo.png";
 import googleLogo from "../../assets/icons/google.logo.png";
 import { SigninType } from "@bibek-samal/traveltrove";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { signinManual } from "../../service/exportServices";
+import { useNavigate } from "react-router-dom";
 
 interface SigninProps {
   closeSignin: () => void;
@@ -19,6 +21,7 @@ const handleFacebookLogin = () => {
 
 const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -30,7 +33,16 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
       handleSubmit,
       formState: { errors },
     } = useForm<SigninType>();
-    const onSubmit: SubmitHandler<SigninType> = (data) => {console.log(data)};
+    const onSubmit: SubmitHandler<SigninType> = async (data) => {
+      const res = await signinManual(data);
+      console.log(res);
+      if(res.success === true){
+        navigate("/home")
+      }
+      else{
+        navigate("/")
+      }
+    };
 
 
   return (
@@ -53,7 +65,7 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
             >
               <input
                 type="text"
-                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+                className="peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="Email"
                 {...register("email", {
                   required: "Email is required",
@@ -77,7 +89,7 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
             >
               <input
                 type={showPassword ? "text" : "password"}
-                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+                className="peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="password"
                 {...register("password", {
                   required: {

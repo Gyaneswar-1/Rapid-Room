@@ -243,7 +243,6 @@ export const signupSchemaFrontend = z.object({
   fullName: z.string().min(1, { message: "Name is required" }),
   email: z.string().email({ message: "Invalid email" }),
   password: z.string().min(8, { message: "Password too sort" }),
-  conformPassword: z.string().min(8, { message: "password too sort" }),
   profileImage: z
     .custom<FileList>((val) => val instanceof FileList, {
       message: "Invalid file input",
