@@ -21,7 +21,7 @@ export const getAllHotels = async (req, res) => {
                 },
                 reviews: {
                     select: {
-                        rating: true,
+                        overallRating: true,
                     },
                 },
                 WishList: {

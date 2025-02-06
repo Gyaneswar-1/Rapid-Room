@@ -3,7 +3,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import prisma from "../db/db.config.js";
-import { SignupSchema } from "@bibek-samal/traveltrove";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 export const userSignup = async (req, res) => {
     const userData = {
@@ -13,22 +12,21 @@ export const userSignup = async (req, res) => {
         profileImage: req.files && req.files.profileImage
             ? req.files.profileImage[0]
             : undefined,
-        isOwner: req.body.isOwner === "true" ? true : false,
+        isHost: req.body.isHost === "true" ? true : false,
         state: req.body.state,
         street: req.body.street,
         city: req.body.city,
         zipCode: req.body.zipCode,
         country: req.body.country,
     };
-    console.log("here is the user data", userData);
     // zod input validation
-    const isValid = SignupSchema.safeParse(userData);
-    if (isValid.success === false) {
-        return res
-            .status(400)
-            .json(new ApiError(false, {}, "No", "input's are invalid", 400));
-    }
-    const { fullName, email, password, isOwner, state, street, city, zipCode, country, } = userData;
+    // const isValid = SignupSchema.safeParse(userData);
+    // if (isValid.success === false) {
+    //     return res
+    //         .status(400)
+    //         .json(new ApiError(false, {}, "No", "input's are invalid", 400));
+    // }
+    const { fullName, email, password, isHost, state, street, city, zipCode, country, } = userData;
     // doing the signup
     try {
         const userExists = await prisma.users.findUnique({
@@ -56,7 +54,7 @@ export const userSignup = async (req, res) => {
                 fullName: fullName,
                 password: hashedPassword,
                 profileImage: imageUrl || "",
-                isOwner: isOwner,
+                isHost: isHost,
                 address: {
                     create: {
                         state: state,

@@ -6,7 +6,7 @@ export const isAdminMiddleware = async (
     res: Response | any,
     next: NextFunction | any,
 ) => {
-    if (!req.user.isOwner === true) {
+    if (!req.user.isHost === true) {
         return res
             .status(401)
             .json(

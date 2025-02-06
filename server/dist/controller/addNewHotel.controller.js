@@ -1,27 +1,39 @@
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
-import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 export const addNewHotel = async (req, res) => {
-    const { hotelName, description, numberOfRooms, perNight, hasParking, hasPools, hasWifi, images, type, state, street, city, zipcode, country, } = req.body;
+    console.log("controll reached");
+    const { hotelName, description, numberOfRooms, perNight, roomType, hasParking, hasPools, hasWifi, hasTv, hasBalcony, hasKitchen, hasWorkSpace, hasWashingMachine, hasGarden, hasGrummingEqupments, images, //this images is an array or url coming direct from cliend ( for temporary testing purpose )
+    type, state, street, city, zipcode, country, } = req.body;
     try {
-        const imageUrls = await Promise.all(req.files.map(async (file) => {
-            const imageUrl = await upLoadOnCloudinary(file.path);
-            return imageUrl;
-        }));
+        // task to do-> Debug the image upload functionality
+        // const imageUrls = await Promise.all(
+        //     req.files.map(async (file: Express.Multer.File) => {
+        //         const imageUrl = await upLoadOnCloudinary(file.path);
+        //         return imageUrl;
+        //     }),
+        // );
         const trancation = await prisma.$transaction(async (prisma) => {
             //create hotel
             const hotelRes = await prisma.hotels.create({
                 data: {
-                    owner: { connect: { id: req.user.id } },
+                    host: { connect: { id: req.user.id } },
                     hotelName: hotelName,
                     description: description,
                     numberOfRooms: parseInt(numberOfRooms),
                     numberOfEmptyRooms: parseInt(numberOfRooms),
                     perNight: parseFloat(perNight),
+                    roomType: roomType,
                     hasParking: Boolean(hasParking),
                     hasPools: Boolean(hasPools),
                     hasWifi: Boolean(hasWifi),
+                    hasTv: Boolean(hasTv),
+                    hasBalcony: Boolean(hasBalcony),
+                    hasKitchen: Boolean(hasKitchen),
+                    hasWorkSpace: Boolean(hasWorkSpace),
+                    hasWashingMachine: Boolean(hasWashingMachine),
+                    hasGarden: Boolean(hasGarden),
+                    hasGrummingEqupments: Boolean(hasGrummingEqupments),
                     type: type,
                     address: {
                         create: {
@@ -34,7 +46,7 @@ export const addNewHotel = async (req, res) => {
                     },
                     images: {
                         createMany: {
-                            data: imageUrls.map((url) => ({
+                            data: images.map((url) => ({
                                 imageUrl: url,
                             })),
                         },
@@ -61,7 +73,8 @@ export const addNewHotel = async (req, res) => {
         });
     }
     catch (error) {
-        res.status(501).json(new ApiError(false, { error }));
+        console.log(error);
+        res.status(501).json(new ApiError(false, {}, "Failed", "Failed at add hotel controller", 501));
         return;
     }
     finally {

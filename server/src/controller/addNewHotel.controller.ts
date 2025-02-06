@@ -5,15 +5,24 @@ import prisma from "../db/db.config.js";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 
 export const addNewHotel = async (req: Request | any, res: Response | any) => {
+    console.log("controll reached")
     const {
         hotelName,
         description,
         numberOfRooms,
         perNight,
+        roomType,
         hasParking,
         hasPools,
         hasWifi,
-        images,
+        hasTv,
+        hasBalcony,
+        hasKitchen,
+        hasWorkSpace,
+        hasWashingMachine,
+        hasGarden,
+        hasGrummingEqupments,
+        images, //this images is an array or url coming direct from cliend ( for temporary testing purpose )
         type,
         state,
         street,
@@ -22,26 +31,37 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         country,
     } = req.body;
     try {
-        const imageUrls = await Promise.all(
-            req.files.map(async (file: Express.Multer.File) => {
-                const imageUrl = await upLoadOnCloudinary(file.path);
-                return imageUrl;
-            }),
-        );
+
+        // task to do-> Debug the image upload functionality
+
+        // const imageUrls = await Promise.all(
+        //     req.files.map(async (file: Express.Multer.File) => {
+        //         const imageUrl = await upLoadOnCloudinary(file.path);
+        //         return imageUrl;
+        //     }),
+        // );
 
         const trancation = await prisma.$transaction(async (prisma) => {
             //create hotel
             const hotelRes = await prisma.hotels.create({
                 data: {
-                    owner: { connect: { id: req.user.id } },
+                    host: { connect: { id: req.user.id } },
                     hotelName: hotelName,
                     description: description,
                     numberOfRooms: parseInt(numberOfRooms),
                     numberOfEmptyRooms: parseInt(numberOfRooms),
                     perNight: parseFloat(perNight),
+                    roomType: roomType,
                     hasParking: Boolean(hasParking),
                     hasPools: Boolean(hasPools),
                     hasWifi: Boolean(hasWifi),
+                    hasTv: Boolean(hasTv),
+                    hasBalcony: Boolean(hasBalcony),
+                    hasKitchen: Boolean(hasKitchen),
+                    hasWorkSpace: Boolean(hasWorkSpace),
+                    hasWashingMachine: Boolean(hasWashingMachine),
+                    hasGarden: Boolean(hasGarden),
+                    hasGrummingEqupments: Boolean(hasGrummingEqupments),
                     type: type,
                     address: {
                         create: {
@@ -54,7 +74,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                     },
                     images: {
                         createMany: {
-                            data: imageUrls.map((url: string) => ({
+                            data: images.map((url: string) => ({
                                 imageUrl: url,
                             })),
                         },
@@ -100,7 +120,8 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                 );
         });
     } catch (error) {
-        res.status(501).json(new ApiError(false, { error }));
+        console.log(error)
+        res.status(501).json(new ApiError(false,{},"Failed","Failed at add hotel controller",501));
         return;
     } finally {
         prisma.$disconnect();

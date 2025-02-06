@@ -12,10 +12,10 @@ const hotelCRUD = Router();
 hotelCRUD
     .route("/add")
     .post(
-        upload.array("images", 8),
+        upload.array("images", 5),
         authMiddleware,
         isAdminMiddleware,
-        addNewHotel,
+        addNewHotel,    
     );
 hotelCRUD
     .route("/delete")

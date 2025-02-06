@@ -12,8 +12,8 @@ export const addNewReview = async (req: Request | any, res: Response | any) => {
             data: {
                 userId: req.user.id,
                 hotelId: hid,
-                rating: rate,
-                comment: content,
+                overallRating: rate,
+                reviewComment: content,
             },
         });
         return res

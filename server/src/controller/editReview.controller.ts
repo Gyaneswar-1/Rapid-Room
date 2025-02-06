@@ -13,8 +13,8 @@ export const editReview = async (req: Request, res: Response | any) => {
             },
             select: {
                 id: true,
-                rating: true,
-                comment: true,
+                overallRating: true,
+                reviewComment: true,
             },
         });
 
@@ -28,8 +28,8 @@ export const editReview = async (req: Request, res: Response | any) => {
                 id: rid,
             },
             data: {
-                rating: rate !== undefined ? rate : review.rating,
-                comment: content !== undefined ? content : review.comment,
+                overallRating: rate !== undefined ? rate : review.overallRating,
+                reviewComment: content !== undefined ? content : review.reviewComment,
             },
         });
         return res.status(200).json(new ApiResponse(true,result));

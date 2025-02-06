@@ -11,7 +11,7 @@ export const getUserInformation = async (req, res) => {
                 fullName: true,
                 email: true,
                 profileImage: true,
-                isOwner: true,
+                isHost: true,
                 createdAt: true,
                 address: {
                     select: {

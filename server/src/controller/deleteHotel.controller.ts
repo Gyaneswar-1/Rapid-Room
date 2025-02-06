@@ -11,7 +11,7 @@ export const deleteHotel = async (req: Request | any, res: Response | any) => {
         const result = await prisma.hotels.delete({
             where: {
                 id: hid,
-                ownerId: id,
+                hostId: id,
             },
             select: {
                 images: true,

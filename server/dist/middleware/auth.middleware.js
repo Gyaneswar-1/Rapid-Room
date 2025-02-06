@@ -27,7 +27,7 @@ export const authMiddleware = async (req, res, next) => {
                 id: true,
                 email: true,
                 fullName: true,
-                isOwner: true, //used in admin middleware
+                isHost: true, //used in admin middleware
             },
         });
         if (!isExistUser) {

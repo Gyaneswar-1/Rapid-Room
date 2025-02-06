@@ -17,7 +17,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
             req.files && req.files.profileImage
                 ? req.files.profileImage[0]
                 : undefined,
-        isOwner: req.body.isOwner === "true" ? true : false,
+        isHost: req.body.isHost === "true" ? true : false,
         state: req.body.state,
         street: req.body.street,
         city: req.body.city,
@@ -25,21 +25,21 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
         country: req.body.country,
     };
 
-    console.log("here is the user data",userData);
+    
     // zod input validation
-    const isValid = SignupSchema.safeParse(userData);
+    // const isValid = SignupSchema.safeParse(userData);
 
-    if (isValid.success === false) {
-        return res
-            .status(400)
-            .json(new ApiError(false, {}, "No", "input's are invalid", 400));
-    }
+    // if (isValid.success === false) {
+    //     return res
+    //         .status(400)
+    //         .json(new ApiError(false, {}, "No", "input's are invalid", 400));
+    // }
 
     const {
         fullName,
         email,
         password,
-        isOwner,
+        isHost,
         state,
         street,
         city,
@@ -86,7 +86,7 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
                 fullName: fullName,
                 password: hashedPassword,
                 profileImage: imageUrl || "",
-                isOwner: isOwner,
+                isHost: isHost,
                 address: {
                     create: {
                         state: state,
