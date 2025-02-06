@@ -2,7 +2,7 @@ function WhyBest() {
   return (
     <div className="Welcome-textPage  bg-scroll h-96 w-full bg-[url(https://ipt.images.tshiftcdn.com/200045/x/0/10-tips-to-master-wide-angle-landscape-photography-5.jpg?auto=compress%2Cformat&ch=Width%2CDPR&dpr=1&ixlib=php-3.3.0&w=883)] relative bg-cover bg-center bg-dark-overlay bg-no-repeat ">
       <div className="w-full h-full backdrop-blur-sm backdrop-brightness-70 flex  gap-12 items-center justify-center">
-        <div className="max-w-sm p-6  opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
+        <div className="max-w-sm p-6 h-66 flex flex-col justify-evenly opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
           <svg
             className="w-7 h-7 text-black dark:text-black mb-3"
             aria-hidden="true"
@@ -14,18 +14,18 @@ function WhyBest() {
           </svg>
           <a href="#">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-black">
-              Need a help in Claim?
+              Instant Booking ⚡
             </h5>
           </a>
           <p className="mb-3 font-normal text-black dark:text-black">
-            Go to this step by step guideline process on how to certify for your
-            weekly benefits:
+            Skip the Wait, Book in Seconds! With RapidRoom, find and reserve
+            your perfect stay instantly—no delays, no hassle!
           </p>
           <a
             href="#"
             className="inline-flex font-medium items-center text-teal-600 hover:underline"
           >
-            See our guideline
+            Learn More
             <svg
               className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
               aria-hidden="true"
@@ -43,7 +43,7 @@ function WhyBest() {
             </svg>
           </a>
         </div>
-        <div className="max-w-sm p-6 opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
+        <div className="max-w-sm p-6  h-66 flex flex-col justify-evenly opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
           <svg
             className="w-7 h-7 text-black dark:text-black mb-3"
             aria-hidden="true"
@@ -55,18 +55,18 @@ function WhyBest() {
           </svg>
           <a href="#">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-black">
-              Need a help in Claim?
+              Best Price Guarantee 💰
             </h5>
           </a>
           <p className="mb-3 font-normal text-black dark:text-black">
-            Go to this step by step guideline process on how to certify for your
-            weekly benefits:
+            Luxury & Comfort at the Best Rates! We ensure you get the best
+            deals, making every stay affordable without compromising quality.
           </p>
           <a
             href="#"
             className="inline-flex font-medium items-center text-teal-600 hover:underline"
           >
-            See our guideline
+            Learn More
             <svg
               className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
               aria-hidden="true"
@@ -84,7 +84,7 @@ function WhyBest() {
             </svg>
           </a>
         </div>
-        <div className="max-w-sm p-6 opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
+        <div className="max-w-sm p-6 h-66 flex flex-col justify-evenly  opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
           <svg
             className="w-7 h-7 text-black dark:text-black mb-3"
             aria-hidden="true"
@@ -96,18 +96,19 @@ function WhyBest() {
           </svg>
           <a href="#">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-black">
-              Need a help in Claim?
+              Trusted & Secure 🔒
             </h5>
           </a>
           <p className="mb-3 font-normal text-black dark:text-black">
-            Go to this step by step guideline process on how to certify for your
-            weekly benefits:
+            Our verified hotels and secure payment options ensure a smooth,
+            risk-free booking experience. Let me know if you need modifications!
+            🚀🏨
           </p>
           <a
             href="#"
             className="inline-flex font-medium items-center text-teal-600 hover:underline"
           >
-            See our guideline
+            Learn More
             <svg
               className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
               aria-hidden="true"

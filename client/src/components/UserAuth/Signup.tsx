@@ -7,6 +7,7 @@ import { signupTypeFrontend } from "@bibek-samal/traveltrove";
 import { NavLink } from "react-router-dom";
 import { signupManual } from "../../service/exportServices";
 import { useNavigate } from "react-router-dom";
+import { notifyError, notifySuccess } from "../../lib/Toast";
 
 interface SignupProps {
   closeSignup: () => void;
@@ -39,9 +40,10 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
     const res = await signupManual(data);
     if(res.success === true){
       navigate("/home");
+      notifySuccess("Welcome to RapidRoom !")
     }
     else{
-      navigate("/");
+      notifyError("somthing went wrong")
     }
   };
 
@@ -57,7 +59,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
         <h1 className="text-2xl font-semibold ">
           Welcome To <span className="text-teal-600 ">RapidRoom</span>
         </h1>
-        <div className=" h-full w-full p-12">
+        <div className=" h-full w-full p-12 flex flex-col lg:justify-start justify-evenly  ">
           <form
             className=" flex flex-col gap-9"
             onSubmit={handleSubmit(onSubmit)}
@@ -68,7 +70,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
             >
               <input
                 type="text"
-                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden w-full"
                 placeholder="Fullname"
                 {...register("fullName", {
                   required: "Name is required",
@@ -92,7 +94,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
             >
               <input
                 type="text"
-                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden w-full"
                 placeholder="Email"
                 defaultValue={email}
                 {...register("email", {
@@ -117,7 +119,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
             >
               <input
                 type={showPassword ? "text" : "password"}
-                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
+                className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden w-full"
                 placeholder="password"
                 {...register("password", {
                   required: {
@@ -144,7 +146,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute end-2.5 top-1/2 transform -translate-y-1/2 text-gray-700"
+                className="absolute end-2.5 top-1/2 transform -translate-y-1/2 text-neutral-800 "
               >
                 {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
               </button>
@@ -164,7 +166,7 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
           <div className="social-login  h-22 w-full flex md:flex-row flex-col md:gap-0 gap-2 items-center justify-between text-neutral-200">
             <button
               className="flex cursor-pointer rounded-md text-black items-center gap-3 border-blue-500  border-2 w-full md:h-fit md:w-fit p-2.5 "
-              onClick={handleFacebookLogin}
+              onClick={handleGoogleLogin}
             >
               <span className="h-6 w-6">
                 <img src={googleLogo} alt="" />

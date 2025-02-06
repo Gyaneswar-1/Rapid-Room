@@ -37,6 +37,8 @@ function Home({ data }: any) {
 
   return (
     <div className="h-screen w-full   bg-neutral-200">
+
+
       <Navbar />
       <div className="w-full h-full pt-[196px] flex justify-center">
         <div className="flex w-[90rem] gap-8 flex-wrap justify-evenly h-fit">

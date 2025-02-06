@@ -10,7 +10,7 @@ function ErrorPage() {
         </p>
         <p className="mt-4 text-gray-500">We can't find that page.</p>
         <a
-          className="mt-6 inline-block rounded cursor-pointer bg-red-600 px-5 py-3 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring"
+          className="mt-6 inline-block rounded cursor-pointer bg-teal-600 px-5 py-3 text-sm font-medium text-white hover:bg-teal-500 focus:outline-none focus:ring"
           onClick={() => {
             navigate("/");
           }}

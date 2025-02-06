@@ -6,6 +6,7 @@ import { SigninType } from "@bibek-samal/traveltrove";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signinManual } from "../../service/exportServices";
 import { useNavigate } from "react-router-dom";
+import { notifyError, notifySuccess} from "../../lib/Toast";
 
 interface SigninProps {
   closeSignin: () => void;
@@ -38,16 +39,17 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
       console.log(res);
       if(res.success === true){
         navigate("/home")
+        notifySuccess("Welcome back !")
       }
       else{
-        navigate("/")
+        notifyError("Signup failed!")
       }
     };
 
 
   return (
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
-      <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
+     <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
         <button
           onClick={closeSignin}
           className="text-xl cursor-pointer w-full flex items-end justify-end px-5 py-4"
@@ -57,7 +59,7 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
         <h1 className="text-2xl font-semibold ">
           Welcome back to <span className="text-teal-600 ">RapidRoom</span>
         </h1>
-        <div className=" h-full w-full p-12">
+        <div className=" h-full w-full p-12 flex flex-col lg:justify-start justify-evenly ">
           <form  onSubmit={handleSubmit(onSubmit)} className=" flex flex-col gap-9">
             <label
               htmlFor="Email"
