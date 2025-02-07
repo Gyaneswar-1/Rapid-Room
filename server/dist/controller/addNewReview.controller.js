@@ -1,17 +1,22 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
-import logger from "../utils/Logger.js";
 export const addNewReview = async (req, res) => {
-    const { hid, rate, content } = req.body;
-    logger.info(req.user.id, hid, rate, content);
+    const { hotelId, reviewComment, overallRating, cleanlinessRating, accuracyRating, checkInRating, communicationRating, locationRating, priceRating, parkingRating } = req.body;
     try {
         const result = await prisma.review.create({
             data: {
                 userId: req.user.id,
-                hotelId: hid,
-                overallRating: rate,
-                reviewComment: content,
+                hotelId: hotelId,
+                reviewComment: reviewComment,
+                overallRating: overallRating,
+                cleanlinessRating: cleanlinessRating,
+                accuracyRating: accuracyRating,
+                checkInRating: checkInRating,
+                communicationRating: communicationRating,
+                locationRating: locationRating,
+                priceRating: priceRating,
+                parkingRating: parkingRating,
             },
         });
         return res

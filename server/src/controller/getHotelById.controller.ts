@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 
 export const getHotelById = async (req: Request, res: Response | any) => {
     try {
-        const result = await prisma.hotels.findUnique({
+        const hotelResponse = await prisma.hotels.findUnique({
             where: {
                 id: parseInt(req.params.hotelId),
             },
@@ -86,11 +86,21 @@ export const getHotelById = async (req: Request, res: Response | any) => {
                 },
             },
         });
+        
+        if(hotelResponse){
 
-        return res
-            .status(200)
-            .json(new ApiResponse(true, { result }, "Success"));
+            return res
+                .status(200)
+                .json(new ApiResponse(true,hotelResponse,"Success","Get the hotel infromation", 200));
+        }else{
+            return res.status(400).json(
+                new ApiError(false,{},"Failed","can't get the hotel information",400)
+            )
+        }
     } catch (error) {
-        return res.json();
+        return res.status(400).json(
+            new ApiError(false,{},"Failed","can't get the hotel information",400)
+        )
+        
     }
 };

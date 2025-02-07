@@ -44,10 +44,13 @@ export default function AllReviews({onclick}:any) {
               </div>
             </div>
           </div>
-          <div className="revews  w-full hidden md:block ">
+          <div className="reviewouter w-full h-96 hidden md:block relative overflow-hidden">
+
+          <div className="revews max-h-full  w-full hidden md:block border sticky top-0 overflow-y-scroll">
             <div className="ovralrating flex flex-col gap-2">
               <h1 className="text-sm font-bold">Overal rating</h1>
               <ul>
+                
                 <li className="flex items-center gap-2">
                   <span>5</span>
                   <div className="h-1 w-full relative bg-gray-300">
@@ -120,9 +123,10 @@ export default function AllReviews({onclick}:any) {
               </ul>
             </div>
           </div>
+          </div>
         </div>
         <div className="  md:col-span-2 h-full    overflow-y-scroll md:px-8 px-4 ">
-          <div className="top-0   sticky top-0  flex items-center justify-between bg-white py-2 border-b border-b-gray-300 ">
+          <div className="top-0  sticky  flex items-center justify-between bg-white border py-2 border-b border-b-gray-300 ">
             <h1 className="text-2xl font-bold tracking-wide py-4">
               186 reviews
             </h1>

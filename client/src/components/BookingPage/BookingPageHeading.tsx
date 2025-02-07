@@ -1,14 +1,19 @@
 import { FaChevronLeft, FaShare } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
-export default function BookingPageHeading() {
+
+type hotelType = {
+  hotelType: string,
+};
+
+export default function BookingPageHeading({hotelType}:hotelType) {
   return (
-    <div className="heading absolute w-full md:relative flex px-4 md:px-0 justify-between py-4 md:py-8">
+    <div className="heading absolute w-full md:relative flex px-4 md:px-0 justify-between py-4 md:py-8 ">
       <div className="mainheading text-2xl tracking-wide font-semibold flex items-center">
-        <div className="bg-white p-4 rounded-full">
+        <div className="bg-white p-4 rounded-full md:hidden">
           <FaChevronLeft className=" md:hidden  text-xl " />
         </div>
         <span className="hidden md:block ">
-          Apartment with terrace, balcony+ breakfast
+          {hotelType}
         </span>
       </div>
       <div className="btns flex  md:gap-4">

@@ -21,7 +21,7 @@ function BookingPageNavbar() {
             />
         {/* <FaHotel className="text-4xl text-teal-600" /> */}
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-teal-500 ">
-          RapiRoom
+          RapidRoom
         </span>
       </p>
       <div className="flex items-center md:order-2 gap-4 space-x-3 md:space-x-0 rtl:space-x-reverse">

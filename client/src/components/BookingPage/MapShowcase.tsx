@@ -1,5 +1,10 @@
 import MapLT from "./MapLT";
-export default function MapShowcase() {
+type mapPropType = {
+  longitude: number,
+  latitude: number,
+}
+
+export default function MapShowcase({longitude,latitude}:mapPropType) {
     return (
       <div className="py-8 border-t border-gray-300 flex flex-col gap-6">
         <div className="texts flex flex-col gap-2">
@@ -10,8 +15,8 @@ export default function MapShowcase() {
         </div>
         <div className="map  md:h-96 rounded-xl">
           <MapLT
-            longitude="20.684607359715745"
-            latitude="86.16374122241754"
+            longitude={longitude}
+            latitude={latitude}
             className="w-full h-full rounded-xl"
           ></MapLT>
         </div>
