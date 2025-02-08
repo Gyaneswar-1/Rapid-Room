@@ -1,3 +1,6 @@
+//fortesting purpose
+import checkInHandler from "../../../service/checkin/checkInService"
+
 export default function CheckInCard({perNight,cleaningFee}:any){
     return(
       <div className="card sticky md:top-32 rounded-xl flex flex-col gap-4 w-full h-max shadow-2xl p-4">
@@ -28,7 +31,13 @@ export default function CheckInCard({perNight,cleaningFee}:any){
                 />
               </div>
             </div>
-            <button className="bg-teal-500 hover:bg-teal-600 duration-150 py-4 text-xl font-semibold text-white rounded-xl">
+            <button className="bg-teal-500 hover:bg-teal-600 duration-150 py-4 text-xl font-semibold text-white rounded-xl"
+            onClick={()=>{
+              const Totalamount= perNight * 2 + cleaningFee + 200;
+              checkInHandler(Totalamount);
+              
+            }}
+            >
               Reserve
             </button>
             <div className="calculate border-b py-4">
