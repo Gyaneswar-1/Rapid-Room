@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Welcome from "../pages/Welcome";
 import ErrorPage from "../pages/ErrorPage";
 import BookingPage from "../pages/BookingPage";
+import AddHotels from "../pages/AddHotels";
 
 function RouterHandler() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +25,7 @@ function RouterHandler() {
           
           <Route path="/home" element={<Home />} />
           <Route path="/book-hotel" element={<BookingPage />} />
+          <Route path="/add-hotel" element={<AddHotels />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
