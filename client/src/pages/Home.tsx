@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import Card from "../components/Card";
 import Navbar from "../components/Navbar/Navbar";
-import { getHotels } from "../service/getHotels.service";
+// import { getHotels } from "../service/getHotels.service";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { asyncGetHotels } from "../store/actions/Hotels.actions";
+import hotelReducer from "../store/reducers/hotel.reducers";
 
 interface Address {
   country: string;
@@ -18,53 +22,24 @@ export interface Hotel {
   address: Address;
   // images: string[];
   image: string;
-  onclick: ()=> void;
+  onclick: () => void;
 }
 
 function Home({ data }: any) {
-  const [hotelsData, setHotelsData] = useState<Hotel[]>([]);
+  const hotelsData = useSelector((state: RootState) => state.hotelReducer.hotels) || [];  
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
-  async function getHotelsData() {
-    const result = await getHotels(1, 10);
-    setHotelsData(result.hotels);
-    console.log(hotelsData);
-  }
-
-  useEffect(() => {
-    getHotelsData();
-  }, []);
-
+   useEffect(() => {
+    dispatch(asyncGetHotels());
+  }, [dispatch]);
+  console.log("Data lelo",hotelsData.hotels[0].hotelName);
   return (
     <div className="h-screen w-full   bg-neutral-200">
-
-
       <Navbar />
       <div className="w-full h-full pt-[196px] flex justify-center">
         <div className="flex w-[90rem] gap-8 flex-wrap justify-evenly h-fit">
-          {/* <Card
-            image={
-              "https://a0.muscache.com/im/pictures/454710cc-6052-4669-9019-d347e87d9a26.jpg?im_w=1200&im_format=avif"
-            }
-          /> */}
-
-          {hotelsData.map((data, index) => {
-            return (
-              <Card
-                id={data.id}
-                key={index}
-                //  image={data.images}
-                hotelName={data.hotelName}
-                perNight={data.perNight}
-                type={data.type}
-                address={data.address}
-                image={
-                  "https://a0.muscache.com/im/pictures/454710cc-6052-4669-9019-d347e87d9a26.jpg?im_w=1200&im_format=avif"
-                }
-                onclick={()=>{navigate(`/book-hotel?hotelId=${data.id}`)}}
-              />
-            );
-          })}
+       {hotelsData.hotels[0].hotelName}
         </div>
         <BottomNav />
       </div>
