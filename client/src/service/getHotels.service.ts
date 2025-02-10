@@ -1,5 +1,6 @@
 import axios from "axios";
-import { API } from "./API";
+import API from "./api";
+
 
 export const getHotels = async (page: number, limit: number) => {
   try {

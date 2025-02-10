@@ -26,20 +26,21 @@ export interface Hotel {
 }
 
 function Home({ data }: any) {
-  const hotelsData = useSelector((state: RootState) => state.hotelReducer.hotels) || [];  
+  const hotelsData =
+    useSelector((state: RootState) => state.hotelReducer.hotels) || [];
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-   useEffect(() => {
+  useEffect(() => {
     dispatch(asyncGetHotels());
   }, [dispatch]);
-  console.log("Data lelo",hotelsData.hotels[0].hotelName);
+  console.log("Data:", hotelsData);
   return (
     <div className="h-screen w-full   bg-neutral-200">
       <Navbar />
       <div className="w-full h-full pt-[196px] flex justify-center">
         <div className="flex w-[90rem] gap-8 flex-wrap justify-evenly h-fit">
-       {hotelsData.hotels[0].hotelName}
+          {/* {hotelsData.hotels[0].hotelName} */}
         </div>
         <BottomNav />
       </div>

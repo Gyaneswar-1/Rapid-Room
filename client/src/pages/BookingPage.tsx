@@ -29,11 +29,11 @@ export default function BookingPage() {
           setShowSkeliton(false);
         }
         else{
-          navigate("/home");
+          // navigate("/home");
         }
      })
      .catch((err)=>{
-        navigate("/home");
+        // navigate("/home");
      })
   },[])
 

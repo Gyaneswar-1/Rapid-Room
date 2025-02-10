@@ -50,7 +50,7 @@ export default function Reviews({ onclick }: any) {
     },
   ]);
   return (
-    <div className="w-full py-8 grid md:grid-cols-2 md:gap-8 border-t border-gray-300">
+    <div className="w-full py-8 grid md:grid-cols-2 md:gap-4 border-t border-gray-300">
       {reviewCards.map((e: any) => {
         return (
           <>
@@ -64,9 +64,18 @@ export default function Reviews({ onclick }: any) {
               reviewerReviewUploadTime={e.reviewerReviewUploadTime}
               reviewContent={e.reviewContent}
             ></ReviewCard>
+            
           </>
         );
       })}
+      <button
+        onClick={() => {
+          onclick();
+        }}
+        className=" bg-neutral-500 hover:bg-neutral-600 duration-150 text-white px-2 py-1 cursor-pointer  rounded-lg w-max  font-semibold"
+      >
+      All Reviews
+      </button>
     </div>
   );
 }

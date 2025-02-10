@@ -11,7 +11,7 @@ export default function ReviewCard({
   reviewContent,
 }: any) {
   return (
-    <div className="card flex flex-col gap-2  cursor-pointer">
+    <div className="card flex flex-col gap-2 ">
       <div className="flex items-center">
         <div className="shrink-0">
           <img
@@ -37,16 +37,9 @@ export default function ReviewCard({
         </div>
         {reviewerReviewUploadTime}
       </div>
-      <div className="con border md:h-24 w-full overflow-hidden">{reviewContent}
+      <div className="con  md:h-24 w-full overflow-hidden">
+        {reviewContent}
       </div>
-      <button
-        onClick={() => {
-          onclick();
-        }}
-        className="px-2 py-1 bg-neutral-500 hover:bg-neutral-600 duration-150 text-white rounded-lg w-max  font-semibold"
-      >
-        Show more
-      </button>
     </div>
   );
 }

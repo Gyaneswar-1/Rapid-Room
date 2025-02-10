@@ -1,6 +1,6 @@
 import { SigninType } from "@bibek-samal/traveltrove";
-import { API } from "../api";
 import axios from "axios";
+import API from "../api";
 
 export default async function signinManual(data:SigninType) {
     try {

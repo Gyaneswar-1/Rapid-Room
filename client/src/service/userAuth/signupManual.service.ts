@@ -1,6 +1,7 @@
 import { signupTypeFrontend } from "@bibek-samal/traveltrove";
 import axios from "axios";
-import { API } from "../api";
+import API from "../api";
+
 
 export default async function signupManual(data: signupTypeFrontend){
     try {
