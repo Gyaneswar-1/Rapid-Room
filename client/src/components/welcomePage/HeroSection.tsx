@@ -12,14 +12,14 @@ const HeroSection = ({toggleSignup,handleEmailChange}:any) => {
             <section className="">
               <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
                 <h1 className="mb-4 text-4xl font-semibold md:font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                  Your Perfect Stay, Just a{" "}
-                  <span className="text-green-500">Click</span>{" "}
-                  <span className="text-yellow-500">Away</span>
+                  Your Perfect Stay, Just a
+                  <span className="text-green-500"> Click </span>
+                  Away
                 </h1>
                 <p className="mb-8 md:text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">
                   Book instantly, stay comfortably! RapidRoom offers a seamless
                   hotel booking experience with lightning-fast reservations,
-                  unbeatable deals, and stays that feel like home. 🌍🛏️✨
+                  unbeatable deals, and stays that feel like home. 🌍
                 </p>
                 <form className="w-full max-w-md mx-auto">
                   <label

@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
+import { loggers } from "winston";
 
 export const addNewHotel = async (req: Request | any, res: Response | any) => {
     console.log("controll reached")
@@ -41,6 +42,28 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         //     }),
         // );
 
+         console.log(        hotelName,
+            description,
+            numberOfRooms,
+            perNight,
+            roomType,
+            hasParking,
+            hasPools,
+            hasWifi,
+            hasTv,
+            hasBalcony,
+            hasKitchen,
+            hasWorkSpace,
+            hasWashingMachine,
+            hasGarden,
+            hasGrummingEqupments,
+            images,
+            type,
+            state,
+            street,
+            city,
+            zipcode,
+            country,)
         const trancation = await prisma.$transaction(async (prisma) => {
             //create hotel
             const hotelRes = await prisma.hotels.create({
@@ -72,13 +95,13 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                             country: country,
                         },
                     },
-                    images: {
-                        createMany: {
-                            data: images.map((url: string) => ({
-                                imageUrl: url,
-                            })),
-                        },
-                    },
+                    // images: {
+                    //     createMany: {
+                    //         data: images.map((url: string) => ({
+                    //             imageUrl: url,
+                    //         })),
+                    //     },
+                    // },
                 },
             });
 

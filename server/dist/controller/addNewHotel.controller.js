@@ -13,6 +13,7 @@ export const addNewHotel = async (req, res) => {
         //         return imageUrl;
         //     }),
         // );
+        console.log(hotelName, description, numberOfRooms, perNight, roomType, hasParking, hasPools, hasWifi, hasTv, hasBalcony, hasKitchen, hasWorkSpace, hasWashingMachine, hasGarden, hasGrummingEqupments, images, type, state, street, city, zipcode, country);
         const trancation = await prisma.$transaction(async (prisma) => {
             //create hotel
             const hotelRes = await prisma.hotels.create({
@@ -44,13 +45,13 @@ export const addNewHotel = async (req, res) => {
                             country: country,
                         },
                     },
-                    images: {
-                        createMany: {
-                            data: images.map((url) => ({
-                                imageUrl: url,
-                            })),
-                        },
-                    },
+                    // images: {
+                    //     createMany: {
+                    //         data: images.map((url: string) => ({
+                    //             imageUrl: url,
+                    //         })),
+                    //     },
+                    // },
                 },
             });
             //create bulkrooms
