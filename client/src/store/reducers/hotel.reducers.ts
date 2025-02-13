@@ -1,28 +1,26 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Result } from "../../pages/Home";
+import { createSlice } from "@reduxjs/toolkit";
 
-
-const initialState:Result = {
-  hotels: [],
-  pagination: {
-    currentPage: 0,
-    pageSize: 0,
-    totalHotels: 0,
-    totalPages: 0
-  }
+const initialState: any = {
+  hotels: [
+    {
+      id: "",
+      hotelName: "",
+      perNight: "",
+      address: { country: "", city: "" },
+      reviews: [{ overalRating: "" }],
+    },
+  ],
 };
 
 export const HotelSlice = createSlice({
   name: "hotels",
   initialState,
   reducers: {
-    getHotelsSuccess: (state, action: PayloadAction<any[]>) => {
+    getAllHotels: (state, action) => {
       state.hotels = action.payload;
     },
- 
   },
 });
 
 export default HotelSlice.reducer;
-export const { getHotelsSuccess } =
-  HotelSlice.actions;
+export const { getAllHotels } = HotelSlice.actions;

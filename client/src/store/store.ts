@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/user.reducers";
-import hotelReducer from "./reducers/hotel.reducers"
+import hotelReducer from "./reducers/hotel.reducers";
 
 export const store = configureStore({
   reducer: {
