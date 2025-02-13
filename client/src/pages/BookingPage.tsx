@@ -13,7 +13,7 @@ import getSingleHotelInformation from "../service/getSingleHotelInformation/getS
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function BookingPage() {
-  const [showSkeliton, setShowSkeliton] = useState(true);
+  const [showSkeliton, setShowSkeliton] = useState(false);
   const [showAllReview, setShowAllReview] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

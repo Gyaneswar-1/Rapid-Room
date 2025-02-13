@@ -36,7 +36,7 @@ function Home({ data }: any) {
   }, [dispatch]);
   console.log("Data:", hotelsData);
   return (
-    <div className="h-screen w-full   bg-neutral-200">
+    <div className="h-screen w-full">
       <Navbar />
       <div className="w-full h-full pt-[196px] flex justify-center">
         <div className="flex w-[90rem] gap-8 flex-wrap justify-evenly h-fit">

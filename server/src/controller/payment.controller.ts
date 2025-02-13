@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { instance } from "../app.js";
 
-export const payment = async (req:Request,res:Response) => {
+export const payment = async (req:Request | any,res:Response | any) => {
 
     const amount = req.body.amount;
     if(!amount){
-        res.status(400).json({
+       return res.status(400).json({
             success: false,
             msg: "paymet uncessfull",
             data:{

@@ -6,7 +6,7 @@ import Categories from "./Categories";
 function Navbar() {
   return (
     <div className=" fixed w-full bg-white z-11 shadow-sm ">
-      <div className=" py-4 border-b-[1px]">
+      <div className=" py-4 border-b border-b-gray-300 shadow-2xl">
         <div
           className="max-w-[2520px]
             mx-auto
