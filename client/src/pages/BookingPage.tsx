@@ -13,8 +13,17 @@ import getSingleHotelInformation from "../service/getSingleHotelInformation/getS
 import { useLocation, useNavigate } from "react-router-dom";
 
 //state management
-import { RootState } from "../store/store";
-import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import {
+  setHotelType,
+  setHotelImages,
+  setHotelAddress,
+  setAboutHotel,
+  setRoomType,
+  setPerNight,
+  setAboutHost,
+} from "../store/reducers/singleHotel.reducer";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function BookingPage() {
   //delay functon
@@ -30,9 +39,18 @@ export default function BookingPage() {
   const { showAllReview } = useSelector(
     (state: RootState) => state.toogleAllReviewsReducer
   );
-  console.log(showAllReview)
-  const [showSkeliton, setShowSkeliton] = useState(true);
+  const {
+    hotelType,
+    hotelImages,
+    hotelAddress,
+    aboutHotel,
+    roomType,
+    perNight,
+    aboutHost,
+  } = useSelector((state: RootState) => state.singleHotelReducer);
+  const dispatch: AppDispatch = useDispatch();
 
+  const [showSkeliton, setShowSkeliton] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -40,18 +58,40 @@ export default function BookingPage() {
 
   useEffect(() => {
     getSingleHotelInformation(id)
-      .then(async (data) => {
-        if (data.success === true) {
-          console.log(data.data);
+      .then(async (res) => {
+        if (res.success === true) {
+          console.log(res.data);
+          console.log("here is the address", res.data.address);
           //here set the data to the store user recoil or redux for better state management
-          await delay();
+          dispatch(setHotelType(res.data.type));
+          dispatch(setHotelImages(res.data.images));
+          dispatch(
+            setHotelAddress({
+              state: res.data.address.state,
+              country: res.data.address.country,
+              longitude: res.data.address.longitude,
+              latitude: res.data.address.latitude,
+            })
+          );
+          dispatch(setAboutHotel(res.data.description));
+          dispatch(setRoomType(res.data.roomType));
+          dispatch(setPerNight(res.data.perNight));
+          dispatch(
+            setAboutHost({
+              name: res.data.host.fullName,
+              hostExperience: res.data.host.hostExperience,
+              email: res.data.host.email,
+              profileImage: res.data.host.profileImage,
+            })
+          );
+          // await delay();
           setShowSkeliton(false);
         } else {
           // navigate("/home");
         }
       })
       .catch((err) => {
-        console.log("error in the booking page catch",err);
+        console.log("error in the booking page catch", err);
         // navigate("/home");
       });
   }, []);
@@ -68,28 +108,25 @@ export default function BookingPage() {
           <div className="container w-full  md:w-4/6 flex flex-col ">
             <BookingPageHeading hotelType="Apartment with terrace, balcony+ breakfast"></BookingPageHeading>
             <BookingPageImages
-              img1=""
-              img2=""
-              img3=""
-              img4=""
-              img5=""
+              img1={hotelImages[0]}
+              img2={hotelImages[1]}
+              img3={hotelImages[2]}
+              img4={hotelImages[3]}
+              img5={hotelImages[4]}
             ></BookingPageImages>
             <AboutWithCheckout
-              country="India"
-              state="Odisha"
-              roomType="1 double bedPrivate attached bathroom"
+              country={hotelAddress.country}
+              state={hotelAddress.state}
+              roomType={roomType}
               totalReviews={135}
               overalRating={3.5}
               hostImage="https://a0.muscache.com/im/pictures/user/e349f69e-6f7f-4a69-98ef-391baafed14a.jpg?im_w=240&im_format=avif"
-              hostName="Bibek"
-              hostExperienceYear={8}
-              aboutThisPlace="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam ea
-            libero quaerat corrupti! Possimus, suscipit. Eum iusto, beatae error
-            repudiandae odit ex rerum ratione, nobis porro quos suscipit
-            voluptatem nisi!"
-              perNight={3000}
+              hostName={aboutHost.name}
+              hostExperienceYear={aboutHost.hostExperience}
+              aboutThisPlace={aboutHotel}
+              perNight={perNight}
               cleaningFee={100}
-              numberOfGuests={3}
+              numberOfGuests={4}
             ></AboutWithCheckout>
             <RatingSection
               overalRating={5.1}
@@ -103,8 +140,8 @@ export default function BookingPage() {
             ></RatingSection>
             <Reviews></Reviews>
             <MapShowcase
-              longitude={20.684607359715745}
-              latitude={86.16374122241754}
+              longitude={hotelAddress.longitude}
+              latitude={hotelAddress.latitude}
             ></MapShowcase>
             <MeetHost
               hostImage=""
