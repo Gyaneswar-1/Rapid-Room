@@ -22,6 +22,7 @@ import {
   setRoomType,
   setPerNight,
   setAboutHost,
+  setHotelId
 } from "../store/reducers/singleHotel.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -55,7 +56,7 @@ export default function BookingPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = Number(queryParams.get("hotelId"));
-
+  dispatch(setHotelId(id));
   useEffect(() => {
     getSingleHotelInformation(id)
       .then(async (res) => {
@@ -63,6 +64,7 @@ export default function BookingPage() {
           console.log(res.data);
           console.log("here is the address", res.data.address);
           //here set the data to the store user recoil or redux for better state management
+
           dispatch(setHotelType(res.data.type));
           dispatch(setHotelImages(res.data.images));
           dispatch(

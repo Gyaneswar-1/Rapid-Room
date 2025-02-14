@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: any = {
+    hotelId: 0,
   hotelType: "",
   aboutHotel:"",
   roomType:"",
@@ -22,9 +23,13 @@ const initialState: any = {
 };
 
 export const singleHotelSlice = createSlice({
+    
   name: "singleHotelSlice",
   initialState,
   reducers: {
+    setHotelId:(state,action)=>{
+        state.hotelId = action.payload;
+    },
     setHotelType: (state, action) => {
       state.hotelType = action.payload;
     },
@@ -50,4 +55,4 @@ export const singleHotelSlice = createSlice({
 });
 
 export default singleHotelSlice.reducer;
-export const { setHotelType, setHotelImages,setHotelAddress, setAboutHotel,setRoomType, setPerNight, setAboutHost } = singleHotelSlice.actions;
+export const { setHotelType, setHotelImages,setHotelAddress, setAboutHotel,setRoomType, setPerNight, setAboutHost,setHotelId } = singleHotelSlice.actions;

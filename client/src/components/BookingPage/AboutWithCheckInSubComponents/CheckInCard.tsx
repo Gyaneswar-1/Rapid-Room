@@ -14,14 +14,20 @@ import { AppDispatch, RootState } from "../../../store/store";
 import { setStayingFor,setTotalAmount } from "../../../store/reducers/checkIn.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
+import { handelReservation } from "../../../service/checkin/handelReservation";
 
+import { notifyError, notifySuccess } from "../../../lib/Toast";
+import { useNavigate } from "react-router-dom";
+import { GiDuration } from "react-icons/gi";
 
 export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: any) {
 
   //state management
   const { stayingFor,totalAmount } = useSelector((state: RootState) => state.checkInReducer);
+  const {hotelId} = useSelector((state: RootState)=> state.singleHotelReducer)
   const dispatch: AppDispatch = useDispatch();
 
+  const navigate = useNavigate();
 
   const {
     register,
@@ -37,12 +43,18 @@ export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: a
   const checkOut:any = new Date(checkOutDate);
   const difference = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
 
-  const onSubmit: SubmitHandler<checkInType> = (data: any) => {
+  const onSubmit: SubmitHandler<checkInType> = async (data: any) => {
     console.log(data);
     dispatch(setStayingFor(difference))
     dispatch(setTotalAmount(perNight * difference + cleaningFee + 200))
-    
-    checkInHandler(totalAmount);
+    const res = await handelReservation(hotelId,difference);
+    if(res.success === true){
+      await checkInHandler(totalAmount);
+      notifySuccess("Hotel booked successfull !")
+    }else{
+      notifyError("Reservation failed");
+      navigate("/home");
+    }
   };
   return (
     <form
@@ -149,7 +161,7 @@ export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: a
       <div className="totalfee px-3">
         <div className="flex items-center justify-between">
           <div className="left underline">Total</div>
-          <div className="right">{`₹${perNight * difference + cleaningFee + 200}`}</div>
+          <div className="right">{`₹${perNight * difference+ cleaningFee + 200}`}</div>
         </div>
       </div>
     </form>

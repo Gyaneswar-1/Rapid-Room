@@ -23,7 +23,8 @@ export default async function checkInHandler(amount: number){
         currency: 'INR',
         name: 'Acme Corp',
         description: 'Test Transaction',
-        order_id: orderRes.data.data.order.id, // This is the order_id created in the backend
+        order_id: orderRes.data.data.order.id,
+        xxx:"madorchod", // This is the order_id created in the backend
         callback_url: 'http://localhost:3000/api/v1/user/payment-verification', // Your success URL
         prefill: {
           name: 'Gaurav Kumar',
