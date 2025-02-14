@@ -8,9 +8,10 @@ import { signinManual } from "../../service/exportServices";
 import { useNavigate } from "react-router-dom";
 import { notifyError, notifySuccess} from "../../lib/Toast";
 
-interface SigninProps {
-  closeSignin: () => void;
-}
+//state management
+import { AppDispatch, RootState } from "../../store/store";
+import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
+import { useDispatch, useSelector } from "react-redux";
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
@@ -20,13 +21,18 @@ const handleFacebookLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
 };
 
-const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
+const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+ 
+  //state management
+  const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
+  const dispatch: AppDispatch = useDispatch();
 
    //react-hook form actions
     const {
@@ -51,7 +57,10 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
      <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
         <button
-          onClick={closeSignin}
+        //close the sign in here
+          onClick={()=>{
+            dispatch(flipSignin(showSignin))
+          }}
           className="text-xl cursor-pointer w-full flex items-end justify-end px-5 py-4"
         >
           <IoMdClose />
@@ -66,7 +75,7 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
               className="relative block rounded-md h-12  text-xl p-2 border border-neutral-800 shadow-xs focus-within:border-teal-600 focus-within:ring-1 focus-within:ring-teal-600"
             >
               <input
-                type="text"
+                type="email"
                 className="peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden"
                 placeholder="Email"
                 {...register("email", {
@@ -152,13 +161,16 @@ const Signin: React.FC<SigninProps> = ({ closeSignin }) => {
           </div>
           <p className="flex justify-center md:pt-0 pt-12">
             already have an account{" "}
-            <a
-              href=""
-              onClick={closeSignin}
-              className="text-blue-700 underline-offset-1 underline"
+            <button
+              
+              onClick={()=>{
+                dispatch(flipSignin(showSignin))
+                dispatch(flipSignUp(showSignup))
+              }}
+              className="text-blue-700 underline-offset-1 underline cursor-pointer"
             >
               Signup ?
-            </a>
+            </button>
           </p>
         </div>
       </div>

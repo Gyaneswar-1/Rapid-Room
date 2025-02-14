@@ -4,15 +4,11 @@ import facebookLogo from "../../assets/icons/facebook.logo.png";
 import googleLogo from "../../assets/icons/google.logo.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signupTypeFrontend } from "@bibek-samal/traveltrove";
-import { NavLink } from "react-router-dom";
 import { signupManual } from "../../service/exportServices";
 import { useNavigate } from "react-router-dom";
 import { notifyError, notifySuccess } from "../../lib/Toast";
 
-interface SignupProps {
-  closeSignup: () => void;
-  email: string;
-}
+
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
@@ -22,13 +18,27 @@ const handleFacebookLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
 };
 
-const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
+
+//state management
+import { AppDispatch, RootState } from "../../store/store";
+import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
+import { useDispatch, useSelector } from "react-redux";
+
+
+const Signup= () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+
+  
+  //state management
+  const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
+  const dispatch: AppDispatch = useDispatch();
+  const { email } = useSelector((state: RootState) => state.emailReducer);
 
   //react-hook form actions
   const {
@@ -51,7 +61,10 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
     <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
       <div className="flex flex-col items-center  signup-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl ">
         <button
-          onClick={closeSignup}
+        //close the signup
+          onClick={()=>{
+            dispatch(flipSignUp(showSignup));
+          }}
           className="text-xl cursor-pointer w-full flex items-end justify-end px-5 py-4"
         >
           <IoMdClose />
@@ -95,8 +108,8 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
               <input
                 type="text"
                 className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden w-full"
-                placeholder="Email"
                 defaultValue={email}
+                placeholder="Email"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -185,12 +198,15 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, email }) => {
           </div>
           <p className="flex justify-center md:pt-0 pt-12">
             already have an account
-            <NavLink
-              to="/"
-              className="text-blue-700 underline-offset-1 underline"
+            <button
+              onClick={()=>{
+                dispatch(flipSignUp(showSignup))
+                dispatch(flipSignin(showSignin))
+              }}
+              className="text-blue-700 underline-offset-1 underline cursor-pointer"
             >
               Signin ?
-            </NavLink>
+            </button>
           </p>
         </div>
       </div>

@@ -1,6 +1,19 @@
 import heroBanner from "../../assets/welcomepage/heroBanner.avif"
 
-const HeroSection = ({toggleSignup,handleEmailChange}:any) => {
+
+//state management
+import { AppDispatch, RootState } from "../../store/store";
+import { setEmail } from "../../store/reducers/email.reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { flipSignUp } from "../../store/reducers/showAuthCard.reducers";
+
+
+const HeroSection = () => {
+  
+  //state management
+  const dispatch: AppDispatch = useDispatch();
+  const { showSignup } = useSelector((state: RootState) => state.showAuthCardReducer);
+
   return (
     <div className="Welcome-textPage h-96 md:h-full border-amber-600  bg-scroll   bg-[url({})] relative bg-cover bg-center bg-dark-overlay bg-no-repeat ">
           <img
@@ -21,7 +34,7 @@ const HeroSection = ({toggleSignup,handleEmailChange}:any) => {
                   hotel booking experience with lightning-fast reservations,
                   unbeatable deals, and stays that feel like home. 🌍
                 </p>
-                <form className="w-full max-w-md mx-auto">
+                <div className="w-full max-w-md mx-auto">
                   <label
                     htmlFor="default-email"
                     className="mb-2 text-sm font-medium  sr-only text-white"
@@ -47,17 +60,24 @@ const HeroSection = ({toggleSignup,handleEmailChange}:any) => {
                       className="block w-full p-4 ps-10 text-sm text-teal-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 "
                       placeholder="Enter your email here..."
                       required
-                      onChange={handleEmailChange}
+                      //handel the email change
+                      onChange={(e)=>{
+                        dispatch(setEmail(e.target.value));
+                      }}
+                     
                     />
                     <button
                       type="submit"
                       className="text-white absolute end-2.5 bottom-2.5 bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-teal-600  "
-                      onClick={toggleSignup}
+                      //go to the signup page
+                      onClick={()=>{
+                        dispatch(flipSignUp(showSignup))
+                      }}
                     >
                       Get Started
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </section>
           </div>

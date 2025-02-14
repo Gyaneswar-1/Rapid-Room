@@ -83,7 +83,7 @@ function Home() {
       });
   }, []);
 
-  console.log(hotels);
+  // console.log(hotels);
 
   return (
     <>

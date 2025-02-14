@@ -9,38 +9,36 @@ import WelcomePagenavBar from "../components/welcomePage/WelcomePagenavBar";
 import HeroSection from "../components/welcomePage/HeroSection";
 import Footer from "../components/Reusable/Footer";
 
+//store
+import { AppDispatch, RootState } from "../store/store";
+import { flipSignUp } from "../store/reducers/showAuthCard.reducers";
+import { useDispatch, useSelector } from "react-redux";
+
+
 function Welcome() {
-  const [signup, setSignup] = useState(false);
-  const [signin, setSignin] = useState(false);
-  const [email, setEmail] = useState("");
+  
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  //state management
+  const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
+  const dispatch: AppDispatch = useDispatch();
 
-  const toggleSignup = () => {
-    setSignup(!signup);
-  };
+  
 
-  const toggleSignin = () => {
-    setSignin(!signin);
-  };
+
+  
+
+  
 
   return (
     <>
       <div className="font-EmCode h-max  relative">
         
         <WelcomePagenavBar
-          toggleSignup={() => {
-            toggleSignup();
-          }}
-          toggleSignin={() => {
-            toggleSignin();
-          }}
+         
         ></WelcomePagenavBar>
 
        
-        <HeroSection toggleSignup={toggleSignup} handleEmailChange={handleEmailChange} ></HeroSection>
+        <HeroSection ></HeroSection>
 
         <Offer />
 
@@ -49,14 +47,14 @@ function Welcome() {
         <UserReview />
         <Footer></Footer>
       </div>
-      {signin && (
+      {showSignin && (
         <div>
-          <Signin closeSignin={toggleSignin} />
+          <Signin />
         </div>
       )}
-      {signup && (
+      {showSignup && (
         <div>
-          <Signup closeSignup={toggleSignup} email={email} />
+          <Signup />
         </div>
       )}
     </>
