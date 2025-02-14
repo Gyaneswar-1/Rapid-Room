@@ -1,9 +1,18 @@
 import { useState } from "react";
-
 import {ReviewCard} from "./reviewsSubcomponents/exportreviewSubComponents"
 
-export default function Reviews({ onclick }: any) {
-  const [reviewCards,serReviewCards] = useState([
+//state management
+import { AppDispatch, RootState } from "../../store/store";
+import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
+import { useDispatch, useSelector } from "react-redux";
+
+export default function Reviews() {
+  //state management
+  const { showAllReview } = useSelector((state: RootState) => state.toogleAllReviewsReducer);
+  const dispatch: AppDispatch = useDispatch();
+  
+
+  const [reviewCards,setReviewCards] = useState([
     {
       reviewerImage:
         "https://tse3.mm.bing.net/th?id=OIP.zQ9s_pN5SoZLDeAFoM4jhQAAAA&pid=Api&P=0&h=180",
@@ -69,8 +78,9 @@ export default function Reviews({ onclick }: any) {
         );
       })}
       <button
-        onClick={() => {
-          onclick();
+        //show all reviews
+        onClick={()=>{
+          dispatch(toogleAllReviews(showAllReview))
         }}
         className=" bg-neutral-500 hover:bg-neutral-600 duration-150 text-white px-2 py-1 cursor-pointer  rounded-lg w-max  font-semibold"
       >

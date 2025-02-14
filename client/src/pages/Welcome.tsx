@@ -10,9 +10,8 @@ import HeroSection from "../components/welcomePage/HeroSection";
 import Footer from "../components/Reusable/Footer";
 
 //store
-import { AppDispatch, RootState } from "../store/store";
-import { flipSignUp } from "../store/reducers/showAuthCard.reducers";
-import { useDispatch, useSelector } from "react-redux";
+import {  RootState } from "../store/store";
+import { useSelector } from "react-redux";
 
 
 function Welcome() {
@@ -20,7 +19,7 @@ function Welcome() {
 
   //state management
   const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
-  const dispatch: AppDispatch = useDispatch();
+  
 
   
 

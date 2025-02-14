@@ -12,51 +12,58 @@ import BookingPageSkeliton from "../components/skelitions/BookingPageSkeliton";
 import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
 import { useLocation, useNavigate } from "react-router-dom";
 
+//state management
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
+
 export default function BookingPage() {
-  const [showSkeliton, setShowSkeliton] = useState(false);
-  const [showAllReview, setShowAllReview] = useState(false);
+  //delay functon
+  async function delay() {
+    await new Promise((res) => {
+      setTimeout(() => {
+        res("");
+      }, 1500);
+    });
+  }
+
+  //state management
+  const { showAllReview } = useSelector(
+    (state: RootState) => state.toogleAllReviewsReducer
+  );
+  console.log(showAllReview)
+  const [showSkeliton, setShowSkeliton] = useState(true);
+
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = Number(queryParams.get("hotelId"));
 
-  useEffect(()=>{
-     getSingleHotelInformation(id)
-     .then(async (data)=>{
-        if(data.success === true){
+  useEffect(() => {
+    getSingleHotelInformation(id)
+      .then(async (data) => {
+        if (data.success === true) {
           console.log(data.data);
           //here set the data to the store user recoil or redux for better state management
+          await delay();
           setShowSkeliton(false);
-        }
-        else{
+        } else {
           // navigate("/home");
         }
-     })
-     .catch((err)=>{
+      })
+      .catch((err) => {
+        console.log("error in the booking page catch",err);
         // navigate("/home");
-     })
-  },[])
+      });
+  }, []);
 
-  if (showSkeliton) {
-    return (
-      <>
-        <BookingPageNavbar />
+  return (
+    <>
+      <BookingPageNavbar />
+
+      {showAllReview && <AllReviews></AllReviews>}
+      {showSkeliton ? (
         <BookingPageSkeliton></BookingPageSkeliton>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <BookingPageNavbar />
-
-        {showAllReview && (
-          <AllReviews
-            onclick={() => {
-              setShowAllReview(false);
-            }}
-          ></AllReviews>
-        )}
-
+      ) : (
         <div className="w-full min-h-screen bg-white flex justify-center">
           <div className="container w-full  md:w-4/6 flex flex-col ">
             <BookingPageHeading hotelType="Apartment with terrace, balcony+ breakfast"></BookingPageHeading>
@@ -82,6 +89,7 @@ export default function BookingPage() {
             voluptatem nisi!"
               perNight={3000}
               cleaningFee={100}
+              numberOfGuests={3}
             ></AboutWithCheckout>
             <RatingSection
               overalRating={5.1}
@@ -93,11 +101,7 @@ export default function BookingPage() {
               valueRating={3.3}
               parkingRating={4.1}
             ></RatingSection>
-            <Reviews
-              onclick={() => {
-                setShowAllReview(true);
-              }}
-            ></Reviews>
+            <Reviews></Reviews>
             <MapShowcase
               longitude={20.684607359715745}
               latitude={86.16374122241754}
@@ -112,7 +116,7 @@ export default function BookingPage() {
             ></MeetHost>
           </div>
         </div>
-      </>
-    );
-  }
+      )}
+    </>
+  );
 }

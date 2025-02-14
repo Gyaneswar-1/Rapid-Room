@@ -1,5 +1,6 @@
 import { FaChevronLeft, FaShare } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa6";
+import { notifySuccess } from "../../lib/Toast";
 
 type hotelType = {
   hotelType: string,
@@ -19,16 +20,21 @@ export default function BookingPageHeading({hotelType}:hotelType) {
       <div className="btns flex  md:gap-4">
         <div className="btn1 hover:bg-gray-200 px-2  py-1 rounded-lg flex items-center gap-2">
           <div className="bg-white md:bg-transparent  p-4 md:p-0 rounded-full">
-            <FaRegHeart className=" text-xl " />
+            <FaHeart  className=" text-2xl text-rose-500" />
           </div>
           <span className="hidden md:block">Like</span>
         </div>
-        <div className="btn2 hover:bg-gray-200 px-2  py-1 rounded-lg flex items-center gap-2">
+        <button
+        onClick={()=>{
+          navigator.clipboard.writeText(window.location.href);
+          notifySuccess("Link has been copied")
+        }}
+        className="btn2 hover:bg-gray-200 px-2  py-1 rounded-lg flex items-center gap-2">
           <div className="bg-white md:bg-transparent p-4 md:p-0 rounded-full">
-            <FaShare className=" text-xl " />
+            <FaShare className=" text-2xl text-teal-500" />
           </div>
           <span className="hidden md:block">share</span>
-        </div>
+        </button>
       </div>
     </div>
   );

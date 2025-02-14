@@ -12,8 +12,9 @@ type aboutWithCheckOut = {
   aboutThisPlace: string
   perNight: number,
   cleaningFee: number,
+  numberOfGuests: number
 }
-export default function AboutWithCheckout({country,state,roomType,overalRating,totalReviews,hostImage,hostName,hostExperienceYear, aboutThisPlace, perNight, cleaningFee}:aboutWithCheckOut) {
+export default function AboutWithCheckout({country,state,roomType,overalRating,totalReviews,hostImage,hostName,hostExperienceYear, aboutThisPlace, perNight, cleaningFee, numberOfGuests}:aboutWithCheckOut) {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 pt-8">
       <div className="  lg:col-span-2 ">
@@ -24,7 +25,7 @@ export default function AboutWithCheckout({country,state,roomType,overalRating,t
         <WhatThisPlaceOffer></WhatThisPlaceOffer>
       </div>
       <div className=" relative ">
-        <CheckInCard perNight={perNight} cleaningFee={cleaningFee} ></CheckInCard>
+        <CheckInCard perNight={perNight} cleaningFee={cleaningFee} numberOfGuests={numberOfGuests} ></CheckInCard>
       </div>
     </div>
   );

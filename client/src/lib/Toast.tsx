@@ -14,9 +14,10 @@ export const notifySuccess = (message: string): void => {
     icon: <SiTicktick />,
     style: {
       fontWeight: "bold",
-      backgroundColor: "white",
+      backgroundColor: "whitge",
       color: "#16A34A",
       border: "3px solid #16A34A",
+      boxShadow: "4px 10px 10px rgba(22, 163, 74, 0.5)",
     },
   });
 };
