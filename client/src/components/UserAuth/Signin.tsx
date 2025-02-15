@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
+  localStorage.setItem("isUserLoggedIn", "true");
 };
 
 const handleFacebookLogin = () => {
@@ -44,6 +45,7 @@ const Signin = () => {
       const res = await signinManual(data);
       console.log(res);
       if(res.success === true){
+        localStorage.setItem("isUserLoggedIn", "true");
         navigate("/home")
         notifySuccess("Welcome back !")
       }
