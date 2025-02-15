@@ -21,11 +21,13 @@ type bookingPageImagesType = {
  */
 
 
+
+
 export default function BookingPageImages({img1,img2, img3, img4, img5}:bookingPageImagesType) {
     return (
-      <div className="md:h-4/7 h-1/3 md:max-h-4/7 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-2 ">
+      <div className="md:h-4/7 h-1/3 overflow-hidden md:max-h-4/7 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-2 ">
         <img
-          className="h-full md:rounded-lg object-center object-fill"
+          className="h-full max-w-full md:rounded-lg object-center object-fill "
           src={img1?img1:"https://a0.muscache.com/im/pictures/airflow/Hosting-20351538/original/a37e8b2a-1910-49ad-a556-e55e8ef6b920.jpg?im_w=1200&im_format=avif"}
           alt=""
         />

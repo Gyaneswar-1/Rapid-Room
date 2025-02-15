@@ -64,7 +64,7 @@ export default function BookingPage() {
           console.log(res.data);
           console.log("here is the address", res.data.address);
           //here set the data to the store user recoil or redux for better state management
-
+          console.log(res.data.images)
           dispatch(setHotelType(res.data.type));
           dispatch(setHotelImages(res.data.images));
           dispatch(
@@ -97,7 +97,7 @@ export default function BookingPage() {
         // navigate("/home");
       });
   }, []);
-
+ 
   return (
     <>
       <BookingPageNavbar />
@@ -110,11 +110,16 @@ export default function BookingPage() {
           <div className="container w-full  md:w-4/6 flex flex-col ">
             <BookingPageHeading hotelType="Apartment with terrace, balcony+ breakfast"></BookingPageHeading>
             <BookingPageImages
-              img1={hotelImages[0]}
-              img2={hotelImages[1]}
-              img3={hotelImages[2]}
-              img4={hotelImages[3]}
-              img5={hotelImages[4]}
+              img1={hotelImages[0].imageUrl}
+              img2={hotelImages[1].imageUrl}
+              img3={hotelImages[2].imageUrl}
+              img4={""}
+              img5={hotelImages[4].imageUrl}
+              // img1={""}
+              // img2={""}
+              // img3={""}
+              // img4={""}
+              // img5={""}
             ></BookingPageImages>
             <AboutWithCheckout
               country={hotelAddress.country}

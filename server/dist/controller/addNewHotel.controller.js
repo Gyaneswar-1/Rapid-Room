@@ -4,7 +4,7 @@ import prisma from "../db/db.config.js";
 export const addNewHotel = async (req, res) => {
     console.log("controll reached");
     const { hotelName, description, numberOfRooms, perNight, roomType, hasParking, hasPools, hasWifi, hasTv, hasBalcony, hasKitchen, hasWorkSpace, hasWashingMachine, hasGarden, hasGrummingEqupments, images, //this images is an array or url coming direct from cliend ( for temporary testing purpose )
-    type, state, street, city, zipcode, country, } = req.body;
+    type, state, street, city, zipcode, country, longitude, latitude, } = req.body;
     try {
         // task to do-> Debug the image upload functionality
         // const imageUrls = await Promise.all(
@@ -43,15 +43,17 @@ export const addNewHotel = async (req, res) => {
                             city: city,
                             zipCode: zipcode,
                             country: country,
+                            longitude: longitude,
+                            latitude: latitude
                         },
                     },
-                    // images: {
-                    //     createMany: {
-                    //         data: images.map((url: string) => ({
-                    //             imageUrl: url,
-                    //         })),
-                    //     },
-                    // },
+                    images: {
+                        createMany: {
+                            data: images.map((url) => ({
+                                imageUrl: url,
+                            })),
+                        },
+                    },
                 },
             });
             //create bulkrooms

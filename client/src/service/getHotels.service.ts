@@ -7,6 +7,7 @@ export const getHotels = async (page: number, limit: number) => {
     const response = await axios.get(
       `${API}/hotel/get/?page=${page}&limit=${limit}`
     );
+    console.log(response)
    if(response.data.success === true){
     return{success: true, data: response.data.data.hotels}
    }else{

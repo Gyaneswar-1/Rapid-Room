@@ -37,7 +37,8 @@ export const singleHotelSlice = createSlice({
         state.aboutHotel = action.payload
     },
     setHotelImages: (state, action) => {
-      state.value = action.payload;
+      
+      state.hotelImages = action.payload;
     },
     setHotelAddress:(state,action)=>{
         state.hotelAddress = action.payload

@@ -52,6 +52,7 @@ function Home() {
         if (res.success === true) {
           await delay();
           setShowLoader(false);
+          console.log("here is the hotel data",res.data)
           dispatch(getAllHotels(res.data));
         } else {
           dispatch(
@@ -90,7 +91,7 @@ function Home() {
       <div className="h-screen w-full ">
         <Navbar />
         <div className="w-full h-full pt-[196px] flex justify-center ">
-          <div className="flex w-[90rem] gap-8 flex-wrap justify-start h-fit ">
+          <div className="flex w-[90rem] gap-8 flex-wrap justify-center h-fit ">
             {showLoader ? (
               <Loader></Loader>
             ) : (

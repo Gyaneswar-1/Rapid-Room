@@ -6,7 +6,7 @@ import { upLoadOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 import { loggers } from "winston";
 
 export const addNewHotel = async (req: Request | any, res: Response | any) => {
-    console.log("controll reached")
+    console.log("controll reached");
     const {
         hotelName,
         description,
@@ -30,9 +30,10 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         city,
         zipcode,
         country,
+        longitude,
+        latitude,
     } = req.body;
     try {
-
         // task to do-> Debug the image upload functionality
 
         // const imageUrls = await Promise.all(
@@ -42,7 +43,8 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         //     }),
         // );
 
-         console.log(        hotelName,
+        console.log(
+            hotelName,
             description,
             numberOfRooms,
             perNight,
@@ -63,7 +65,8 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
             street,
             city,
             zipcode,
-            country,)
+            country,
+        );
         const trancation = await prisma.$transaction(async (prisma) => {
             //create hotel
             const hotelRes = await prisma.hotels.create({
@@ -93,15 +96,17 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                             city: city,
                             zipCode: zipcode,
                             country: country,
+                            longitude:longitude,
+                            latitude:latitude
                         },
                     },
-                    // images: {
-                    //     createMany: {
-                    //         data: images.map((url: string) => ({
-                    //             imageUrl: url,
-                    //         })),
-                    //     },
-                    // },
+                    images: {
+                        createMany: {
+                            data: images.map((url: string) => ({
+                                imageUrl: url,
+                            })),
+                        },
+                    },
                 },
             });
 
@@ -143,8 +148,16 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                 );
         });
     } catch (error) {
-        console.log(error)
-        res.status(501).json(new ApiError(false,{},"Failed","Failed at add hotel controller",501));
+        console.log(error);
+        res.status(501).json(
+            new ApiError(
+                false,
+                {},
+                "Failed",
+                "Failed at add hotel controller",
+                501,
+            ),
+        );
         return;
     } finally {
         prisma.$disconnect();
