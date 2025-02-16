@@ -1,6 +1,19 @@
+import { useForm } from "react-hook-form";
+
 function Slide1() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data:any) => console.log(data);
+
   return (
-    <div className=" xl:px-70 md:px-42 px-2 pt-12 pb-20 w-full flex flex-col justify-center">
+    <form
+      className=" xl:px-70 md:px-42 px-2 pt-12 pb-20 w-full flex flex-col justify-center"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="mb-6 ">
         <label
           htmlFor="large-input"
@@ -15,6 +28,7 @@ function Slide1() {
           type="text"
           id="large-input"
           className="block w-full p-4 text-2xl text-black border border-neutral-700 rounded-lg bg-gray-50  focus:ring-blue-500 focus:border-blue-500"
+          defaultValue="test" {...register("example")}
         />
         <p className="text-sm text-black mt-2">12/24</p>
       </div>
@@ -195,7 +209,7 @@ function Slide1() {
           <div className="relative flex items-center md:justify-between justify-evenly md:w-1/2 w-full">
             <span className="   text-black md:text-xl text-md ">Guests</span>
             <div className="flex gap-3 items-center">
-            <button
+              <button
                 type="button"
                 id="increment-button"
                 data-input-counter-increment="quantity-input"
@@ -245,10 +259,9 @@ function Slide1() {
         </div>
         <div className=" border-b-2 w-full  flex justify-evenly h-24 items-center grow">
           <div className="relative flex items-center md:justify-between justify-evenly md:w-1/2 w-full">
-
             <span className="  md:text-xl text-md   text-black">Bathrooms</span>
             <div className="flex gap-2 items-center">
-            <button
+              <button
                 type="button"
                 id="increment-button"
                 data-input-counter-increment="quantity-input"
@@ -300,7 +313,7 @@ function Slide1() {
           <div className="relative flex items-center md:justify-between justify-evenly md:w-1/2 w-full">
             <span className="  md:text-xl text-md   text-black">Beds</span>
             <div className="flex gap-2 items-center">
-            <button
+              <button
                 type="button"
                 id="increment-button"
                 data-input-counter-increment="quantity-input"
@@ -352,7 +365,7 @@ function Slide1() {
           <div className="relative flex items-center md:justify-between justify-evenly md:w-1/2 w-full">
             <span className="  md:text-xl text-md   text-black">Bedrooms</span>
             <div className="flex gap-2 items-center">
-            <button
+              <button
                 type="button"
                 id="increment-button"
                 data-input-counter-increment="quantity-input"
@@ -401,7 +414,7 @@ function Slide1() {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

@@ -38,25 +38,25 @@ model Hotels {
   id                   Int     @id @default(autoincrement())
   hostId               Int
   host                 Users   @relation(fields: [hostId], references: [id], onDelete: Cascade)
-  hotelName            String
+  hotelName            String?
   description          String?
-  address              Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
-  addressId            Int
-  perNight             Float
-  roomType             String
+  address              Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId            Int?
+  perNight             Float?
+  roomType             String?
   rooms                Rooms[]
-  numberOfRooms        Int
-  numberOfEmptyRooms   Int
-  hasParking           Boolean @default(false)
-  hasPools             Boolean @default(false)
-  hasWifi              Boolean @default(false)
-  hasTv                Boolean @default(false)
-  hasBalcony           Boolean @default(false)
-  hasKitchen           Boolean @default(false)
-  hasWorkSpace         Boolean @default(false)
-  hasWashingMachine    Boolean @default(false)
-  hasGarden            Boolean @default(false)
-  hasGrummingEqupments Boolean @default(false)
+  numberOfRooms        Int?
+  numberOfEmptyRooms   Int?
+  hasParking           Boolean? @default(false)
+  hasPools             Boolean? @default(false)
+  hasWifi              Boolean? @default(false)
+  hasTv                Boolean? @default(false)
+  hasBalcony           Boolean? @default(false)
+  hasKitchen           Boolean? @default(false)
+  hasWorkSpace         Boolean? @default(false)
+  hasWashingMachine    Boolean? @default(false)
+  hasGarden            Boolean? @default(false)
+  hasGrummingEqupments Boolean? @default(false)
   //add other things 
 
   isAllReserved Boolean        @default(false)
@@ -65,8 +65,9 @@ model Hotels {
   createdAt     DateTime       @default(now())
   Reserved      Reservations[]
   WishList      WishList[]
-  type          HotelType      @default(BEACH)
+  type          HotelType?      @default(BEACH)
   Payments      Payments[]
+  drafted       Boolean        @default(true)
 }
 
 enum HotelType {
