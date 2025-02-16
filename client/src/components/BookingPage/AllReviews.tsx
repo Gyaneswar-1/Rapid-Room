@@ -7,9 +7,33 @@ import { AppDispatch, RootState } from "../../store/store";
 import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function AllReviews() {
+type allreviewprop = {
+  overallRating: number
+  totalReviews: number;
+  cleanlinessRating: number;
+  accuracyRating: number;
+  checkInRating: number;
+  communicationRating: number;
+  locationRating: number;
+  valueRating: number;
+  parkingRating: number;
+};
+
+export default function AllReviews({
+  overallRating,
+  totalReviews,
+  cleanlinessRating,
+  accuracyRating,
+  checkInRating,
+  communicationRating,
+  locationRating,
+  valueRating,
+  parkingRating,
+}: allreviewprop) {
   //state management
-  const { showAllReview } = useSelector((state: RootState) => state.toogleAllReviewsReducer);
+  const { showAllReview } = useSelector(
+    (state: RootState) => state.toogleAllReviewsReducer
+  );
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -18,15 +42,23 @@ export default function AllReviews() {
         <button
           className="absolute top-5 left-5"
           onClick={() => {
-           dispatch(toogleAllReviews(showAllReview));
+            dispatch(toogleAllReviews(showAllReview));
           }}
         >
           <RxCross1 className=" text-2xl font-thin" />
         </button>
-        <RatingPannel></RatingPannel>
-        <ReviewsPannel></ReviewsPannel>
+        <RatingPannel
+          overalRating={overallRating}
+          accuracyRating={accuracyRating}
+          checkInRating={checkInRating}
+          cleanlinessRating={cleanlinessRating}
+          communicationRating={communicationRating}
+          locationRating={ locationRating}
+          parkingRating={parkingRating}
+          valueRating={valueRating}
+        ></RatingPannel>
+        <ReviewsPannel totalReviews={totalReviews}></ReviewsPannel>
       </div>
     </div>
   );
 }
-

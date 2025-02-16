@@ -1,7 +1,7 @@
 
 import {MeetHostCard, AboutHost} from "./meetHostSubcomponents/exportMeetHostSubComponents"
 
-type meetHostpropType = {
+export type meetHostpropType = {
   hostImage:string, hostName:string, totalReveiws:number, hostRating:number, hostExperienceYear:number, hostResponseRate:number
 }
 
@@ -20,7 +20,7 @@ export default function MeetHost({hostImage, hostName, totalReveiws, hostRating,
             
           ></MeetHostCard>
         </div>
-          <AboutHost hostResponseRate={hostResponseRate}></AboutHost>
+          <AboutHost hostResponseRate={hostResponseRate} hostName={hostName}></AboutHost>
       </div>
     </div>
   );

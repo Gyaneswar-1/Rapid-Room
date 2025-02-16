@@ -1,4 +1,8 @@
-export default function AboutHost({hostName, hostResponseRate}:any){
+type aboutHostProp = {
+  hostName: string,
+  hostResponseRate: number
+}
+export default function AboutHost({hostName, hostResponseRate}:aboutHostProp){
     return(
       <div className=" lg:col-span-2 flex flex-col  items-start justify-center pl-12 gap-6">
             <div className="info flex flex-col gap-2">

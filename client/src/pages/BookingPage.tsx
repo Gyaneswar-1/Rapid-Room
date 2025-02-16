@@ -22,7 +22,7 @@ import {
   setRoomType,
   setPerNight,
   setAboutHost,
-  setHotelId
+  setHotelId,
 } from "../store/reducers/singleHotel.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -61,14 +61,14 @@ export default function BookingPage() {
     getSingleHotelInformation(id)
       .then(async (res) => {
         if (res.success === true) {
-          console.log(res.data);
-          console.log("here is the address", res.data.address);
           //here set the data to the store user recoil or redux for better state management
-          console.log(res.data.images)
+          console.log(res.data);
           dispatch(setHotelType(res.data.type));
           dispatch(setHotelImages(res.data.images));
           dispatch(
             setHotelAddress({
+              city: res.data.address.city,
+              street: res.data.address.street,
               state: res.data.address.state,
               country: res.data.address.country,
               longitude: res.data.address.longitude,
@@ -81,8 +81,10 @@ export default function BookingPage() {
           dispatch(
             setAboutHost({
               name: res.data.host.fullName,
-              hostExperience: res.data.host.hostExperience,
               email: res.data.host.email,
+              hostExperience: res.data.host.hostExperience,
+              hostRating: res.data.host.hostRating,
+              hostResponseRate: res.data.host.hostResponseRate,
               profileImage: res.data.host.profileImage,
             })
           );
@@ -97,12 +99,24 @@ export default function BookingPage() {
         // navigate("/home");
       });
   }, []);
- 
+
   return (
     <>
       <BookingPageNavbar />
 
-      {showAllReview && <AllReviews></AllReviews>}
+      {showAllReview && (
+        <AllReviews
+          overallRating={4.9}
+          totalReviews={4}
+          accuracyRating={4.3}
+          checkInRating={4.9}
+          cleanlinessRating={4.2}
+          communicationRating={3.8}
+          locationRating={4.5}
+          parkingRating={3.6}
+          valueRating={3.8}
+        ></AllReviews>
+      )}
       {showSkeliton ? (
         <BookingPageSkeliton></BookingPageSkeliton>
       ) : (
@@ -113,7 +127,7 @@ export default function BookingPage() {
               img1={hotelImages[0].imageUrl}
               img2={hotelImages[1].imageUrl}
               img3={hotelImages[2].imageUrl}
-              img4={""}
+              img4={hotelImages[3].imageUrl}
               img5={hotelImages[4].imageUrl}
               // img1={""}
               // img2={""}
@@ -125,9 +139,9 @@ export default function BookingPage() {
               country={hotelAddress.country}
               state={hotelAddress.state}
               roomType={roomType}
-              totalReviews={135}
-              overalRating={3.5}
-              hostImage="https://a0.muscache.com/im/pictures/user/e349f69e-6f7f-4a69-98ef-391baafed14a.jpg?im_w=240&im_format=avif"
+              totalReviews={4}
+              overalRating={4.9}
+              hostImage={aboutHost.profileImage}
               hostName={aboutHost.name}
               hostExperienceYear={aboutHost.hostExperience}
               aboutThisPlace={aboutHotel}
@@ -136,25 +150,29 @@ export default function BookingPage() {
               numberOfGuests={4}
             ></AboutWithCheckout>
             <RatingSection
-              overalRating={5.1}
-              cleanlinessRating={2.1}
-              accuracyRating={3.3}
-              checkInRating={3.3}
-              communicationRating={3.3}
-              locationRating={3.3}
-              valueRating={3.3}
-              parkingRating={4.1}
+              overalRating={4.9}
+              accuracyRating={4.3}
+              checkInRating={4.9}
+              cleanlinessRating={4.2}
+              communicationRating={3.8}
+              locationRating={4.5}
+              parkingRating={3.6}
+              valueRating={3.8}
             ></RatingSection>
             <Reviews></Reviews>
             <MapShowcase
-              longitude={hotelAddress.longitude}
-              latitude={hotelAddress.latitude}
+              country={hotelAddress.country}
+              city={hotelAddress.city}
+              state={hotelAddress.state}
+              street={hotelAddress.street}
+              longitude={Number(hotelAddress.longitude)}
+              latitude={Number(hotelAddress.latitude)}
             ></MapShowcase>
             <MeetHost
-              hostImage=""
-              hostName="bibek samal"
+              hostImage={aboutHost.profileImage}
+              hostName={aboutHost.name}
               totalReveiws={123}
-              hostRating={1.2}
+              hostRating={aboutHost.hostRating}
               hostExperienceYear={2}
               hostResponseRate={100}
             ></MeetHost>

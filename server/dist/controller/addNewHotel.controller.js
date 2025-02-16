@@ -60,6 +60,9 @@ export const addNewHotel = async (req, res) => {
                         // },
                     },
                 });
+                if (!hotelRes) {
+                    return res.status(400).json(new ApiError(false, {}, "Failse", "Unable to creaet hote at create hotel controller", 400));
+                }
                 //create bulkrooms
                 const rooms = [];
                 for (let i = 101; i < 101 + hotelRes.numberOfRooms; i++) {

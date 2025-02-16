@@ -50,7 +50,7 @@ const Signin = () => {
         notifySuccess("Welcome back !")
       }
       else{
-        notifyError("Signup failed!")
+        notifyError("Signin failed!")
       }
     };
 

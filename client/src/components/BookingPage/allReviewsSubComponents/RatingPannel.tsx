@@ -3,9 +3,31 @@ import { IoKeyOutline } from "react-icons/io5"
 import { LuMousePointerBan, LuParkingMeter } from "react-icons/lu"
 import { TfiSpray } from "react-icons/tfi"
 import { TiMessage } from "react-icons/ti"
+import left from "../../../assets/images/left.avif"
+import right from "../../../assets/images/right.avif"
+import { FaCarSide } from "react-icons/fa6";
 
+type ratingPropType = {
+  overalRating: number;
+  cleanlinessRating: number;
+  accuracyRating: number;
+  checkInRating: number;
+  communicationRating: number;
+  locationRating: number;
+  valueRating: number;
+  parkingRating: number;
+};
 
-const RatingPannel = () => {
+const RatingPannel = ({
+  overalRating,
+  cleanlinessRating,
+  accuracyRating,
+  checkInRating,
+  communicationRating,
+  locationRating,
+  valueRating,
+  parkingRating,
+}:ratingPropType) => {
   return (
    <>
    <div className="pt1 w-full   md:py-6 py-4  flex flex-col gap-2 items-center md:px-8">
@@ -13,13 +35,13 @@ const RatingPannel = () => {
                <div className="rating flex items-top  justify-center">
                  <img
                    className="h-32"
-                   src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-GuestFavorite/original/78b7687c-5acf-4ef8-a5ea-eda732ae3b2f.png"
+                   src={left}
                    alt=""
                  />
-                 <h1 className="font-bold text-6xl">5.0</h1>
+                 <h1 className="font-bold text-6xl">{overalRating}</h1>
                  <img
                    className="h-32"
-                   src="https://a0.muscache.com/im/pictures/airbnb-platform-assets/AirbnbPlatformAssets-GuestFavorite/original/b4005b30-79ff-4287-860c-67829ecd7412.png"
+                   src={right}
                    alt=""
                  />
                </div>
@@ -77,43 +99,51 @@ const RatingPannel = () => {
                        <TfiSpray className="text-2xl" />
                        <h1 className="font-bold">Cleanliness</h1>
                      </div>
-                     <div className="rating font-bold">5.o</div>
+                     <div className="rating font-bold">{cleanlinessRating}</div>
                    </li>
                    <li className="w-full h-12 md:pr-2 border-b border-b-gray-300 flex justify-between items-center py-2">
                      <div className="category flex items-center gap-2">
                        <LuMousePointerBan className="text-2xl" />
                        <h1 className="font-bold">Accuracy</h1>
                      </div>
-                     <div className="rating font-bold">5.o</div>
+                     <div className="rating font-bold">{accuracyRating}</div>
                    </li>
                    <li className="w-full h-12 md:pr-2 border-b border-b-gray-300 flex justify-between items-center py-2">
                      <div className="category flex items-center gap-2">
                        <IoKeyOutline className="text-2xl" />
                        <h1 className="font-bold">Check-in</h1>
                      </div>
-                     <div className="rating font-bold">5.o</div>
+                     <div className="rating font-bold">{checkInRating}</div>
                    </li>
                    <li className="w-full h-12 md:pr-2 border-b border-b-gray-300 flex justify-between items-center py-2">
                      <div className="category flex items-center gap-2">
                        <TiMessage className="text-2xl" />
                        <h1 className="font-bold">Communication</h1>
                      </div>
-                     <div className="rating font-bold">5.o</div>
+                     <div className="rating font-bold">{communicationRating}</div>
                    </li>
                    <li className="w-full h-12 md:pr-2 border-b border-b-gray-300 flex justify-between items-center py-2">
                      <div className="category flex items-center gap-2">
                        <CiShoppingTag className="text-2xl" />
                        <h1 className="font-bold">Value</h1>
                      </div>
-                     <div className="rating font-bold">5.o</div>
+                     <div className="rating font-bold">{valueRating}</div>
                    </li>
                    <li className="w-full h-12 md:pr-2 border-b border-b-gray-300 flex justify-between items-center py-2">
                      <div className="category flex items-center gap-2">
-                       <LuParkingMeter className="text-2xl" />
+                       <FaCarSide className="text-2xl" />
+                       <h1 className="font-bold">Location</h1>
+                     </div>
+                     <div className="rating font-bold">{locationRating}</div>
+                   </li>
+                   <li className="w-full h-12 md:pr-2 border-b border-b-gray-300 flex justify-between items-center py-2">
+                     <div className="category flex items-center gap-2">
+                       <FaCarSide className="text-2xl" />
                        <h1 className="font-bold">Parking</h1>
                      </div>
-                     <div className="rating font-bold">5.o</div>
+                     <div className="rating font-bold">{parkingRating}</div>
                    </li>
+                   
                  </ul>
                </div>
              </div>

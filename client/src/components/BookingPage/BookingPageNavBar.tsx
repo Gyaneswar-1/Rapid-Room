@@ -11,16 +11,16 @@ function BookingPageNavbar() {
   const navigate = useNavigate();
   return (
     <nav className="bg-white   sticky   top-0 z-50 shadow-zink-900 shadow-xl ">
-    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 " >
       <p className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer" onClick={()=>navigate("/home")}>
       <img
-              className="rounded-full  md:block cursor-pointer h-12 md:h-16"
+              className="rounded-full  md:block cursor-pointer h-12 md:h-12"
              
               src={MainLogo}
               alt="Main Logo"
             />
         {/* <FaHotel className="text-4xl text-teal-600" /> */}
-        <span className="self-center text-2xl font-semibold whitespace-nowrap text-teal-500 ">
+        <span className="self-center text-xl font-semibold whitespace-nowrap text-teal-500 ">
           RapidRoom
         </span>
       </p>
@@ -60,10 +60,13 @@ const MenuItem :React.FC<MenuItemsPropes> = ({
 function UserMenu() {
     const [isOpen,setIsOpen] = useState(false);
     const controlSetIsOpen = () =>{
-      setIsOpen(isOpen =>!isOpen);
+      // setIsOpen(isOpen =>!isOpen);
     }
+    const navigate = useNavigate();
     return (
-      <div className='relative sm:block'>
+      <div className='relative sm:block '
+      onClick={()=>navigate("/home")}
+      >
         <div className='flex flex-row items-center gap-3'>
           <div onClick={()=>{}} className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer '>
       Rapid Your Room

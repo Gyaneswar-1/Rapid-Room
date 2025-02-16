@@ -92,14 +92,23 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                     },
                 });
 
+                if(!hotelRes){
+                    return res.status(400).json(
+                        new ApiError(false,{},"Failse","Unable to creaet hote at create hotel controller",400)
+                    )
+                }
+
                 //create bulkrooms
                 const rooms = [];
-                for (let i = 101; i < 101 + hotelRes.numberOfRooms; i++) {
-                    rooms.push({
-                        roomNumber: i,
-                        hotelId: hotelRes.id,
-                    });
-                }
+                
+
+                    for (let i = 101; i < 101 + hotelRes.numberOfRooms!; i++) {
+                        rooms.push({
+                            roomNumber: i,
+                            hotelId: hotelRes.id,
+                        });
+                    }
+                
 
                 //push these to db
                 const roomsRes = await prisma.rooms.createMany({ data: rooms });
@@ -202,15 +211,15 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                         type: type !== undefined ? type : isExists.type,
                         address: {
                             update: {
-                                where: { id: isExists.address.id },
+                                where: { id: isExists.address!.id },
                                 data: {
-                                    state: state !== undefined ? state : isExists.address.state,
-                                    street: street !== undefined ? street : isExists.address.street,
-                                    city: city !== undefined ? city : isExists.address.city,
-                                    zipCode: zipcode !== undefined ? zipcode : isExists.address.zipCode,
-                                    country: country !== undefined ? country : isExists.address.country,
-                                    longitude: longitude !== undefined ? parseFloat(longitude) : isExists.address.longitude,
-                                    latitude: latitude !== undefined ? parseFloat(latitude) : isExists.address.latitude,
+                                    state: state !== undefined ? state : isExists.address!.state,
+                                    street: street !== undefined ? street : isExists.address!.street,
+                                    city: city !== undefined ? city : isExists.address!.city,
+                                    zipCode: zipcode !== undefined ? zipcode : isExists.address!.zipCode,
+                                    country: country !== undefined ? country : isExists.address!.country,
+                                    longitude: longitude !== undefined ? parseFloat(longitude) : isExists.address!.longitude,
+                                    latitude: latitude !== undefined ? parseFloat(latitude) : isExists.address!.latitude,
                                 },
                             },
                         },

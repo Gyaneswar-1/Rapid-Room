@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 
-type reviewCardProp = {
+type AllReviewCardProp = {
   reviewerImage: string,
   reviewerName: string,
   reviewerState :string,
@@ -10,7 +10,7 @@ type reviewCardProp = {
   reviewContent: string,
 }
 
-export default function ReviewCard({
+export default function AllReviewCard({
   reviewerImage,
   reviewerName,
   reviewerState,
@@ -18,7 +18,7 @@ export default function ReviewCard({
   reviewerOveralRating,
   reviewerReviewUploadTime,
   reviewContent,
-}: reviewCardProp) {
+}: AllReviewCardProp) {
   return (
     <div className="card flex flex-col gap-2 ">
       <div className="flex items-center">
@@ -47,7 +47,7 @@ export default function ReviewCard({
         {reviewerReviewUploadTime}
       </div>
       <div className="con  md:h-24 w-full overflow-hidden">
-        {(reviewContent.length>175)?`${reviewContent.slice(0,175)} . . .`:reviewContent}
+        {reviewContent}
       </div>
     </div>
   );

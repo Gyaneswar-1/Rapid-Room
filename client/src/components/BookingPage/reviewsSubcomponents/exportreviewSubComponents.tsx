@@ -1,2 +1,3 @@
 import ReviewCard from "./ReviewCard";
-export {ReviewCard}
+import AllReviewCard from "./AllReviewCard";
+export {ReviewCard,AllReviewCard}

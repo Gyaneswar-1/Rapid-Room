@@ -4,6 +4,7 @@ import Slide2 from "../components/addHotel/Slide2";
 import Slide3 from "../components/addHotel/Slide3";
 import MainLogo from "../assets/images/MainLogo.png"
 import Slide4 from "../components/addHotel/Slide4";
+import { useNavigate } from "react-router-dom";
 
 const AddHotels = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,17 +24,23 @@ const AddHotels = () => {
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
   };
-
+  const navigate = useNavigate();
   return (
     <div className="w-full flex">
       <div className="bg-zinc-400 flex gap-5 top-0 fixed items-center w-full h-20 justify-between z-2 p-5">
-        <div className="flex items-center gap-3 px-5">
+        <div className="flex items-center gap-3 px-5 "
+        onClick={()=>navigate("/home")}
+        >
           <img src={MainLogo} alt="" height={45} width={45} />
           <h1 className="text-xl md:block hidden">RapidRoom</h1>
         </div>
         <div className="flex gap-4">
-          <button className="text-white p-3 rounded-4xl px-6 cursor-pointer hover:bg-neutral border-2 hidden md:block">Help?</button>
-          <button className="text-white p-3 rounded-4xl px-6 cursor-pointer hover:bg-neutral border-2 md:block hidden">Skip</button>
+          <button className="text-white p-3 rounded-4xl px-6 cursor-pointer hover:bg-neutral border-2 hidden md:block"
+          onClick={()=>navigate("/home")}
+          >Help?</button>
+          <button className="text-white p-3 rounded-4xl px-6 cursor-pointer hover:bg-neutral border-2 md:block hidden"
+          onClick={()=>navigate("/home")}
+          >Skip</button>
           <button className="text-white p-3 rounded-4xl px-6 cursor-pointer hover:bg-neutral border-2 md:hidden">more</button>
         </div>
       </div>

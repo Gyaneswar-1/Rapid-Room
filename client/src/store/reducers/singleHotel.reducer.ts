@@ -17,6 +17,8 @@ const initialState: any = {
     name: "",
     email:"",
     hostExperience:0,
+    hostRating:0,
+    hostResponseRate:0,
     profileImage: ""
   }
 

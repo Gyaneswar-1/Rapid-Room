@@ -1,6 +1,13 @@
 import { FaStar } from "react-icons/fa";
+type meetHostTypeCardProp = {
+  hostImage: string,
+  hostName: string,
+  totalReveiws: number,
+  hostRating: number,
+  hostExperienceYear: number,
+}
 
-export default function MeetHostCard({hostImage, hostName, totalReveiws, hostRating, hostExperienceYear}:any){
+export default function MeetHostCard({hostImage, hostName, totalReveiws, hostRating, hostExperienceYear}:meetHostTypeCardProp){
   return(
     <div className="hostcard flex md:justify-evenly justify-around items-center rounded-2xl md:py-12 py-4 shadow-2xl">
             <div className="pt1 flex flex-col items-center gap-1">
@@ -23,6 +30,7 @@ export default function MeetHostCard({hostImage, hostName, totalReveiws, hostRat
                 <div className="num text-lg font-bold flex items-center gap-2">
                   {hostRating}
                   <FaStar className="text-sm" />
+                  
                 </div>
                 <div className="text text-sm font-bold">Rating</div>
               </div>
