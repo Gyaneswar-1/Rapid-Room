@@ -23,7 +23,7 @@ import { GiDuration } from "react-icons/gi";
 export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: any) {
 
   //state management
-  const { stayingFor,totalAmount } = useSelector((state: RootState) => state.checkInReducer);
+  // const { stayingFor,totalAmount } = useSelector((state: RootState) => state.checkInReducer);
   const {hotelId} = useSelector((state: RootState)=> state.singleHotelReducer)
   const dispatch: AppDispatch = useDispatch();
 
@@ -44,17 +44,25 @@ export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: a
   const difference = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
 
   const onSubmit: SubmitHandler<checkInType> = async (data: any) => {
-    console.log(data);
+    
     dispatch(setStayingFor(difference))
-    dispatch(setTotalAmount(perNight * difference + cleaningFee + 200))
-    const res = await handelReservation(hotelId,difference);
-    if(res.success === true){
-      await checkInHandler(totalAmount);
-      notifySuccess("Hotel booked successfull !")
-    }else{
-      notifyError("Reservation failed");
-      navigate("/home");
+    await dispatch(setTotalAmount(perNight * difference + cleaningFee + 200))
+    // const res = await handelReservation(hotelId,difference);
+    // if(res.success === true){
+    //   await checkInHandler(totalAmount);
+    //   notifySuccess("Hotel booked successfull !")
+    // }else{
+    //   notifyError("Reservation failed");
+    //   navigate("/home");
+    // }
+    const amount = perNight * difference + cleaningFee + 200;
+    
+    const res = await checkInHandler({amount:amount, email: "bibek@gmail.com", name:"Bibek samal",phNumber:9178240594,hotelId:hotelId,checkInDate:data.checkInDate,stayingFor:difference});
+
+    if(res?.success === false){
+      notifyError("Reservatio failed")
     }
+
   };
   return (
     <form
@@ -153,7 +161,7 @@ export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: a
             <div className="right">{`₹${cleaningFee}`}</div>
           </li>
           <li className="flex items-center justify-between px-2">
-            <div className="left underline">Rapid book fee</div>
+            <div className="left underline">RapidBook fee</div>
             <div className="right">₹200</div>
           </li>
         </ul>
