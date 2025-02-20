@@ -4,7 +4,7 @@ export const googleAuthCallback = (req: any, res: any) => {
         secure: true,
         sameSite: "None",
     });
-    res.redirect("http://localhost:5173/home");
+    res.redirect("http://localhost:5173/");
 };
 
 export const facebookAuthCallback = (req: any, res: any) => {
@@ -13,5 +13,5 @@ export const facebookAuthCallback = (req: any, res: any) => {
         secure: false,
         sameSite: "Lax",
     });
-    res.redirect("http://localhost:5173/home");
+    res.redirect("http://localhost:5173/");
 };

@@ -3,8 +3,23 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import { useNavigate } from "react-router-dom";
+import {
+  flipSignUp,
+  flipSignin,
+} from "../../store/reducers/showAuthCard.reducers";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import Signin from "../UserAuth/Signin";
+import Signup from "../UserAuth/Signup";
 
 function UserMenu() {
+  const isLoggedIn = localStorage.getItem("loggedin");
+
+  const { showSignup, showSignin } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
+  const dispatch: AppDispatch = useDispatch();
+
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const controlSetIsOpen = () => {
@@ -14,9 +29,11 @@ function UserMenu() {
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div
-           onClick={()=>{
-            navigate("/add-hotel")
-        }}
+          onClick={() => {
+            {
+              !isLoggedIn ? navigate("/signup") : navigate("/add-hotel");
+            }
+          }}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer "
         >
           Rapid Your Room
@@ -35,7 +52,7 @@ function UserMenu() {
         <div className="absolute rouned-xl shadow-xl w-[40vw] rounded-2xl border md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm z-12">
           <div className="flex flex-col cursor-pointer ">
             <>
-              {true ? (
+              {isLoggedIn ? (
                 <div>
                   <MenuItem onClick={() => {}} label="message" />
                   <MenuItem onClick={() => {}} label="tipes" />
@@ -50,8 +67,8 @@ function UserMenu() {
                   <MenuItem onClick={() => {}} label="help center" />
                   <MenuItem
                     onClick={() => {
-                      localStorage.setItem("isUserLoggedIn", "false");
-                      window.location.reload()
+                      localStorage.removeItem("loggedin");
+                      window.location.reload();
                     }}
                     style={"text-red-600"}
                     label="logout"
@@ -59,14 +76,22 @@ function UserMenu() {
                 </div>
               ) : (
                 <div>
-                  <MenuItem onClick={() => {}} label="Signup" />
-                  <MenuItem onClick={() => {}} label="Login" />
+                  <MenuItem
+                    onClick={() => dispatch(flipSignin(showSignin))}
+                    label="Signup"
+                  />
+                  <MenuItem
+                    onClick={() => dispatch(flipSignin(showSignup))}
+                    label="Login"
+                  />
                 </div>
               )}
             </>
           </div>
         </div>
       )}
+      {showSignin && <Signin />}
+      {showSignup && <Signup />}
     </div>
   );
 }

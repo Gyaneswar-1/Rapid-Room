@@ -5,7 +5,7 @@ import googleLogo from "../../assets/icons/google.logo.png";
 import { SigninType } from "@bibek-samal/traveltrove";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signinManual } from "../../service/exportServices";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import { notifyError, notifySuccess} from "../../lib/Toast";
 
 //state management
@@ -15,11 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
-  localStorage.setItem("isUserLoggedIn", "true");
+  localStorage.setItem("loggedin", "true");
 };
 
 const handleFacebookLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
+  localStorage.setItem("loggedin", "true");
 };
 
 const Signin = () => {
@@ -45,8 +46,8 @@ const Signin = () => {
       const res = await signinManual(data);
       console.log(res);
       if(res.success === true){
-        localStorage.setItem("isUserLoggedIn", "true");
-        navigate("/home")
+        localStorage.setItem("loggedin", "true")
+        navigate("/")
         notifySuccess("Welcome back !")
       }
       else{
@@ -56,7 +57,7 @@ const Signin = () => {
 
 
   return (
-    <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
+    <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
      <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
         <button
         //close the sign in here

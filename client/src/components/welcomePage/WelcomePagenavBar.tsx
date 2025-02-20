@@ -5,7 +5,9 @@ import { AppDispatch, RootState } from "../../store/store";
 import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const WelcomePagenavBar = () => {
+  const isLoggedIn = localStorage.getItem("loggedin")
 
   //state management
   const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
@@ -25,7 +27,8 @@ const WelcomePagenavBar = () => {
                   RapidRoom
                 </span>
               </div>
-              <div className="flex md:order-2 gap-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+
+              { !isLoggedIn ? (<div className="flex md:order-2 gap-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <button
                   type="button"
                   className="cursor-pointer text-white bg-teal-500 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-xl text-sm px-4 py-2 text-center"
@@ -44,7 +47,7 @@ const WelcomePagenavBar = () => {
                 >
                   Signup
                 </button>
-              </div>
+              </div>) : null}
             </div>
             <hr />
           </nav>

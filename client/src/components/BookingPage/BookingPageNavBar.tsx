@@ -12,7 +12,7 @@ function BookingPageNavbar() {
   return (
     <nav className="bg-white   sticky   top-0 z-50 shadow-zink-900 shadow-xl ">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 " >
-      <p className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer" onClick={()=>navigate("/home")}>
+      <p className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer" onClick={()=>navigate("/")}>
       <img
               className="rounded-full  md:block cursor-pointer h-12 md:h-12"
              

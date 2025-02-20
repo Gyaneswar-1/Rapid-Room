@@ -8,6 +8,12 @@ import { AppDispatch, RootState } from "../store/store";
 import { getHotels } from "../service/getHotels.service";
 import { getAllHotels } from "../store/reducers/hotel.reducers";
 import Loader from "../components/Reusable/Loader";
+import {
+  flipSignUp,
+  flipSignin,
+} from "../store/reducers/showAuthCard.reducers";
+import Signin from "../components/UserAuth/Signin";
+import Signup from "../components/UserAuth/Signup";
 
 interface Address {
   city: string;
@@ -33,10 +39,14 @@ export interface Result {
 }
 
 function Home() {
+  const isLoggedIn = localStorage.getItem("loggedin");
+
   const [showLoader, setShowLoader] = useState(true);
 
   const navigate = useNavigate();
   const { hotels } = useSelector((state: RootState) => state.hotelReducer);
+  const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
+
 
   const dispatch: AppDispatch = useDispatch();
   async function delay() {
@@ -52,7 +62,7 @@ function Home() {
         if (res.success === true) {
           await delay();
           setShowLoader(false);
-          console.log("here is the hotel data",res.data)
+          console.log("here is the hotel data", res.data);
           dispatch(getAllHotels(res.data));
         } else {
           dispatch(
@@ -101,14 +111,22 @@ function Home() {
                     key={e.id}
                     id={1}
                     onclick={() => {
-                      navigate(`/book-hotel?hotelId=${e.id}`);
+                      {
+                        !isLoggedIn
+                          ? dispatch(flipSignin(showSignin))
+                          : navigate(`/book-hotel?hotelId=${e.id}`);
+                      }
                     }}
                     hotelName={e.hotelName}
                     perNight={e.perNight}
                     country={e.address.country}
                     city={e.address.city}
-                    overalRating={e?.reviews[0]?.overallRating?e.reviews[0].overallRating:5}
-                    image={e.images[0]?.imageUrl?e.images[0]?.imageUrl:""}
+                    overalRating={
+                      e?.reviews[0]?.overallRating
+                        ? e.reviews[0].overallRating
+                        : 5
+                    }
+                    image={e.images[0]?.imageUrl ? e.images[0]?.imageUrl : ""}
                   ></Card>
                 );
               })
@@ -117,6 +135,8 @@ function Home() {
           <BottomNav />
         </div>
       </div>
+      {showSignin && <Signin />}
+      {showSignup && <Signup />}
     </>
   );
 }

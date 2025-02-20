@@ -12,10 +12,12 @@ import { notifyError, notifySuccess } from "../../lib/Toast";
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
+  localStorage.setItem("loggedin", "true");
 };
 
 const handleFacebookLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
+  localStorage.setItem("loggedin", "true");
 };
 
 
@@ -49,7 +51,8 @@ const Signup= () => {
   const onSubmit: SubmitHandler<signupTypeFrontend> = async(data) => {
     const res = await signupManual(data);
     if(res.success === true){
-      navigate("/home");
+      localStorage.setItem("loggedin", "true")
+      navigate("/")
       notifySuccess("Welcome to RapidRoom !")
     }
     else{
@@ -58,7 +61,7 @@ const Signup= () => {
   };
 
   return (
-    <div className="fixed inset-0 w-full h-full z-6 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
+    <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
       <div className="flex flex-col items-center  signup-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl ">
         <button
         //close the signup
