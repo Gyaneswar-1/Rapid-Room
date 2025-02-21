@@ -1,17 +1,33 @@
 import MainLogo from "../../assets/images/MainLogo.png"
+import LoadingButton from "../Reusable/LoadingButton";
+import { logOutServices } from "../../service/userAuth/logOutServices";
 
 //state management
 import { AppDispatch, RootState } from "../../store/store";
 import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
+import {setShowLoader} from "../../store/reducers/loader.reducer"
+
 
 
 const WelcomePagenavBar = () => {
   const isLoggedIn = localStorage.getItem("loggedin")
-
+  
   //state management
   const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
   const dispatch: AppDispatch = useDispatch();
+  
+
+
+  async function handelLoagout(){
+    dispatch(setShowLoader());
+
+    const res = await logOutServices();
+    if(res.success === true){
+      dispatch(setShowLoader());
+    }
+    
+  }
 
   return (
     <div className="Navbar">
@@ -47,7 +63,15 @@ const WelcomePagenavBar = () => {
                 >
                   Signup
                 </button>
-              </div>) : null}
+              </div>) : <button
+                  type="button"
+                  className="cursor-pointer text-teal-600  border-2 border-teal-600 hover:bg-teal-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-xl text-sm px-4 py-2 text-center "
+                 onClick={()=>{
+                  handelLoagout();
+                 }}
+                >
+                  Logout
+                </button>}
             </div>
             <hr />
           </nav>

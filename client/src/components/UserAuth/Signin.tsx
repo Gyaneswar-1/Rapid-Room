@@ -47,7 +47,7 @@ const Signin = () => {
       console.log(res);
       if(res.success === true){
         localStorage.setItem("loggedin", "true")
-        navigate("/")
+        navigate("/home")
         notifySuccess("Welcome back !")
         dispatch(flipSignin(showSignin))
         // dispatch(flipSignUp(showSignup))
@@ -59,7 +59,7 @@ const Signin = () => {
 
 
   return (
-    <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center  bg-opacity-50 backdrop-brightness-40 backdrop-blur-sm ">
+    <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center  bg-opacity-50 backdrop-brightness-70 backdrop-blur-[2px] ">
      <div className="flex flex-col items-center  Signin-page md:w-[530px] md:h-[620px] w-full h-full bg-neutral-200 rounded-xl">
         <button
         //close the sign in here

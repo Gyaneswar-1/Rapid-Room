@@ -2,12 +2,15 @@ import Search from "./Search";
 import UserMenu from "./UserMenu";
 import MainLogo from "../../assets/images/MainLogo.png";
 import Categories from "./Categories";
+import { useNavigate } from "react-router-dom";
 
 interface display{
   show:boolean
 }
 
+
 function Navbar({show}:display) {
+  const navigate = useNavigate();
   return (
     <div className=" fixed w-full bg-white z-11 shadow-sm ">
       <div className=" py-4 border-b border-b-gray-300 shadow-2xl">
@@ -20,7 +23,9 @@ function Navbar({show}:display) {
             px-4
             flex justify-between "
         >
-          <div className=" flex  flex-row items-center justify-between gap-3 md:gap-1">
+          <div className=" flex  flex-row items-center justify-between gap-3 md:gap-1 cursor-pointer"
+          onClick={()=>{navigate("/home")}}
+          >
             <img
               className="rounded-full hidden md:block cursor-pointer"
               height={50}

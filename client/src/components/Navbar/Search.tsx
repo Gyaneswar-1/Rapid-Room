@@ -2,6 +2,10 @@ import React from 'react'
 import { BiSearch } from 'react-icons/bi'
 
 function Search() {
+
+    //for temporary serch purpose
+    
+
   return (
     <div className='
     border-[1px]
@@ -25,9 +29,13 @@ function Search() {
             text-sm font-semibold px-6 border-x-[1px] flex-1 text-center '>
                 anyWeek
             </div>
-            <div className='text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3'>
-                <div className="hidden sm:block">add Guests</div>
-                <div className='p-2 bg-cyan-600 rounded-full text-white'>
+            <div className='text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3 '>
+                {/* <div className="hidden sm:block border">add Guests</div> */}
+                {/* for temporary serch purpose */}
+                <input type="text" className='hidden sm:block outline-none bg-transparent' placeholder='Search place' />
+                <div onClick={()=>{
+                    
+                }} className='p-2 bg-cyan-600 rounded-full text-white'>
     <BiSearch size={18}/>
                 </div>
             </div>

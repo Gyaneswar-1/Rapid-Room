@@ -3,17 +3,21 @@ import BottomNav from "../components/BottomNav";
 import Card from "../components/homepage/Card";
 import Navbar from "../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
 import { getHotels } from "../service/getHotels.service";
 import { getAllHotels } from "../store/reducers/hotel.reducers";
 import Loader from "../components/Reusable/Loader";
+
+//state management
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import {
   flipSignUp,
   flipSignin,
 } from "../store/reducers/showAuthCard.reducers";
+
 import Signin from "../components/UserAuth/Signin";
 import Signup from "../components/UserAuth/Signup";
+
 
 interface Address {
   city: string;
@@ -42,8 +46,9 @@ function Home() {
   const isLoggedIn = localStorage.getItem("loggedin");
 
   const [showLoader, setShowLoader] = useState(true);
-
   const navigate = useNavigate();
+
+  //state management
   const { hotels } = useSelector((state: RootState) => state.hotelReducer);
   const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
 
@@ -98,6 +103,7 @@ function Home() {
 
   return (
     <>
+    
       <div className="h-screen w-full ">
         <Navbar show={true} />
         <div className="w-full h-full pt-[196px] flex justify-center ">

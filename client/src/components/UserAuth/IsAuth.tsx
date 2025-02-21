@@ -6,7 +6,7 @@ function IsAuth() {
     
     if(!isLoggedIn){
       return <Navigate 
-        to="/welcome"
+        to="/"
         replace
       />
     }

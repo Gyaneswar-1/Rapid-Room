@@ -27,7 +27,7 @@ const HeroSection = () => {
             <button className=" text-white w-full flex  justify-center  text-xl">
               <div
                 onClick={() => {
-                  navigate("/");
+                  navigate("/home");
                 }}
                 className="w-fit  bg-neutral-900 hover:bg-neutral-950 cursor-pointer flex justify-center items-center gap-1.5 p-3 rounded-lg"
               >

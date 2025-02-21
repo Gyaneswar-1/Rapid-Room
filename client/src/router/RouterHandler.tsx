@@ -10,7 +10,6 @@ import PersonalAddress from "../components/Useraccount/PersonalAddress";
 import AccountLayout from "../components/Useraccount/AccountLayout";
 import IsAuth from "../components/UserAuth/IsAuth";
 
-
 function RouterHandler() {
   return (
     <div>
@@ -18,9 +17,8 @@ function RouterHandler() {
         <Routes>
           <Route path="/" />
 
-          <Route index element={<Home />} />
-          <Route index path="/welcome" element={<Welcome />} />
-
+          <Route index element={<Welcome />} />
+          <Route  path="/home" element={<Home></Home>} />
 
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
@@ -38,6 +36,5 @@ function RouterHandler() {
     </div>
   );
 }
-
 
 export default RouterHandler;

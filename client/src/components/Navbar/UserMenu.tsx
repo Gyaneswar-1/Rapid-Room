@@ -3,14 +3,19 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import { useNavigate } from "react-router-dom";
+
+import Signin from "../UserAuth/Signin";
+import Signup from "../UserAuth/Signup";
+import { logOutServices } from "../../service/userAuth/logOutServices";
+
+// state management
+import { AppDispatch, RootState } from "../../store/store";
 import {
   flipSignUp,
   flipSignin,
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import Signin from "../UserAuth/Signin";
-import Signup from "../UserAuth/Signup";
+import { setShowLoader } from "../../store/reducers/loader.reducer";
 
 function UserMenu() {
   const isLoggedIn = localStorage.getItem("loggedin");
@@ -25,22 +30,38 @@ function UserMenu() {
   const controlSetIsOpen = () => {
     setIsOpen((isOpen) => !isOpen);
   };
+  async function handelLoagout() {
+    dispatch(setShowLoader());
+    const res = await logOutServices();
+    if (res.success === true) {
+      dispatch(setShowLoader());
+      navigate("/");
+    }
+    else{
+      navigate("/")
+    }
+  }
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
-        <div
-          onClick={() => {
-            {
-              !isLoggedIn ? navigate("/signup") : navigate("/add-hotel");
-            }
-          }}
-          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer "
-        >
-          Rapid Your Room
-        </div>
+        {localStorage.getItem("loggedin") ? (
+          <div
+            onClick={() => {
+              {
+                navigate("/add-hotel");
+              }
+            }}
+            className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer  "
+          >
+            Rapid Your Room
+          </div>
+        ) : (
+          <p></p>
+        )}
+
         <div
           onClick={controlSetIsOpen}
-          className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+          className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition "
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
@@ -67,8 +88,8 @@ function UserMenu() {
                   <MenuItem onClick={() => {}} label="help center" />
                   <MenuItem
                     onClick={() => {
-                      localStorage.removeItem("loggedin");
-                      navigate("/welcome")
+                      //logout here
+                      handelLoagout();
                     }}
                     style={"text-red-600"}
                     label="logout"

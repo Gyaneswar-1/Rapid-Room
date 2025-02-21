@@ -3,6 +3,7 @@ export const googleAuthCallback = (req: any, res: any) => {
         httpOnly: true,
         secure: true,
         sameSite: "None",
+        maxAge: 100 * 365 * 24 * 60 * 60 * 1000,
     });
     res.redirect("http://localhost:5173/");
 };
@@ -10,8 +11,9 @@ export const googleAuthCallback = (req: any, res: any) => {
 export const facebookAuthCallback = (req: any, res: any) => {
     res.cookie("token", `Bearer ${req.user}`, {
         httpOnly: true,
-        secure: false,
-        sameSite: "Lax",
+        secure: true,
+        sameSite: "None",
+        maxAge: 100 * 365 * 24 * 60 * 60 * 1000,
     });
     res.redirect("http://localhost:5173/");
 };
