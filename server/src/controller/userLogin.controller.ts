@@ -71,17 +71,16 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
                 );
         }
 
-        const token = await jwt.sign(
+        const token = await jwt.sign( //no expair of token
             { id: isExists.id, email: isExists.email },
             process.env.JWT_SECRET!,
-            {
-                expiresIn: process.env.EXPIRY_TIME,
-            },
+            
         );
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,
             sameSite: "None",
+            maxAge: 100 * 365 * 24 * 60 * 60 * 1000
         });
 
         return res

@@ -35,13 +35,13 @@ export const userLogin = async (req, res) => {
                 .status(500)
                 .json(new ApiError(false, {}, "Auth error", "Email or password didnot matched", 500));
         }
-        const token = await jwt.sign({ id: isExists.id, email: isExists.email }, process.env.JWT_SECRET, {
-            expiresIn: process.env.EXPIRY_TIME,
-        });
+        const token = await jwt.sign(//no expair of token
+        { id: isExists.id, email: isExists.email }, process.env.JWT_SECRET);
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,
             sameSite: "None",
+            maxAge: 100 * 365 * 24 * 60 * 60 * 1000
         });
         return res
             .status(200)

@@ -66,9 +66,8 @@ export const userSignup = async (req, res) => {
                 },
             },
         });
-        const token = await jwt.sign({ id: result.id, email: result.email }, process.env.JWT_SECRET, {
-            expiresIn: process.env.EXPIRY_TIME,
-        });
+        const token = await jwt.sign(//no token expairation
+        { id: result.id, email: result.email }, process.env.JWT_SECRET);
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,

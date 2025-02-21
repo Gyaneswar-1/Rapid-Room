@@ -99,12 +99,10 @@ export const userSignup = async (req: Request | any, res: Response | any) => {
             },
         });
 
-        const token = await jwt.sign(
+        const token = await jwt.sign( //no token expairation
             { id: result.id, email: result.email },
             process.env.JWT_SECRET!,
-            {
-                expiresIn: process.env.EXPIRY_TIME,
-            },
+            
         );
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
