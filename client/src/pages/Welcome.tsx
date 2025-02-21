@@ -11,7 +11,6 @@ import Footer from "../components/Reusable/Footer";
 import Loader from "../components/Reusable/Loader";
 
 
-
 //store and state management //comment remove karibani kehi
 import {  RootState } from "../store/store";
 import { useSelector } from "react-redux";

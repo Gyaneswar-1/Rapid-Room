@@ -27,7 +27,7 @@ function BookingPageNavbar() {
       </p>
       <div className="flex items-center md:order-2 gap-4 space-x-3 md:space-x-0 rtl:space-x-reverse">
         
-        <UserMenu></UserMenu>
+        <UserMenu showRapidYourRoom={true}></UserMenu>
       </div>
     </div>
   </nav>

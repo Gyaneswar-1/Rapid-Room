@@ -17,7 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setShowLoader } from "../../store/reducers/loader.reducer";
 
-function UserMenu() {
+function UserMenu({showRapidYourRoom}:{showRapidYourRoom: boolean}) {
   const isLoggedIn = localStorage.getItem("loggedin");
 
   const { showSignup, showSignin } = useSelector(
@@ -45,16 +45,16 @@ function UserMenu() {
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         {localStorage.getItem("loggedin") ? (
-          <div
-            onClick={() => {
-              {
-                navigate("/add-hotel");
-              }
-            }}
-            className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer  "
-          >
-            Rapid Your Room
-          </div>
+          (showRapidYourRoom)?<div
+          onClick={() => {
+            {
+              navigate("/add-hotel");
+            }
+          }}
+          className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer  "
+        >
+          Rapid Your Room
+        </div>:null
         ) : (
           <p></p>
         )}
@@ -71,7 +71,7 @@ function UserMenu() {
       </div>
       {isOpen && (
         <div className="absolute rouned-xl shadow-xl w-[40vw] rounded-2xl border md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm z-12">
-          <div className="flex flex-col cursor-pointer ">
+          <div className="flex flex-col  cursor-pointer">
             <>
               {isLoggedIn ? (
                 <div>

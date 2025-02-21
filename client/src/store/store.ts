@@ -7,6 +7,7 @@ import toogleAllReviewsReducer from "./reducers/showReviews.reducer"
 import checkInReducer from "./reducers/checkIn.reducer"
 import singleHotelReducer from "./reducers/singleHotel.reducer"
 import loaderReducer from "./reducers/loader.reducer"
+import searchReducer from "./reducers/search.reducer"
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
     toogleAllReviewsReducer: toogleAllReviewsReducer,
     checkInReducer: checkInReducer,
     singleHotelReducer:singleHotelReducer,
-    loaderReducer: loaderReducer
+    loaderReducer: loaderReducer,
+    searchReducer: searchReducer
   },
 });
 

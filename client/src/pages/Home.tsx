@@ -15,6 +15,9 @@ import {
   flipSignin,
 } from "../store/reducers/showAuthCard.reducers";
 
+
+
+
 import Signin from "../components/UserAuth/Signin";
 import Signup from "../components/UserAuth/Signup";
 
@@ -51,7 +54,9 @@ function Home() {
   //state management
   const { hotels } = useSelector((state: RootState) => state.hotelReducer);
   const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
-
+  const { search} = useSelector(
+    (state: RootState) => state.searchReducer
+  );
 
   const dispatch: AppDispatch = useDispatch();
   async function delay() {
@@ -97,7 +102,7 @@ function Home() {
           ])
         );
       });
-  }, []);
+  }, [search]);
 
   // console.log(hotels);
 
@@ -112,30 +117,34 @@ function Home() {
               <Loader></Loader>
             ) : (
               hotels.map((e: any) => {
-                return (
-                  <Card
-                    key={e.id}
-                    id={1}
-                    onclick={() => {
-                      {
-                        !isLoggedIn
-                          ? dispatch(flipSignin(showSignin))
-                          : navigate(`/book-hotel?hotelId=${e.id}`);
-                      }
-                    }}
-                    hotelName={e.hotelName}
-                    perNight={e.perNight}
-                    country={e.address.country}
-                    city={e.address.city}
-                    overalRating={
-                      e?.reviews[0]?.overallRating
-                        ? e.reviews[0].overallRating
-                        : 5
-                    }
-                    image={e.images[0]?.imageUrl ? e.images[0]?.imageUrl : ""}
-                  ></Card>
-                );
+                if (
+                  e.hotelName.toLowerCase().startsWith(search) || 
+                  e.address.country.toLowerCase().startsWith(search) || 
+                  e.address.city.toLowerCase().startsWith(search)
+                ) {
+                  return (
+                    <Card
+                      key={e.id}
+                      id={1}
+                      onclick={() => {
+                        if (!isLoggedIn) {
+                          dispatch(flipSignin(showSignin));
+                        } else {
+                          navigate(`/book-hotel?hotelId=${e.id}`);
+                        }
+                      }}
+                      hotelName={e.hotelName}
+                      perNight={e.perNight}
+                      country={e.address.country}
+                      city={e.address.city}
+                      overalRating={e?.reviews[0]?.overallRating ? e.reviews[0].overallRating : 5}
+                      image={e.images[0]?.imageUrl ? e.images[0]?.imageUrl : ""}
+                    />
+                  );
+                }
+                return null;
               })
+              
             )}
           </div>
           <BottomNav />

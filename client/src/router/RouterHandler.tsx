@@ -10,12 +10,13 @@ import PersonalAddress from "../components/Useraccount/PersonalAddress";
 import AccountLayout from "../components/Useraccount/AccountLayout";
 import IsAuth from "../components/UserAuth/IsAuth";
 
+
 function RouterHandler() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" />
+          <Route path="/"  />
 
           <Route index element={<Welcome />} />
           <Route  path="/home" element={<Home></Home>} />
