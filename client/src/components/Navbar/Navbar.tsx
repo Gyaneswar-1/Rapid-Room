@@ -3,7 +3,11 @@ import UserMenu from "./UserMenu";
 import MainLogo from "../../assets/images/MainLogo.png";
 import Categories from "./Categories";
 
-function Navbar() {
+interface display{
+  show:boolean
+}
+
+function Navbar({show}:display) {
   return (
     <div className=" fixed w-full bg-white z-11 shadow-sm ">
       <div className=" py-4 border-b border-b-gray-300 shadow-2xl">
@@ -26,10 +30,10 @@ function Navbar() {
             />
             <p className="md:text-xl text-sm xl:block hidden">RapidRoom</p>
           </div>
-          <Search />
+          { show &&  <Search />}
           <UserMenu />
         </div>
-        <Categories />
+        { show &&  <Categories/>}
       </div>
     </div>
   );

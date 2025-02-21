@@ -68,7 +68,7 @@ function UserMenu() {
                   <MenuItem
                     onClick={() => {
                       localStorage.removeItem("loggedin");
-                      window.location.reload();
+                      navigate("/welcome")
                     }}
                     style={"text-red-600"}
                     label="logout"

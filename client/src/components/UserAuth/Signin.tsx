@@ -49,6 +49,8 @@ const Signin = () => {
         localStorage.setItem("loggedin", "true")
         navigate("/")
         notifySuccess("Welcome back !")
+        dispatch(flipSignin(showSignin))
+        // dispatch(flipSignUp(showSignup))
       }
       else{
         notifyError("Signin failed!")

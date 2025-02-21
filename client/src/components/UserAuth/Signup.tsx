@@ -54,6 +54,8 @@ const Signup= () => {
       localStorage.setItem("loggedin", "true")
       navigate("/")
       notifySuccess("Welcome to RapidRoom !")
+      // dispatch(flipSignin(showSignin))
+      dispatch(flipSignUp(showSignup))
     }
     else{
       notifyError("somthing went wrong")
