@@ -102,7 +102,7 @@ function Home() {
           ])
         );
       });
-  }, [search]);
+  }, []);
 
   // console.log(hotels);
 
@@ -118,9 +118,9 @@ function Home() {
             ) : (
               hotels.map((e: any) => {
                 if (
-                  e.hotelName.toLowerCase().startsWith(search) || 
-                  e.address.country.toLowerCase().startsWith(search) || 
-                  e.address.city.toLowerCase().startsWith(search)
+                  e.hotelName.toLowerCase().startsWith(search.toLowerCase()) || 
+                  e.address.country.toLowerCase().startsWith(search.toLowerCase()) || 
+                  e.address.city.toLowerCase().startsWith(search.toLowerCase())
                 ) {
                   return (
                     <Card

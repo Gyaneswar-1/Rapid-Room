@@ -57,7 +57,7 @@ export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: a
     // }
     const amount = perNight * difference + cleaningFee + 200;
     
-    const res = await checkInHandler({amount:amount, email: "bibek@gmail.com", name:"Bibek samal",phNumber:9178240594,hotelId:hotelId,checkInDate:data.checkInDate,stayingFor:difference});
+    const res = await checkInHandler({amount:amount, email: "bibekbibek966@gmail.com", name:"Bibek samal",phNumber:9178240594,hotelId:hotelId,checkInDate:data.checkInDate,stayingFor:difference});
 
     if(res?.success === false){
       notifyError("Reservatio failed")

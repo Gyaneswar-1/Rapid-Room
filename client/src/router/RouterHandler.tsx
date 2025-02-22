@@ -9,6 +9,7 @@ import EditUser from "../components/Useraccount/EditUser";
 import PersonalAddress from "../components/Useraccount/PersonalAddress";
 import AccountLayout from "../components/Useraccount/AccountLayout";
 import IsAuth from "../components/UserAuth/IsAuth";
+import ComeingSoon from "../pages/ComeingSoon";
 
 
 function RouterHandler() {
@@ -20,6 +21,7 @@ function RouterHandler() {
 
           <Route index element={<Welcome />} />
           <Route  path="/home" element={<Home></Home>} />
+          <Route  path="/comeingsoon" element={<ComeingSoon></ComeingSoon>} />
 
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
