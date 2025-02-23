@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Offline, Online } from "react-detect-offline";
 import Home from "../pages/Home";
 import Welcome from "../pages/Welcome";
 import ErrorPage from "../pages/ErrorPage";
@@ -10,33 +11,37 @@ import PersonalAddress from "../components/Useraccount/PersonalAddress";
 import AccountLayout from "../components/Useraccount/AccountLayout";
 import IsAuth from "../components/UserAuth/IsAuth";
 import ComeingSoon from "../pages/ComeingSoon";
-
+import OfflinePage from "../pages/OfflinePage";
 
 function RouterHandler() {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/"  />
+    <>
+      <Online>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/comeingsoon" element={<ComeingSoon />} />
+            <Route path="/offline" element={<OfflinePage />} />
 
-          <Route index element={<Welcome />} />
-          <Route  path="/home" element={<Home></Home>} />
-          <Route  path="/comeingsoon" element={<ComeingSoon></ComeingSoon>} />
+            <Route element={<IsAuth />}>
+              <Route path="book-hotel" element={<BookingPage />} />
+              <Route path="add-hotel" element={<AddHotels />} />
 
-          <Route element={<IsAuth />}>
-            <Route path="book-hotel" element={<BookingPage />} />
-            <Route path="add-hotel" element={<AddHotels />} />
-
-            <Route path="/user-account" element={<AccountLayout />}>
-              <Route index element={<Account />} />
-              <Route path="edit-user" element={<EditUser />} />
-              <Route path="personal-address" element={<PersonalAddress />} />
+              <Route path="/user-account" element={<AccountLayout />}>
+                <Route index element={<Account />} />
+                <Route path="edit-user" element={<EditUser />} />
+                <Route path="personal-address" element={<PersonalAddress />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Online>
+      <Offline>
+        <OfflinePage />
+      </Offline>
+    </>
   );
 }
 
