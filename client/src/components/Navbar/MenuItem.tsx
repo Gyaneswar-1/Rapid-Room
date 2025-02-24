@@ -1,21 +1,27 @@
-import React from 'react'
+import React from 'react';
+import { motion } from 'framer-motion';
 
-interface MenuItemsPropes{
-    onClick:() => void;
-    label:string;
-    style?: string;
-}
-const MenuItem :React.FC<MenuItemsPropes> = ({
-    onClick,
-    label,
-    style
-    }) =>{
-    return(
-        <div onClick={onClick} className={`px-4 py-3 hover:bg-neutral-100 transition font-semibold ${style}` }>
-                {label}
-        </div>
-    )
+interface MenuItemsProps {
+  onClick: () => void;
+  label: string;
+  style?: string;
 }
 
+const MenuItem: React.FC<MenuItemsProps> = ({ onClick, label, style }) => {
+  const itemVariants = {
+    hidden: { opacity: 0, x: 0 },
+    visible: { opacity: 1, x: 0 }
+  };
 
-export default MenuItem
+  return (
+    <motion.div
+      variants={itemVariants}
+      onClick={onClick}
+      className={`px-4  py-1.5 hover:bg-neutral-200 rounded-md m-1 transition ${style}`}
+    >
+      {label}
+    </motion.div>
+  );
+};
+
+export default MenuItem;

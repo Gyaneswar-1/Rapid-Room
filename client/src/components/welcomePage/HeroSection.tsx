@@ -39,7 +39,7 @@ const HeroSection = () => {
                 onClick={() => {
                   navigate("/home");
                 }}
-                className="w-fit  bg-neutral-900 hover:bg-neutral-950 cursor-pointer flex justify-center items-center gap-1.5 p-3 rounded-lg"
+                className="w-fit  bg-teal-700 hover:bg-teal-800 cursor-pointer flex justify-center  gap-1.5 p-3 rounded-full items-center px-5  hover:shadow-2xl"
               >
                 Explore <MdOutlineArrowForwardIos />
               </div>

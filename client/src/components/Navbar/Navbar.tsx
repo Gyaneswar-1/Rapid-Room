@@ -36,7 +36,7 @@ function Navbar({show}:display) {
             <p className="md:text-xl text-sm xl:block hidden">RapidRoom</p>
           </div>
           { show &&  <Search />}
-          <UserMenu showRapidYourRoom={true}/>
+          <UserMenu showRapidYourRoom={show}/>
         </div>
         { show &&  <Categories/>}
       </div>

@@ -50,7 +50,6 @@ function Search() {
           <div
             onClick={(e) => {
                 dispatch(setSearch(searchValue));
-                
             }}
             className="p-2 bg-cyan-600 rounded-full text-white"
           >
