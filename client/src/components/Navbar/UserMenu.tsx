@@ -68,9 +68,13 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
             >
               Rapid Your Room
             </div>
-          ) : null
+          ) : <p className="hidden md:block text-sm font-semibold py-3 px-12 rounded-full   ">
+          
+        </p>
         ) : (
-          <p></p>
+          <p className="hidden md:block text-sm font-semibold py-3 px-12 rounded-full ">
+            
+          </p>
         )}
 
         <motion.div
