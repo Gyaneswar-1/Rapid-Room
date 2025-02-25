@@ -124,16 +124,16 @@ export default function BookingPage() {
           <div className="container w-full  md:w-4/6 flex flex-col ">
             <BookingPageHeading hotelType="Apartment with terrace, balcony+ breakfast"></BookingPageHeading>
             <BookingPageImages
-              img1={hotelImages[0].imageUrl}
-              img2={hotelImages[1].imageUrl}
-              img3={hotelImages[2].imageUrl}
-              img4={hotelImages[3].imageUrl}
-              img5={hotelImages[4].imageUrl}
-              // img1={""}
-              // img2={""}
-              // img3={""}
-              // img4={""}
-              // img5={""}
+              // img1={hotelImages[0].imageUrl}
+              // img2={hotelImages[1].imageUrl}
+              // img3={hotelImages[2].imageUrl}
+              // img4={hotelImages[3].imageUrl}
+              // img5={hotelImages[4].imageUrl}
+              img1={""}
+              img2={""}
+              img3={""}
+              img4={""}
+              img5={""}
             ></BookingPageImages>
             <AboutWithCheckout
               country={hotelAddress.country}

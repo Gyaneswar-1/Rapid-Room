@@ -12,6 +12,8 @@ import AccountLayout from "../components/Useraccount/AccountLayout";
 import IsAuth from "../components/UserAuth/IsAuth";
 import ComeingSoon from "../pages/ComeingSoon";
 import OfflinePage from "../pages/OfflinePage";
+import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
+import AdminConfirm from "../pages/AdminConfirm";
 
 function RouterHandler() {
   return (
@@ -27,7 +29,8 @@ function RouterHandler() {
             <Route element={<IsAuth />}>
               <Route path="book-hotel" element={<BookingPage />} />
               <Route path="add-hotel" element={<AddHotels />} />
-
+              <Route path="/admin-confirm" element={<AdminConfirm />} />
+              <Route path="/admin-terms" element={<TermsAndConditionsForAdmin />} />
               <Route path="/user-account" element={<AccountLayout />}>
                 <Route index element={<Account />} />
                 <Route path="edit-user" element={<EditUser />} />
