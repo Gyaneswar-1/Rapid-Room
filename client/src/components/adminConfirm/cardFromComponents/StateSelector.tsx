@@ -19,10 +19,6 @@ const CountrySelector: React.FC<SelectorProps> = ({ props }:SelectorProps) => {
   function handleSelect(country: CountryData) {
     setSelectedCountry(country);
     setShowCountry(false); 
-    console.log("Selected",selectedCountry);
-    console.log(selectedCountry?.flag);
-    console.log(selectedCountry?.isoCode);
-    console.log(selectedCountry?.name);
 }
 
   return (

@@ -7,9 +7,11 @@ import {
   CiBank,
   CiCreditCard1,
   CiLocationArrow1,
+  CiLocationOn,
   CiPhone,
 } from "react-icons/ci";
 import { FaCity } from "react-icons/fa6";
+import CitySelector from "./cardFromComponents/CitySelector";
 
 function CardForm({ show }: { show: (value: boolean) => void }) {
   const countries = Country.getAllCountries();
@@ -20,7 +22,7 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
 
   return (
     <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center bg-opacity-50 backdrop-brightness-70 backdrop-blur-[2px]">
-      <div className="w-full mx-2 md:mx-0 md:w-fit md:h-fit p-8 rounded-xl border-2 border-neutral-500 bg-neutral-50">
+      <div className="w-full mx-2 md:mx-0 md:w-fit md:h-fit md:p-8 px-4 py-4 rounded-xl border-2 border-neutral-500 bg-neutral-50">
         <div className="flex md:flex-row flex-col">
           <button
             className="cursor-pointer h-fit w-fit p-2 mb-2 bg-black rounded-md text-white"
@@ -73,26 +75,9 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
               <CountrySelector props={countries} />
               <CountrySelector props={countries} />
             </div>
-            <div>
+            <CitySelector CountryIsoCode="IN" StateIsoCode="OR" />            <div>
               <label
-                htmlFor="GovID"
-                className="block text-md font-medium text-gray-700"
-              >
-                City name
-              </label>
-              <div className="flex items-center mt-1 p-2  w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
-                <CiBank className="mx-1 mr-3 text-black text-xl" />
-                <input
-                  type="text"
-                  id="UserEmail"
-                  placeholder="city name"
-                  className="w-full outline-none"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="GovID"
+                htmlFor="zip code"
                 className="block text-md font-medium text-gray-700"
               >
                 zip code
@@ -103,6 +88,21 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
                   type="text"
                   id="UserEmail"
                   placeholder="eg. 233445"
+                  className="w-full outline-none"
+                />
+              </div>
+              <label
+                htmlFor="street"
+                className="block text-md font-medium text-gray-700"
+              >
+                Street
+              </label>
+              <div className="flex items-center mt-1 p-2  w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
+                <CiLocationOn  className="mx-1 mr-3 text-black text-xl" />
+                <input
+                  type="text"
+                  id="UserEmail"
+                  placeholder="eg. 256 bulivad"
                   className="w-full outline-none"
                 />
               </div>

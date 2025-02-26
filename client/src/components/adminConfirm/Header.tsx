@@ -5,7 +5,7 @@ function Header() {
     const navigate = useNavigate()
   return (
     <div>
-        <header className="bg-white">
+        <header className="bg-white md:pt-12">
   <div className=" mx-4 sm:px-6 sm:py-5">
     <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
       <div>

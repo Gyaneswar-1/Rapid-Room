@@ -26,6 +26,8 @@ model Users {
   hostExperience   Int?
   hostRating       Int?           @default(5)
   hostResponseRate Int?           @default(100)
+  phoneNumber      Int?           @default(0)
+  GovID            Int?           @default(0)
   ReservedRooms    Reservations[]
   wishList         WishList[]
   reviews          Review[]
@@ -149,7 +151,6 @@ model Review {
   hotelId             Int
   hotel               Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   reviewComment       String
-  // rating part
   overallRating       Int    @default(5)
   cleanlinessRating   Int    @default(5)
   accuracyRating      Int    @default(5)
@@ -158,9 +159,7 @@ model Review {
   locationRating      Int    @default(5)
   priceRating         Int    @default(5)
   parkingRating       Int    @default(5)
-
   createdAt DateTime @default(now())
-
   @@unique([userId, hotelId])
 }
 
@@ -213,3 +212,4 @@ model Payments {
 // Content
 // Timestamp
 // Status (Unread, Read)
+

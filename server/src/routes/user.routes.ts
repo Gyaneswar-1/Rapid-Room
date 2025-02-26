@@ -8,6 +8,7 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 import { reserveHotel } from "../controller/reserveHotel.controller.js";
 import { editUser } from "../controller/editUser.controller.js";
 import { userLogout } from "../controller/userLogout.controller.js";
+import { updateAdmin } from "../controller/updateAdmin.controller.js";
 const userRouter = Router();
 
 userRouter.route("/signup").post(
@@ -24,6 +25,7 @@ userRouter.route("/signup").post(
 userRouter.route("/login").post(userLogin);
 userRouter.route("/delete").delete(authMiddleware,deleteUser);
 userRouter.route("/logout").get(authMiddleware,userLogout);
+userRouter.route("/update-admin").post(authMiddleware,updateAdmin);
 
 userRouter.route("/getInfo").get(authMiddleware,getUserInformation);
 userRouter.route("/edit").put(authMiddleware,editUser);
