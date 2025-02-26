@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { notifyInfo } from "../../lib/Toast";
 import { useState } from "react";
 import CardForm from "./CardForm";
+import { motion } from "framer-motion";
 
 function ConfirmButton() {
-  const [showCard,setShowCard] = useState(false);
+  const [showCard, setShowCard] = useState(false);
   const navigate = useNavigate();
   return (
     <div>
@@ -28,7 +29,7 @@ function ConfirmButton() {
                     className="underline text-blue-700 cursor-pointer"
                     onClick={() => {
                       navigate("/admin-terms");
-                      notifyInfo("Thanks for registering yourself")
+                      notifyInfo("Thanks for registering yourself");
                     }}
                   >
                     terms and conditions.
@@ -39,15 +40,25 @@ function ConfirmButton() {
           </div>
         </fieldset>
         <button
-        onClick={()=>{
-            setShowCard(!showCard)
-            notifyInfo("Thanks for applying for Host ")
+          onClick={() => {
+            setShowCard(!showCard);
+            notifyInfo("Thanks for applying for Host ");
           }}
-        className="inline-block rounded-sm   cursor-pointer hover:bg-teal-700 bg-teal-600 px-12 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden">
+          className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 px-12 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
+        >
           Apply for Admin
         </button>
       </div>
-      {showCard && <CardForm show={setShowCard}/>}
+      {showCard && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: showCard ? "auto" : 0, opacity: showCard ? 1 : 0 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="overflow-hidden"
+        >
+          <CardForm show={setShowCard} />
+        </motion.div>
+      )}
     </div>
   );
 }
