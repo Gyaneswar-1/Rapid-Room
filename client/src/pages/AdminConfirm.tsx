@@ -12,7 +12,7 @@ function AdminConfirm() {
   return (
     <div>
       <Navbar show={false} />
-      <div className="pt-28 p-12">
+      <div className="pt-28 md:p-12 p-2">
         <Header />
         <Section1 />
         <Section2 />

@@ -1,7 +1,7 @@
 function Profit() {
   return (
     <>
-      <section className="flex w-full md:flex-row flex-col md:gap-4 gap-8 justify-evenly py-12 px-10">
+      <section className="flex w-full md:flex-row flex-col md:gap-4 gap-8 justify-evenly py-12 md:px-10">
         <div className="w-full md:w-1/2">
           <article className="flex flex-col gap-4 h-full w-full rounded-lg border-1 border-gray-400 bg-white p-6">
             <div className="inline-flex gap-2 self-end rounded-sm bg-green-100 p-1 text-green-600">

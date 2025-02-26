@@ -9,11 +9,11 @@ function ConfirmButton() {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="flex justify-between items-center px-12">
+      <div className="flex justify-between items-center md:px-12">
         <fieldset>
           <div className="divide-y divide-gray-200">
-            <label className="flex  items-start gap-4 py-4">
-              <div className="flex items-center">
+            <label className="flex items-start gap-4 py-4">
+              <div className="flex items-center gap-2">
                 &#8203;
                 <input
                   type="checkbox"
@@ -24,7 +24,7 @@ function ConfirmButton() {
 
               <div>
                 <strong className="font-medium text-gray-900">
-                  I agree with the{" "}
+                  I agree with the
                   <span
                     className="underline text-blue-700 cursor-pointer"
                     onClick={() => {
@@ -44,7 +44,7 @@ function ConfirmButton() {
             setShowCard(!showCard);
             notifyInfo("Thanks for applying for Host ");
           }}
-          className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 px-12 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
+          className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
         >
           Apply for Admin
         </button>

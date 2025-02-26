@@ -3,7 +3,7 @@ function Section2() {
   return (
     <div>
          <section>
-          <div className="flex pt-28 px-10 items-center justify-center w-full">
+          <div className="flex pt-28 md:px-10 items-center justify-center w-full">
             <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full gap-8">
 
               <div className="md:w-1/2">
