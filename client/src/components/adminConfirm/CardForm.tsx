@@ -12,6 +12,8 @@ import {
 } from "react-icons/ci";
 import { FaCity } from "react-icons/fa6";
 import CitySelector from "./cardFromComponents/CitySelector";
+import InputField from "./cardFromComponents/InputField";
+import { IconBaseProps } from "react-icons";
 
 function CardForm({ show }: { show: (value: boolean) => void }) {
   const countries = Country.getAllCountries();
@@ -30,82 +32,25 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
           >
             <TfiClose />
           </button>
-          <h1 className="text-2xl font-semibold pb-7 w-full flex justify-center mr-[26px]">Basic Info</h1>
+          <h1 className="text-2xl font-semibold pb-7 w-full flex justify-center mr-[26px]">
+            Basic Info
+          </h1>
         </div>
 
         <div>
           <form onSubmit={(e) => e.preventDefault()}>
-            <div>
-              <label
-                htmlFor="UserEmail"
-                className="block text-md font-medium text-gray-700 "
-              >
-                Phone No
-              </label>
-              <div className="flex items-center mt-1 p-2  w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm  focus-within:border focus-within:border-neutral-950">
-                <CiPhone className="mx-1 mr-3 text-black text-xl" />
-                <input
-                  type="text"
-                  id="UserEmail"
-                  placeholder="+91 234 234 54"
-                  className="w-full outline-none "
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="GovID"
-                className="block text-md font-medium text-gray-700"
-              >
-                Gov ID
-              </label>
-              <div className="flex items-center mt-1 p-2  w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
-                <CiCreditCard1 className="mx-1 mr-3 text-black text-xl" />
-                <input
-                  type="text"
-                  id="UserEmail"
-                  placeholder="id number"
-                  className="w-full outline-none"
-                />
-              </div>
-            </div>
+            <InputField title={"Phone No"} placeholder={"+91 234 234 54"} logo={CiPhone} register={() => {}} errors={{}} name={""}/>
+            <InputField title={"Gov ID"} placeholder={"id number"} logo={CiCreditCard1} register={() => {}} errors={{}} name={""} />
 
             <h1>Address: </h1>
             <div className="country-and-states flex  md:flex-row flex-col gap-2 my-2">
               <CountrySelector props={countries} />
               <CountrySelector props={countries} />
             </div>
-            <CitySelector CountryIsoCode="IN" StateIsoCode="OR" />            <div>
-              <label
-                htmlFor="zip code"
-                className="block text-md font-medium text-gray-700"
-              >
-                zip code
-              </label>
-              <div className="flex items-center mt-1 p-2  w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
-                <CiLocationArrow1 className="mx-1 mr-3 text-black text-xl" />
-                <input
-                  type="text"
-                  id="UserEmail"
-                  placeholder="eg. 233445"
-                  className="w-full outline-none"
-                />
-              </div>
-              <label
-                htmlFor="street"
-                className="block text-md font-medium text-gray-700"
-              >
-                Street
-              </label>
-              <div className="flex items-center mt-1 p-2  w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
-                <CiLocationOn  className="mx-1 mr-3 text-black text-xl" />
-                <input
-                  type="text"
-                  id="UserEmail"
-                  placeholder="eg. 256 bulivad"
-                  className="w-full outline-none"
-                />
-              </div>
+            <CitySelector CountryIsoCode="IN" StateIsoCode="OR" />
+            <div>
+              <InputField title={"zip code"} placeholder={"eg. 233445"} logo={CiLocationArrow1} register={() => {}} errors={{}} name={""}  />
+              <InputField title={"Street"} placeholder={"eg. 256 bulivad"} logo={CiLocationOn} register={() => {}} errors={{}} name={""} />
             </div>
             <div className="bg-teal-600 text-white cursor-pointer py-1 flex justify-center items-center mt-5 rounded-md border-2 border-neutral-400">
               <button type="submit" className="text-lg">

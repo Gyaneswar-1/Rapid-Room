@@ -25,7 +25,7 @@ function RouterHandler() {
             <Route path="/home" element={<Home />} />
             <Route path="/comeingsoon" element={<ComeingSoon />} />
             <Route path="/offline" element={<OfflinePage />} />
-
+            {/* need authentication to access */}
             <Route element={<IsAuth />}>
               <Route path="book-hotel" element={<BookingPage />} />
               <Route path="add-hotel" element={<AddHotels />} />

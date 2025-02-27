@@ -26,8 +26,8 @@ model Users {
   hostExperience   Int?
   hostRating       Int?           @default(5)
   hostResponseRate Int?           @default(100)
-  phoneNumber      Int?           @default(0)
-  GovID            Int?           @default(0)
+  phoneNumber      BigInt?           @default(0)
+  GovID            BigInt?           @default(0)
   ReservedRooms    Reservations[]
   wishList         WishList[]
   reviews          Review[]
