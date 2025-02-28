@@ -1,31 +1,56 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useRef } from "react";
-import { BiDownArrow } from "react-icons/bi";
+import React, { useEffect, useRef, useState } from "react";
 
-interface countryData {
+interface CountryData {
   name: string;
   flag: string;
+  isoCode:string
 }
 
-interface SelectorProps {
-  props: countryData[];
+interface Selectorcountries {
+  countries: CountryData[];
+  setCountry: (country: string) => void;
+  register:any
 }
 
-function CountrySelector({ props }: SelectorProps) {
-  const [showCountry, setShowCountry] = React.useState(false);
-  const [selectedCountry, setSelectedCountry] =
-    React.useState<countryData | null>(null);
+function CountrySelector({ countries, setCountry,register }: Selectorcountries) {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
+  const [search, setSearch] = useState("");
+  const [filteredCountries, setFilteredCountries] = useState<CountryData[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  function handleSelect(country: countryData) {
-    setSelectedCountry(country);
-    setShowCountry(false);
-  }
+  // Handle input change and filter countries
+  
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
 
+    if (value.trim() === "") {
+      setFilteredCountries([]);
+      setShowDropdown(false);
+    } else {
+      const filtered = countries.filter((country) =>
+        country.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCountries(filtered);
+      setShowDropdown(filtered.length > 0);
+    }
+  };
+
+  // Select country and close dropdown
+  const handleSelect = (country: CountryData) => {
+    setSelectedCountry(country);
+    setCountry(country.isoCode)
+    setSearch(country.name);
+    setShowDropdown(false);
+  };
+
+  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setShowCountry(false);
+        setShowDropdown(false);
       }
     }
 
@@ -33,69 +58,42 @@ function CountrySelector({ props }: SelectorProps) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, []);
 
   return (
-    <div ref={dropdownRef}>
-      <div className="relative md:w-52 w-full">
-        <div className="inline-flex md:w-52 w-full items-center overflow-hidden rounded-md border bg-white">
-          <div
-            onClick={() => {
-              setShowCountry(!showCountry);
-            }}
-            className="border-e w-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
-          >
-            {selectedCountry ? (
-              <>
-                {selectedCountry.flag} {
-                  selectedCountry.name.length > 20 ? `${selectedCountry.name.substring(0,17)}..` : selectedCountry.name
-                }
-              </>
-            ) : (
-              <>Select your country</>
-            )}
-          </div>
+    <div ref={dropdownRef} className="relative w-full md:w-52">
+      <label className="block text-md font-medium text-gray-700">
+        Select Country
+      </label>
+      <div className="flex items-center mt-1 p-2 w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
+        <input
+          type="text"
+          placeholder="Search country"
+          className="w-full outline-none"
+          value={search}
+          onChange={handleSearch}
+          onFocus={() => setShowDropdown(filteredCountries.length > 0)}
+        />
+      </div>
 
-          <button
-            onClick={() => {
-              setShowCountry(!showCountry);
-            }}
-            className="h-full p-2 text-gray-600 hover:bg-gray-50 hover:text-gray-700"
-          >
-            <BiDownArrow />
-          </button>
-        </div>
-
+      {showDropdown && (
         <motion.div
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
-          animate={{
-            opacity: showCountry ? 1 : 0,
-            y: showCountry ? 0 : -10,
-            scale: showCountry ? 1 : 0.95,
-          }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.1, ease: "easeInOut" }}
-          className={`absolute end-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg 
-    max-h-60 overflow-y-auto backdrop-blur-md ${!showCountry && "hidden"}`}
-          role="menu"
+          className="absolute z-10 mt-2 w-full max-h-60 overflow-y-auto rounded-md border bg-white shadow-lg"
         >
-          {showCountry && (
-            <div className="p-2">
-              {props.map((data: any, index: any) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    handleSelect(data);
-                  }}
-                  className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                  role="menuitem"
-                >
-                  {data.flag}&ensp;{data.name}
-                </div>
-              ))}
+          {filteredCountries.map((country, index) => (
+            <div
+              key={index}
+              onClick={() => handleSelect(country)}
+              className="p-2 cursor-pointer hover:bg-gray-100"
+            >
+              {country.flag}&ensp;{country.name}
             </div>
-          )}
+          ))}
         </motion.div>
-      </div>
+      )}
     </div>
   );
 }
