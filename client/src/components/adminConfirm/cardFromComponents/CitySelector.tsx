@@ -5,11 +5,14 @@ import { CiBank } from "react-icons/ci";
 interface CountryData {
   CountryIsoCode: string;
   StateIsoCode: string;
+  register: any;
 }
 
-const CitySelector: React.FC<CountryData> = ({ CountryIsoCode, StateIsoCode }) => {
-
-
+const CitySelector: React.FC<CountryData> = ({
+  CountryIsoCode,
+  StateIsoCode,
+  register,
+}) => {
   const cities = City.getCitiesOfState(CountryIsoCode, StateIsoCode) || [];
   const [search, setSearch] = useState("");
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
@@ -43,7 +46,10 @@ const CitySelector: React.FC<CountryData> = ({ CountryIsoCode, StateIsoCode }) =
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     }
@@ -62,6 +68,7 @@ const CitySelector: React.FC<CountryData> = ({ CountryIsoCode, StateIsoCode }) =
       <div className="flex items-center mt-1 p-2 w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
         <CiBank className="mx-1 mr-3 text-black text-xl" />
         <input
+          {...register("city")}
           type="text"
           id="city"
           placeholder="Search city"

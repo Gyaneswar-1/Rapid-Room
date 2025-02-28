@@ -4,9 +4,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Section2 from "../components/adminConfirm/Section2";
 import Header from "../components/adminConfirm/Header";
 import ConfirmButton from "../components/adminConfirm/ConfirmButton";
-import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
 import { useNavigate } from "react-router-dom";
-import CitySelector from "../components/adminConfirm/cardFromComponents/CitySelector";
 
 function AdminConfirm() {
   const navigate = useNavigate();

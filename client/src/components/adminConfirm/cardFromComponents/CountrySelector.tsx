@@ -4,24 +4,30 @@ import React, { useEffect, useRef, useState } from "react";
 interface CountryData {
   name: string;
   flag: string;
-  isoCode:string
+  isoCode: string;
 }
 
 interface Selectorcountries {
   countries: CountryData[];
   setCountry: (country: string) => void;
-  register:any
+  register: any;
 }
 
-function CountrySelector({ countries, setCountry,register }: Selectorcountries) {
+function CountrySelector({
+  countries,
+  setCountry,
+  register,
+}: Selectorcountries) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(
+    null,
+  );
   const [search, setSearch] = useState("");
   const [filteredCountries, setFilteredCountries] = useState<CountryData[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle input change and filter countries
-  
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
@@ -31,7 +37,7 @@ function CountrySelector({ countries, setCountry,register }: Selectorcountries) 
       setShowDropdown(false);
     } else {
       const filtered = countries.filter((country) =>
-        country.name.toLowerCase().includes(value.toLowerCase())
+        country.name.toLowerCase().includes(value.toLowerCase()),
       );
       setFilteredCountries(filtered);
       setShowDropdown(filtered.length > 0);
@@ -41,7 +47,7 @@ function CountrySelector({ countries, setCountry,register }: Selectorcountries) 
   // Select country and close dropdown
   const handleSelect = (country: CountryData) => {
     setSelectedCountry(country);
-    setCountry(country.isoCode)
+    setCountry(country.isoCode);
     setSearch(country.name);
     setShowDropdown(false);
   };
@@ -49,7 +55,10 @@ function CountrySelector({ countries, setCountry,register }: Selectorcountries) 
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     }
@@ -67,6 +76,7 @@ function CountrySelector({ countries, setCountry,register }: Selectorcountries) 
       </label>
       <div className="flex items-center mt-1 p-2 w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
         <input
+          {...register("country")}
           type="text"
           placeholder="Search country"
           className="w-full outline-none"

@@ -5,17 +5,18 @@ import { State } from "country-state-city";
 
 interface StateData {
   name: string;
-  isoCode:string
+  isoCode: string;
 }
 
 interface Selectorstate {
-  setState:(state:string) => void;
-  countryCode:string
+  setState: (state: string) => void;
+  countryCode: string;
+  register: any;
 }
 
-function StateSelector({setState,countryCode }: Selectorstate) {
-  const state = State.getStatesOfCountry(countryCode)
-  console.log(state)
+function StateSelector({ setState, countryCode, register }: Selectorstate) {
+  const state = State.getStatesOfCountry(countryCode);
+  console.log(state);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedState, setSelectedState] = useState<StateData | null>(null);
   const [search, setSearch] = useState("");
@@ -32,7 +33,7 @@ function StateSelector({setState,countryCode }: Selectorstate) {
       setShowDropdown(false);
     } else {
       const filtered = state.filter((state) =>
-        state.name.toLowerCase().includes(value.toLowerCase())
+        state.name.toLowerCase().includes(value.toLowerCase()),
       );
       setFilteredCountries(filtered);
       setShowDropdown(filtered.length > 0);
@@ -42,7 +43,7 @@ function StateSelector({setState,countryCode }: Selectorstate) {
   // Select state and close dropdown
   const handleSelect = (state: StateData) => {
     setSelectedState(state);
-    setState(state.isoCode)
+    setState(state.isoCode);
     setSearch(state.name);
     setShowDropdown(false);
   };
@@ -50,7 +51,10 @@ function StateSelector({setState,countryCode }: Selectorstate) {
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     }
@@ -68,6 +72,7 @@ function StateSelector({setState,countryCode }: Selectorstate) {
       </label>
       <div className="flex items-center mt-1 p-2 w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
         <input
+          {...register("state")}
           type="text"
           placeholder="Search state"
           className="w-full outline-none"

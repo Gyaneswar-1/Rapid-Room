@@ -75,10 +75,22 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
 
             <h1>Address:</h1>
             <div className="country-and-states flex md:flex-row flex-col gap-2 my-2">
-              <CountrySelector countries={countries} setCountry={setCountry} register={register} />
-              <StateSelector setState={setState} countryCode={country} />
+              <CountrySelector
+                countries={countries}
+                setCountry={setCountry}
+                register={register}
+              />
+              <StateSelector
+                setState={setState}
+                countryCode={country}
+                register={register}
+              />
             </div>
-            <CitySelector CountryIsoCode={country} StateIsoCode={state} />
+            <CitySelector
+              CountryIsoCode={country}
+              StateIsoCode={state}
+              register={register}
+            />
 
             <div>
               <InputField
@@ -100,7 +112,9 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
             </div>
 
             <div className="bg-teal-600 text-white cursor-pointer py-1 flex justify-center items-center mt-5 rounded-md border-2 border-neutral-400">
-              <button type="submit" className="text-lg">Submit</button>
+              <button type="submit" className="text-lg">
+                Submit
+              </button>
             </div>
           </form>
         </div>

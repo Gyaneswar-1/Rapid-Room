@@ -1,17 +1,27 @@
 // UserMenu.tsx
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import { useNavigate } from "react-router-dom";
-import { BsBoxArrowInLeft, BsBoxArrowRight, BsChat, BsHeart, BsListUl, BsPerson, BsQuestionCircle, BsSignpostSplit, BsSuitcase2 } from "react-icons/bs";
+import {
+  BsBoxArrowInLeft,
+  BsBoxArrowRight,
+  BsChat,
+  BsHeart,
+  BsListUl,
+  BsPerson,
+  BsQuestionCircle,
+  BsSignpostSplit,
+  BsSuitcase2,
+} from "react-icons/bs";
 
 function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const isLoggedIn = localStorage.getItem("loggedin")
+  const isLoggedIn = localStorage.getItem("loggedin");
 
   const controlSetIsOpen = () => {
     setIsOpen((prev) => !prev);
@@ -61,21 +71,17 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
           showRapidYourRoom ? (
             <div
               onClick={() => {
-                {
-                  navigate("/add-hotel");
-                }
+                false ? navigate("/add-hotel") : navigate("/admin-confirm");
               }}
               className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer  "
             >
               Rapid Your Room
             </div>
-          ) : <p className="hidden md:block text-sm font-semibold py-3 px-12 rounded-full   ">
-          
-        </p>
+          ) : (
+            <p className="hidden md:block text-sm font-semibold py-3 px-12 rounded-full   "></p>
+          )
         ) : (
-          <p className="hidden md:block text-sm font-semibold py-3 px-12 rounded-full ">
-            
-          </p>
+          <p className="hidden md:block text-sm font-semibold py-3 px-12 rounded-full "></p>
         )}
 
         <motion.div
@@ -102,26 +108,47 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
           <div className="flex flex-col cursor-pointer my-2">
             {isLoggedIn ? (
               <>
-                <MenuItem onClick={() => {}} label="Message"  icons={BsChat} />
-                <MenuItem onClick={() => {}} label="Trips"  icons={BsSuitcase2} />
-                <MenuItem onClick={() => {}} label="Wishlist"  icons={BsHeart} />
-                <MenuItem onClick={() => {}} label="Manage Listing"  icons={BsListUl} />
+                <MenuItem onClick={() => {}} label="Message" icons={BsChat} />
+                <MenuItem
+                  onClick={() => {}}
+                  label="Trips"
+                  icons={BsSuitcase2}
+                />
+                <MenuItem onClick={() => {}} label="Wishlist" icons={BsHeart} />
+                <MenuItem
+                  onClick={() => {}}
+                  label="Manage Listing"
+                  icons={BsListUl}
+                />
                 <MenuItem
                   onClick={() => navigate("/user-account")}
-                  label="Account" icons={BsPerson} 
+                  label="Account"
+                  icons={BsPerson}
                 />
-                <MenuItem onClick={() => {}} label="Help Center"  icons={BsQuestionCircle} />
                 <MenuItem
-                  onClick={() => {
-                  }}
+                  onClick={() => {}}
+                  label="Help Center"
+                  icons={BsQuestionCircle}
+                />
+                <MenuItem
+                  onClick={() => {}}
                   style="text-red-600"
-                  label="Logout" icons={BsBoxArrowRight} 
+                  label="Logout"
+                  icons={BsBoxArrowRight}
                 />
               </>
             ) : (
               <>
-                <MenuItem onClick={() => {}} label="Signup"  icons={BsBoxArrowInLeft} />
-                <MenuItem onClick={() => {}} label="Login"  icons={BsSignpostSplit} />
+                <MenuItem
+                  onClick={() => {}}
+                  label="Signup"
+                  icons={BsBoxArrowInLeft}
+                />
+                <MenuItem
+                  onClick={() => {}}
+                  label="Login"
+                  icons={BsSignpostSplit}
+                />
               </>
             )}
           </div>
