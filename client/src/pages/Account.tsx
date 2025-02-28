@@ -51,11 +51,11 @@ const card = [
 
 function Account() {
   return (
-    <div className="h-screen w-screen flex  justify-center">
-      <div className=" w-[1200px]  p-15 flex flex-col gap-2">
+    <div className="h-screen w-screen flex pt-12  justify-center">
+      <div className=" md:w-[1200px]  md:p-15 p-2 flex flex-col gap-2">
         <h1 className="text-4xl font-semibold">Your Account</h1>
         <p>edit & view your details</p>
-        <div className="cards mt-20 flex flex-wrap  gap-6 justify-start w-full ">
+        <div className="cards mt-20 flex flex-wrap  gap-6 md:justify-start justify-start w-full ">
           {card.map((c, index) => (
             <Cards
               key={index}

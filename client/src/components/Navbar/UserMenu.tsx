@@ -1,10 +1,11 @@
 // UserMenu.tsx
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import { useNavigate } from "react-router-dom";
+import { BsBoxArrowInLeft, BsBoxArrowRight, BsChat, BsHeart, BsListUl, BsPerson, BsQuestionCircle, BsSignpostSplit, BsSuitcase2 } from "react-icons/bs";
 
 function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
   const navigate = useNavigate();
@@ -98,28 +99,29 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
           animate="visible"
           className="absolute rounded-xl  shadow-xl w-fit md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm z-20 " // Adjusted z-index
         >
-          <div className="flex flex-col cursor-pointer ">
+          <div className="flex flex-col cursor-pointer my-2">
             {isLoggedIn ? (
               <>
-                <MenuItem onClick={() => {}} label="Message" />
-                <MenuItem onClick={() => {}} label="Trips" />
-                <MenuItem onClick={() => {}} label="Wishlist" />
-                <MenuItem onClick={() => {}} label="Manage Listing" />
+                <MenuItem onClick={() => {}} label="Message"  icons={BsChat} />
+                <MenuItem onClick={() => {}} label="Trips"  icons={BsSuitcase2} />
+                <MenuItem onClick={() => {}} label="Wishlist"  icons={BsHeart} />
+                <MenuItem onClick={() => {}} label="Manage Listing"  icons={BsListUl} />
                 <MenuItem
                   onClick={() => navigate("/user-account")}
-                  label="Account"
+                  label="Account" icons={BsPerson} 
                 />
-                <MenuItem onClick={() => {}} label="Help Center" />
+                <MenuItem onClick={() => {}} label="Help Center"  icons={BsQuestionCircle} />
                 <MenuItem
-                  onClick={() => {}}
+                  onClick={() => {
+                  }}
                   style="text-red-600"
-                  label="Logout"
+                  label="Logout" icons={BsBoxArrowRight} 
                 />
               </>
             ) : (
               <>
-                <MenuItem onClick={() => {}} label="Signup" />
-                <MenuItem onClick={() => {}} label="Login" />
+                <MenuItem onClick={() => {}} label="Signup"  icons={BsBoxArrowInLeft} />
+                <MenuItem onClick={() => {}} label="Login"  icons={BsSignpostSplit} />
               </>
             )}
           </div>

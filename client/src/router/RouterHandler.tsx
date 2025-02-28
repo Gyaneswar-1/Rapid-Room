@@ -14,6 +14,7 @@ import ComeingSoon from "../pages/ComeingSoon";
 import OfflinePage from "../pages/OfflinePage";
 import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
 import AdminConfirm from "../pages/AdminConfirm";
+import { notifyError } from "../lib/Toast";
 
 function RouterHandler() {
   return (
@@ -30,7 +31,10 @@ function RouterHandler() {
               <Route path="book-hotel" element={<BookingPage />} />
               <Route path="add-hotel" element={<AddHotels />} />
               <Route path="admin-confirm" element={<AdminConfirm />} />
-              <Route path="admin-terms" element={<TermsAndConditionsForAdmin />} />
+              <Route
+                path="admin-terms"
+                element={<TermsAndConditionsForAdmin />}
+              />
               <Route path="user-account" element={<AccountLayout />}>
                 <Route index element={<Account />} />
                 <Route path="edit-user" element={<EditUser />} />

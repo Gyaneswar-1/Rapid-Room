@@ -11,13 +11,13 @@ const info = [
 function EditUser() {
   return (
     <div className="h-screen w-screen flex  justify-center">
-      <div className=" w-[1200px]  p-15 flex flex-col gap-2">
+      <div className=" w-full md:w-[1200px]  md:p-15 p-5 flex flex-col gap-2">
         <div>
           <Breadcrumb />
         </div>
-        <h1 className="text-4xl font-semibold">Edit Personal info</h1>
+        <h1 className="md:text-4xl text-[1.8rem] font-semibold">Edit Personal info</h1>
         <div>
-          <div className="flex items-center justify-start pt-12">
+          <div className="flex items-center md:justify-start justify-center pt-12">
             <input
               type="file"
               id="fileInput"
@@ -33,7 +33,7 @@ function EditUser() {
             </label>
           </div>
         </div>
-        <div className="cards mt-18 flex flex-wrap justify-start gap-16 h-full w-4/5 ">
+        <div className="cards mt-18 flex flex-wrap justify-start gap-16 h-full md:w-4/5 w-full ">
           {info.map((e, index) => {
             return <UserFormEdit key={index} {...e} />;
           })}

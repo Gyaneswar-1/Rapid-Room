@@ -1,12 +1,15 @@
 import { Outlet } from 'react-router-dom'
 import MainLogo from "client/src/assets/images/MainLogo.png"
+import Navbar from '../Navbar/Navbar'
 // import Navbar from '../Navbar/Navbar'
 
 function AccountLayout() {
   return (
     <div>
-        <h1>Navbar</h1>
-        <Outlet/>
+        <Navbar show={false}/>
+       <div className='pt-18 pb-88'>
+       <Outlet/>
+       </div>
         <footer className="bg-white">
           <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
             <div className="sm:flex sm:items-center sm:justify-between">
