@@ -20,8 +20,8 @@ export const createAdmin = async (req: Request | any, res: Response | any) => {
                 },
                 data: {
                     isHost: true,
-                    GovID: GovID ? parseInt(GovID) : null,
-                    phoneNumber: phoneNo ? parseInt(phoneNo) : null,
+                    GovID: GovID ? BigInt(GovID) : null,
+                    phoneNumber: phoneNo ? BigInt(phoneNo) : null,
                     address: {
                         create: {
                             street: street,
@@ -32,14 +32,14 @@ export const createAdmin = async (req: Request | any, res: Response | any) => {
                         },
                     },
                 },
-                include: { address: true },
             });
+
             return res
                 .status(200)
                 .json(
                     new ApiResponse(
                         true,
-                        { result },
+                        {},
                         "success to send the data",
                         "success",
                         200,
@@ -59,6 +59,7 @@ export const createAdmin = async (req: Request | any, res: Response | any) => {
                 );
         }
     } catch (error: any) {
+        console.log(error);
         return res
             .status(500)
             .json(new ApiError(false, error, "failed to send ", "failed", 500));
