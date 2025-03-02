@@ -5,6 +5,7 @@ import Section2 from "../components/adminConfirm/Section2";
 import Header from "../components/adminConfirm/Header";
 import ConfirmButton from "../components/adminConfirm/ConfirmButton";
 import { useNavigate } from "react-router-dom";
+import CompareTable from "../components/adminConfirm/CompareTable";
 
 function AdminConfirm() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function AdminConfirm() {
         <Section1 />
         <Section2 />
         <Profit />
+        <CompareTable/>
         <section className="px-12 py-12 pb-12 bg-gray-200 mb-12 rounded-2xl">
           <h2 className="text-xl font-semibold mb-2">1. Eligibility</h2>
           <p className="text-gray-700">
