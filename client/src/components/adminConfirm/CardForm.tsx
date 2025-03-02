@@ -13,6 +13,9 @@ import InputField from "./cardFromComponents/InputField";
 import StateSelector from "./cardFromComponents/StateSelector";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { tuple } from "zod";
+import { useNavigate } from "react-router-dom";
+import { notifyInfo } from "../../lib/Toast";
+import { applyAdmin } from "../../service/admin.service";
 
 type Inputs = {
   phoneNumber: string;
@@ -28,6 +31,8 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
   const countries = Country.getAllCountries();
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
+  const [loading, setLoading] = useState(false);
+  const naviagte = useNavigate()
 
   const {
     register,
@@ -35,7 +40,14 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setLoading(!loading);
+    setTimeout(() => {
+      applyAdmin(data);
+      naviagte("/home")
+      notifyInfo("Thanks for registering yourself");
+    }, 3000);
+  };
 
   return (
     <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center bg-opacity-50 backdrop-brightness-70 backdrop-blur-[2px]">
@@ -92,12 +104,12 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
               name="govID"
               type="text"
               registerValue={{
-                ...register("govID",{
-                  required:{
+                ...register("govID", {
+                  required: {
                     value: true,
-                    message: "This field is required"
-                  }
-                })
+                    message: "This field is required",
+                  },
+                }),
               }}
               errorsFor={errors.govID}
             />
@@ -129,27 +141,27 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
                 errors={errors}
                 name="zip"
                 type="number"
-              registerValue={{
-                ...register("zip", {
-                  required: {
-                    value: true,
-                    message: "this field is required",
-                  },
-                  minLength: {
-                    value: 6,
-                    message: "Must be exactly 6 digits",
-                  },
-                  maxLength: {
-                    value: 6,
-                    message: "Must be exactly 6 digits",
-                  },
-                  pattern: {
-                    value: /^\d{6}$/,
-                    message: "Must be exactly 6 digits",
-                  },
-                }),
-              }}
-              errorsFor={errors.zip}
+                registerValue={{
+                  ...register("zip", {
+                    required: {
+                      value: true,
+                      message: "this field is required",
+                    },
+                    minLength: {
+                      value: 6,
+                      message: "Must be exactly 6 digits",
+                    },
+                    maxLength: {
+                      value: 6,
+                      message: "Must be exactly 6 digits",
+                    },
+                    pattern: {
+                      value: /^\d{6}$/,
+                      message: "Must be exactly 6 digits",
+                    },
+                  }),
+                }}
+                errorsFor={errors.zip}
               />
               <InputField
                 title="Street"
@@ -158,25 +170,33 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
                 errors={errors}
                 name="street"
                 type="text"
-              registerValue={{
-                ...register("street", {
-                  required: {
-                    value: true,
-                    message: "this field is required",
-                  },
-                  
-                }),
-              }}
-              errorsFor={errors.zip}
+                registerValue={{
+                  ...register("street", {
+                    required: {
+                      value: true,
+                      message: "this field is required",
+                    },
+                  }),
+                }}
+                errorsFor={errors.zip}
               />
             </div>
-
-            <div className="bg-teal-600 text-white cursor-pointer py-1 flex justify-center items-center mt-5 rounded-md border-2 border-neutral-400">
-              {/* <button type="submit" className="text-lg">
-                Submit
-              </button> */}
-              <input type="submit" />
-            </div>
+            <button
+              type="submit"
+              className={`w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border-2 border-neutral-400 text-lg w-fill h-full ${
+                loading
+                  ? " cursor-wait pointer-events-none opacity-50"
+                  : "cursor-pointer opacity-100"
+              }`}
+            >
+              {loading ? (
+                <>
+                  <div className="w-5 h-5 my-1 border-2 border-t-blue-500 border-teal-900 rounded-full animate-spin"></div>
+                </>
+              ) : (
+                <>Submit</>
+              )}
+            </button>
           </form>
         </div>
       </div>

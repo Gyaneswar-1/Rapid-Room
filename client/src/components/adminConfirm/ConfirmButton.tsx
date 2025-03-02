@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { notifyInfo } from "../../lib/Toast";
 import { useState } from "react";
 import CardForm from "./CardForm";
 import { motion } from "framer-motion";
@@ -29,7 +28,6 @@ function ConfirmButton() {
                     className="underline text-blue-700 cursor-pointer"
                     onClick={() => {
                       navigate("/admin-terms");
-                      notifyInfo("Thanks for registering yourself");
                     }}
                   >
                     terms and conditions.
@@ -42,11 +40,10 @@ function ConfirmButton() {
         <button
           onClick={() => {
             setShowCard(!showCard);
-            notifyInfo("Thanks for applying for Host ");
           }}
           className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
         >
-          Apply for Admin
+          Apply for Host
         </button>
       </div>
       {showCard && (
