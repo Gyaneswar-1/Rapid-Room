@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 function ConfirmButton() {
   const [showCard, setShowCard] = useState(false);
+  const [checkbox, setCheckbox] = useState(false);
   const navigate = useNavigate();
   return (
     <div>
@@ -16,8 +17,11 @@ function ConfirmButton() {
                 &#8203;
                 <input
                   type="checkbox"
-                  className="size-4 rounded-sm border-gray-300 cursor-pointer"
+                  className="size-5 rounded-4xl cursor-pointer"
                   id="Option1"
+                  onClick={() => {
+                    setCheckbox(!checkbox);
+                  }}
                 />
               </div>
 
@@ -25,7 +29,7 @@ function ConfirmButton() {
                 <strong className="font-medium text-gray-900">
                   I agree with the
                   <span
-                    className="underline text-blue-700 cursor-pointer"
+                    className="underline  pl-1.5 text-blue-700 cursor-pointer"
                     onClick={() => {
                       navigate("/admin-terms");
                     }}
@@ -37,14 +41,23 @@ function ConfirmButton() {
             </label>
           </div>
         </fieldset>
-        <button
-          onClick={() => {
-            setShowCard(!showCard);
-          }}
-          className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
-        >
-          Apply for Host
-        </button>
+
+        {checkbox ? (
+          <button
+            onClick={() => {
+              setShowCard(!showCard);
+            }}
+            className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
+          >
+            Apply for Host
+          </button>
+        ) : (
+          <button
+            className="inline-block rounded-sm cursor-not-allowed  bg-teal-600 opacity-50 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
+          >
+            Apply for Host
+          </button>
+        )}
       </div>
       {showCard && (
         <motion.div

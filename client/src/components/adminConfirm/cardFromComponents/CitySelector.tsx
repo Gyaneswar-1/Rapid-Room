@@ -1,17 +1,20 @@
 import { City } from "country-state-city";
 import React, { useState, useRef, useEffect } from "react";
+import { UseFormSetValue } from "react-hook-form";
 import { CiBank } from "react-icons/ci";
 
 interface CountryData {
   CountryIsoCode: string;
   StateIsoCode: string;
   register: any;
+  setValue:UseFormSetValue<any>
 }
 
 const CitySelector: React.FC<CountryData> = ({
   CountryIsoCode,
   StateIsoCode,
   register,
+  setValue,
 }) => {
   const cities = City.getCitiesOfState(CountryIsoCode, StateIsoCode) || [];
   const [search, setSearch] = useState("");
@@ -41,6 +44,7 @@ const CitySelector: React.FC<CountryData> = ({
     setSearch(cityName);
     setFilteredCities([]);
     setDropdownOpen(false);
+    setValue("city",cityName)
   };
 
   // Close dropdown when clicking outside

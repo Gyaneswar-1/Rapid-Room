@@ -10,12 +10,10 @@ export const applyAdmin = async (data: {
   zip: number;
   street: string;
 }) => {
-    console.log("sent data",data);
   try {
     const result = await axios.post(`${API}/user/create-admin`, data, {
       withCredentials: true,
     });
-    console.log(result);
     return result;
   } catch (error) {
     console.log(error);

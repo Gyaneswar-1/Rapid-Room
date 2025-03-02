@@ -12,7 +12,6 @@ import CitySelector from "./cardFromComponents/CitySelector";
 import InputField from "./cardFromComponents/InputField";
 import StateSelector from "./cardFromComponents/StateSelector";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { tuple } from "zod";
 import { useNavigate } from "react-router-dom";
 import { notifyInfo } from "../../lib/Toast";
 import { applyAdmin } from "../../service/admin.service";
@@ -32,19 +31,19 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
-  const naviagte = useNavigate()
+  const naviagte = useNavigate();
 
   const {
     register,
     handleSubmit,
-    watch,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(!loading);
     setTimeout(() => {
       applyAdmin(data);
-      naviagte("/home")
+      naviagte("/home");
       notifyInfo("Thanks for registering yourself");
     }, 3000);
   };
@@ -120,17 +119,20 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
                 countries={countries}
                 setCountry={setCountry}
                 register={register}
+                setValue={setValue}
               />
               <StateSelector
                 setState={setState}
                 countryCode={country}
                 register={register}
+                setValue={setValue}
               />
             </div>
             <CitySelector
               CountryIsoCode={country}
               StateIsoCode={state}
               register={register}
+              setValue={setValue}
             />
 
             <div>
@@ -181,22 +183,22 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
                 errorsFor={errors.zip}
               />
             </div>
-            <button
-              type="submit"
-              className={`w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border-2 border-neutral-400 text-lg w-fill h-full ${
-                loading
-                  ? " cursor-wait pointer-events-none opacity-50"
-                  : "cursor-pointer opacity-100"
-              }`}
-            >
-              {loading ? (
-                <>
-                  <div className="w-5 h-5 my-1 border-2 border-t-blue-500 border-teal-900 rounded-full animate-spin"></div>
-                </>
-              ) : (
-                <>Submit</>
-              )}
-            </button>
+            {loading ? (
+              <button
+                className="w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border opacity-55 border-neutral-700 text-lg w-fill h-full cursor-not-allowed "
+              >
+                <div className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-neutral-50  rounded-full" role="status" aria-label="loading">
+  <span className="sr-only">Loading...</span>
+</div>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border border-neutral-900 text-lg w-fill h-full cursor-pointer opacity-100"
+             >
+                Submit
+              </button>
+            )}
           </form>
         </div>
       </div>

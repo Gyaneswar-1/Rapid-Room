@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { BiDownArrow } from "react-icons/bi";
 import { State } from "country-state-city";
+import { UseFormSetValue } from "react-hook-form";
 
 interface StateData {
   name: string;
@@ -12,11 +13,16 @@ interface Selectorstate {
   setState: (state: string) => void;
   countryCode: string;
   register: any;
+  setValue: UseFormSetValue<any>;
 }
 
-function StateSelector({ setState, countryCode, register }: Selectorstate) {
+function StateSelector({
+  setState,
+  countryCode,
+  register,
+  setValue,
+}: Selectorstate) {
   const state = State.getStatesOfCountry(countryCode);
-  console.log(state);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedState, setSelectedState] = useState<StateData | null>(null);
   const [search, setSearch] = useState("");
@@ -33,7 +39,7 @@ function StateSelector({ setState, countryCode, register }: Selectorstate) {
       setShowDropdown(false);
     } else {
       const filtered = state.filter((state) =>
-        state.name.toLowerCase().includes(value.toLowerCase()),
+        state.name.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredCountries(filtered);
       setShowDropdown(filtered.length > 0);
@@ -45,6 +51,7 @@ function StateSelector({ setState, countryCode, register }: Selectorstate) {
     setSelectedState(state);
     setState(state.isoCode);
     setSearch(state.name);
+    setValue("state", state.name);
     setShowDropdown(false);
   };
 
