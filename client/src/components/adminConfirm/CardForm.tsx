@@ -12,9 +12,10 @@ import CitySelector from "./cardFromComponents/CitySelector";
 import InputField from "./cardFromComponents/InputField";
 import StateSelector from "./cardFromComponents/StateSelector";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { tuple } from "zod";
 
 type Inputs = {
-  phoneNumber: number;
+  phoneNumber: string;
   govID: number;
   country: string;
   state: string;
@@ -24,20 +25,17 @@ type Inputs = {
 };
 
 function CardForm({ show }: { show: (value: boolean) => void }) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-
   const countries = Country.getAllCountries();
-
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log("Form Data:", data);
-  };
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center bg-opacity-50 backdrop-brightness-70 backdrop-blur-[2px]">
@@ -60,17 +58,48 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
               title="Phone No"
               placeholder="+91 234 234 54"
               logo={CiPhone}
-              register={register}
               errors={errors}
               name="phoneNumber"
+              type="number"
+              registerValue={{
+                ...register("phoneNumber", {
+                  required: {
+                    value: true,
+                    message: "Phone number is required",
+                  },
+                  minLength: {
+                    value: 10,
+                    message: "Ph number must be exactly 10 digits",
+                  },
+                  maxLength: {
+                    value: 10,
+                    message: "Ph number must be exactly 10 digits",
+                  },
+                  pattern: {
+                    value: /^\d{10}$/,
+                    message: "Ph number must be exactly 10 digits",
+                  },
+                }),
+              }}
+              errorsFor={errors.phoneNumber}
             />
+
             <InputField
               title="Gov ID"
               placeholder="ID number"
               logo={CiCreditCard1}
-              register={register}
               errors={errors}
               name="govID"
+              type="text"
+              registerValue={{
+                ...register("govID",{
+                  required:{
+                    value: true,
+                    message: "This field is required"
+                  }
+                })
+              }}
+              errorsFor={errors.govID}
             />
 
             <h1>Address:</h1>
@@ -97,24 +126,56 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
                 title="Zip Code"
                 placeholder="eg. 233445"
                 logo={CiLocationArrow1}
-                register={register}
                 errors={errors}
                 name="zip"
+                type="number"
+              registerValue={{
+                ...register("zip", {
+                  required: {
+                    value: true,
+                    message: "this field is required",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Must be exactly 6 digits",
+                  },
+                  maxLength: {
+                    value: 6,
+                    message: "Must be exactly 6 digits",
+                  },
+                  pattern: {
+                    value: /^\d{6}$/,
+                    message: "Must be exactly 6 digits",
+                  },
+                }),
+              }}
+              errorsFor={errors.zip}
               />
               <InputField
                 title="Street"
                 placeholder="eg. 256 Boulevard"
                 logo={CiLocationOn}
-                register={register}
                 errors={errors}
                 name="street"
+                type="text"
+              registerValue={{
+                ...register("street", {
+                  required: {
+                    value: true,
+                    message: "this field is required",
+                  },
+                  
+                }),
+              }}
+              errorsFor={errors.zip}
               />
             </div>
 
             <div className="bg-teal-600 text-white cursor-pointer py-1 flex justify-center items-center mt-5 rounded-md border-2 border-neutral-400">
-              <button type="submit" className="text-lg">
+              {/* <button type="submit" className="text-lg">
                 Submit
-              </button>
+              </button> */}
+              <input type="submit" />
             </div>
           </form>
         </div>

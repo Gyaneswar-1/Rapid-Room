@@ -79,6 +79,7 @@ function StateSelector({ setState, countryCode, register }: Selectorstate) {
           value={search}
           onChange={handleSearch}
           onFocus={() => setShowDropdown(filteredCountries.length > 0)}
+          required
         />
       </div>
 

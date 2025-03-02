@@ -6,19 +6,25 @@ interface InputFieldProps {
   placeholder: string;
   logo: IconType;
   type?: string;
-  register: any;
   name: string;
   errors?: any;
+  errorsFor?: any;
+  minLength?:any;
+  maxLength?:any;
+  pattern?:any;
+  registerValue?:any
 }
 
 function InputField({
   title,
   placeholder,
   logo: Logo,
-  type = "text",
-  register,
+  type,
   name,
   errors,
+  errorsFor,
+ 
+  registerValue
 }: InputFieldProps) {
   return (
     <div>
@@ -27,13 +33,11 @@ function InputField({
         className="flex justify-between w-full text-md font-medium text-gray-700"
       >
         {title}
-        <div className="font-semibold italic text-rose-500">
-          error message
-          {errors?.[name] && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors[name].message} error message
-            </p>
-          )}
+        <div className=" text-sm italic text-rose-500">
+          {
+            errorsFor && <span>{errorsFor.message}</span>
+          }
+          
         </div>
       </label>
       <div className="flex items-center mt-1 p-2 w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border focus-within:border-neutral-950">
@@ -43,7 +47,8 @@ function InputField({
           id={name}
           placeholder={placeholder}
           className="w-full outline-none"
-          {...register(name)}
+          
+          {...registerValue}
         />
       </div>
     </div>
@@ -51,3 +56,4 @@ function InputField({
 }
 
 export default InputField;
+

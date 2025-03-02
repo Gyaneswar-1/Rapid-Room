@@ -83,6 +83,7 @@ function CountrySelector({
           value={search}
           onChange={handleSearch}
           onFocus={() => setShowDropdown(filteredCountries.length > 0)}
+          required
         />
       </div>
 

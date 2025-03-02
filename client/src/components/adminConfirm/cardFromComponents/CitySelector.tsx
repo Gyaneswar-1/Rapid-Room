@@ -75,6 +75,7 @@ const CitySelector: React.FC<CountryData> = ({
           className="w-full outline-none"
           value={search}
           onChange={handleSearch}
+          required
         />
       </div>
 
