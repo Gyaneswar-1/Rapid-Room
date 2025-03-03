@@ -8,7 +8,7 @@ import {
   CiMoneyBill,
   CiUser,
 } from "react-icons/ci";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const card = [
   {
@@ -50,11 +50,15 @@ const card = [
 ];
 
 function Account() {
+  const navigate = useNavigate()
   return (
-    <div className="h-screen w-screen flex pt-12  justify-center">
-      <div className=" md:w-[1200px]  md:p-15 p-2 flex flex-col gap-2">
+    <div className="h-screen w-screen flex md:pt-0 pt-12 justify-center">
+      <div className=" md:w-[1200px] md:p-15 p-2 flex flex-col gap-2">
         <h1 className="text-4xl font-semibold">Your Account</h1>
         <p>edit & view your details</p>
+        <span>switch to <a onClick={()=>{
+          navigate("/user-profile")
+        }} >user-profile</a></span>
         <div className="cards mt-20 flex flex-wrap  gap-6 md:justify-start justify-start w-full ">
           {card.map((c, index) => (
             <Cards

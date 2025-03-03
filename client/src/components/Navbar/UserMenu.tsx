@@ -90,7 +90,7 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
           whileHover="hover"
           whileTap="pressed"
           onClick={controlSetIsOpen}
-          className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+          className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 hidden md:flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
@@ -105,7 +105,7 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
           animate="visible"
           className="absolute rounded-xl  shadow-xl w-fit md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm z-20 " // Adjusted z-index
         >
-          <div className="flex flex-col cursor-pointer my-2">
+          <div className= " flex flex-col cursor-pointer my-2">
             {isLoggedIn ? (
               <>
                 <MenuItem onClick={() => {}} label="Message" icons={BsChat} />

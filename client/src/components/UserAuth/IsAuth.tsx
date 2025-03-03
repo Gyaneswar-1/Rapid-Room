@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet,Navigate } from 'react-router-dom'
+import BottomNav from '../BottomNav'
 
 function IsAuth() {
     const isLoggedIn = localStorage.getItem("loggedin")
@@ -12,7 +13,10 @@ function IsAuth() {
     }
     
   return (
+    <>
     <Outlet/>
+    <BottomNav/>
+    </>
   )
 }
 
