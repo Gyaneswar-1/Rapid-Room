@@ -39,6 +39,10 @@ app.use(
     }),
 );
 
+//healthCheck
+import healthCheckRoute from "./routes/healthCheck.routes.js";
+app.use("/api/v1/healthcheck",healthCheckRoute);
+
 //user authentication
 import userRouter from "./routes/user.routes.js";
 app.use("/api/v1/user", userRouter);
