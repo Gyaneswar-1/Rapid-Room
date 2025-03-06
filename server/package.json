@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "build": "tsc -b",
-        "dev": "nodemon dist/index.js",
+        "dev": "node dist/index.js",
         "start": "tsc -b && nodemon dist/index.js"
     },
     "author": "gynaeswar_and_bibek",
