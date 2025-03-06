@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import { UseFormSetValue } from "react-hook-form"; 
+import { UseFormSetValue } from "react-hook-form";
 
 interface CountryData {
   name: string;
