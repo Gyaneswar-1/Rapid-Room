@@ -1,4 +1,3 @@
-import React from "react";
 import { IconType } from "react-icons";
 
 interface InputFieldProps {
@@ -21,7 +20,6 @@ function InputField({
   logo: Logo,
   type,
   name,
-  errors,
   errorsFor,
  
   registerValue

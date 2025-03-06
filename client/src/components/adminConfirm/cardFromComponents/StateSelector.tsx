@@ -1,7 +1,6 @@
+import { State } from "country-state-city";
 import { motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
-import { BiDownArrow } from "react-icons/bi";
-import { State } from "country-state-city";
 import { UseFormSetValue } from "react-hook-form";
 
 interface StateData {
@@ -25,6 +24,7 @@ function StateSelector({
   const state = State.getStatesOfCountry(countryCode);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedState, setSelectedState] = useState<StateData | null>(null);
+  console.log(selectedState)
   const [search, setSearch] = useState("");
   const [filteredCountries, setFilteredCountries] = useState<StateData[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);

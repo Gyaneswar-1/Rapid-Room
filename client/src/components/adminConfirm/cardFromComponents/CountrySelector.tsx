@@ -25,6 +25,7 @@ function CountrySelector({
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(
     null
   );
+  console.log(selectedCountry)
   const [search, setSearch] = useState("");
   const [filteredCountries, setFilteredCountries] = useState<CountryData[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);

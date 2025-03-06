@@ -11,7 +11,7 @@ import Loader from "../components/Reusable/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import {
-  flipSignUp,
+  
   flipSignin,
 } from "../store/reducers/showAuthCard.reducers";
 
@@ -60,7 +60,7 @@ function Home() {
 
   const dispatch: AppDispatch = useDispatch();
   async function delay() {
-    await new Promise((res, rej) => {
+    await new Promise((res) => {
       setTimeout(() => {
         res("");
       }, 1500);

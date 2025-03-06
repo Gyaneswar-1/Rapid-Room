@@ -7,7 +7,7 @@ export async function logOutServices() {
   //cleare the cookie (done)
   // navigate the user to the welcome page (done)
   // show the card sign up
-  await new Promise((res, rej) => {
+  await new Promise((res) => {
     setTimeout(() => {
       res("");
     }, 1000);
@@ -16,6 +16,7 @@ export async function logOutServices() {
     const res = await axios.get(`${API}/user/logout`, {
       withCredentials: true,
     });
+    console.log(res);
     localStorage.removeItem("loggedin");
     return { success: true };
   } catch (error) {

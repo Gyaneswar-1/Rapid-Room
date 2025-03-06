@@ -6,7 +6,7 @@ const info = [
   { title: "Email address", content: "gyan*******5.com", button: "edit" },
   { title: "phone number", content: "826****52", button: "add" },
 ];
-
+console.log(info)
 function PersonalAddress() {
   return (
     <div className="h-screen w-screen flex  justify-center">

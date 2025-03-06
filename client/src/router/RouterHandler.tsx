@@ -1,21 +1,20 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Offline, Online } from "react-detect-offline";
-import Home from "../pages/Home";
-import Welcome from "../pages/Welcome";
-import ErrorPage from "../pages/ErrorPage";
-import BookingPage from "../pages/BookingPage";
-import AddHotels from "../pages/AddHotels";
-import Account from "../pages/Account";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
+import AccountLayout from "../components/Useraccount/AccountLayout";
 import EditUser from "../components/Useraccount/EditUser";
 import PersonalAddress from "../components/Useraccount/PersonalAddress";
-import AccountLayout from "../components/Useraccount/AccountLayout";
 import IsAuth from "../components/UserAuth/IsAuth";
-import ComeingSoon from "../pages/ComeingSoon";
-import OfflinePage from "../pages/OfflinePage";
-import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
+import Account from "../pages/Account";
+import AddHotels from "../pages/AddHotels";
 import AdminConfirm from "../pages/AdminConfirm";
-import { notifyError } from "../lib/Toast";
+import BookingPage from "../pages/BookingPage";
+import ComeingSoon from "../pages/ComeingSoon";
+import ErrorPage from "../pages/ErrorPage";
+import Home from "../pages/Home";
+import OfflinePage from "../pages/OfflinePage";
 import UserProfile from "../pages/UserProfile";
+import Welcome from "../pages/Welcome";
 
 function RouterHandler() {
   return (

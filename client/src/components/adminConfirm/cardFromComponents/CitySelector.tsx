@@ -1,5 +1,5 @@
 import { City } from "country-state-city";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { CiBank } from "react-icons/ci";
 

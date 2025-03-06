@@ -1,4 +1,4 @@
-import React from "react";
+
 import Cards from "../components/Useraccount/edituser/Cards";
 import {
   CiBellOn,
@@ -8,7 +8,7 @@ import {
   CiMoneyBill,
   CiUser,
 } from "react-icons/ci";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const card = [
   {

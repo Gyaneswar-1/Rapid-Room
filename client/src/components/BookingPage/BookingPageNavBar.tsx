@@ -1,12 +1,9 @@
 
-import React from 'react'
+import React from 'react';
 
-import MainLogo from "../../assets/images/MainLogo.png";
-import { useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
-import Avatar from '../Avatar';
-import UserMenu from '../Navbar/UserMenu';
 import { useNavigate } from 'react-router-dom';
+import MainLogo from "../../assets/images/MainLogo.png";
+import UserMenu from '../Navbar/UserMenu';
 
 function BookingPageNavbar() {
   const navigate = useNavigate();
@@ -42,7 +39,7 @@ interface MenuItemsPropes{
     onClick:() => void;
     label:string;
 }
-const MenuItem :React.FC<MenuItemsPropes> = ({
+export const MenuItem :React.FC<MenuItemsPropes> = ({
     onClick,
     label
     }) =>{

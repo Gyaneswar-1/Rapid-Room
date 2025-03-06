@@ -1,7 +1,6 @@
-import { useState } from "react";
 
 function HotelSearch() {
-  const [option, showOption] = useState(false);
+  // const [option, showOption] = useState(false);
   return (
     <div className=" pt-10">
       <form className="flex items-center max-w-sm mx-auto">

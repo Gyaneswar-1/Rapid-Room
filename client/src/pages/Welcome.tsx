@@ -1,20 +1,19 @@
-import { useState } from "react";
-import Offer from "../components/welcomePage/Offer";
-import UserReview from "../components/welcomePage/UserReview";
-import WhyBest from "../components/welcomePage/WhyBest";
-import Signin from "../components/UserAuth/Signin";
-import Signup from "../components/UserAuth/Signup";
-import Stat from "../components/welcomePage/Stat";
-import WelcomePagenavBar from "../components/welcomePage/WelcomePagenavBar";
-import HeroSection from "../components/welcomePage/HeroSection";
+
 import Footer from "../components/Reusable/Footer";
 import Loader from "../components/Reusable/Loader";
+import Signin from "../components/UserAuth/Signin";
+import Signup from "../components/UserAuth/Signup";
+import HeroSection from "../components/welcomePage/HeroSection";
+import Offer from "../components/welcomePage/Offer";
+import Stat from "../components/welcomePage/Stat";
+import UserReview from "../components/welcomePage/UserReview";
+import WelcomePagenavBar from "../components/welcomePage/WelcomePagenavBar";
+import WhyBest from "../components/welcomePage/WhyBest";
 
 
 //store and state management //comment remove karibani kehi
-import {  RootState } from "../store/store";
 import { useSelector } from "react-redux";
-import {setShowLoader} from "../store/reducers/loader.reducer" 
+import { RootState } from "../store/store";
 
 
 function Welcome() {

@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { FaStar } from 'react-icons/fa'
-import {AllReviewCard} from "../reviewsSubcomponents/exportreviewSubComponents"
+import { AllReviewCard } from "../reviewsSubcomponents/exportreviewSubComponents";
 
 const ReviewsPannel = ({totalReviews}:{totalReviews:number}) => {
-  const [reviewCards,setReviewCards] = useState([
+  const [reviewCards] = useState([
       {
         reviewerImage:
           "https://tse2.mm.bing.net/th?id=OIP.tZJ1pKobeZWWO16pHS3BfwHaE8&pid=Api&P=0&h=180",

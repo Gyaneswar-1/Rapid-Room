@@ -1,9 +1,9 @@
 // src/components/Page1.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 const Page1 = ({ register, errors }:{register:any,errors:any}) => {
-
+  console.log(errors)
  const [guests,setGuests] = useState(1);
  const [beds,setBeds] = useState(1);
  const [bathrooms,setBathrooms] = useState(1);

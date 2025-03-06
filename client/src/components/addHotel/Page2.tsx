@@ -49,7 +49,7 @@ const Page2 = ({ register, errors }: { register: any; errors: any }) => {
   const [selectedItems, setSelectedItems] = React.useState<Set<string>>(
     new Set()
   );
-
+  console.log(register,errors)
   const handleSelection = (name: any) => {
     setSelectedItems((prev: Set<string>) => {
       const newSet = new Set(prev);

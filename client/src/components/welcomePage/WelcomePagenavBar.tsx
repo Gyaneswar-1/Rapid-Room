@@ -1,13 +1,12 @@
-import MainLogo from "../../assets/images/MainLogo.png"
-import LoadingButton from "../Reusable/LoadingButton";
+import MainLogo from "../../assets/images/MainLogo.png";
 import { logOutServices } from "../../service/userAuth/logOutServices";
 import UserMenu from "../Navbar/UserMenu";
 
 //state management
-import { AppDispatch, RootState } from "../../store/store";
-import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
-import {setShowLoader} from "../../store/reducers/loader.reducer"
+import { setShowLoader } from "../../store/reducers/loader.reducer";
+import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
+import { AppDispatch, RootState } from "../../store/store";
 
 
 

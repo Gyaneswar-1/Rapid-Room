@@ -1,5 +1,5 @@
 // src/components/Page3.jsx
-import React from 'react';
+
 
 const Page3 = ({ register, errors }:{ register:any, errors:any }) => {
   return (

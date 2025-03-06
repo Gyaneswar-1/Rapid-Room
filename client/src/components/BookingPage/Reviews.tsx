@@ -12,7 +12,7 @@ export default function Reviews() {
   const dispatch: AppDispatch = useDispatch();
   
 
-  const [reviewCards,setReviewCards] = useState([
+  const [reviewCards] = useState([
     {
       reviewerImage:
         "https://tse2.mm.bing.net/th?id=OIP.tZJ1pKobeZWWO16pHS3BfwHaE8&pid=Api&P=0&h=180",

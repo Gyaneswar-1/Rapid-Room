@@ -11,6 +11,7 @@ function Card({
   image,
   overalRating,
 }: any) {
+  console.log(id)
   return (
     <div
       className="h-fit md:w-80 w-72 cursor-pointer rounded-2xl  text-black shadow-2xl"

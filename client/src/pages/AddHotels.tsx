@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar/Navbar';
 import Page1 from '../components/addHotel/Page1';
 import Page2 from '../components/addHotel/Page2';
 import Page3 from '../components/addHotel/Page3';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 

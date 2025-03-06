@@ -5,7 +5,7 @@ import googleLogo from "../../assets/icons/google.logo.png";
 import { SigninType } from "@bibek-samal/traveltrove";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signinManual } from "../../service/exportServices";
-import { replace, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { notifyError, notifySuccess} from "../../lib/Toast";
 
 //state management

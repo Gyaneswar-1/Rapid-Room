@@ -10,7 +10,7 @@ import Reviews from "../components/BookingPage/Reviews";
 import BookingPageNavbar from "../components/BookingPage/BookingPageNavBar";
 import BookingPageSkeliton from "../components/skelitions/BookingPageSkeliton";
 import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 
 //state management
 import { AppDispatch, RootState } from "../store/store";
@@ -28,13 +28,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function BookingPage() {
   //delay functon
-  async function delay() {
-    await new Promise((res) => {
-      setTimeout(() => {
-        res("");
-      }, 1500);
-    });
-  }
+  // async function delay() {
+  //   await new Promise((res) => {
+  //     setTimeout(() => {
+  //       res("");
+  //     }, 1500);
+  //   });
+  // }
 
   //state management
   const { showAllReview } = useSelector(
@@ -50,9 +50,9 @@ export default function BookingPage() {
     aboutHost,
   } = useSelector((state: RootState) => state.singleHotelReducer);
   const dispatch: AppDispatch = useDispatch();
-
+  console.log(hotelType,hotelImages)
   const [showSkeliton, setShowSkeliton] = useState(true);
-  const navigate = useNavigate();
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = Number(queryParams.get("hotelId"));

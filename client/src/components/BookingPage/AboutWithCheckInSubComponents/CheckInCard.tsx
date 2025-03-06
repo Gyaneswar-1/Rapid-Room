@@ -1,6 +1,6 @@
 //fortesting purpose
+import { SubmitHandler, useForm } from "react-hook-form";
 import checkInHandler from "../../../service/checkin/checkInService";
-import { useForm, SubmitHandler } from "react-hook-form";
 
 type checkInType = {
   checkInDate: string; // Date input, stored as string
@@ -10,15 +10,12 @@ type checkInType = {
 
 
 //state management
-import { AppDispatch, RootState } from "../../../store/store";
-import { setStayingFor,setTotalAmount } from "../../../store/reducers/checkIn.reducer";
 import { useDispatch, useSelector } from "react-redux";
+import { setStayingFor, setTotalAmount } from "../../../store/reducers/checkIn.reducer";
+import { AppDispatch, RootState } from "../../../store/store";
 
-import { handelReservation } from "../../../service/checkin/handelReservation";
 
-import { notifyError, notifySuccess } from "../../../lib/Toast";
-import { useNavigate } from "react-router-dom";
-import { GiDuration } from "react-icons/gi";
+import { notifyError } from "../../../lib/Toast";
 
 export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: any) {
 
@@ -27,7 +24,7 @@ export default function CheckInCard({ perNight, cleaningFee, numberOfGuests }: a
   const {hotelId} = useSelector((state: RootState)=> state.singleHotelReducer)
   const dispatch: AppDispatch = useDispatch();
 
-  const navigate = useNavigate();
+  
 
   const {
     register,

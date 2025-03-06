@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
 import { setSearch } from "../../store/reducers/search.reducer";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../store/store";
 
 function Search() {
   //for temporary serch purpose
-  const { search} = useSelector(
-    (state: RootState) => state.searchReducer
-  );
+  // const { search} = useSelector(
+  //   (state: RootState) => state.searchReducer
+  // );
   const dispatch: AppDispatch = useDispatch();
   const [searchValue,setSearchValue] = useState("");
   return (
@@ -48,7 +48,8 @@ function Search() {
             }}
             />
           <div
-            onClick={(e) => {
+            onClick={() => {
+              
                 dispatch(setSearch(searchValue));
             }}
             className="p-2 bg-cyan-600 rounded-full text-white"

@@ -1,6 +1,6 @@
 import { CiShoppingTag } from "react-icons/ci"
 import { IoKeyOutline } from "react-icons/io5"
-import { LuMousePointerBan, LuParkingMeter } from "react-icons/lu"
+import { LuMousePointerBan} from "react-icons/lu"
 import { TfiSpray } from "react-icons/tfi"
 import { TiMessage } from "react-icons/ti"
 import left from "../../../assets/images/left.avif"
