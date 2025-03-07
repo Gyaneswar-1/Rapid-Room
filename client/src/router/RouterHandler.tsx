@@ -19,33 +19,30 @@ import Welcome from "../pages/Welcome";
 function RouterHandler() {
   return (
     <>
-      <Online>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/comeingsoon" element={<ComeingSoon />} />
-            <Route path="/offline" element={<OfflinePage />} />
-            {/* need authentication to access */}
-            <Route element={<IsAuth />} >
-              <Route path="book-hotel" element={<BookingPage />} />
-              <Route path="add-hotel" element={<AddHotels />} />
-              <Route path="admin-confirm" element={<AdminConfirm />} />
-              <Route path="admin-terms" element={<TermsAndConditionsForAdmin />}/>
-              <Route path="user-profile" element={<UserProfile />}/>
-              <Route path="user-account" element={<AccountLayout />}>
-                <Route index element={<Account />} />
-                <Route path="edit-user" element={<EditUser />} />
-                <Route path="personal-address" element={<PersonalAddress />} />
-              </Route>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/comeingsoon" element={<ComeingSoon />} />
+          {/* need authentication to access */}
+          <Route element={<IsAuth />}>
+            <Route path="book-hotel" element={<BookingPage />} />
+            <Route path="add-hotel" element={<AddHotels />} />
+            <Route path="admin-confirm" element={<AdminConfirm />} />
+            <Route
+              path="admin-terms"
+              element={<TermsAndConditionsForAdmin />}
+            />
+            <Route path="user-profile" element={<UserProfile />} />
+            <Route path="user-account" element={<AccountLayout />}>
+              <Route index element={<Account />} />
+              <Route path="edit-user" element={<EditUser />} />
+              <Route path="personal-address" element={<PersonalAddress />} />
             </Route>
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </BrowserRouter>
-      </Online>
-      <Offline>
-        <OfflinePage />
-      </Offline>
+          </Route>
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

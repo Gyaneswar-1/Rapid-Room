@@ -19,7 +19,7 @@ export const instance = new Razorpay({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin:true, credentials: true }));
+app.use(cors({ origin:true, credentials: true }));  //["http://localhost:5173","https://rapid-room-client.onrender.com/"]
 app.use(cookieParser());
 app.use(passport.initialize());
 
