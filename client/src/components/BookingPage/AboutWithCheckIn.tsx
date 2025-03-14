@@ -12,7 +12,7 @@ type aboutWithCheckOut = {
   aboutThisPlace: string
   perNight: number,
   cleaningFee: number,
-  numberOfGuests: number
+  numberOfGuests: number 
 }
 export default function AboutWithCheckout({country,state,roomType,overalRating,totalReviews,hostImage,hostName,hostExperienceYear, aboutThisPlace, perNight, cleaningFee, numberOfGuests}:aboutWithCheckOut) {
   return (

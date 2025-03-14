@@ -6,7 +6,7 @@ type mapPropType = {
   city: string,
   state: string,
   street: string,
-}
+} 
 
 export default function MapShowcase({longitude,latitude,country,city,state,street}:mapPropType) {
     return (

@@ -3,7 +3,7 @@ import {MeetHostCard, AboutHost} from "./meetHostSubcomponents/exportMeetHostSub
 
 export type meetHostpropType = {
   hostImage:string, hostName:string, totalReveiws:number, hostRating:number, hostExperienceYear:number, hostResponseRate:number
-}
+} 
 
 export default function MeetHost({hostImage, hostName, totalReveiws, hostRating, hostExperienceYear, hostResponseRate}:meetHostpropType) {
   return (
