@@ -8,6 +8,7 @@ import {
   CiLocationOn,
   CiPhone,
 } from "react-icons/ci";
+import {motion} from "motion/react"
 import CitySelector from "./cardFromComponents/CitySelector";
 import InputField from "./cardFromComponents/InputField";
 import StateSelector from "./cardFromComponents/StateSelector";
@@ -52,12 +53,18 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
     <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center bg-opacity-50 backdrop-brightness-70 backdrop-blur-[2px]">
       <div className="w-full mx-2 md:mx-0 md:w-fit md:h-fit md:p-8 px-4 py-4 rounded-xl border-2 border-neutral-500 bg-neutral-50">
         <div className="flex md:flex-row flex-col">
-          <button
+          <motion.button
+          whileHover={{
+            scale:1.08
+          }}
+          whileTap={{
+            scale:0.91
+          }}
             className="cursor-pointer h-fit w-fit p-2 mb-2 bg-black rounded-md text-white"
             onClick={() => show(false)}
           >
             <TfiClose />
-          </button>
+          </motion.button>
           <h1 className="text-2xl font-semibold pb-7 w-full flex justify-center mr-[26px]">
             Basic Info
           </h1>
@@ -192,12 +199,18 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
 </div>
               </button>
             ) : (
-              <button
+              < motion.button
+              whileHover={{
+                scale:1.02
+              }}
+              whileTap={{
+                scale:0.95
+              }}
                 type="submit"
                 className="w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border border-neutral-900 text-lg w-fill h-full cursor-pointer opacity-100"
              >
                 Submit
-              </button>
+              </ motion.button>
             )}
           </form>
         </div>

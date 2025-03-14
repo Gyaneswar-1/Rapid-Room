@@ -1,8 +1,23 @@
+import {motion} from 'motion/react'
+
 function Profit() {
   return (
     <>
       <section className="flex w-full md:flex-row flex-col md:gap-4 gap-8 justify-evenly py-12 md:px-10">
-        <div className="w-full md:w-1/2">
+        <motion.div 
+         initial={{
+                x: -40,
+              }}
+              whileInView={{
+                x: 0,
+                y: 0,
+              }}
+              transition={{
+                duration:0.6,
+                delay:0.1
+              }}
+              viewport={{once:true}}
+        className="w-full md:w-1/2">
           <article className="flex flex-col gap-4 h-full w-full rounded-lg border-1 border-gray-400 bg-white p-6">
             <div className="inline-flex gap-2 self-end rounded-sm bg-green-100 p-1 text-green-600">
               <svg
@@ -37,8 +52,21 @@ function Profit() {
               </p>
             </div>
           </article>
-        </div>
-        <div className="w-full text-center  md:w-1/2">
+        </motion.div>
+        <motion.div 
+         initial={{
+                x: 40,
+              }}
+              whileInView={{
+                x: 0,
+                y: 0,
+              }}
+              transition={{
+                duration:0.6,
+                delay:0.1
+              }}
+              viewport={{once:true}}
+        className="w-full text-center  md:w-1/2">
           <h2 className="text-2xl font-semibold text-gray-900 sm:text-3xl">
           Maximize Your Profit
           </h2>
@@ -47,7 +75,7 @@ function Profit() {
           Turn your property into a consistent income stream by listing it on our platform.
           Maximize your earnings by optimizing your pricing, increasing bookings, and offering exceptional service.
           </p>
-        </div>
+        </motion.div>
       </section>
     </>
   );

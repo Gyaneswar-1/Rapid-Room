@@ -1,4 +1,3 @@
-
 import Footer from "../components/Reusable/Footer";
 import Loader from "../components/Reusable/Loader";
 import Signin from "../components/UserAuth/Signin";
@@ -10,45 +9,33 @@ import UserReview from "../components/welcomePage/UserReview";
 import WelcomePagenavBar from "../components/welcomePage/WelcomePagenavBar";
 import WhyBest from "../components/welcomePage/WhyBest";
 
-
 //store and state management //comment remove karibani kehi
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
-
 function Welcome() {
-  
+  //state management
+  const { showSignup, showSignin } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
 
   //state management
-  const { showSignup,showSignin  } = useSelector((state: RootState) => state.showAuthCardReducer);
-  
 
-  
-//state management
-
-const { showLoader } = useSelector((state: RootState) => state.loaderReducer);
-  
-
-  
+  const { showLoader } = useSelector((state: RootState) => state.loaderReducer);
 
   return (
     <>
-    
-    {showLoader && <WelComeLoader></WelComeLoader>}
-    
-      <div className="font-EmCode h-max  relative">
-        
-        <WelcomePagenavBar
-         
-        ></WelcomePagenavBar>
+      {showLoader && <WelComeLoader></WelComeLoader>}
 
-       
-        <HeroSection ></HeroSection>
+      <div className="font-EmCode h-max  relative">
+        <WelcomePagenavBar></WelcomePagenavBar>
+
+        <HeroSection></HeroSection>
 
         <Offer />
 
         <WhyBest />
-        <Stat/>
+        <Stat />
         <UserReview />
         <Footer></Footer>
       </div>
@@ -68,11 +55,10 @@ const { showLoader } = useSelector((state: RootState) => state.loaderReducer);
 
 export default Welcome;
 
-function WelComeLoader(){
-  return(
+function WelComeLoader() {
+  return (
     <div className="fixed top-0 left-0 h-screen w-screen bg-black z-10 opacity-60">
-    <Loader></Loader>
-
+      <Loader></Loader>
     </div>
-  )
+  );
 }

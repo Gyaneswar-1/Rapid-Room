@@ -43,16 +43,24 @@ function ConfirmButton() {
         </fieldset>
 
         {checkbox ? (
-          <button
+          <motion.button
+           whileHover={{
+            scale:1.2
+          }}
+          whileTap={{
+            scale:0.9
+          }}
             onClick={() => {
               setShowCard(!showCard);
             }}
             className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
           >
             Apply for Host
-          </button>
+          </motion.button>
         ) : (
           <button
+         
+
             className="inline-block rounded-sm cursor-not-allowed  bg-teal-600 opacity-50 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
           >
             Apply for Host
@@ -60,14 +68,12 @@ function ConfirmButton() {
         )}
       </div>
       {showCard && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: showCard ? "auto" : 0, opacity: showCard ? 1 : 0 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
+        <div
+
           className="overflow-hidden"
         >
           <CardForm show={setShowCard} />
-        </motion.div>
+        </div>
       )}
     </div>
   );

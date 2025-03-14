@@ -1,4 +1,5 @@
 import heroBanner from "../../assets/welcomepage/heroBanner.avif";
+import {motion} from "motion/react"
 
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +35,14 @@ const HeroSection = () => {
               unbeatable deals, and stays that feel like home. 🌍
             </p>
 
-            <button className=" text-white w-full flex  justify-center  text-xl">
+            <motion.button
+              whileTap={{
+                scale:0.9
+              }}
+              whileHover={{
+                scale:1.1
+              }}
+            className=" text-white w-full flex  justify-center  text-xl">
               <div
                 onClick={() => {
                   navigate("/home");
@@ -43,7 +51,7 @@ const HeroSection = () => {
               >
                 Explore <MdOutlineArrowForwardIos />
               </div>
-            </button>
+            </motion.button>
           </div>
         </section>
       </div>

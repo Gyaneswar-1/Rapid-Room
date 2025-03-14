@@ -1,5 +1,6 @@
 import { IoStar } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa6";
+import {motion} from "motion/react";
 
 function Card({
   hotelName,
@@ -13,7 +14,13 @@ function Card({
 }: any) {
   console.log(id)
   return (
-    <div
+    <motion.div
+    whileHover={{
+      scale:1.02
+    }}
+    whileTap={{
+      scale:0.88
+    }}
       className="h-fit md:w-80 w-72 cursor-pointer rounded-2xl  text-black shadow-2xl"
       onClick={onclick}
     >
@@ -49,7 +56,7 @@ function Card({
           28
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
