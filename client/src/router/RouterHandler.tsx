@@ -13,6 +13,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile";
 import Welcome from "../pages/Welcome";
+import BookingPage2 from "../pages/BookingPage2";
 
 function RouterHandler() {
   return (
@@ -25,6 +26,7 @@ function RouterHandler() {
           {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
+            <Route path="book-hotel2" element={<BookingPage2 />} />
             <Route path="add-hotel" element={<AddHotels />} />
             <Route path="admin-confirm" element={<AdminConfirm />} />
             <Route
