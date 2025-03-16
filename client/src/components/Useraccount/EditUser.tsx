@@ -74,13 +74,7 @@ export default EditUser;
 
 // model Address {
 //   id        Int      @id @default(autoincrement())
-//   street    String?
-//   city      String?
-//   state     String?
-//   zipCode   String?
-//   country   String?
-//   longitude Decimal?
-//   latitude  Decimal?
+
 //   users     Users[]
 //   hotels    Hotels[]
 // }

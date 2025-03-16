@@ -1,30 +1,40 @@
-import React from "react";
-import { IconType } from "react-icons";
+"use client"
 
-interface CategoryBoxPropes {
-  icon: IconType;
-  label: string;
-  selected?: boolean;
+import type React from "react"
+import type { IconType } from "react-icons"
+import { motion } from "framer-motion"
+
+interface CategoryBoxProps {
+  icon: IconType
+  label: string
+  selected?: boolean
+  onClick?: () => void
 }
 
-const CategoryBox: React.FC<CategoryBoxPropes> = ({
-  icon: Icon,
-  label,
-  selected
-}) => {
-
+const CategoryBox: React.FC<CategoryBoxProps> = ({ icon: Icon, label, selected, onClick }) => {
   return (
-    <div
-      className={`flex flex-col items-center justify-center gap-2 p-3 border-b-2 hover:text-neutral-800 transition cursor-pointer ${
-        selected
-          ? "border-b-neutral-800 text-neutral-800"
-          : "border-transparent text-neutral-500"
-      } `}
+    <motion.div
+      whileHover={{ y: -5
+        ,transition:{
+          duration:0.01
+        }
+       }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      onClick={onClick}
+      className={`
+        flex flex-col items-center justify-center gap-2 
+        p-3 rounded-xl cursor-pointer transition-all
+        ${selected ? " text-teal-800 font-extrabold underline" : "hover:bg-neutral-50 text-neutral-500"}
+      `}
     >
-      <Icon size={24} />
+      <Icon size={26} />
       <p className="font-medium text-sm">{label}</p>
-    </div>
-  );
-};
+    </motion.div>
+  )
+}
 
-export default CategoryBox;
+export default CategoryBox
+

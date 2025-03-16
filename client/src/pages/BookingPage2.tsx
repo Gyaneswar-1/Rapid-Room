@@ -178,14 +178,14 @@ export default function BookingPage() {
         <div className="mb-6 flex justify-between items-start">
           <div>
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{hotelData.type}</h1>
-            <div className="flex items-center gap-2 mt-1 text-sm">
+            <div className="flex sm:items-center gap-2 mt-1 text-sm flex-col sm:flex-row">
               <div className="flex items-center">
                 <Star className="h-4 w-4 mr-1 fill-current" />
                 <span>{hotelData.ratings.overall}</span>
               </div>
-              <span>·</span>
-              <span className="underline">{hotelData.totalReviews} reviews</span>
-              <span>·</span>
+              <span className="sm:flex hidden">·</span>
+              <span className="underline hidden sm:flex">{hotelData.totalReviews} reviews</span>
+              <span className="sm:flex hidden">·</span>
               <span>
                 {hotelData.address.city}, {hotelData.address.state}, {hotelData.address.country}
               </span>

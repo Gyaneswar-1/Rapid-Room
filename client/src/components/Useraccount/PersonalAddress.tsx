@@ -1,12 +1,18 @@
+import { CiLocationOn } from "react-icons/ci";
 import Breadcrumb from "../../components/Useraccount/edituser/Breadcrumb";
+import AddressFormEdit from "./edituseraddress/UserAddressEdit";
 // import UserFormEdit from "../../components/Useraccount/EditUser/UserFormEdit";
 
-const info = [
-  { title: "Fullname", content: "Gyaneswar", button: "edit" },
-  { title: "Email address", content: "gyan*******5.com", button: "edit" },
-  { title: "phone number", content: "826****52", button: "add" },
+const addressInfo = [
+  { title: "Street", content: "123 Main Street", button: "edit" },
+  { title: "City", content: "San Francisco", button: "edit" },
+  { title: "State", content: "California", button: "edit" },
+  { title: "Zip Code", content: "94105", button: "edit" },
+  { title: "Country", content: "United States", button: "edit" },
+  { title: "Longitude", content: "-122.4194", button: "edit" },
+  { title: "Latitude", content: "37.7749", button: "edit" },
 ];
-console.log(info)
+
 function PersonalAddress() {
   return (
     <div className="h-screen w-screen flex  justify-center">
@@ -15,6 +21,12 @@ function PersonalAddress() {
           <Breadcrumb />
         </div>
         <h1 className="text-4xl font-semibold">Edit Personal Address</h1>
+        <div></div>
+        <div className="cards mt-18 flex flex-wrap justify-start gap-16 h-full md:w-4/5 w-full">
+          {addressInfo.map((item, index) => {
+            return <AddressFormEdit key={index} {...item} />;
+          })}
+        </div>
       </div>
     </div>
   );

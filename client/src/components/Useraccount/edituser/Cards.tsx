@@ -1,27 +1,30 @@
-import React from "react";
-import { IconType } from "react-icons";
-import { Link } from "react-router-dom";
+import React from "react"
+import type { IconType } from "react-icons"
+import { Link } from "react-router-dom"
 
-interface Card {
-  icon: IconType;
-  title: string;
-  description: string;
-  toThe: string;
+interface CardProps {
+  icon: IconType
+  title: string
+  description: string
+  toThe: string
 }
 
-function Cards(props: Card) {
+function Cards({ icon, title, description, toThe }: CardProps) {
   return (
     <Link
-      to={props.toThe}
-      className="border px-5 py-5 flex flex-col grow max-w-86 max-h-52 rounded-xl hover:shadow-2xl  border- transition cursor-pointer "
+      to={toThe}
+      className="group bg-white border border-gray-200 rounded-xl p-6 flex flex-col h-full transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:translate-y-[-2px]"
     >
-      <div className="logo text-4xl">{React.createElement(props.icon)}</div>
+      <div className="text-4xl text-teal-600 mb-4">
+        {React.createElement(icon, { className: "group-hover:scale-110 transition-transform duration-200" })}
+      </div>
       <div>
-        <h1 className="text-lg font-semibold">{props.title}</h1>
-        <p className="font-thin text-sm pt-2">{props.description}</p>
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">{title}</h2>
+        <p className="text-gray-600 text-sm">{description}</p>
       </div>
     </Link>
-  );
+  )
 }
 
-export default Cards;
+export default Cards
+

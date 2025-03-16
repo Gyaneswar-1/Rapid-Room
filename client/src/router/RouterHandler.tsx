@@ -14,6 +14,7 @@ import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile";
 import Welcome from "../pages/Welcome";
 import BookingPage2 from "../pages/BookingPage2";
+import Hosting from "../pages/Hosting";
 
 function RouterHandler() {
   return (
@@ -38,6 +39,9 @@ function RouterHandler() {
               <Route index element={<Account />} />
               <Route path="edit-user" element={<EditUser />} />
               <Route path="personal-address" element={<PersonalAddress />} />
+            </Route>
+            <Route path="hosting">
+                <Route index element={<Hosting/>} />
             </Route>
           </Route>
           <Route path="*" element={<ErrorPage />} />

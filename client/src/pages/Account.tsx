@@ -1,78 +1,82 @@
+"use client"
 
-import Cards from "../components/Useraccount/edituser/Cards";
-import {
-  CiBellOn,
-  CiDesktop,
-  CiLocationOn,
-  CiLock,
-  CiMoneyBill,
-  CiUser,
-} from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { CiBellOn, CiDesktop, CiLocationOn, CiLock, CiMoneyBill, CiUser } from "react-icons/ci"
+import Cards from "../components/Useraccount/edituser/Cards"
 
-const card = [
+const cards = [
   {
     icon: CiUser,
     title: "Personal info",
-    descripion: "Provide the personal details and how we can reach you",
+    description: "Provide the personal details and how we can reach you",
     toThe: "edit-user",
   },
   {
     icon: CiLocationOn,
     title: "Personal address",
-    descripion: "personal address, so we can find best hotel for you",
+    description: "Personal address, so we can find best hotel for you",
     toThe: "personal-address",
   },
   {
     icon: CiLock,
     title: "Login & security",
-    descripion: "Update your password and secure your account",
+    description: "Update your password and secure your account",
     toThe: "/edit-user",
   },
   {
     icon: CiDesktop,
     title: "Dashboard",
-    descripion: "check your earnig and your hotel bookings",
+    description: "Check your earnings and your hotel bookings",
     toThe: "/edit-user",
   },
   {
     icon: CiMoneyBill,
-    title: "payment and payout",
-    descripion: "Review payment,payout giftcard etc",
+    title: "Payment and payout",
+    description: "Review payment, payout, gift cards etc",
     toThe: "/edit-user",
   },
   {
     icon: CiBellOn,
     title: "Notification",
-    descripion: "Choose Notification,how you want to connected",
+    description: "Choose notifications, how you want to be connected",
     toThe: "/edit-user",
   },
-];
+]
 
 function Account() {
   const navigate = useNavigate()
+
   return (
-    <div className="h-screen w-screen flex md:pt-0 pt-12 justify-center">
-      <div className=" md:w-[1200px] md:p-15 p-2 flex flex-col gap-2">
-        <h1 className="text-4xl font-semibold">Your Account</h1>
-        <p>edit & view your details</p>
-        <span>switch to <a onClick={()=>{
-          navigate("/user-profile")
-        }} >user-profile</a></span>
-        <div className="cards mt-20 flex flex-wrap  gap-6 md:justify-start justify-start w-full ">
-          {card.map((c, index) => (
-            <Cards
-              key={index}
-              icon={c.icon}
-              title={c.title}
-              description={c.descripion}
-              toThe={c.toThe}
-            />
-          ))}
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Your Account</h1>
+            <p className="text-gray-600 mb-2">Edit & view your details</p>
+            <button
+              onClick={() => navigate("/user-profile")}
+              className="text-teal-600 hover:text-teal-800 font-medium transition-colors underline cursor-pointer"
+            >
+              Switch to user profile
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {cards.map((card, index) => (
+              <Cards
+                key={index}
+                icon={card.icon}
+                title={card.title}
+                description={card.description}
+                toThe={card.toThe}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Account;
+export default Account
+

@@ -104,7 +104,6 @@ function Home() {
       });
   }, []);
 
-  // console.log(hotels);
 
   return (
     <>
