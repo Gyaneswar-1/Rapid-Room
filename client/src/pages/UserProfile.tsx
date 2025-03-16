@@ -5,7 +5,8 @@ import { FaUser, FaCalendarAlt, FaCheckCircle, FaHotel, FaMedal, FaStar } from "
 import { MdLocationOn, MdEmail, MdPhone } from "react-icons/md"
 
 export default function UserProfile() {
-  const [isHost, setIsHost] = useState(true)
+  // const [isHost, setIsHost] = useState(true)
+  const [isHost, ] = useState(true)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-teal-100 p-4 md:p-8 lg:p-12">

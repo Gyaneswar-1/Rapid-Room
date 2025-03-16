@@ -43,7 +43,7 @@ export default function Calendar({ selectedDate, onChange, minDate, maxDate }: C
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
 
   // Create an array of empty cells for days before the first day of the month
-  const emptyCells = Array.from({ length: firstDayOfMonth }, (_, i) => null)
+  const emptyCells = Array.from({ length: firstDayOfMonth }, (_, ) => null)
 
   // Combine empty cells and days
   const calendarDays = [...emptyCells, ...days]
