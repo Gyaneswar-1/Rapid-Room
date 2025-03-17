@@ -15,6 +15,9 @@ import UserProfile from "../pages/UserProfile";
 import Welcome from "../pages/Welcome";
 import BookingPage2 from "../pages/BookingPage2";
 import Hosting from "../pages/Hosting";
+import MessageHost from "../pages/MessageHost";
+import ChatPage from "../components/messageHost/Chatpage";
+import WishlistPage from "../pages/WishlistPage";
 
 function RouterHandler() {
   return (
@@ -35,13 +38,16 @@ function RouterHandler() {
               element={<TermsAndConditionsForAdmin />}
             />
             <Route path="user-profile" element={<UserProfile />} />
+            <Route path="/messages" element={<MessageHost />} />
+            <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/messages/:hostId" element={<ChatPage />} />
             <Route path="user-account" element={<AccountLayout />}>
               <Route index element={<Account />} />
               <Route path="edit-user" element={<EditUser />} />
               <Route path="personal-address" element={<PersonalAddress />} />
             </Route>
             <Route path="hosting">
-                <Route index element={<Hosting/>} />
+              <Route index element={<Hosting />} />
             </Route>
           </Route>
           <Route path="*" element={<ErrorPage />} />

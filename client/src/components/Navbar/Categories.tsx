@@ -130,11 +130,11 @@ function Categories() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10  "
       >
         <button
           onClick={() => scroll("left")}
-          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition"
+          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition  md:ml-4 ml-2 cursor-pointer border border-neutral-300"
           aria-label="Scroll left"
         >
           <MdKeyboardArrowLeft size={24} />
@@ -169,7 +169,7 @@ function Categories() {
       >
         <button
           onClick={() => scroll("right")}
-          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition"
+          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition md:mr-4 mr-2 cursor-pointer border border-neutral-300"
           aria-label="Scroll right"
         >
           <MdKeyboardArrowRight size={24} />

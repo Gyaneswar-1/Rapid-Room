@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import BottomNav from '../BottomNav'
+import BottomNav from '../Navbar/BottomNav'
 
 function IsAuth() {
     const isLoggedIn = localStorage.getItem("loggedin")

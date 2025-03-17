@@ -3,10 +3,12 @@
 import { useState } from "react"
 import { FaUser, FaCalendarAlt, FaCheckCircle, FaHotel, FaMedal, FaStar } from "react-icons/fa"
 import { MdLocationOn, MdEmail, MdPhone } from "react-icons/md"
+import { useNavigate } from "react-router-dom"
 
 export default function UserProfile() {
   // const [isHost, setIsHost] = useState(true)
   const [isHost, ] = useState(true)
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-teal-100 p-4 md:p-8 lg:p-12">
@@ -159,6 +161,10 @@ export default function UserProfile() {
                     <p className="text-sm text-gray-500">Response time</p>
                     <p className="font-medium text-gray-800">Within 24 hours</p>
                   </div>
+
+                </div>
+                <div className="text-blue-600 underline" onClick={()=>{navigate("/user-account")}}>
+                  edit 
                 </div>
               </div>
             </div>

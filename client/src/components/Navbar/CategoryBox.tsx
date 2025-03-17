@@ -27,11 +27,12 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({ icon: Icon, label, selected, 
       className={`
         flex flex-col items-center justify-center gap-2 
         p-3 rounded-xl cursor-pointer transition-all
-        ${selected ? " text-teal-800 font-extrabold underline" : "hover:bg-neutral-50 text-neutral-500"}
+        ${selected ? " text-teal-800 font-extrabold " : "hover:bg-neutral-50 text-neutral-500"}
       `}
     >
       <Icon size={26} />
       <p className="font-medium text-sm">{label}</p>
+      {selected && <div className="w-full h-[3px] bg-teal-800"></div>}
     </motion.div>
   )
 }

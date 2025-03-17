@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/Navbar/BottomNav";
 import Card from "../components/homepage/Card";
 import Navbar from "../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";

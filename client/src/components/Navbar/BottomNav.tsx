@@ -18,7 +18,7 @@ function BottomNav() {
           <FaRegKissWinkHeart className="text-3xl" />
           <p className="text-xs">Tips</p>
         </NavLink>
-        <NavLink to="/message" className={({ isActive }) => `flex flex-col items-center ${isActive ? "text-teal-600 fill-teal-600    underline font-extrabold " : "text-neutral-800"}`}>
+        <NavLink to="/messages" className={({ isActive }) => `flex flex-col items-center ${isActive ? "text-teal-600 fill-teal-600    underline font-extrabold " : "text-neutral-800"}`}>
           <CiMail className="text-3xl" />
           <p className="text-xs">Message</p>
         </NavLink>

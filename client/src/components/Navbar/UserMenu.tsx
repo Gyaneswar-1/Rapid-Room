@@ -68,8 +68,8 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
     <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
         {/*localStorage.getItem("loggedin")*/}
-        {false ? (
-          showRapidYourRoom ? (
+        {showRapidYourRoom ? (
+           false ? (
             <div
               onClick={() => {
                 false ? navigate("/add-hotel") : navigate("/admin-confirm");
@@ -79,14 +79,14 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
               Rapid Your Room
             </div>
           ) : (
-            <p className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full"></p>
-          )
-        ) : (
-          <p className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full  hover:bg-neutral-100 transition cursor-pointer "
+            <p className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full  hover:bg-neutral-100 transition cursor-pointer "
           onClick={()=>{
             navigate("/hosting")
           }}
           >switch to Hosting</p>
+          )
+        ) : (
+          <p className="hidden md:block text-sm font-semibold py-3 px-4 "></p>
         )}
 
         <motion.div
@@ -113,13 +113,13 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
           <div className= " flex flex-col cursor-pointer my-2">
             {isLoggedIn ? (
               <>
-                <MenuItem onClick={() => {}} label="Message" icons={BsChat} />
+                <MenuItem onClick={() => {navigate("/messages")}} label="Message" icons={BsChat} />
                 <MenuItem
-                  onClick={() => {}}
+                  onClick={() =>{}}
                   label="Trips"
                   icons={BsSuitcase2}
                 />
-                <MenuItem onClick={() => {}} label="Wishlist" icons={BsHeart} />
+                <MenuItem onClick={() => {navigate("/wishlist")}} label="Wishlist" icons={BsHeart} />
                 <MenuItem
                   onClick={() => {}}
                   label="Manage Listing"
