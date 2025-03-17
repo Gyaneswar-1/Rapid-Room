@@ -18,6 +18,7 @@ import Hosting from "../pages/Hosting";
 import MessageHost from "../pages/MessageHost";
 import ChatPage from "../components/messageHost/Chatpage";
 import WishlistPage from "../pages/WishlistPage";
+import SecurityAndAuth from "../components/Useraccount/SecurityAndAuth";
 
 function RouterHandler() {
   return (
@@ -45,12 +46,13 @@ function RouterHandler() {
               <Route index element={<Account />} />
               <Route path="edit-user" element={<EditUser />} />
               <Route path="personal-address" element={<PersonalAddress />} />
+              <Route path="security" element={<SecurityAndAuth/>} />
             </Route>
             <Route path="hosting">
               <Route index element={<Hosting />} />
             </Route>
           </Route>
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} /> 
         </Routes>
       </BrowserRouter>
     </>

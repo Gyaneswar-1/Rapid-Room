@@ -1,58 +1,80 @@
-"use client"
 
-import React from "react"
+
+import { useState } from "react"
+import { CiEdit } from "react-icons/ci"
 import { CgClose } from "react-icons/cg"
 
-interface AddressField {
+interface AddressFieldProps {
   title: string
   content: string
   button: string
 }
 
-function AddressFormEdit(props: AddressField) {
-  const [showWindow, setShowWindow] = React.useState(false)
+export default function AddressFormEdit({ title, content, button }: AddressFieldProps) {
+  const [showModal, setShowModal] = useState(false)
+  const [value, setValue] = useState(content)
+
+  const toggleModal = () => {
+    setShowModal(!showModal)
+  }
+
+  const handleSubmit = () => {
+    // Here you would typically save the value to your backend
+    toggleModal()
+  }
 
   return (
-    <div className="w-full h-fit">
-      <div className="flex justify-between pb-6">
-        <div>
-          <h1 className="text-xl">{props.title}</h1>
-          <p className="text-md opacity-70">{props.content}</p>
-        </div>
-        <div>
-          <button
-            className="cursor-pointer bg-neutral-800 text-white text-lg py-1 px-3 rounded-md"
-            onClick={() => {
-              setShowWindow(!showWindow)
-            }}
-          >
-            {props.button}
-          </button>
-        </div>
+    <div className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow">
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-sm font-medium text-gray-500">{title}</h3>
+        <button
+          onClick={toggleModal}
+          className="text-teal-600 hover:text-teal-800 transition-colors flex items-center text-sm"
+        >
+          <CiEdit className="mr-1" /> {button}
+        </button>
       </div>
-      <hr />
 
-      {showWindow && (
-        <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center backdrop-brightness-40">
-          <div className="text-stone-700 flex flex-col rounded-lg bg-white p-8 w-[800px] h-fit opacity-100">
-            <button
-              className="w-full flex justify-end cursor-pointer"
-              onClick={() => {
-                setShowWindow(!showWindow)
-              }}
-            >
-              <CgClose className="text-xl" />
-            </button>
-            <div className="flex flex-col gap-10">
-              <h1 className="text-xl">{`Edit your ${props.title.toLowerCase()}`}</h1>
+      <p className="text-gray-800 font-medium">{value}</p>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-xl animate-fadeIn">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">Edit your {title.toLowerCase()}</h2>
+              <button onClick={toggleModal} className="text-gray-500 hover:text-gray-700 transition-colors">
+                <CgClose className="text-xl" />
+              </button>
+            </div>
+
+            <div className="mt-4">
+              <label htmlFor={title.replace(/\s+/g, "")} className="block text-sm font-medium text-gray-700 mb-1">
+                {title}
+              </label>
               <input
                 type="text"
-                id={props.title.replace(/\s+/g, "")}
-                className="peer border bg-transparent w-full h-13 p-6 rounded-lg focus:border-neutral-800 focus:ring-0 focus:outline-hidden"
-                defaultValue={props.content}
-                placeholder={`Enter your ${props.title.toLowerCase()}`}
+                id={title.replace(/\s+/g, "")}
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder={`Enter your ${title.toLowerCase()}`}
               />
-              <button className="bg-neutral-800 text-white p-4 rounded-lg cursor-pointer w-full">Submit</button>
+            </div>
+
+            <div className="mt-6 flex space-x-3">
+              <button
+                onClick={toggleModal}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="flex-1 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
@@ -60,6 +82,4 @@ function AddressFormEdit(props: AddressField) {
     </div>
   )
 }
-
-export default AddressFormEdit
 

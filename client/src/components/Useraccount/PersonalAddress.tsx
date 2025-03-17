@@ -1,7 +1,7 @@
-// import { CiLocationOn } from "react-icons/ci";
-import Breadcrumb from "../../components/Useraccount/edituser/Breadcrumb";
-import AddressFormEdit from "./edituseraddress/UserAddressEdit";
-// import UserFormEdit from "../../components/Useraccount/EditUser/UserFormEdit";
+
+import { CiLocationOn } from "react-icons/ci"
+import Breadcrumb from "./edituser/Breadcrumb"
+import AddressFormEdit from "./edituseraddress/UserAddressEdit"
 
 const addressInfo = [
   { title: "Street", content: "123 Main Street", button: "edit" },
@@ -11,25 +11,43 @@ const addressInfo = [
   { title: "Country", content: "United States", button: "edit" },
   { title: "Longitude", content: "-122.4194", button: "edit" },
   { title: "Latitude", content: "37.7749", button: "edit" },
-];
+]
 
-function PersonalAddress() {
+export default function PersonalAddress() {
   return (
-    <div className="h-screen w-screen flex  justify-center">
-      <div className=" w-[1200px]  p-15 flex flex-col gap-2">
-        <div>
-          <Breadcrumb />
-        </div>
-        <h1 className="text-4xl font-semibold">Edit Personal Address</h1>
-        <div></div>
-        <div className="cards mt-18 flex flex-wrap justify-start gap-16 h-full md:w-4/5 w-full">
-          {addressInfo.map((item, index) => {
-            return <AddressFormEdit key={index} {...item} />;
-          })}
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8 md:py-12 max-w-4xl">
+        <Breadcrumb />
+
+        <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 mt-4">
+          <div className="flex items-center mb-6">
+            <div className="bg-teal-100 p-3 rounded-full mr-4">
+              <CiLocationOn className="text-teal-600 text-2xl" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Edit Personal Address</h1>
+          </div>
+
+          <p className="text-gray-600 mb-8">
+            Update your address information to help us find the best accommodations for you.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {addressInfo.map((item, index) => (
+              <AddressFormEdit key={index} {...item} />
+            ))}
+          </div>
+
+          <div className="mt-10 flex justify-end space-x-4">
+            <button className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+              Cancel
+            </button>
+            <button className="px-6 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors">
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default PersonalAddress;

@@ -1,64 +1,62 @@
-import React from "react";
-import { CgClose } from "react-icons/cg";
+"use client"
 
-interface texts {
-  title: string;
-  content: string;
-  button: string;
+import { useState } from "react"
+import { CiEdit, CiCirclePlus } from "react-icons/ci"
+
+interface UserFormEditProps {
+  title: string
+  content: string
+  button: "edit" | "add"
 }
 
-function UserFormEdit(props: texts) {
-  const [showWindow, setshowWindow] = React.useState(false);
-  return (
-    <div className="w-full h-fit ">
-      <div className="flex justify-between pb-6 ">
-        <div className="">
-          <h1 className="text-xl">{props.title}</h1>
-          <p className="text-md opacity-70">{props.content}</p>
-        </div>
-        <div>
-          <button
-            className="cursor-pointer bg-neutral-800 text-white text-lg py-1 px-3 rounded-md"
-            onClick={() => {
-              setshowWindow(!showWindow);
-            }}
-          >
-            {props.button}
-          </button>
-        </div>
-      </div>
-      <hr />
+export default function UserFormEdit({ title, content, button }: UserFormEditProps) {
+  const [isEditing, setIsEditing] = useState(false)
 
-      {showWindow && (
-        <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center backdrop-brightness-40">
-          <div className="text-stone-700 flex flex-col rounded-lg  bg-white p-8 w-[800px] h-fit opacity-100">
+  const toggleEdit = () => {
+    setIsEditing(!isEditing)
+  }
+
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow">
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-sm font-medium text-gray-500">{title}</h3>
+        <button
+          onClick={toggleEdit}
+          className="text-teal-600 hover:text-teal-800 transition-colors flex items-center text-sm"
+        >
+          {button === "edit" ? (
+            <>
+              <CiEdit className="mr-1" /> Edit
+            </>
+          ) : (
+            <>
+              <CiCirclePlus className="mr-1" /> Add
+            </>
+          )}
+        </button>
+      </div>
+
+      {isEditing ? (
+        <div className="mt-2">
+          <input
+            type="text"
+            defaultValue={content}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+          <div className="flex justify-end mt-3 space-x-2">
             <button
-              className="w-full flex justify-end cursor-pointer"
-              onClick={() => {
-                setshowWindow(!showWindow);
-              }}
+              onClick={toggleEdit}
+              className="px-3 py-1 text-xs border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
             >
-              <CgClose />
+              Cancel
             </button>
-            <div className="flex flex-col gap-10">
-              <h1 className="text-xl">{`edit your ${props.title}`}</h1>
-              <input
-                type="text"
-                id="Username"
-                className="peer border bg-transparent w-full h-13 p-6 rounded-lg focus:border-neutral-800 focus:ring-0 focus:outline-hidden"
-                defaultValue={props.content}
-              />
-              <button className="bg-neutral-800 text-white p-4 rounded-lg cursor-pointer w-full">
-                submit
-              </button>
-            </div>
+            <button className="px-3 py-1 text-xs bg-teal-600 text-white rounded-md hover:bg-teal-700">Save</button>
           </div>
         </div>
+      ) : (
+        <p className="text-gray-800 font-medium">{content}</p>
       )}
     </div>
-  );
+  )
 }
-
-export default UserFormEdit;
-
 

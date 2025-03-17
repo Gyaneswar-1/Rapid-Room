@@ -21,7 +21,7 @@ const cards = [
     icon: CiLock,
     title: "Login & security",
     description: "Update your password and secure your account",
-    toThe: "/edit-user",
+    toThe: "security",
   },
   {
     icon: CiDesktop,
