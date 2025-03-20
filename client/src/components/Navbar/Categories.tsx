@@ -1,7 +1,6 @@
-"use client"
-
 import { useRef, useState } from "react"
 import { motion } from "framer-motion"
+import { useLocation } from "react-router-dom"
 import {
   GiBarn,
   GiBoatFishing,
@@ -18,6 +17,7 @@ import { BsSnow } from "react-icons/bs"
 import { IoDiamond } from "react-icons/io5"
 import { FaSkiing } from "react-icons/fa"
 import CategoryBox from "./CategoryBox"
+
 
 
 export const categories = [
@@ -99,6 +99,8 @@ export const categories = [
 ]
 
 function Categories() {
+  const location = useLocation();
+
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
@@ -126,7 +128,7 @@ function Categories() {
   }
 
   return (
-    <div className="relative w-full pt-3">
+    <div className={`relative w-full pt-3  ${(location.pathname === "/home")?"block":"hidden"}`} >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

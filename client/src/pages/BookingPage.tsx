@@ -12,6 +12,11 @@ import BookingPageSkeliton from "../components/skelitions/BookingPageSkeliton";
 import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
 import { useLocation} from "react-router-dom";
 
+// imports for booking page 2
+import ImageCarousel from "../components/BookingPage/image-carousel"
+import Navbar from "../components/Navbar/Navbar";
+//import end
+
 //state management
 import { AppDispatch, RootState } from "../store/store";
 import {
@@ -100,9 +105,19 @@ export default function BookingPage() {
       });
   }, []);
 
+  //for temporary use only
+  const images =  [
+    hotelImages[0].imageUrl,
+    hotelImages[1].imageUrl,
+    hotelImages[2].imageUrl,
+    hotelImages[3].imageUrl,
+    hotelImages[4].imageUrl,
+  ]
+
   return (
     <>
-      <BookingPageNavbar />
+      {/* <BookingPageNavbar /> */}
+      <Navbar show={true} />
 
       {showAllReview && (
         <AllReviews
@@ -123,18 +138,19 @@ export default function BookingPage() {
         <div className="w-full min-h-screen bg-white flex justify-center">
           <div className="container w-full  md:w-4/6 flex flex-col ">
             <BookingPageHeading hotelType="Apartment with terrace, balcony+ breakfast"></BookingPageHeading>
-            <BookingPageImages
-              // img1={hotelImages[0].imageUrl}
-              // img2={hotelImages[1].imageUrl}
-              // img3={hotelImages[2].imageUrl}
-              // img4={hotelImages[3].imageUrl}
-              // img5={hotelImages[4].imageUrl}
-              img1={""}
-              img2={""}
-              img3={""}
-              img4={""}
-              img5={""}
-            ></BookingPageImages>
+            {/* <BookingPageImages
+              img1={hotelImages[0].imageUrl}
+              img2={hotelImages[1].imageUrl}
+              img3={hotelImages[2].imageUrl}
+              img4={hotelImages[3].imageUrl}
+              img5={hotelImages[4].imageUrl}
+              // img1={""}
+              // img2={""}
+              // img3={""}
+              // img4={""}
+              // img5={""}
+            ></BookingPageImages> */}
+            <ImageCarousel images={images} />
             <AboutWithCheckout
               country={hotelAddress.country}
               state={hotelAddress.state}

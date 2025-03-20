@@ -1,6 +1,32 @@
-"use client"
+import { useEffect, useState } from "react";
+import AboutWithCheckout from "../components/BookingPage/AboutWithCheckIn";
+import AllReviews from "../components/BookingPage/AllReviews";
+import BookingPageHeading from "../components/BookingPage/BookingPageHeading";
+import BookingPageImages from "../components/BookingPage/BookingPageImages";
+import MapShowcase from "../components/BookingPage/MapShowcase";
+import MeetHost from "../components/BookingPage/MeetHost";
+import RatingSection from "../components/BookingPage/RatingSection";
+import Reviews from "../components/BookingPage/Reviews";
+import BookingPageNavbar from "../components/BookingPage/BookingPageNavBar";
+import BookingPageSkeliton from "../components/skelitions/BookingPageSkeliton";
+import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
+import { useLocation} from "react-router-dom";
 
-import { useEffect, useState } from "react"
+//state management
+import { AppDispatch, RootState } from "../store/store";
+import {
+  setHotelType,
+  setHotelImages,
+  setHotelAddress,
+  setAboutHotel,
+  setRoomType,
+  setPerNight,
+  setAboutHost,
+  setHotelId,
+} from "../store/reducers/singleHotel.reducer";
+import { useDispatch, useSelector } from "react-redux";
+
+
 import {
   Heart,
   Share,
@@ -19,6 +45,68 @@ import ImageCarousel from "../components/BookingPage/image-carousel"
 import Calendar from "../components/BookingPage/Calendar"
 
 export default function BookingPage() {
+  const { showAllReview } = useSelector(
+      (state: RootState) => state.toogleAllReviewsReducer
+    );
+    const {
+      hotelType,
+      hotelImages,
+      hotelAddress,
+      aboutHotel,
+      roomType,
+      perNight,
+      aboutHost,
+    } = useSelector((state: RootState) => state.singleHotelReducer);
+    const dispatch: AppDispatch = useDispatch();
+    console.log(hotelType,hotelImages)
+    const [showSkeliton, setShowSkeliton] = useState(true);
+    
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const id = Number(queryParams.get("hotelId"));
+    dispatch(setHotelId(id));
+    useEffect(() => {
+      getSingleHotelInformation(id)
+        .then(async (res) => {
+          if (res.success === true) {
+            //here set the data to the store user recoil or redux for better state management
+            console.log(res.data);
+            dispatch(setHotelType(res.data.type));
+            dispatch(setHotelImages(res.data.images));
+            dispatch(
+              setHotelAddress({
+                city: res.data.address.city,
+                street: res.data.address.street,
+                state: res.data.address.state,
+                country: res.data.address.country,
+                longitude: res.data.address.longitude,
+                latitude: res.data.address.latitude,
+              })
+            );
+            dispatch(setAboutHotel(res.data.description));
+            dispatch(setRoomType(res.data.roomType));
+            dispatch(setPerNight(res.data.perNight));
+            dispatch(
+              setAboutHost({
+                name: res.data.host.fullName,
+                email: res.data.host.email,
+                hostExperience: res.data.host.hostExperience,
+                hostRating: res.data.host.hostRating,
+                hostResponseRate: res.data.host.hostResponseRate,
+                profileImage: res.data.host.profileImage,
+              })
+            );
+            // await delay();
+            setShowSkeliton(false);
+          } else {
+            // navigate("/home");
+          }
+        })
+        .catch((err) => {
+          console.log("error in the booking page catch", err);
+          // navigate("/home");
+        });
+    }, []);
   const [isLoading, setIsLoading] = useState(true)
   const [hotelData, setHotelData] = useState<any>(null)
   const [showReviewsModal, setShowReviewsModal] = useState(false)

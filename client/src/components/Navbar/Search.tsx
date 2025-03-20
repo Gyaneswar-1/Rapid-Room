@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setSearch } from "../../store/reducers/search.reducer";
 import { AppDispatch } from "../../store/store";
+import { useLocation } from "react-router-dom";
 
 function Search() {
   //for temporary serch purpose
@@ -11,9 +12,17 @@ function Search() {
   // );
   const dispatch: AppDispatch = useDispatch();
   const [searchValue,setSearchValue] = useState("");
+  const location = useLocation();
+ useEffect(() => {
+     const tid = setTimeout(async () => {
+       dispatch(setSearch(searchValue))
+     }, 200);
+     return () => clearTimeout(tid);
+   }, [searchValue]);
+
   return (
     <div
-      className="
+      className={`
     border-[1px]
     w-full
     md:w-auto
@@ -23,8 +32,8 @@ function Search() {
     hover:shadow-sm
     transition
     cursor-pointer
-
-    "
+    ${(location.pathname === "/home")?"block":"hidden"}
+    `}
     >
       <div className="flex flex-row items-center justify-between">
         <div className="text-sm font-semibold px-6">Anywhere</div>

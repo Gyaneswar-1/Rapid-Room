@@ -111,7 +111,7 @@ function Home() {
       <div className="h-screen w-full ">
         <Navbar show={true} />
         <div className="w-full h-full pt-[196px] flex justify-center ">
-          <div className="flex w-[90rem] gap-8 flex-wrap justify-center h-fit ">
+          <div className="flex w-[90rem] gap-8 flex-wrap justify-center md:py-4  h-fit ">
             {showLoader ? (
               <Loader></Loader>
             ) : (
