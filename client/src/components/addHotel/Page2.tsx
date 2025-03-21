@@ -1,74 +1,64 @@
-// src/components/Page2.jsx
 
-import { CgGym } from "react-icons/cg";
-import { CiWifiOn } from "react-icons/ci";
-import { FaCar, FaFirstAid } from "react-icons/fa";
-import { FaComputer } from "react-icons/fa6";
-import { GiCampfire, GiPoolTableCorner } from "react-icons/gi";
-import { IoTvOutline } from "react-icons/io5";
-import { LiaSwimmingPoolSolid, LiaHotTubSolid } from "react-icons/lia";
-import { LuTreeDeciduous } from "react-icons/lu";
-import {
-  MdBalcony,
-  MdOutlineOutdoorGrill,
-  MdOutlineShower,
-} from "react-icons/md";
-import { PiWashingMachine, PiFireExtinguisher } from "react-icons/pi";
-import { TbToolsKitchen3, TbAlarmSmoke } from "react-icons/tb";
-import Slide2Buttons from "./Slide2Buttons";
-import React from "react";
+import { useState, useEffect } from "react"
+import Slide2Buttons from "./Slide2Buttons"
+import { FaWifi, FaTv, FaHome, FaDesktop, FaBuilding, FaFlask, FaTruck, FaFire, FaBolt, FaArchive, FaShieldAlt } from "react-icons/fa"
 
 const basicAmenities = [
-  { icon: CiWifiOn, name: "Wifi" },
-  { icon: IoTvOutline, name: "TV" },
-  { icon: TbToolsKitchen3, name: "Kitchen" },
-  { icon: MdBalcony, name: "Balcony" },
-  { icon: FaComputer, name: "WorkSpace" },
-  { icon: PiWashingMachine, name: "Washing Machine" },
-  { icon: LuTreeDeciduous, name: "Garden" },
-  { icon: FaCar, name: "Parking" },
-];
+  { icon: FaWifi, name: "Wifi" },
+  { icon: FaTv, name: "TV" },
+  { icon: FaHome, name: "Kitchen" },
+  { icon: FaBuilding, name: "Balcony" },
+  { icon: FaDesktop, name: "WorkSpace" },
+  { icon: FaArchive, name: "Washing Machine" },
+  { icon: FaFlask, name: "Garden" },
+  { icon: FaTruck, name: "Parking" },
+]
 
 const standOutAmenities = [
-  { icon: LiaSwimmingPoolSolid, name: "Pools" },
-  { icon: LiaHotTubSolid, name: "Hot tub" },
-  { icon: GiCampfire, name: "Firepit" },
-  { icon: MdOutlineOutdoorGrill, name: "BBQ grill" },
-  { icon: GiPoolTableCorner, name: "Pool table" },
-  { icon: CgGym, name: "Exercise equipment" },
-  { icon: MdOutlineShower, name: "Outdoor shower" },
-];
+  { icon: FaArchive, name: "Pools" },
+  { icon: FaFire, name: "Hot tub" },
+  { icon: FaBolt, name: "Firepit" },
+  { icon: FaArchive, name: "BBQ grill" },
+  { icon: FaArchive, name: "Pool table" },
+  { icon: FaShieldAlt, name: "Exercise equipment" },
+  { icon: FaArchive, name: "Outdoor shower" },
+]
 
 const safetyItems = [
-  { icon: TbAlarmSmoke, name: "smoke" },
-  { icon: FaFirstAid, name: "First aid Kit" },
-  { icon: PiFireExtinguisher, name: "Fire extinguisher" },
-];
+  { icon: FaShieldAlt, name: "Smoke alarm" },
+  { icon: FaShieldAlt, name: "First aid Kit" },
+  { icon: FaShieldAlt, name: "Fire extinguisher" },
+]
 
 const Page2 = ({ register, errors }: { register: any; errors: any }) => {
-  const [selectedItems, setSelectedItems] = React.useState<Set<string>>(
-    new Set()
-  );
-  console.log(register,errors)
-  const handleSelection = (name: any) => {
-    setSelectedItems((prev: Set<string>) => {
-      const newSet = new Set(prev);
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set())
+
+  // Update form values when selections change
+  useEffect(() => {
+    register("amenities", { value: Array.from(selectedItems) })
+  }, [selectedItems, register])
+
+  const handleSelection = (name: string) => {
+    setSelectedItems((prev) => {
+      const newSet = new Set(prev)
       if (newSet.has(name)) {
-        newSet.delete(name);
+        newSet.delete(name)
       } else {
-        newSet.add(name);
+        newSet.add(name)
       }
-      return newSet;
-    });
-  };
+      return newSet
+    })
+  }
 
   return (
-    <div className="xl:px-68 md:px-42 px-2 w-full">
-        <div className="elements flex flex-col pt-8 w-full">
-          <h1 className="font-medium text-black text-3xl">
-            Tell guests what your place has to offer
-          </h1>
-          <div className="pt-8 md:py-5 p-0.5 flex gap-3 flex-wrap justify-start ">
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="bg-white rounded-xl shadow-sm p-6 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Tell guests what your place has to offer</h1>
+
+        {/* Basic Amenities */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic amenities</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {basicAmenities.map((amenity, index) => (
               <Slide2Buttons
                 key={index}
@@ -79,8 +69,12 @@ const Page2 = ({ register, errors }: { register: any; errors: any }) => {
               />
             ))}
           </div>
-          <p>Do you have any standout amenities?</p>
-          <div className="pt-8 md:py-5 p-0.5 flex gap-3 flex-wrap w-full justify-start ">
+        </div>
+
+        {/* Standout Amenities */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Standout amenities</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {standOutAmenities.map((amenity, index) => (
               <Slide2Buttons
                 key={index}
@@ -91,8 +85,12 @@ const Page2 = ({ register, errors }: { register: any; errors: any }) => {
               />
             ))}
           </div>
-          <p>Do you have any safety items?</p>
-          <div className="pt-8 md:py-5 p-0.5 flex gap-3 flex-wrap w-full justify-start ">
+        </div>
+
+        {/* Safety Items */}
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Safety items</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {safetyItems.map((amenity, index) => (
               <Slide2Buttons
                 key={index}
@@ -104,8 +102,11 @@ const Page2 = ({ register, errors }: { register: any; errors: any }) => {
             ))}
           </div>
         </div>
-    </div>
-  );
-};
 
-export default Page2;
+        {errors.amenities && <p className="mt-1 text-sm text-red-600">{errors.amenities.message}</p>}
+      </div>
+    </div>
+  )
+}
+
+export default Page2
