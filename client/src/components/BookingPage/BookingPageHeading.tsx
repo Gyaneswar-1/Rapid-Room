@@ -22,7 +22,7 @@ export default function BookingPageHeading({hotelType}:hotelType) {
           <div className="bg-white md:bg-transparent  p-4 md:p-0 rounded-full">
             <FaHeart  className=" text-2xl text-rose-500" />
           </div>
-          <span className="hidden md:block">Like</span>
+          <span className="hidden md:block z-10">Like</span>
         </div>
         <button
         onClick={()=>{

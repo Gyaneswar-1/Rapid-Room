@@ -19,6 +19,8 @@ import MessageHost from "../pages/MessageHost";
 import ChatPage from "../components/messageHost/Chatpage";
 import WishlistPage from "../pages/WishlistPage";
 import SecurityAndAuth from "../components/Useraccount/SecurityAndAuth";
+import UserBookings from "../pages/UserBookings";
+
 
 function RouterHandler() {
   return (
@@ -33,6 +35,7 @@ function RouterHandler() {
             <Route path="book-hotel" element={<BookingPage />} />
             <Route path="book-hotel2" element={<BookingPage2 />} />
             <Route path="add-hotel" element={<AddHotels />} />
+            <Route path="my-bookings" element={<UserBookings></UserBookings>}></Route>
             <Route path="admin-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"

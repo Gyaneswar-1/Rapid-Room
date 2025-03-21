@@ -115,8 +115,10 @@ function UserMenu({ showRapidYourRoom }: { showRapidYourRoom: Boolean }) {
               <>
                 <MenuItem onClick={() => {navigate("/messages")}} label="Message" icons={BsChat} />
                 <MenuItem
-                  onClick={() =>{}}
-                  label="Trips"
+                  onClick={() =>{
+                    navigate("/my-bookings")
+                  }}
+                  label="My bookings"
                   icons={BsSuitcase2}
                 />
                 <MenuItem onClick={() => {navigate("/wishlist")}} label="Wishlist" icons={BsHeart} />

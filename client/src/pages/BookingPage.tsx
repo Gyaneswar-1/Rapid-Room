@@ -136,7 +136,7 @@ export default function BookingPage() {
         <BookingPageSkeliton></BookingPageSkeliton>
       ) : (
         <div className="w-full min-h-screen bg-white flex justify-center">
-          <div className="container w-full  md:w-4/6 flex flex-col ">
+          <div className="container w-full  md:w-4/6 flex flex-col py-16">
             <BookingPageHeading hotelType="Apartment with terrace, balcony+ breakfast"></BookingPageHeading>
             {/* <BookingPageImages
               img1={hotelImages[0].imageUrl}
