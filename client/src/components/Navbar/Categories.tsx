@@ -128,15 +128,15 @@ function Categories() {
   }
 
   return (
-    <div className={`relative w-full pt-3  ${(location.pathname === "/home")?"block":"hidden"}`} >
+    <div className={`relative w-full ${(location.pathname === "/home")?"block":"hidden"}`} >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10  "
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
       >
         <button
           onClick={() => scroll("left")}
-          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition  md:ml-4 ml-2 cursor-pointer border border-neutral-300"
+          className="p-2 rounded-full bg-white hover:bg-gray-50 transition  md:ml-4 ml-2 cursor-pointer border border-neutral-300"
           aria-label="Scroll left"
         >
           <MdKeyboardArrowLeft size={24} />

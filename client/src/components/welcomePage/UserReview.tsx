@@ -1,42 +1,138 @@
-function UserReview() {
+"use client"
+
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
+
+export default function UserReview() {
+  const [currentReview, setCurrentReview] = useState(0)
+
+  const reviews = [
+    {
+      quote:
+        "I've used many booking sites before, but RapidRoom is by far the easiest. I booked my stay in just a few minutes, and the room exceeded my expectations! The best part? I got an amazing deal. Definitely my go-to for future trips!",
+      name: "Priya K.",
+      role: "Frequent Traveler",
+      avatar: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      quote:
+        "The customer service at RapidRoom is exceptional. When I needed to modify my booking last minute, they were incredibly helpful and accommodating. The process was smooth and stress-free!",
+      name: "Michael T.",
+      role: "Business Traveler",
+      avatar: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      quote:
+        "As someone who travels with family, finding the right accommodations is crucial. RapidRoom made it easy to filter for family-friendly options, and the detailed descriptions helped me choose the perfect place for our vacation.",
+      name: "Sarah J.",
+      role: "Family Traveler",
+      avatar: "/placeholder.svg?height=80&width=80",
+    },
+  ]
+
+  const nextReview = () => {
+    setCurrentReview((prev) => (prev === reviews.length - 1 ? 0 : prev + 1))
+  }
+
+  const prevReview = () => {
+    setCurrentReview((prev) => (prev === 0 ? reviews.length - 1 : prev - 1))
+  }
+
   return (
-    <div>
-      <figure className="max-w-screen-md mx-auto text-center py-14 font-EmCode">
-        <svg
-          className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-600"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 18 14"
+    <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
         >
-          <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
-        </svg>
-        <blockquote>
-          <p className="text-2xl italic font-medium text-gray-900 ">
-            "I’ve used many booking sites before, but RapidRoom is by far the
-            easiest. I booked my stay in just a few minutes, and the room
-            exceeded my expectations! The best part? I got an amazing deal.
-            Definitely my go-to for future trips!"
-          </p>
-        </blockquote>
-        <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
-          <img
-            className="w-6 h-6 rounded-full"
-            src="https://i0.wp.com/mamanushka.com/wp-content/uploads/2018/07/Tul-Palav-Kashmiri-Pherans-13-Sumaya-Teli-via-Mamanushkablog.jpg?resize=740%2C1110&ssl=1"
-            alt="profile picture"
-          />
-          <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700">
-            <cite className="pe-3 font-medium text-gray-900 ">
-            Priya K.
-            </cite>
-            <cite className="ps-3 text-sm text-gray-500 dark:text-gray-400">
-              User
-            </cite>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">What Our Travelers Say</h2>
+          <div className="w-20 h-1 bg-teal-500 mx-auto mt-4"></div>
+        </motion.div>
+
+        <div className="max-w-4xl mx-auto relative">
+          {/* Review Cards */}
+          <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
+            <div className="absolute top-0 left-0 w-20 h-20 bg-teal-500 rounded-br-2xl flex items-center justify-center">
+              <Quote className="text-white w-10 h-10" />
+            </div>
+
+            <div className="pt-16 pb-10 px-6 md:px-16">
+              {reviews.map((review, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{
+                    opacity: currentReview === index ? 1 : 0,
+                    x: currentReview === index ? 0 : 100,
+                    position: currentReview === index ? "relative" : "absolute",
+                  }}
+                  transition={{ duration: 0.5 }}
+                  className={`${currentReview === index ? "block" : "hidden"}`}
+                >
+                  <blockquote>
+                    <p className="text-xl md:text-2xl italic font-medium text-gray-800 mb-8 leading-relaxed">
+                      "{review.quote}"
+                    </p>
+                  </blockquote>
+                  <div className="flex items-center justify-center md:justify-start gap-4">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-teal-500">
+                      <img
+                        src={review.avatar || "/placeholder.svg"}
+                        alt={`${review.name} profile picture`}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900 text-lg">{review.name}</p>
+                      <p className="text-gray-600">{review.role}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </figcaption>
-      </figure>
-    </div>
-  );
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-center mt-8 gap-4">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={prevReview}
+              className="p-3 rounded-full bg-white shadow-md hover:bg-gray-50 transition-all"
+              aria-label="Previous review"
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </motion.button>
+
+            <div className="flex items-center gap-2">
+              {reviews.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentReview(index)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${
+                    currentReview === index ? "bg-teal-500 w-6" : "bg-gray-300"
+                  }`}
+                  aria-label={`Go to review ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={nextReview}
+              className="p-3 rounded-full bg-white shadow-md hover:bg-gray-50 transition-all"
+              aria-label="Next review"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </motion.button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
 
-export default UserReview;

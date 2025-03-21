@@ -32,7 +32,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({ icon: Icon, label, selected, 
     >
       <Icon size={26} />
       <p className="font-medium text-sm">{label}</p>
-      {selected && <div className="w-full h-[3px] bg-teal-800"></div>}
+      {selected ? <div className="w-full h-[2px] bg-teal-800"></div>:<div className="w-full h-[3px]"></div>}
     </motion.div>
   )
 }

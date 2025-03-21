@@ -1,18 +1,10 @@
-import { IoStar } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa6";
-import { motion } from "motion/react";
+"use client"
 
-function Card({
-  hotelName,
-  perNight,
-  country,
-  city,
-  id,
-  onclick,
-  image,
-  overalRating,
-}: any) {
-  console.log(id);
+import { IoStar } from "react-icons/io5"
+import { FaHeart } from "react-icons/fa6"
+import { motion } from "motion/react"
+
+function Card({ hotelName, perNight, country, city, id, onclick, image, overalRating }: any) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -25,12 +17,12 @@ function Card({
       whileTap={{
         scale: 0.88,
       }}
-      className="h-fit md:w-80 w-72 cursor-pointer rounded-2xl  text-black shadow-2xl"
+      className="w-full h-fit rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 bg-white overflow-hidden cursor-pointer"
       onClick={onclick}
     >
-      <div className="relative h-70 md:w-80 w-72  p-2 items-center overflow-hidden">
-        <button className="absolute top-0 right-0 m-2 text-2xl p-3">
-          <FaHeart className="text-rose-500 hover:text-rose-600" />
+      <div className="relative w-full aspect-[4/3] overflow-hidden">
+        <button className="absolute top-3 right-3 z-10 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 transition-colors">
+          <FaHeart className="text-rose-500 hover:text-rose-600 text-xl" />
         </button>
         <img
           src={
@@ -38,30 +30,29 @@ function Card({
               ? image
               : "https://a0.muscache.com/im/pictures/3aa09cd0-bcec-430e-9f25-7384cffb6a58.jpg?im_w=720&im_format=avif&im_origin=fuzzy"
           }
-          alt=""
-          className="h-full w-full object-cover  rounded-xl"
+          alt={hotelName || "Hotel image"}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
         />
       </div>
-      <div className="text-grid p-2 text-white max-h-80">
-        <div className="grid grid-flow-col grid-rows-4  ">
-          <div className="text-black">
-            {city.length > 10 ? `${city.slice(0, 10)}...` : city},
-            {country.length > 10 ? `${country.slice(0, 10)}...` : country}
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-1">
+          <h3 className="font-medium text-gray-900 truncate max-w-[80%]">{hotelName}</h3>
+          <div className="flex items-center gap-1 text-sm">
+            <IoStar className="text-amber-500" />
+            <span>{overalRating || 5}</span>
           </div>
-          <div className="text-black opacity-75  ">{hotelName}</div>
-          <div className="text-sm text-black  opacity-75 ">3-12 mar</div>
-          <div className="text-sm text-black">₹{perNight} night</div>
-          <div className="flex items-center text-black gap-1 justify-end">
-            <div className="icon text-red-500 ">
-              <IoStar />
-            </div>
-            <p className="rating">{overalRating}</p>
-          </div>
-          28
         </div>
+        <p className="text-gray-600 text-sm mb-1 truncate">
+          {city}, {country}
+        </p>
+        <p className="text-gray-500 text-xs mb-2">3-12 mar</p>
+        <p className="font-semibold">
+          ₹{perNight} <span className="font-normal text-sm">night</span>
+        </p>
       </div>
     </motion.div>
-  );
+  )
 }
 
-export default Card;
+export default Card
+

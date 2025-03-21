@@ -44,13 +44,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         // );
 
         const trancation = await prisma.$transaction(async (prisma) => {
-            const isExists = await prisma.hotels.findFirst({
-                where: { hostId: req.user.id },
-                include: { address: true, images: true },
-            });
 
-            //create hotel
-            if (!isExists) {
                 const hotelRes = await prisma.hotels.create({
                     data: {
                         host: { connect: { id: req.user.id } },
@@ -137,113 +131,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                             ),
                         );
                 }
-            } else {
-                const hotelUpdate = await prisma.hotels.update({
-                    where: {
-                        id: isExists.id,
-                    },
-                    data: {
-                        host: { connect: { id: req.user.id } },
-                        hotelName:
-                            hotelName !== undefined
-                                ? hotelName
-                                : isExists.hotelName,
-                        description:
-                            description !== undefined
-                                ? description
-                                : isExists.description,
-                        numberOfRooms:
-                            numberOfRooms !== undefined
-                                ? parseInt(numberOfRooms)
-                                : isExists.numberOfRooms,
-                        numberOfEmptyRooms:
-                            numberOfRooms !== undefined
-                                ? parseInt(numberOfRooms)
-                                : isExists.numberOfEmptyRooms,
-                        perNight:
-                            perNight !== undefined
-                                ? parseFloat(perNight)
-                                : isExists.perNight,
-                        roomType:
-                            roomType !== undefined
-                                ? roomType
-                                : isExists.roomType,
-                        hasParking:
-                            hasParking !== undefined
-                                ? Boolean(hasParking)
-                                : isExists.hasParking,
-                        hasPools:
-                            hasPools !== undefined
-                                ? Boolean(hasPools)
-                                : isExists.hasPools,
-                        hasWifi:
-                            hasWifi !== undefined
-                                ? Boolean(hasWifi)
-                                : isExists.hasWifi,
-                        hasTv:
-                            hasTv !== undefined
-                                ? Boolean(hasTv)
-                                : isExists.hasTv,
-                        hasBalcony:
-                            hasBalcony !== undefined
-                                ? Boolean(hasBalcony)
-                                : isExists.hasBalcony,
-                        hasKitchen:
-                            hasKitchen !== undefined
-                                ? Boolean(hasKitchen)
-                                : isExists.hasKitchen,
-                        hasWorkSpace:
-                            hasWorkSpace !== undefined
-                                ? Boolean(hasWorkSpace)
-                                : isExists.hasWorkSpace,
-                        hasWashingMachine:
-                            hasWashingMachine !== undefined
-                                ? Boolean(hasWashingMachine)
-                                : isExists.hasWashingMachine,
-                        hasGarden:
-                            hasGarden !== undefined
-                                ? Boolean(hasGarden)
-                                : isExists.hasGarden,
-                        hasGrummingEqupments:
-                            hasGrummingEqupments !== undefined
-                                ? Boolean(hasGrummingEqupments)
-                                : isExists.hasGrummingEqupments,
-                        type: type !== undefined ? type : isExists.type,
-                        address: {
-                            update: {
-                                where: { id: isExists.address!.id },
-                                data: {
-                                    state: state !== undefined ? state : isExists.address!.state,
-                                    street: street !== undefined ? street : isExists.address!.street,
-                                    city: city !== undefined ? city : isExists.address!.city,
-                                    zipCode: zipcode !== undefined ? zipcode : isExists.address!.zipCode,
-                                    country: country !== undefined ? country : isExists.address!.country,
-                                    longitude: longitude !== undefined ? parseFloat(longitude) : isExists.address!.longitude,
-                                    latitude: latitude !== undefined ? parseFloat(latitude) : isExists.address!.latitude,
-                                },
-                            },
-                        },
-                        // images: {
-                        //     createMany: {
-                        //         data: images.map((url: string) => ({
-                        //             imageUrl: url,
-                        //         })),
-                        //     },
-                        // },
-                    },
-                });
-                return res
-                    .status(200)
-                    .json(
-                        new ApiResponse(
-                            true,
-                            { hotelUpdate },
-                            "data updated successfully",
-                            "Your hotel updated !",
-                            200,
-                        ),
-                    );
-            }
+           
         });
     } catch (error) {
         console.log(error);

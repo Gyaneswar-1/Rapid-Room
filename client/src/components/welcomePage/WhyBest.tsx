@@ -1,136 +1,100 @@
-import WhyBestBg from "../../assets/welcomepage/WhyBestBg.jpg"
-function WhyBest() {
+"use client"
+
+import { motion } from "framer-motion"
+import { Zap, Shield, DollarSign, ArrowUpRight } from "lucide-react"
+
+export default function WhyBest() {
+  const features = [
+    {
+      icon: <Zap className="w-8 h-8 text-teal-600" />,
+      title: "Instant Booking ⚡",
+      description:
+        "Skip the Wait, Book in Seconds! With RapidRoom, find and reserve your perfect stay instantly—no delays, no hassle!",
+    },
+    {
+      icon: <DollarSign className="w-8 h-8 text-teal-600" />,
+      title: "Best Price Guarantee 💰",
+      description:
+        "Luxury & Comfort at the Best Rates! We ensure you get the best deals, making every stay affordable without compromising quality.",
+    },
+    {
+      icon: <Shield className="w-8 h-8 text-teal-600" />,
+      title: "Trusted & Secure 🔒",
+      description:
+        "Our verified hotels and secure payment options ensure a smooth, risk-free booking experience. Your safety is our priority!",
+    },
+  ]
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  }
+
   return (
-    <div className="Welcome-textPage  bg-scroll  w-full  relative bg-cover bg-center bg-dark-overlay bg-no-repeat " >
-      <img src={WhyBestBg} alt="banner" className="absolute h-full w-full top-0" />
-      <div className="w-full h-full backdrop-blur-[3px] backdrop-brightness-85 hover:backdrop-brightness-100 duration-150 flex flex-col md:flex-row md:py-12 md:px-0 py-4 px-2 md:gap-12 gap-4 items-center justify-center">
-        <div className="max-w-sm p-6 duration-150 h-66 flex flex-col justify-evenly opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
-          <svg
-            className="w-7 h-7 text-black dark:text-black mb-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M18 5h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C8.4.842 6.949 0 5.5 0A3.5 3.5 0 0 0 2 3.5c.003.52.123 1.033.351 1.5H2a2 2 0 0 0-2 2v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V7a2 2 0 0 0-2-2ZM8.058 5H5.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM11 13H9v7h2v-7Zm-4 0H2v5a2 2 0 0 0 2 2h3v-7Zm6 0v7h3a2 2 0 0 0 2-2v-5h-5Z" />
-          </svg>
-          <a href="#">
-            <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-black">
-              Instant Booking ⚡
-            </h5>
-          </a>
-          <p className="mb-3 font-normal text-black dark:text-black">
-            Skip the Wait, Book in Seconds! With RapidRoom, find and reserve
-            your perfect stay instantly—no delays, no hassle!
-          </p>
-          <a
-            href="#"
-            className="inline-flex font-medium items-center text-teal-600 hover:underline"
-          >
-            Learn More
-            <svg
-              className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 18"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
-              />
-            </svg>
-          </a>
-        </div>
-        <div className="max-w-sm p-6 duration-150  h-66 flex flex-col justify-evenly opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
-          <svg
-            className="w-7 h-7 text-black dark:text-black mb-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M18 5h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C8.4.842 6.949 0 5.5 0A3.5 3.5 0 0 0 2 3.5c.003.52.123 1.033.351 1.5H2a2 2 0 0 0-2 2v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V7a2 2 0 0 0-2-2ZM8.058 5H5.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM11 13H9v7h2v-7Zm-4 0H2v5a2 2 0 0 0 2 2h3v-7Zm6 0v7h3a2 2 0 0 0 2-2v-5h-5Z" />
-          </svg>
-          <a href="#">
-            <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-black">
-              Best Price Guarantee 💰
-            </h5>
-          </a>
-          <p className="mb-3 font-normal text-black dark:text-black">
-            Luxury & Comfort at the Best Rates! We ensure you get the best
-            deals, making every stay affordable without compromising quality.
-          </p>
-          <a
-            href="#"
-            className="inline-flex font-medium items-center text-teal-600 hover:underline"
-          >
-            Learn More
-            <svg
-              className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 18"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
-              />
-            </svg>
-          </a>
-        </div>
-        <div className="max-w-sm duration-150 p-6 h-66 flex flex-col justify-evenly  opacity-80 hover:opacity-100 bg-zinc-300 border border-gray-200 rounded-lg shadow-sm dark:text-zinc-200 dark:border-gray-700">
-          <svg
-            className="w-7 h-7 text-black dark:text-black mb-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M18 5h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C8.4.842 6.949 0 5.5 0A3.5 3.5 0 0 0 2 3.5c.003.52.123 1.033.351 1.5H2a2 2 0 0 0-2 2v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V7a2 2 0 0 0-2-2ZM8.058 5H5.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM11 13H9v7h2v-7Zm-4 0H2v5a2 2 0 0 0 2 2h3v-7Zm6 0v7h3a2 2 0 0 0 2-2v-5h-5Z" />
-          </svg>
-          <a href="#">
-            <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-black">
-              Trusted & Secure 🔒
-            </h5>
-          </a>
-          <p className="mb-3 font-normal text-black dark:text-black">
-            Our verified hotels and secure payment options ensure a smooth,
-            risk-free booking experience. Let me know if you need modifications!
-            🚀🏨
-          </p>
-          <a
-            href="#"
-            className="inline-flex font-medium items-center text-teal-600 hover:underline"
-          >
-            Learn More
-            <svg
-              className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 18"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
-              />
-            </svg>
-          </a>
-        </div>
+    <section className="relative py-20 overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 w-full h-full">
+        <img src="/placeholder.svg?height=800&width=1600" alt="Background" className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-900/80 to-gray-900/80 backdrop-blur-[2px]"></div>
       </div>
-    </div>
-  );
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-12"
+        >
+          Why Choose RapidRoom?
+        </motion.h2>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
+              className="bg-white/95 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden"
+            >
+              <div className="p-8">
+                <div className="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center mb-6">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+                <p className="text-gray-600 mb-6">{feature.description}</p>
+                <a
+                  href="#"
+                  className="inline-flex items-center text-teal-600 font-medium hover:text-teal-800 transition-colors group"
+                >
+                  Learn More
+                  <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
 }
 
-export default WhyBest;
