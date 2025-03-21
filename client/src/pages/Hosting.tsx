@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Dick from "../assets/images/Dick.png"
+
 
 function Hosting() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -43,7 +43,7 @@ function Hosting() {
             transition={{ delay:4.0 }}
             className="absolute inset-0 flex justify-center items-center bg-transparent z-50"
           >
-            <img src={Dick} height={300} width={300} alt="" />
+            
           </motion.div>
          </div>
         )}
