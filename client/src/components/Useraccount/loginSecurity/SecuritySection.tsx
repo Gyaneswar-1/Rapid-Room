@@ -21,8 +21,8 @@ export default function SecuritySection({
   description,
   actionText,
   isToggle = false,
-  toggleValue = false,
-  onToggle,
+  // toggleValue = false,
+  // onToggle,
   onAction,
 }: SecuritySectionProps) {
   return (

@@ -33,7 +33,7 @@ function RouterHandler() {
           {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
-            <Route path="book-hotel2" element={<BookingPage2 />} />
+            {/* <Route path="book-hotel2" element={<BookingPage2 />} /> */}
             <Route path="add-hotel" element={<AddHotels />} />
             <Route path="my-bookings" element={<UserBookings></UserBookings>}></Route>
             <Route path="admin-confirm" element={<AdminConfirm />} />

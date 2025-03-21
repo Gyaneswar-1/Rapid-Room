@@ -3,13 +3,13 @@
 import { useState } from "react"
 import { CiEdit, CiCirclePlus } from "react-icons/ci"
 
-interface UserFormEditProps {
-  title: string
-  content: string
-  button: "edit" | "add"
-}
+// interface UserFormEditProps {
+//   title: string
+//   content: string
+//   button: "edit" | "add"
+// }
 
-export default function UserFormEdit({ title, content, button }: UserFormEditProps) {
+export default function UserFormEdit({ title, content, button }: any) {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => {

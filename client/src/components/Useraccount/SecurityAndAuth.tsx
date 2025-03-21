@@ -74,7 +74,7 @@ export default function SecurityAndAuth() {
               title="Two-Factor Authentication"
               description={twoFactorEnabled ? "Enabled" : "Disabled"}
               isToggle={true}
-              toggleValue={twoFactorEnabled}
+              // toggleValue={twoFactorEnabled}
               onToggle={toggleTwoFactor}
             />
 
