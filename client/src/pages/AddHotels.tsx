@@ -14,7 +14,8 @@ const AddHotels = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid },
+    // formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: "onChange",
     defaultValues: {

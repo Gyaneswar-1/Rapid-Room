@@ -13,7 +13,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile";
 import Welcome from "../pages/Welcome";
-import BookingPage2 from "../pages/BookingPage2";
+// import BookingPage2 from "../pages/BookingPage2";
 import Hosting from "../pages/Hosting";
 import MessageHost from "../pages/MessageHost";
 import ChatPage from "../components/messageHost/Chatpage";
