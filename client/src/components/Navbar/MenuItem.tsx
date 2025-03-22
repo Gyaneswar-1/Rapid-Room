@@ -1,30 +1,34 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { IconType } from 'react-icons';
+"use client"
 
-interface MenuItemsProps {
-  onClick: () => void;
-  label: string;
-  style?: string;
-  icons:IconType
+import type React from "react"
+import { motion } from "framer-motion"
+import type { IconType } from "react-icons"
+
+interface MenuItemProps {
+  onClick: () => void
+  label: string
+  style?: string
+  icons: IconType
 }
 
-const MenuItem: React.FC<MenuItemsProps> = ({ onClick, label, style,icons:Icon }) => {
-  const itemVariants = {
-    hidden: { opacity: 0, x: 0 },
-    visible: { opacity: 1, x: 0 }
-  };
-
+const MenuItem: React.FC<MenuItemProps> = ({ onClick, label, style, icons: Icon }) => {
   return (
     <motion.div
-      variants={itemVariants}
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ backgroundColor: "#f3f4f6" }}
       onClick={onClick}
-      className={`mx-3 w-40 flex justify-start items-center gap-2 py-1.5 hover:bg-neutral-200 rounded-md m-1 transition ${style}`}
+      className={`
+        flex items-center gap-3 px-4 py-2.5 
+        cursor-pointer transition-colors rounded-md
+        ${style || "text-gray-700"}
+      `}
     >
       <Icon className="text-lg" />
-      {label}
+      <span className="font-medium text-sm">{label}</span>
     </motion.div>
-  );
-};
+  )
+}
 
-export default MenuItem;
+export default MenuItem
+

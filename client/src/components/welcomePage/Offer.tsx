@@ -5,17 +5,17 @@ import { motion } from "framer-motion"
 export default function Offer() {
   const destinations = [
     {
-      image: "/placeholder.svg?height=240&width=240",
+      image: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "India",
       nearby: "Pakistan, Sri Lanka, Nepal, Bhutan",
     },
     {
-      image: "/placeholder.svg?height=240&width=240",
+      image: "https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "France",
       nearby: "Belgium, Luxembourg, Germany",
     },
     {
-      image: "/placeholder.svg?height=240&width=240",
+      image: "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Thailand",
       nearby: "Laos, Myanmar, Vietnam",
     },

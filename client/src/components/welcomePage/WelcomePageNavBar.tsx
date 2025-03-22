@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, LogOut, User, ChevronDown } from "lucide-react"
 import { Link } from "react-router-dom"
+import MainLogo from "../../assets/images/MainLogo.png"
 
 export default function WelcomePageNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -43,28 +44,12 @@ export default function WelcomePageNavBar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="relative w-10 h-10">
-              <img src="/placeholder.svg?height=40&width=40" alt="RapidRoom Logo"  className="object-contain" />
+          <Link to="/" className="flex items-center justify-center gap-3">
+            <div className="relative flex w-12 h-12">
+              <img src={MainLogo} alt="RapidRoom Logo"  className="object-contain" />
             </div>
             <span className="text-2xl font-bold text-gray-900 hidden md:block">RapidRoom</span>
           </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link to="/" className="text-gray-700 hover:text-teal-600 font-medium transition-colors">
-              Home
-            </Link>
-            <Link to="/destinations" className="text-gray-700 hover:text-teal-600 font-medium transition-colors">
-              Destinations
-            </Link>
-            <Link to="/about" className="text-gray-700 hover:text-teal-600 font-medium transition-colors">
-              About
-            </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-teal-600 font-medium transition-colors">
-              Contact
-            </Link>
-          </nav>
 
           {/* Authentication Buttons */}
           <div className="hidden md:flex items-center gap-4">
@@ -262,6 +247,7 @@ export default function WelcomePageNavBar() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
   )
 }

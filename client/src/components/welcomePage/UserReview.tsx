@@ -13,21 +13,21 @@ export default function UserReview() {
         "I've used many booking sites before, but RapidRoom is by far the easiest. I booked my stay in just a few minutes, and the room exceeded my expectations! The best part? I got an amazing deal. Definitely my go-to for future trips!",
       name: "Priya K.",
       role: "Frequent Traveler",
-      avatar: "/placeholder.svg?height=80&width=80",
+      avatar: "https://images.unsplash.com/photo-1542206395-9feb3edaa68d?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       quote:
         "The customer service at RapidRoom is exceptional. When I needed to modify my booking last minute, they were incredibly helpful and accommodating. The process was smooth and stress-free!",
       name: "Michael T.",
       role: "Business Traveler",
-      avatar: "/placeholder.svg?height=80&width=80",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       quote:
         "As someone who travels with family, finding the right accommodations is crucial. RapidRoom made it easy to filter for family-friendly options, and the detailed descriptions helped me choose the perfect place for our vacation.",
       name: "Sarah J.",
       role: "Family Traveler",
-      avatar: "/placeholder.svg?height=80&width=80",
+      avatar: "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ]
 
@@ -82,6 +82,7 @@ export default function UserReview() {
                       <img
                         src={review.avatar || "/placeholder.svg"}
                         alt={`${review.name} profile picture`}
+                        loading="lazy"
                         className="object-cover"
                       />
                     </div>

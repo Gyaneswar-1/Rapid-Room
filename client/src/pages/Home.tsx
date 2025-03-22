@@ -36,7 +36,7 @@ export interface Result {
     currentPage: number
     pageSize: number
     totalHotels: number
-    totalPages: number
+    totalPages: number 
   }
 }
 

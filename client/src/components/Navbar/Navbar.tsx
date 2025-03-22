@@ -1,50 +1,54 @@
-import Search from "./Search";
-import UserMenu from "./UserMenu";
-import MainLogo from "../../assets/images/MainLogo.png";
-import Categories from "./Categories";
-import { useNavigate } from "react-router-dom";
+"use client"
 
-interface display {
-  show: boolean;
+import { useNavigate } from "react-router-dom"
+import MainLogo from "../../assets/images/MainLogo.png"
+import Search from "./Search"
+import UserMenu from "./UserMenu"
+import Categories from "./Categories"
+
+interface NavbarProps {
+  show: boolean
 }
 
-function Navbar({ show }: display) {
-  const navigate = useNavigate();
+function Navbar({ show }: NavbarProps) {
+  const navigate = useNavigate()
+
   return (
-    <div className=" fixed w-full bg-white z-11  ">
-      <div className="pt-4">
-        <div
-          className="max-w-[2520px]
-            mx-auto
-             xl:px-20
-            md:px-10
-             sm:px-2
-            px-4
-            flex justify-between 
-             pb-4"
-        >
-          <div
-            className=" flex  flex-row items-center justify-between gap-3 md:gap-1 cursor-pointer"
-            onClick={() => {
-              navigate("/home");
-            }}
-          >
-            <img
-              className="rounded-full hidden md:block cursor-pointer"
-              height={50}
-              width={50}
-              src={MainLogo}
-              alt="Main Logo"
-            />
-            <p className="md:text-xl text-sm xl:block hidden">RapidRoom</p>
+    <div className="fixed w-full bg-white z-50 shadow-sm">
+      <div className="py-4 border-b">
+        <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-4 px-4">
+          <div className="flex items-center justify-between gap-3 md:gap-0">
+            {/* Logo */}
+            <div
+              className="flex items-center gap-2 cursor-pointer transition hover:opacity-80"
+              onClick={() => navigate("/home")}
+            >
+              <img
+                className="rounded-full hidden md:block h-10 w-10 object-contain"
+                src={MainLogo || "/placeholder.svg"}
+                alt="RapidRoom"
+              />
+              <span className="font-bold text-teal-600 text-xl hidden sm:block">RapidRoom</span>
+            </div>
+
+            {/* Search Bar */}
+            {show && <Search />}
+
+            {/* User Menu */}
+            <UserMenu showRapidYourRoom={show} />
           </div>
-          {show && <Search />}
-          <UserMenu showRapidYourRoom={show} />
         </div>
-        <div className="md:px-16">{show && <Categories />}</div>
       </div>
+
+      {/* Categories */}
+      {show && (
+        <div className="px-2 md:px-10 lg:px-20">
+          <Categories />
+        </div>
+      )}
     </div>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
+

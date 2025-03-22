@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { useLocation } from "react-router-dom"
@@ -17,8 +19,6 @@ import { BsSnow } from "react-icons/bs"
 import { IoDiamond } from "react-icons/io5"
 import { FaSkiing } from "react-icons/fa"
 import CategoryBox from "./CategoryBox"
-
-
 
 export const categories = [
   {
@@ -99,8 +99,7 @@ export const categories = [
 ]
 
 function Categories() {
-  const location = useLocation();
-
+  const location = useLocation()
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
@@ -117,39 +116,30 @@ function Categories() {
     }
   }
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
-    },
+  // Only show on home page
+  if (location.pathname !== "/home") {
+    return null
   }
 
   return (
-    <div className={`relative w-full ${(location.pathname === "/home")?"block":"hidden"}`} >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
+    <div className="relative w-full py-4">
+      {/* Left scroll button */}
+      <button
+        onClick={() => scroll("left")}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 hidden md:block"
+        aria-label="Scroll left"
       >
-        <button
-          onClick={() => scroll("left")}
-          className="p-2 rounded-full bg-white hover:bg-gray-50 transition  md:ml-4 ml-2 cursor-pointer border border-neutral-300"
-          aria-label="Scroll left"
-        >
-          <MdKeyboardArrowLeft size={24} />
-        </button>
-      </motion.div>
+        <MdKeyboardArrowLeft size={20} />
+      </button>
 
-      <div className="mx-10 overflow-hidden">
+      {/* Categories container */}
+      <div className="mx-8 overflow-hidden">
         <motion.div
           ref={containerRef}
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="flex gap-4 overflow-x-auto scrollbar-hide py-2 px-1 justify-around"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="flex gap-6 overflow-x-auto scrollbar-hide py-1 px-1"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categories.map((item) => (
@@ -164,19 +154,14 @@ function Categories() {
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10"
+      {/* Right scroll button */}
+      <button
+        onClick={() => scroll("right")}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 hidden md:block"
+        aria-label="Scroll right"
       >
-        <button
-          onClick={() => scroll("right")}
-          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition md:mr-4 mr-2 cursor-pointer border border-neutral-300"
-          aria-label="Scroll right"
-        >
-          <MdKeyboardArrowRight size={24} />
-        </button>
-      </motion.div>
+        <MdKeyboardArrowRight size={20} />
+      </button>
     </div>
   )
 }

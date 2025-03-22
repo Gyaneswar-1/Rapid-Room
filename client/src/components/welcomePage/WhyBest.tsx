@@ -48,7 +48,7 @@ export default function WhyBest() {
     <section className="relative py-20 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 w-full h-full">
-        <img src="/placeholder.svg?height=800&width=1600" alt="Background" className="object-cover" />
+        <img src="https://images.unsplash.com/photo-1501952476817-d7ae22e8ee4e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Background" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-teal-900/80 to-gray-900/80 backdrop-blur-[2px]"></div>
       </div>
 

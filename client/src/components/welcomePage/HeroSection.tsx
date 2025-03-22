@@ -13,13 +13,14 @@ export default function HeroSection() {
   return (
     <section className="relative h-[600px] md:h-[700px] overflow-hidden">
       {/* Hero Background */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full overflow-hidden ">
         <img
-          src="/placeholder.svg?height=700&width=1400"
+          src="https://images.unsplash.com/photo-1455587734955-081b22074882?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Travel destination"
-          className="object-cover"
+          className="h-full w-full object-cover"
+          loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-[4px]"></div>
       </div>
 
       {/* Content */}
@@ -64,7 +65,7 @@ export default function HeroSection() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate("/home")}
-                className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-4 px-8 rounded-full inline-flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white font-medium py-4 px-8 rounded-full inline-flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Explore
                 <svg
@@ -83,13 +84,13 @@ export default function HeroSection() {
               </motion.button>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
               className="mt-12 flex justify-center gap-4"
             >
-              {["Hotels", "Flights", "Cars", "Experiences"].map((item, index) => (
+              {["Hotels", "Flights", "Experiences"].map((item, index) => (
                 <motion.span
                   key={index}
                   whileHover={{ y: -3 }}
@@ -98,7 +99,7 @@ export default function HeroSection() {
                   {item}
                 </motion.span>
               ))}
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </div>
