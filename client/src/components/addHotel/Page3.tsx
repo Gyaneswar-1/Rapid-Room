@@ -39,14 +39,36 @@ const Page3 = ({ register, errors }: { register: any; errors: any }) => {
     URL.revokeObjectURL(previewUrls[index])
     setPreviewUrls((prevUrls) => prevUrls.filter((_, i) => i !== index))
   }
-
   const hotelTypes = [
-    { value: "CITY", label: "City" },
-    { value: "BEACH", label: "Beach" },
-    { value: "MOUNTAIN", label: "Mountain" },
-    { value: "COUNTRYSIDE", label: "Countryside" },
-    { value: "RESORT", label: "Resort" },
+    { value: "CITY", label: "city" },
+    { value: "BEACH", label: "beach" },
+    { value: "MOUNTAIN", label: "mountain" },
+    { value: "COUNTRYSIDE", label: "countryside" },
+    { value: "RESORT", label: "resort" },
+    { value: "BUDGET", label: "budget" },
+    { value: "LUXURY", label: "luxury" },
+    { value: "AMAZING_VIEWS", label: "amazing views" },
+    { value: "AMAZING_POOLS", label: "amazing pools" },
+    { value: "FARMS", label: "farms" },
+    { value: "HISTORICAL_HOMES", label: "historical homes" },
+    { value: "SURFING", label: "surfing" },
+    { value: "BEACHFRONT", label: "beachfront" },
+    { value: "LAKEFRONT", label: "lakefront" },
+    { value: "CASTLES", label: "castles" },
+    { value: "CAMPING", label: "camping" },
+    { value: "BOATS", label: "boats" },
+    { value: "TROPICAL", label: "tropical" },
+    { value: "TOP_OF_THE_WORLD", label: "top of the world" },
+    { value: "TOP_CITIES", label: "top cities" },
+    { value: "ARCTIC", label: "arctic" },
+    { value: "TREEHOUSES", label: "treehouses" },
+    { value: "CABINS", label: "cabins" },
+    { value: "TINY_HOMES", label: "tiny homes" },
+    { value: "ISLANDS", label: "islands" },
+    { value: "MANSIONS", label: "mansions" },
   ]
+
+
 
   return (
     <div className="w-full max-w-4xl mx-auto">

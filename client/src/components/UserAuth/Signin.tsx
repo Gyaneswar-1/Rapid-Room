@@ -10,7 +10,10 @@ import { notifyError, notifySuccess } from "../../lib/Toast";
 
 // State management
 import { AppDispatch, RootState } from "../../store/store";
-import { flipSignUp, flipSignin } from "../../store/reducers/showAuthCard.reducers";
+import {
+  flipSignUp,
+  flipSignin,
+} from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
 
 const handleGoogleLogin = () => {
@@ -25,6 +28,7 @@ const handleFacebookLogin = () => {
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -32,7 +36,9 @@ const Signin = () => {
   };
 
   // State management
-  const { showSignup, showSignin } = useSelector((state: RootState) => state.showAuthCardReducer);
+  const { showSignup, showSignin } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
   const dispatch: AppDispatch = useDispatch();
 
   // React-hook form actions
@@ -41,17 +47,20 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SigninType>();
-  
+
   const onSubmit: SubmitHandler<SigninType> = async (data) => {
+    setShowLoader(true);
     const res = await signinManual(data);
     console.log(res);
     if (res.success === true) {
       localStorage.setItem("loggedin", "true");
+      setShowLoader(false);
       navigate("/home");
       notifySuccess("Welcome back!");
       dispatch(flipSignin(showSignin));
     } else {
       notifyError("Signin failed!");
+      setShowLoader(false);
     }
   };
 
@@ -75,7 +84,9 @@ const Signin = () => {
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
               Welcome back to <span className="text-teal-600">RapidRoom</span>
             </h1>
-            <p className="text-gray-500 text-sm">Sign in to continue to your account</p>
+            <p className="text-gray-500 text-sm">
+              Sign in to continue to your account
+            </p>
           </div>
 
           {/* Form */}
@@ -140,7 +151,11 @@ const Signin = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 >
-                  {showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+                  {showPassword ? (
+                    <IoMdEyeOff size={20} />
+                  ) : (
+                    <IoMdEye size={20} />
+                  )}
                 </button>
               </label>
               {errors.password && (
@@ -152,18 +167,35 @@ const Signin = () => {
 
             {/* Forgot password link */}
             <div className="text-right">
-              <a href="#" className="text-sm text-teal-600 hover:text-teal-700 hover:underline">
+              <a
+                href="#"
+                className="text-sm text-teal-600 hover:text-teal-700 hover:underline"
+              >
                 Forgot password?
               </a>
             </div>
 
             {/* Submit button */}
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-            >
-              Sign In
-            </button>
+
+            {showLoader ? (
+              <button
+                className="w-full py-3 px-4 flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+              >
+                <div className="flex flex-row gap-2">
+                  <div
+                    className="loader border-t-2 rounded-full border-teal-950 bg-transparent animate-spin
+aspect-square w-8 flex justify-center items-center text-yellow-700"
+                  ></div>
+                </div>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+              >
+                Sign In
+              </button>
+            )}
           </form>
 
           {/* Divider */}
@@ -172,7 +204,9 @@ const Signin = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">or continue with</span>
+              <span className="px-2 bg-white text-gray-500">
+                or continue with
+              </span>
             </div>
           </div>
 
@@ -182,15 +216,25 @@ const Signin = () => {
               onClick={handleGoogleLogin}
               className="flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
-              <img src={googleLogo || "/placeholder.svg"} alt="Google" className="w-5 h-5" />
+              <img
+                src={googleLogo || "/placeholder.svg"}
+                alt="Google"
+                className="w-5 h-5"
+              />
               <span className="text-sm font-medium text-gray-700">Google</span>
             </button>
             <button
               onClick={handleFacebookLogin}
               className="flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
-              <img src={facebookLogo || "/placeholder.svg"} alt="Facebook" className="w-5 h-5" />
-              <span className="text-sm font-medium text-gray-700">Facebook</span>
+              <img
+                src={facebookLogo || "/placeholder.svg"}
+                alt="Facebook"
+                className="w-5 h-5"
+              />
+              <span className="text-sm font-medium text-gray-700">
+                Facebook
+              </span>
             </button>
           </div>
 
