@@ -116,14 +116,12 @@ function Categories() {
     }
   }
 
-  // Only show on home page
   if (location.pathname !== "/home") {
     return null
   }
 
   return (
     <div className="relative w-full py-4">
-      {/* Left scroll button */}
       <button
         onClick={() => scroll("left")}
         className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 hidden md:block"

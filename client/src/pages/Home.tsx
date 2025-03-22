@@ -121,7 +121,7 @@ function Home() {
               <p className="text-gray-500 mt-2">Try adjusting your search criteria</p>
             </div>
           ) : (
-            <div className="grid pt-30 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid pt-14 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {filteredHotels.map((hotel: any) => (
                 <div key={hotel.id} className="w-full">
                   <Card

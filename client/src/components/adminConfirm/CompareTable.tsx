@@ -1,33 +1,55 @@
-import CompareTableComponent from "./CompareTableComponent";
 
-const data = [
-  { title: "Guest identity verification", rapidRoom: true, Competitors: true },
-  { title: "Reservation screening", rapidRoom: true, Competitors: false },
-  { title: "$3m USD damage protection", rapidRoom: true, Competitors: false },
-  { title: "Art & valuables", rapidRoom: true, Competitors: false },
-  { title: "Auto & boat", rapidRoom: true, Competitors: true },
-  // {title:"Pet damage"	,rapidRoom:true,Competitors:false},
-  // {title:"Income loss",rapidRoom:true,Competitors:false},
-  // {title:"Deep cleaning",rapidRoom:true,Competitors:false},
-  // {title:"$1m USD liability insurance",rapidRoom:true,Competitors:false},
-  // {title:"24-hour safety line",rapidRoom:true,Competitors:true},
-];
 
 function CompareTable() {
   return (
-    <div className="my-20  md:mx-20">
-      <div className="header flex w-full justify-end my-8 px-6">
-        <div className="flex gap-6  ">
-          <h1 className="text-lg" >RapidRoom</h1>
-          <h1 className="text-lg" >Competitors</h1>
+    <div className="mb-24">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">How We Compare</h2>
+
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="grid grid-cols-3 border-b">
+              <div className="p-6 font-semibold text-gray-800">Features</div>
+              <div className="p-6 font-semibold text-teal-600 text-center">RapidRoom</div>
+              <div className="p-6 font-semibold text-gray-600 text-center">Competitors</div>
+            </div>
+
+            {[
+              { title: "Guest identity verification", rapidRoom: true, competitors: true },
+              { title: "Reservation screening", rapidRoom: true, competitors: false },
+              { title: "$3m USD damage protection", rapidRoom: true, competitors: false },
+              { title: "Art & valuables coverage", rapidRoom: true, competitors: false },
+              { title: "Auto & boat coverage", rapidRoom: true, competitors: true },
+              { title: "Pet damage protection", rapidRoom: true, competitors: false },
+              { title: "Income loss protection", rapidRoom: true, competitors: false },
+              { title: "24-hour safety line", rapidRoom: true, competitors: true },
+            ].map((item, index) => (
+              <div key={index} className={`grid grid-cols-3 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
+                <div className="p-6 text-gray-700">{item.title}</div>
+                <div className="p-6 flex justify-center items-center">
+                  {item.rapidRoom ? (
+                    <svg className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  )}
+                </div>
+                <div className="p-6 flex justify-center items-center">
+                  {item.competitors ? (
+                    <svg className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div>
-        {data.map((d, index) => {
-          return <CompareTableComponent key={index} data={d} />;
-        })}
-      </div>
-    </div>
   );
 }
 

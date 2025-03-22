@@ -1,81 +1,45 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import CardForm from "./CardForm";
 import { motion } from "framer-motion";
+import CardForm from "./CardForm";
 
 function ConfirmButton() {
   const [showCard, setShowCard] = useState(false);
   const [checkbox, setCheckbox] = useState(false);
   const navigate = useNavigate();
   return (
-    <div>
-      <div className="flex justify-between items-center md:px-12">
-        <fieldset>
-          <div className="divide-y divide-gray-200">
-            <label className="flex items-start gap-4 py-4">
-              <div className="flex items-center gap-2">
-                &#8203;
-                <input
-                  type="checkbox"
-                  className="size-5 rounded-4xl cursor-pointer"
-                  id="Option1"
-                  onClick={() => {
-                    setCheckbox(!checkbox);
-                  }}
-                />
-              </div>
-
-              <div>
-                <strong className="font-medium text-gray-900">
-                  I agree with the
-                  <span
-                    className="underline  pl-1.5 text-blue-700 cursor-pointer"
-                    onClick={() => {
-                      navigate("/admin-terms");
-                    }}
-                  >
-                    terms and conditions.
-                  </span>
-                </strong>
-              </div>
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white p-8 rounded-2xl shadow-sm">
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="terms-checkbox"
+              className="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500 mt-1"
+              onChange={() => setCheckbox(!checkbox)}
+            />
+            <label htmlFor="terms-checkbox" className="text-gray-700">
+              I agree with the
+              <button
+                onClick={() => navigate("/admin-terms")}
+                className="text-teal-600 font-medium hover:text-teal-800 transition-colors ml-1"
+              >
+                terms and conditions
+              </button>
             </label>
           </div>
-        </fieldset>
 
-        {checkbox ? (
           <motion.button
-           whileHover={{
-            scale:1.2
-          }}
-          whileTap={{
-            scale:0.9
-          }}
-            onClick={() => {
-              setShowCard(!showCard);
-            }}
-            className="inline-block rounded-sm cursor-pointer hover:bg-teal-700 bg-teal-600 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => checkbox && setShowCard(!showCard)}
+            className={`px-8 py-3 rounded-lg text-white font-medium ${
+              checkbox ? "bg-teal-600 hover:bg-teal-700 cursor-pointer" : "bg-gray-400 cursor-not-allowed"
+            } transition-colors`}
+            disabled={!checkbox}
           >
             Apply for Host
           </motion.button>
-        ) : (
-          <button
-         
-
-            className="inline-block rounded-sm cursor-not-allowed  bg-teal-600 opacity-50 md:px-12 md:py-3 px-5 py-3 text-sm font-medium text-white focus:ring-3 focus:outline-hidden"
-          >
-            Apply for Host
-          </button>
-        )}
-      </div>
-      {showCard && (
-        <div
-
-          className="overflow-hidden"
-        >
-          <CardForm show={setShowCard} />
+          {showCard && <CardForm show={setShowCard}/>}
         </div>
-      )}
-    </div>
   );
 }
 

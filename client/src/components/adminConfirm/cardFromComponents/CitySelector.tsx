@@ -1,82 +1,77 @@
-import { City } from "country-state-city";
-import React, { useEffect, useRef, useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
-import { CiBank } from "react-icons/ci";
+"use client"
+
+import { City } from "country-state-city"
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
+import type { UseFormSetValue } from "react-hook-form"
+import { CiBank } from "react-icons/ci"
 
 interface CountryData {
-  CountryIsoCode: string;
-  StateIsoCode: string;
-  register: any;
-  setValue:UseFormSetValue<any>
+  CountryIsoCode: string
+  StateIsoCode: string
+  register: any
+  setValue: UseFormSetValue<any>
 }
 
-const CitySelector: React.FC<CountryData> = ({
-  CountryIsoCode,
-  StateIsoCode,
-  register,
-  setValue,
-}) => {
-  const cities = City.getCitiesOfState(CountryIsoCode, StateIsoCode) || [];
-  const [search, setSearch] = useState("");
-  const [filteredCities, setFilteredCities] = useState<string[]>([]);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const inputRef = useRef<HTMLDivElement>(null);
+const CitySelector: React.FC<CountryData> = ({ CountryIsoCode, StateIsoCode, register, setValue }) => {
+  const cities = City.getCitiesOfState(CountryIsoCode, StateIsoCode) || []
+  const [search, setSearch] = useState("")
+  const [filteredCities, setFilteredCities] = useState<string[]>([])
+  const [isDropdownOpen, setDropdownOpen] = useState(false)
+  const inputRef = useRef<HTMLDivElement>(null)
 
   // Handle search and show only matching cities
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearch(value);
+    const value = e.target.value
+    setSearch(value)
 
     if (value.trim() === "") {
-      setFilteredCities([]);
-      setDropdownOpen(false);
+      setFilteredCities([])
+      setDropdownOpen(false)
     } else {
       const filtered = cities
         .filter((city) => city.name.toLowerCase().includes(value.toLowerCase()))
-        .map((city) => city.name);
-      setFilteredCities(filtered);
-      setDropdownOpen(filtered.length > 0);
+        .map((city) => city.name)
+      setFilteredCities(filtered)
+      setDropdownOpen(filtered.length > 0)
     }
-  };
+  }
 
   // Select city and close dropdown
   const handleSelectCity = (cityName: string) => {
-    setSearch(cityName);
-    setFilteredCities([]);
-    setDropdownOpen(false);
-    setValue("city",cityName)
-  };
+    setSearch(cityName)
+    setFilteredCities([])
+    setDropdownOpen(false)
+    setValue("city", cityName)
+  }
 
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false)
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   return (
     <div className="relative w-full" ref={inputRef}>
-      <label htmlFor="city" className="block text-md font-medium text-gray-700">
+      <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1.5">
         City name
       </label>
-      <div className="flex items-center mt-1 p-2 w-full rounded-md border border-gray-300 text-lg shadow-xs sm:text-sm focus-within:border-neutral-950">
-        <CiBank className="mx-1 mr-3 text-black text-xl" />
+      <div className="flex items-center px-3 py-2.5 w-full rounded-lg border border-gray-300 bg-white shadow-sm transition-all focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/30">
+        <CiBank className="flex-shrink-0 text-gray-500 mr-2 text-xl" />
         <input
           {...register("city")}
           type="text"
           id="city"
           placeholder="Search city"
-          className="w-full outline-none"
+          className="w-full outline-none text-gray-800 placeholder-gray-400 bg-transparent"
           value={search}
           onChange={handleSearch}
           required
@@ -84,11 +79,11 @@ const CitySelector: React.FC<CountryData> = ({
       </div>
 
       {isDropdownOpen && (
-        <ul className="absolute w-full bg-white border border-gray-300 mt-1 max-h-40 overflow-y-auto shadow-lg rounded-md z-10">
+        <ul className="absolute z-20 mt-1 w-full max-h-60 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
           {filteredCities.map((city) => (
             <li
               key={city}
-              className="p-2 hover:bg-gray-100 cursor-pointer"
+              className="px-3 py-2 hover:bg-gray-50 cursor-pointer transition-colors"
               onClick={() => handleSelectCity(city)}
             >
               {city}
@@ -97,7 +92,8 @@ const CitySelector: React.FC<CountryData> = ({
         </ul>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CitySelector;
+export default CitySelector
+

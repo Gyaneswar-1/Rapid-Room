@@ -12,13 +12,11 @@ interface NavbarProps {
 
 function Navbar({ show }: NavbarProps) {
   const navigate = useNavigate()
-
   return (
-    <div className="fixed w-full bg-white z-50 shadow-sm">
-      <div className="py-4 border-b">
+    <div className="fixed w-full bg-white z-50">
+      <div className="py-2 ">
         <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-4 px-4">
           <div className="flex items-center justify-between gap-3 md:gap-0">
-            {/* Logo */}
             <div
               className="flex items-center gap-2 cursor-pointer transition hover:opacity-80"
               onClick={() => navigate("/home")}
@@ -40,7 +38,6 @@ function Navbar({ show }: NavbarProps) {
         </div>
       </div>
 
-      {/* Categories */}
       {show && (
         <div className="px-2 md:px-10 lg:px-20">
           <Categories />
