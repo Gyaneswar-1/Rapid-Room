@@ -1,10 +1,11 @@
-"use client"
+
 
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, LogOut, User, ChevronDown } from "lucide-react"
 import { Link } from "react-router-dom"
 import MainLogo from "../../assets/images/MainLogo.png"
+
 
 export default function WelcomePageNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -78,6 +79,7 @@ export default function WelcomePageNavBar() {
                   >
                     <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
                       <User className="h-5 w-5 text-teal-600" />
+                      
                     </div>
                     <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
                   </button>

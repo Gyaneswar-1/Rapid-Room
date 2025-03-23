@@ -8,11 +8,17 @@ export const getUserInformation = async (req, res) => {
                 id: req.user.id,
             },
             select: {
+                id: true,
                 fullName: true,
                 email: true,
+                phoneNumber: true,
                 profileImage: true,
+                GovID: true,
                 isHost: true,
                 createdAt: true,
+                hostExperience: true,
+                hostRating: true,
+                hostResponseRate: true,
                 address: {
                     select: {
                         street: true,
@@ -20,6 +26,8 @@ export const getUserInformation = async (req, res) => {
                         state: true,
                         zipCode: true,
                         country: true,
+                        latitude: true,
+                        longitude: true,
                     },
                 },
             },
@@ -29,9 +37,15 @@ export const getUserInformation = async (req, res) => {
                 .status(404)
                 .json(new ApiError(false, {}, "Failed", "Can't get the data", 404));
         }
+        // Convert BigInt to Number safely
+        const formattedUserInfo = {
+            ...userInformation,
+            phoneNumber: userInformation.phoneNumber ? Number(userInformation.phoneNumber) : null,
+            GovID: userInformation.GovID ? Number(userInformation.GovID) : null,
+        };
         return res
             .status(200)
-            .json(new ApiResponse(true, userInformation, "Success", "Successfully get the user Information", 200));
+            .json(new ApiResponse(true, formattedUserInfo, "Success", "Successfully get the user Information", 200));
     }
     catch (error) {
         return res.status(404).json(new ApiError(false, {

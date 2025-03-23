@@ -13,11 +13,17 @@ export const getUserInformation = async (
                 id: req.user.id,
             },
             select: {
+                id: true,
                 fullName: true,
                 email: true,
+                phoneNumber: true,
                 profileImage: true,
+                GovID: true,
                 isHost: true,
                 createdAt: true,
+                hostExperience: true,
+                hostRating: true,
+                hostResponseRate: true,
                 address: {
                     select: {
                         street: true,
@@ -25,6 +31,8 @@ export const getUserInformation = async (
                         state: true,
                         zipCode: true,
                         country: true,
+                        latitude: true,
+                        longitude: true,
                     },
                 },
             },
@@ -43,12 +51,19 @@ export const getUserInformation = async (
                 );
         }
 
+        // Convert BigInt to Number safely
+        const formattedUserInfo = {
+            ...userInformation,
+            phoneNumber: userInformation.phoneNumber ? Number(userInformation.phoneNumber) : null,
+            GovID: userInformation.GovID ? Number(userInformation.GovID) : null,
+        };
+
         return res
             .status(200)
             .json(
                 new ApiResponse(
                     true,
-                    userInformation,
+                    formattedUserInfo,
                     "Success",
                     "Successfully get the user Information",
                     200,

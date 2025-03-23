@@ -22,6 +22,13 @@ interface UserMenuProps {
   showRapidYourRoom: boolean
 }
 
+import { userStoreType } from "../../store/reducers/user.reducers"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+
+
+
+
 function UserMenu({ showRapidYourRoom }: UserMenuProps) {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
@@ -45,7 +52,8 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
-
+  const { profileImage }:userStoreType = useSelector((state: RootState) => state.userReducer);
+  console.log("the image",profileImage)
   return (
     <div className="relative" ref={menuRef}>
       <div className="flex items-center gap-3">
@@ -66,7 +74,9 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
         >
           <AiOutlineMenu className="text-gray-600" size={18} />
           <div className="hidden md:block">
-            <Avatar />
+            {/* <Avatar /> */}
+            <img src={profileImage} alt="image" className="hidden md:block h-10 w-10 rounded-full object-center object-fill"/>
+            
           </div>
         </button>
       </div>
