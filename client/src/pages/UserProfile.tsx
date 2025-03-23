@@ -14,11 +14,16 @@ import {
   FaEllipsisH,
 } from "react-icons/fa"
 import { MdBookmark, MdLocationOn, MdSettings } from "react-icons/md"
+import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+import { userStoreType } from "../store/reducers/user.reducers"
+import { RootState } from "../store/store"
 
 export default function UserProfile() {
+    const { isHost,fullName,email,phoneNumber,profileImage,createdAt,country,state }: userStoreType = useSelector(
+      (state: RootState) => state.userReducer
+    );
   const [activeTab, setActiveTab] = useState("profile")
-  const [isHost] = useState(true)
   const navigate =  useNavigate();
 
   return (
@@ -47,7 +52,7 @@ export default function UserProfile() {
                     <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden bg-white">
                       <img
                         className="w-full h-full object-cover"
-                        src="/placeholder.svg?height=128&width=128"
+                        src={profileImage}
                         alt="User profile"
                       />
                     </div>
@@ -60,7 +65,7 @@ export default function UserProfile() {
 
               {/* User Info */}
               <div className="pt-20 pb-6 px-6 text-center">
-                <h2 className="text-xl font-bold text-gray-800">John Doe</h2>
+                <h2 className="text-xl font-bold text-gray-800">{fullName}</h2>
                 <p className="text-gray-500">@johndoe</p>
 
                 {isHost && (
@@ -184,7 +189,7 @@ export default function UserProfile() {
                           <input
                             type="text"
                             className="w-full px-4 py-3 bg-transparent focus:outline-none text-gray-800"
-                            value="John Doe"
+                            value={fullName}
                             readOnly
                           />
                         </div>
@@ -210,7 +215,7 @@ export default function UserProfile() {
                           <input
                             type="email"
                             className="w-full px-4 py-3 bg-transparent focus:outline-none text-gray-800"
-                            value="john.doe@example.com"
+                            value={email}
                             readOnly
                           />
                         </div>
@@ -223,7 +228,7 @@ export default function UserProfile() {
                           <input
                             type="tel"
                             className="w-full px-4 py-3 bg-transparent focus:outline-none text-gray-800"
-                            value="+1 (555) 123-4567"
+                            value={phoneNumber}
                             readOnly
                           />
                         </div>
@@ -236,7 +241,7 @@ export default function UserProfile() {
                           <input
                             type="text"
                             className="w-full px-4 py-3 bg-transparent focus:outline-none text-gray-800"
-                            value="New York, USA"
+                            value={country+ ', '+state}
                             readOnly
                           />
                         </div>
@@ -249,7 +254,7 @@ export default function UserProfile() {
                           <input
                             type="text"
                             className="w-full px-4 py-3 bg-transparent focus:outline-none text-gray-800"
-                            value="January 2022"
+                            value={createdAt}
                             readOnly
                           />
                         </div>

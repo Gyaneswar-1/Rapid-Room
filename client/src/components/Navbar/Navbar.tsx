@@ -6,11 +6,13 @@ import Search from "./Search"
 import UserMenu from "./UserMenu"
 import Categories from "./Categories"
 
+
 interface NavbarProps {
   show: boolean
 }
 
 function Navbar({ show }: NavbarProps) {
+
   const navigate = useNavigate()
   return (
     <div className="fixed w-full bg-white z-50">

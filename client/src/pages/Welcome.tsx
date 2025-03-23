@@ -8,8 +8,6 @@ import { getuserData } from "../service/userdata/getuserData";
 import { useEffect } from "react";
 import {userStoreType} from "../store/reducers/user.reducers"
 
-//state to store the data in the srore of user
-//state management
 import { AppDispatch, RootState } from "../store/store";
 import {
   setHasDataInStore,
@@ -35,7 +33,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
-  const { email,hasDataInStore }:userStoreType = useSelector((state: RootState) => state.userReducer);
+  const { hasDataInStore }:userStoreType = useSelector((state: RootState) => state.userReducer);
   
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
@@ -83,7 +81,6 @@ export default function Home() {
 
   return (
     <main>
-      <p>{email}</p>
       <WelcomePageNavBar />
       <HeroSection />
       <Offer />

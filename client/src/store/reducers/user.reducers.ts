@@ -21,7 +21,6 @@ hasDataInStore: boolean,
  zipCode: string,
  longitude: string,
  latitude: string,
-  
 }
 
 const initialState:userStoreType = {
@@ -109,7 +108,6 @@ export const UserSlice = createSlice({
         setUserLatitude:(state,action)=>{
           state.latitude = action.payload;
         },
-        
     }
 })
 

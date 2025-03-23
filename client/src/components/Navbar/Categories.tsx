@@ -137,7 +137,7 @@ function Categories() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex gap-6 overflow-x-auto scrollbar-hide py-1 px-1"
+          className="flex gap-6 overflow-x-auto scrollbar-hide py-1 px-1 justify-center"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categories.map((item) => (

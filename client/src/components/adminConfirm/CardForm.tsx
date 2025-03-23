@@ -5,7 +5,7 @@ import { Country } from "country-state-city"
 import { useState } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { notifyInfo } from "../../lib/Toast"
+import { notifyError, notifyInfo } from "../../lib/Toast"
 import { applyAdmin } from "../../service/admin.service"
 import { motion } from "framer-motion"
 import { CiCreditCard1, CiLocationArrow1, CiLocationOn, CiPhone } from "react-icons/ci"
@@ -14,6 +14,9 @@ import StateSelector from "./cardFromComponents/StateSelector"
 import CitySelector from "./cardFromComponents/CitySelector"
 import InputField from "./cardFromComponents/InputField"
 import CountrySelector from "./cardFromComponents/CountrySelector"
+import { setUserCity, setUserCountry, setUserGovId, setUserIsHost, setUserPhoneNumber, setUserState, setUserStreet, setUserZipCode, userStoreType } from "../../store/reducers/user.reducers"
+import { AppDispatch, RootState } from "../../store/store"
+import { useDispatch, useSelector } from "react-redux"
 
 type Inputs = {
   phoneNumber: string
@@ -26,6 +29,12 @@ type Inputs = {
 }
 
 function CardForm({ show }: { show: (value: boolean) => void }) {
+   const dispatch: AppDispatch = useDispatch();
+
+  // const {  }: userStoreType = useSelector(
+  //   (state: RootState) => state.userReducer
+  // );
+
   const countries = Country.getAllCountries()
   const [country, setCountry] = useState("")
   const [state, setState] = useState("")
@@ -39,13 +48,22 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
     formState: { errors },
   } = useForm<Inputs>()
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true)
-    setTimeout(() => {
-      applyAdmin(data)
+      if(await applyAdmin(data)){
+        notifyInfo("Thanks for registering yourself")
+        dispatch(setUserCountry(data.country))
+        dispatch(setUserPhoneNumber(data.phoneNumber))
+        dispatch(setUserGovId(data.govID))
+        dispatch(setUserState(data.state))
+        dispatch(setUserCity(data.city))
+        dispatch(setUserStreet(data.street))
+        dispatch(setUserZipCode(data.zip))
+        dispatch(setUserIsHost(true))
+      }else{
+        notifyError("Somthing wrong")
+      }
       navigate("/home")
-      notifyInfo("Thanks for registering yourself")
-    }, 3000)
   }
 
   return (

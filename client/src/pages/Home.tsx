@@ -41,6 +41,7 @@ export interface Result {
 }
 
 function Home() {
+
   const isLoggedIn = localStorage.getItem("loggedin")
   const [showLoader, setShowLoader] = useState(true)
   const navigate = useNavigate()
