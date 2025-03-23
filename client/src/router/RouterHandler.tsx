@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter,  Route, Routes } from "react-router-dom";
 import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
 import AccountLayout from "../components/Useraccount/AccountLayout";
 import EditUser from "../components/Useraccount/EditUser";
@@ -20,7 +20,12 @@ import ChatPage from "../components/messageHost/Chatpage";
 import WishlistPage from "../pages/WishlistPage";
 import SecurityAndAuth from "../components/Useraccount/SecurityAndAuth";
 import UserBookings from "../pages/UserBookings";
-
+import TodayPage from "../components/HostingPage/TodayPage";
+import ListingsPage from "../components/HostingPage/ListingsPage";
+import MessagesPage from "../components/HostingPage/MessagesPage";
+import ListingDetailPage from "../components/HostingPage/ListingDetailPage";
+import GuidebookPage from "../components/HostingPage/GuidebookPage";
+import EarningsPage from "../components/HostingPage/EarningsPage";
 
 function RouterHandler() {
   return (
@@ -35,7 +40,10 @@ function RouterHandler() {
             <Route path="book-hotel" element={<BookingPage />} />
             {/* <Route path="book-hotel2" element={<BookingPage2 />} /> */}
             <Route path="add-hotel" element={<AddHotels />} />
-            <Route path="my-bookings" element={<UserBookings></UserBookings>}></Route>
+            <Route
+              path="my-bookings"
+              element={<UserBookings></UserBookings>}
+            ></Route>
             <Route path="admin-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
@@ -49,13 +57,21 @@ function RouterHandler() {
               <Route index element={<Account />} />
               <Route path="edit-user" element={<EditUser />} />
               <Route path="personal-address" element={<PersonalAddress />} />
-              <Route path="security" element={<SecurityAndAuth/>} />
+              <Route path="security" element={<SecurityAndAuth />} />
             </Route>
-            <Route path="hosting">
-              <Route index element={<Hosting />} />
-            </Route>
+            <Route path="hosting" element={<Hosting />}>
+            <Route index element={<TodayPage />} /> {/* Default route */}
+            <Route path="today" element={<TodayPage />} />
+            <Route path="listings" element={<ListingsPage />} />
+            <Route path="listings/:id" element={<ListingDetailPage />} />
+            <Route path="listings/:id/edit" element={<ComeingSoon />} />
+            <Route path="listings/new" element={<ComeingSoon />} />
+            <Route path="messages" element={<MessagesPage />} />
+            <Route path="guidebook" element={<GuidebookPage />} />
+            <Route path="earnings" element={<EarningsPage />} />
           </Route>
-          <Route path="*" element={<ErrorPage />} /> 
+          </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,11 +1,11 @@
 "use client"
-Link
+
 import { useState, useRef, useEffect } from "react"
 import { HiOutlineChevronDown } from "react-icons/hi"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 export default function HostingTabs() {
-//   const pathname = usePathname()
+  const {pathname} = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -29,7 +29,7 @@ export default function HostingTabs() {
   }, [])
 
   return (
-    <div className="border-b border-gray-200">
+    <div className="border-b border-gray-200 mx-auto px-4 py-2 ">
       <div className="flex justify-between items-center">
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => {
@@ -37,10 +37,10 @@ export default function HostingTabs() {
             return (
               <Link
                 key={tab.name}
-                href={tab.href}
+                to={tab.href}
                 className={`${
                   isActive
-                    ? "border-rose-500 text-rose-600"
+                    ? "border-teal-500 text-teal-600"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
                 aria-current={isActive ? "page" : undefined}
@@ -66,7 +66,7 @@ export default function HostingTabs() {
             <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
               <div className="py-1" role="menu" aria-orientation="vertical">
                 <Link
-                  href="/hosting/earnings"
+                  to="/hosting/earnings"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   onClick={() => setMenuOpen(false)}
@@ -74,7 +74,7 @@ export default function HostingTabs() {
                   Earnings
                 </Link>
                 <Link
-                  href="/hosting/guidebook"
+                  to="/hosting/guidebook"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   onClick={() => setMenuOpen(false)}
@@ -82,7 +82,7 @@ export default function HostingTabs() {
                   Guide Book
                 </Link>
                 <Link
-                  href="/hosting/listings/new"
+                  to="/hosting/listings/new"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   onClick={() => setMenuOpen(false)}
