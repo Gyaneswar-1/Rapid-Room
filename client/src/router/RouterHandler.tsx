@@ -26,6 +26,8 @@ import MessagesPage from "../components/HostingPage/MessagesPage";
 import ListingDetailPage from "../components/HostingPage/ListingDetailPage";
 import GuidebookPage from "../components/HostingPage/GuidebookPage";
 import EarningsPage from "../components/HostingPage/EarningsPage";
+import Dashbord from "../pages/Dashbord"
+
 
 function RouterHandler() {
   return (
@@ -38,6 +40,7 @@ function RouterHandler() {
           {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
+            <Route path="dashbord" element={<Dashbord />} />
             {/* <Route path="book-hotel2" element={<BookingPage2 />} /> */}
             <Route path="add-hotel" element={<AddHotels />} />
             <Route

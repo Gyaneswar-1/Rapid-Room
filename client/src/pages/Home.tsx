@@ -5,7 +5,7 @@ import Card from "../components/homepage/Card"
 import Navbar from "../components/Navbar/Navbar"
 import { useNavigate } from "react-router-dom"
 import { getHotels } from "../service/getHotels.service"
-import { getAllHotels } from "../store/reducers/hotel.reducers"
+import { getAllHotels,setHaveHotels } from "../store/reducers/hotel.reducers"
 import Loader from "../components/Reusable/Loader"
 
 //state management
@@ -15,7 +15,9 @@ import { flipSignin } from "../store/reducers/showAuthCard.reducers"
 
 import Signin from "../components/UserAuth/Signin"
 import Signup from "../components/UserAuth/Signup"
-import { getuserData } from "../service/userdata/getuserData"
+
+
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 interface Address {
   city: string
@@ -47,28 +49,22 @@ function Home() {
   const navigate = useNavigate()
 
   //state management
-  const { hotels } = useSelector((state: RootState) => state.hotelReducer)
+  const { hotels,hasHotelsArray } = useSelector((state: RootState) => state.hotelReducer)
   const { showSignup, showSignin } = useSelector((state: RootState) => state.showAuthCardReducer)
   const { search } = useSelector((state: RootState) => state.searchReducer)
 
   const dispatch: AppDispatch = useDispatch()
 
-  async function delay() {
-    await new Promise((res) => {
-      setTimeout(() => {
-        res("")
-      }, 1500)
-    })
-  }
+  
 
   useEffect(() => {
-    getHotels(1, 10)
+    if(!hasHotelsArray){
+      getHotels(1, 10)
       .then(async (res) => {
         if (res.success === true) {
-          await delay()
-          await getuserData()
           setShowLoader(false)
           dispatch(getAllHotels(res.data))
+          dispatch(setHaveHotels(true));
         } else {
           dispatch(
             getAllHotels([
@@ -97,6 +93,10 @@ function Home() {
           ]),
         )
       })
+    }else{
+      setShowLoader(false);
+    }
+      
   }, [])
 
   const filteredHotels = hotels.filter(
@@ -154,6 +154,7 @@ function Home() {
 
       {showSignin && <Signin />}
       {showSignup && <Signup />}
+      <SetUserDataToStore></SetUserDataToStore>
     </div>
   )
 }

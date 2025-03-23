@@ -30,6 +30,7 @@ import {
   setHotelId,
 } from "../store/reducers/singleHotel.reducer";
 import { useDispatch, useSelector } from "react-redux";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 export default function BookingPage() {
   //delay functon
@@ -193,6 +194,7 @@ export default function BookingPage() {
               hostResponseRate={100}
             ></MeetHost>
           </div>
+          <SetUserDataToStore></SetUserDataToStore>
         </div>
       )}
     </>

@@ -151,9 +151,10 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
+                      navigate("/dashbord")
                       setIsOpen(false);
                     }}
-                    label="Help Center"
+                    label="Dashbord"
                     icons={BsQuestionCircle}
                   />
                   <MenuItem
