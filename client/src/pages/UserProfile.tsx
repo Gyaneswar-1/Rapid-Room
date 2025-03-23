@@ -14,10 +14,12 @@ import {
   FaEllipsisH,
 } from "react-icons/fa"
 import { MdBookmark, MdLocationOn, MdSettings } from "react-icons/md"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function UserProfile() {
   const [activeTab, setActiveTab] = useState("profile")
   const [isHost] = useState(true)
+  const navigate =  useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -69,8 +71,12 @@ export default function UserProfile() {
                 )}
 
                 <div className="flex justify-center gap-4 mt-4">
-                  <button className="bg-teal-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-600 transition-colors">
-                    Edit Profile
+                  <button
+                  onClick={()=>{
+                    navigate("/user-account")
+                  }}
+                  className="bg-teal-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-600 transition-colors">
+                     Account
                   </button>
                   <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                     Share
@@ -136,8 +142,8 @@ export default function UserProfile() {
                 </li>
                 {isHost && (
                   <li>
-                    <button
-                      onClick={() => setActiveTab("properties")}
+                    <Link
+                        to={"/hosting/listings"}
                       className={`w-full flex items-center gap-3 p-4 text-left transition-colors ${
                         activeTab === "properties"
                           ? "bg-gradient-to-r from-teal-50 to-cyan-50 text-teal-600 border-l-4 border-teal-500"
@@ -146,7 +152,7 @@ export default function UserProfile() {
                     >
                       <FaHotel className={activeTab === "properties" ? "text-teal-500" : "text-gray-400"} />
                       <span className="font-medium">Properties</span>
-                    </button>
+                    </Link>
                   </li>
                 )}
               </ul>
@@ -548,9 +554,6 @@ export default function UserProfile() {
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <h2 className="text-xl font-semibold text-gray-800">My Wishlist</h2>
-                    <button className="bg-teal-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-600 transition-colors">
-                      Create New List
-                    </button>
                   </div>
                 </div>
 
@@ -589,6 +592,7 @@ export default function UserProfile() {
                       </button>
                     </div>
                   </div>
+                  
 
                   {/* Wishlist Item 2 */}
                   <div className="bg-white rounded-2xl shadow-lg overflow-hidden group">
@@ -658,6 +662,11 @@ export default function UserProfile() {
                     </div>
                   </div>
                 </div>
+                <div className="w-full h-12 p-2  flex items-center justify-center" >
+                      <button onClick={()=>{navigate("/wishlist")}} className="bg-teal-600 px-3 py-2 rounded-lg text-white cursor-pointer">
+                        Show More
+                      </button>
+                    </div>
               </div>
             )}
 
