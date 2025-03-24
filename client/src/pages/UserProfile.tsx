@@ -22,16 +22,27 @@ import {
   Menu,
   ArrowLeft,
   Check,
+  PinIcon,
 } from "lucide-react"
 import { FaHotel } from "react-icons/fa"
+import { userStoreType } from "../store/reducers/user.reducers"
+import { useSelector } from "react-redux"
+import { RootState } from "../store/store"
+import { useNavigate } from "react-router-dom"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 export default function UserProfile() {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("personal-info")
   const [isEditing, setIsEditing] = useState(false)
-  const [isHost, setIsHost] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [selectedBooking, setSelectedBooking] = useState<any>(null)
+
+    const { isHost,profileImage,fullName,email,phoneNumber,govId,createdAt,country,state,street,city,zipCode }: userStoreType = useSelector(
+      (state: RootState) => state.userReducer
+    );
+  
 
   // Close mobile menu when screen size changes to desktop
   useEffect(() => {
@@ -71,6 +82,8 @@ export default function UserProfile() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+            <SetUserDataToStore/>
+      
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -85,16 +98,8 @@ export default function UserProfile() {
             </button>
           </div>
           <div className="hidden sm:flex items-center gap-2">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium flex items-center"
-              onClick={() => (window.location.href = "/dashboard")}
-            >
-              <LayoutDashboard className="w-4 h-4 mr-2" />
-              Switch to Dashboard
-            </motion.button>
-            {!isHost && (
+           
+            {!isHost ? (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -103,7 +108,15 @@ export default function UserProfile() {
                 <Award className="w-4 h-4 mr-2" />
                 Upgrade to Host
               </motion.button>
-            )}
+            ):( <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium flex items-center"
+              onClick={() => navigate("/hosting") }
+            >
+              <LayoutDashboard className="w-4 h-4 mr-2" />
+              Switch to Dashboard
+            </motion.button>)}
           </div>
         </div>
 
@@ -149,7 +162,7 @@ export default function UserProfile() {
                     <div className="relative mb-4">
                       <div className="w-24 h-24 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 overflow-hidden">
                         <img
-                          src="/placeholder.svg?height=96&width=96"
+                          src={ profileImage || "/placeholder.svg?height=96&width=96"}
                           alt="Profile"
                           className="w-full h-full object-cover"
                         />
@@ -162,8 +175,8 @@ export default function UserProfile() {
                         <Camera className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                    <h2 className="text-lg font-bold text-gray-800">John Doe</h2>
-                    <p className="text-sm text-gray-500 mb-2">Member since 2023</p>
+                    <h2 className="text-lg font-bold text-gray-800">{fullName || "fullName"}</h2>
+                    <p className="text-sm text-gray-500 mb-2">Member since {new Date(createdAt).toLocaleDateString(undefined, { month: 'numeric', year: 'numeric' })}</p>
                     {isHost && (
                       <span className="inline-flex items-center gap-1 bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                         <FaHotel className="text-teal-600" size={10} />
@@ -400,7 +413,7 @@ export default function UserProfile() {
                             </div>
                             <div>
                               <p className="text-xs text-gray-500">Email</p>
-                              <p className="font-medium">john.doe@example.com</p>
+                              <p className="font-medium">{email || "testemail@gmail.com"}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
@@ -409,13 +422,13 @@ export default function UserProfile() {
                             </div>
                             <div>
                               <p className="text-xs text-gray-500">Phone</p>
-                              <p className="font-medium">+1 (555) 123-4567</p>
+                              <p className="font-medium">{phoneNumber || "+1 (555) 123-4567"}</p>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="border-b pb-4">
+                      <div className="">
                         <h3 className="text-sm font-medium text-gray-500 mb-3">ADDRESS</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="flex items-center gap-3">
@@ -424,7 +437,7 @@ export default function UserProfile() {
                             </div>
                             <div>
                               <p className="text-xs text-gray-500">Street</p>
-                              <p className="font-medium">123 Main Street</p>
+                              <p className="font-medium">{ street || "Street not added"}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
@@ -433,22 +446,37 @@ export default function UserProfile() {
                             </div>
                             <div>
                               <p className="text-xs text-gray-500">City, State, Country</p>
-                              <p className="font-medium">New York City, NY, USA</p>
+                              <p className="font-medium">{city || "unknown"}, {state || "unknown"}, {country || "unknown"}</p>
                             </div>
                           </div>
                         </div>
                       </div>
 
+                      <div className="border-b pb-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
+                              <PinIcon className="w-5 h-5 text-teal-500" />
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500">Zipcode</p>
+                              <p className="font-medium">{ zipCode || "Zip not added"}</p>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+
                       <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-3">ACCOUNT DETAILS</h3>
+                        <h3 className="text-sm font-medium text-gray-500 mb-3">OTHERS</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center flex-shrink-0">
                               <User className="w-5 h-5 text-purple-500" />
                             </div>
                             <div>
-                              <p className="text-xs text-gray-500">Account Type</p>
-                              <p className="font-medium">{isHost ? "Host" : "Guest"}</p>
+                              <p className="text-xs text-gray-500">GOVID</p>
+                              <p className="font-medium">{govId || "not added"}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">

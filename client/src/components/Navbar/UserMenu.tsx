@@ -24,12 +24,14 @@ import { userStoreType } from "../../store/reducers/user.reducers";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { TfiDashboard } from "react-icons/tfi";
+import SetUserDataToStore from "../../service/userdata/SetDataToStore";
 
 function UserMenu({ showRapidYourRoom }: UserMenuProps) {
-  const { isHost, profileImage }: userStoreType = useSelector(
+  const { isHost, profileImage,fullName }: userStoreType = useSelector(
     (state: RootState) => state.userReducer
   );
-  console.log("Profile",profileImage);
+
+  console.log("Profile",profileImage,fullName);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -191,7 +193,8 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>      <SetUserDataToStore/>
+
     </div>
   );
 }
