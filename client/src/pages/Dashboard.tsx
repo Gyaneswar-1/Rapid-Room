@@ -4,7 +4,7 @@ import HostingTabs from "../components/HostingPage/section/HostingTabs";
 import { Outlet } from "react-router-dom";
 import Fotter from "../components/HostingPage/section/Fotter";
 
-function Hosting() {
+export default function Dashboard() {
   const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
@@ -49,4 +49,3 @@ function Hosting() {
   );
 }
 
-export default Hosting;
