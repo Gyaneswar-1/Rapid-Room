@@ -10,9 +10,9 @@ export default function HostingTabs() {
   const menuRef = useRef<HTMLDivElement>(null)
 
   const tabs = [
-    { name: "Today", href: "/hosting/today" },
-    { name: "Listings", href: "/hosting/listings" },
-    { name: "Messages", href: "/hosting/messages" },
+    { name: "Today", href: "/dashbord/today" },
+    { name: "Listings", href: "/dashbord/listings" },
+    { name: "Messages", href: "/dashbord/messages" },
   ]
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function HostingTabs() {
             <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
               <div className="py-1" role="menu" aria-orientation="vertical">
                 <Link
-                  to="/hosting/earnings"
+                  to="/dashbord/earnings"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   onClick={() => setMenuOpen(false)}
@@ -74,7 +74,7 @@ export default function HostingTabs() {
                   Earnings
                 </Link>
                 <Link
-                  to="/hosting/guidebook"
+                  to="/dashbord/guidebook"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   onClick={() => setMenuOpen(false)}
@@ -82,7 +82,7 @@ export default function HostingTabs() {
                   Guide Book
                 </Link>
                 <Link
-                  to="/hosting/listings/new"
+                  to="/dashbord/listings/new"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem"
                   onClick={() => setMenuOpen(false)}

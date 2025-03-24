@@ -12,7 +12,6 @@ import {
   BsHeart,
   BsListUl,
   BsPerson,
-  BsQuestionCircle,
   BsSignpostSplit,
   BsSuitcase2,
 } from "react-icons/bs";
@@ -24,6 +23,7 @@ interface UserMenuProps {
 import { userStoreType } from "../../store/reducers/user.reducers";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { TfiDashboard } from "react-icons/tfi";
 
 function UserMenu({ showRapidYourRoom }: UserMenuProps) {
   const { isHost, profileImage }: userStoreType = useSelector(
@@ -143,7 +143,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
 
                   <MenuItem
                     onClick={() => {
-                      navigate("/user-account");
+                      navigate("/user-profile");
                       setIsOpen(false);
                     }}
                     label="Account"
@@ -155,11 +155,10 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                       setIsOpen(false);
                     }}
                     label="Dashbord"
-                    icons={BsQuestionCircle}
+                    icons={TfiDashboard}
                   />
                   <MenuItem
                     onClick={() => {
-                      // Handle logout
                       localStorage.removeItem("loggedin");
                       navigate("/");
                       setIsOpen(false);
