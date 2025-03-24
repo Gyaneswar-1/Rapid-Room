@@ -131,9 +131,25 @@ model Reservations {
   hotel                Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   roomId               Int
   room                 Rooms    @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  checkIn              DateTime @default(now())
-  reservationsDuration Int
+  checkIn              DateTime 
+  reservationsDuration Int?
   checkOut             DateTime
+  amountPaid           Int
+  ReservationStatus    reservtionStatus
+  paymentStatus paymentStatus @default(pending)
+
+}
+
+enum reservtionStatus{
+  pending
+  active
+  cancled
+}
+
+enum paymentStatus {
+  pending
+  success
+  failed
 }
 
 model WishList {
@@ -177,8 +193,10 @@ model Payments {
   userId        Int
   amount        Float
   paymentMethod String   @default("UPI")
-  status        String   @default("pending") // pending, success, failed
+  status        paymentStatus   @default(pending) // pending, success, failed
   paymentDate   DateTime @default(now())
+  razorpay_payment_id String
+  razorpay_order_id String
 
   hotel Hotels @relation(fields: [hotelId], references: [id])
   user  Users  @relation(fields: [userId], references: [id])
@@ -186,6 +204,8 @@ model Payments {
   @@index([hotelId])
   @@index([userId])
 }
+
+
 
 // Payment Entity:
 

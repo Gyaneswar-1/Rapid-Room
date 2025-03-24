@@ -7,25 +7,35 @@ import { sendEmail } from "../helper/SendEmail.helper.js";
 
 export async function paymentVerification(req:Request,res:Response){
     
-
-    const { razorpay_payment_id, razorpay_order_id, razorpay_signature} = req.body;
-
-
-
-    // here store the data in the data base like payment, checkin information
-
-    console.log("payment verification connroll reached");
-    console.log(req.query)
-
-    const { hotelId, checkInDate, stayingFor } = req.query;
-
-    console.log(hotelId,checkInDate,stayingFor);
+    
+    // const { hotelId, amount, checkInDate, CheckOutDate } = req.query;
 
     
 
-   return  res.redirect("http://localhost:5173/comeingsoon");
+     res.status(200).json({
+
+        success: false,
+    }
+    )
+    return
+    
+
+//    return  res.redirect("http://localhost:5173/comeingsoon");
    
 
 
     
 }
+
+// create the payment entry
+// user id
+// hotel id
+// reservation id
+// amount
+
+//create the reservation entry
+// user id
+// hotel id
+// check in date
+// check out date
+// amount paid
