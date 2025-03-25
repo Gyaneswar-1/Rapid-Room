@@ -1,9 +1,16 @@
 import { ToastContainer } from "react-toastify";
 import RouterHandler from "./router/RouterHandler";
+import SetUserDataToStore from "./service/userdata/SetDataToStore";
 function App() {
   return (
     <div>
-      <ToastContainer position="bottom-center" hideProgressBar autoClose={1000} />
+      <SetUserDataToStore />
+
+      <ToastContainer
+        position="bottom-center"
+        hideProgressBar
+        autoClose={2000}
+      />
       <RouterHandler />
     </div>
   );

@@ -32,6 +32,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
   );
 
   console.log("Profile",profileImage,fullName);
+
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -40,7 +41,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
-
+  
   // Handle click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -48,16 +49,17 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
         setIsOpen(false);
       }
     };
-
+    
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  
   console.log("the image", profileImage);
   return (
     <div className="relative" ref={menuRef}>
+      <SetUserDataToStore/>
       <div className="flex items-center gap-3">
         {/* Host Button */}
         {showRapidYourRoom && (
@@ -193,7 +195,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>      <SetUserDataToStore/>
+      </AnimatePresence>      
 
     </div>
   );

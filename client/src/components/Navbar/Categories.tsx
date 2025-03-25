@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useRef, useState } from "react"
-import { motion } from "framer-motion"
-import { useLocation } from "react-router-dom"
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useLocation, useSearchParams } from "react-router-dom";
 import {
   GiBarn,
   GiBoatFishing,
@@ -12,13 +12,17 @@ import {
   GiForestCamp,
   GiIsland,
   GiWindmill,
-} from "react-icons/gi"
-import { MdOutlineVilla, MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md"
-import { TbBeach, TbMountain, TbPool } from "react-icons/tb"
-import { BsSnow } from "react-icons/bs"
-import { IoDiamond } from "react-icons/io5"
-import { FaSkiing } from "react-icons/fa"
-import CategoryBox from "./CategoryBox"
+} from "react-icons/gi";
+import {
+  MdOutlineVilla,
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+} from "react-icons/md";
+import { TbBeach, TbMountain, TbPool } from "react-icons/tb";
+import { BsSnow } from "react-icons/bs";
+import { IoDiamond } from "react-icons/io5";
+import { FaSkiing } from "react-icons/fa";
+import CategoryBox from "./CategoryBox";
 
 export const categories = [
   {
@@ -96,28 +100,57 @@ export const categories = [
     icon: IoDiamond,
     description: "This property is luxurious!",
   },
-]
+];
 
 function Categories() {
-  const location = useLocation()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const location = useLocation();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+   // Get category from URL search params
+   const categoryParam = searchParams.get('category');
+   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
+ 
+
+ // Update URL when category changes
+ const handleCategoryClick = (category: string) => {
+  if (selectedCategory === category) {
+    // Deselect category
+    setSelectedCategory(null);
+    
+    // Remove category from search params
+    searchParams.delete('category');
+    setSearchParams(searchParams);
+  } else {
+    // Select new category
+    setSelectedCategory(category);
+    
+    // Update search params with new category
+    searchParams.set('category', category);
+    setSearchParams(searchParams);
+  }
+};
+
+useEffect(() => {
+  setSelectedCategory(categoryParam);
+}, [categoryParam]);
+
 
   const scroll = (direction: "left" | "right") => {
     if (containerRef.current) {
-      const { current } = containerRef
-      const scrollAmount = 300
+      const { current } = containerRef;
+      const scrollAmount = 300;
 
       if (direction === "left") {
-        current.scrollBy({ left: -scrollAmount, behavior: "smooth" })
+        current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       } else {
-        current.scrollBy({ left: scrollAmount, behavior: "smooth" })
+        current.scrollBy({ left: scrollAmount, behavior: "smooth" });
       }
     }
-  }
+  };
 
   if (location.pathname !== "/home") {
-    return null
+    return null;
   }
 
   return (
@@ -146,7 +179,7 @@ function Categories() {
               label={item.label}
               icon={item.icon}
               selected={selectedCategory === item.label}
-              onClick={() => setSelectedCategory(selectedCategory === item.label ? null : item.label)}
+              onClick={() => handleCategoryClick(item.label)}
             />
           ))}
         </motion.div>
@@ -160,8 +193,7 @@ function Categories() {
         <MdKeyboardArrowRight size={20} />
       </button>
     </div>
-  )
+  );
 }
 
-export default Categories
-
+export default Categories;

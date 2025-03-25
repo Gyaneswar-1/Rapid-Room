@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import BottomNav from "../components/Navbar/BottomNav"
 import Card from "../components/homepage/Card"
 import Navbar from "../components/Navbar/Navbar"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { getHotels } from "../service/getHotels.service"
 import { getAllHotels,setHaveHotels } from "../store/reducers/hotel.reducers"
 import Loader from "../components/Reusable/Loader"
@@ -47,6 +47,10 @@ function Home() {
   const isLoggedIn = localStorage.getItem("loggedin")
   const [showLoader, setShowLoader] = useState(true)
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  
+  // Get category from URL search params
+  const categoryParam = searchParams.get('category')
 
   //state management
   const { hotels,hasHotelsArray } = useSelector((state: RootState) => state.hotelReducer)
@@ -99,12 +103,22 @@ function Home() {
       
   }, [])
 
-  const filteredHotels = hotels.filter(
-    (e: any) =>
-      e.hotelName?.toLowerCase().includes(search?.toLowerCase()) ||
-      e.address?.country?.toLowerCase().includes(search?.toLowerCase()) ||
-      e.address?.city?.toLowerCase().includes(search?.toLowerCase()),
-  )
+ 
+
+  const filteredHotels = hotels.filter((hotel: any) => {
+    // Text search filter
+    const matchesSearch = 
+      hotel.hotelName?.toLowerCase().includes(search?.toLowerCase()) ||
+      hotel.address?.country?.toLowerCase().includes(search?.toLowerCase()) ||
+      hotel.address?.city?.toLowerCase().includes(search?.toLowerCase())
+    
+    // Category filter
+    const matchesCategory = !categoryParam || 
+      hotel.type?.toLowerCase() === categoryParam?.toLowerCase()
+    
+    // Return true if both conditions are met
+    return matchesSearch && matchesCategory
+  })
 
   return (
     <div className="min-h-screen w-full bg-white">
@@ -154,7 +168,7 @@ function Home() {
 
       {showSignin && <Signin />}
       {showSignup && <Signup />}
-      <SetUserDataToStore></SetUserDataToStore>
+      <SetUserDataToStore/>
     </div>
   )
 }

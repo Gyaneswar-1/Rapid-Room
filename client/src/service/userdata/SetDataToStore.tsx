@@ -29,7 +29,7 @@ import { useEffect } from "react";
 
 export default function SetUserDataToStore(){
    const { hasDataInStore,email,profileImage }:userStoreType = useSelector((state: RootState) => state.userReducer);
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: AppDispatch = useDispatch();   
    useEffect(()=>{
     if(!hasDataInStore){
         getuserData()
