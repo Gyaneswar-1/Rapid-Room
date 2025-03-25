@@ -1,28 +1,25 @@
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
-import { sendEmail } from "../helper/SendEmail.helper.js";
-// functin to finc the the reservation duration
-function getReservationDuratin(checkIn, checkOut) {
-    const parseDate = (dateStr) => {
-        const [day, month, year] = dateStr.split('-').map(Number);
-        return new Date(year, month - 1, day); // Month is 0-based
-    };
-    const checkInDate = parseDate(checkIn);
-    const checkOutDate = parseDate(checkOut);
-    // Calculate the difference in milliseconds
-    const diffTime = checkOutDate.getTime() - checkInDate.getTime();
-    // Convert milliseconds to days
-    return diffTime / (1000 * 60 * 60 * 24);
-}
 export const reserveHotel = async (req, res) => {
     const { hotelId, checkIn, checkOut } = req.body;
     //validate the input data here
     if (!hotelId || !checkIn || !checkOut) {
-        return res.status(400).json(new ApiError(false, {}, "filed", "Insufficiend input date", 400));
+        return res
+            .status(400)
+            .json(new ApiError(false, {}, "filed", "Insufficiend input date", 400));
     }
-    const reservationsDuration = getReservationDuratin(checkIn, checkOut);
     try {
+        // get the reservation duration
+        const parseDate = (dateStr) => {
+            const [day, month, year] = dateStr.split("-").map(Number);
+            return new Date(year, month - 1, day); // Month is 0-based
+        };
+        const checkInDate = parseDate(checkIn);
+        const checkOutDate = parseDate(checkOut);
+        const diffTime = checkOutDate.getTime() - checkInDate.getTime();
+        const reservationsDuration = diffTime / (1000 * 60 * 60 * 24);
+        console.log(reservationsDuration);
         //initialize the tracsactio for multiple db operation
         const trancation = await prisma.$transaction(async (prisma) => {
             // check in the hotel room is availabe or not
@@ -63,19 +60,37 @@ export const reserveHotel = async (req, res) => {
                     .status(500)
                     .json(new ApiError(false, {}, "Failed", "Can't do the reservation all room are booked", 500));
             }
+            //get the current reservation status
+            let ReservationStatus;
+            (function (ReservationStatus) {
+                ReservationStatus["Pending"] = "pending";
+                ReservationStatus["Active"] = "active";
+                ReservationStatus["Canceled"] = "cancled";
+            })(ReservationStatus || (ReservationStatus = {}));
+            let reservationStatus = ReservationStatus.Active;
+            const currentDate = new Date();
+            if (currentDate < checkInDate) {
+                reservationStatus = ReservationStatus.Pending;
+            }
+            else if (currentDate >= checkInDate &&
+                currentDate <= checkOutDate) {
+                reservationStatus = ReservationStatus.Active;
+            }
+            else {
+                reservationStatus = ReservationStatus.Canceled;
+            }
             // stpe 2 reserve the room
             const reserveRoom = await prisma.reservations.create({
                 data: {
                     userId: req.user.id,
                     hotelId: hotelId,
                     roomId: nonReserveRoom.id,
-                    checkIn: checkIn,
-                    amountPaid: totalAmount,
-                    ReservationStatus: "pending",
-                    paymentStatus: "pending",
+                    checkIn: checkInDate,
+                    checkOut: checkOutDate,
                     reservationsDuration: reservationsDuration,
-                    checkOut: new Date(new Date().getTime() +
-                        reservationsDuration * 24 * 60 * 60 * 1000),
+                    amountPaid: totalAmount,
+                    ReservationStatus: reservationStatus,
+                    paymentStatus: "pending",
                 },
                 select: {
                     id: true,
@@ -99,49 +114,24 @@ export const reserveHotel = async (req, res) => {
                     .status(500)
                     .json(new ApiError(false, {}, "Failed", "Can't do the reservation so internal issue", 500));
             }
-            //update the room status
-            const updateRoomStatus = await prisma.rooms.update({
-                where: {
-                    id: nonReserveRoom.id,
-                },
+            //create the payment entry
+            const paymentEntry = await prisma.payments.create({
                 data: {
-                    isReserved: false,
+                    hotelId: hotelId,
+                    userId: req.user.id,
+                    amount: totalAmount,
+                    razorpay_payment_id: "null",
+                    razorpay_order_id: "null",
                 },
             });
-            if (!updateRoomStatus) {
+            if (!paymentEntry) {
                 return res
                     .status(400)
-                    .json(new ApiError(false, {}, "Failed", "Cant update the room Status", 400));
+                    .json(new ApiError(false, {}, "Failed", "Can't make the payment entry", 400));
             }
-            //update the hotel availablity of rooms
-            const updateHotel = await prisma.hotels.update({
-                where: {
-                    id: hotelId,
-                },
-                data: {
-                    numberOfEmptyRooms: isAvailable?.numberOfEmptyRooms - 1,
-                    isAllReserved: isAvailable?.numberOfEmptyRooms === 1 ? true : false,
-                },
-            });
-            if (!updateHotel) {
-                return res
-                    .status(500)
-                    .json(new ApiError(false, {}, "Failed", "Can't do the reservation some internal issue", 500));
-            }
-            //send the succes mail to the user
-            const mailRes = await sendEmail({
-                to: req.user.email,
-                subject: "Hotel booked successfully",
-                text: `
-                Hotel: ${isAvailable.hotelName}
-                Room number: 1
-                Checkin date: ${`${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`}
-                Pernight cost: ${isAvailable.perNight}
-                Total cost: ${totalAmount}
-
-                `,
-            });
-            return res.status(200).json(new ApiResponse(true, { reserveRoom, totalAmount: totalAmount }, "Successfull", "Successfully reserved the room", 200));
+            return res
+                .status(200)
+                .json(new ApiResponse(true, { resevationId: reserveRoom.id, roomId: nonReserveRoom.id, hotelId: hotelId, paymentId: paymentEntry.id }, "Successfull", "Successfully reserved the room", 200));
         });
     }
     catch (error) {
@@ -157,7 +147,8 @@ export const reserveHotel = async (req, res) => {
 //4. reserve the room with payment status unverifyed with payment
 //5. After reserve the room update the hotel availabe rooms and isAvailable status
 // data need to make this first phase reservation
-{ /*
+{
+    /*
     userid
     hotelid
     roomid
