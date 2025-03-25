@@ -2,8 +2,26 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 import { sendEmail } from "../helper/SendEmail.helper.js";
+// functin to finc the the reservation duration
+function getReservationDuratin(checkIn, checkOut) {
+    const parseDate = (dateStr) => {
+        const [day, month, year] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day); // Month is 0-based
+    };
+    const checkInDate = parseDate(checkIn);
+    const checkOutDate = parseDate(checkOut);
+    // Calculate the difference in milliseconds
+    const diffTime = checkOutDate.getTime() - checkInDate.getTime();
+    // Convert milliseconds to days
+    return diffTime / (1000 * 60 * 60 * 24);
+}
 export const reserveHotel = async (req, res) => {
-    const { hotelId, reservationsDuration } = req.body;
+    const { hotelId, checkIn, checkOut } = req.body;
+    //validate the input data here
+    if (!hotelId || !checkIn || !checkOut) {
+        return res.status(400).json(new ApiError(false, {}, "filed", "Insufficiend input date", 400));
+    }
+    const reservationsDuration = getReservationDuratin(checkIn, checkOut);
     try {
         //initialize the tracsactio for multiple db operation
         const trancation = await prisma.$transaction(async (prisma) => {
@@ -51,8 +69,8 @@ export const reserveHotel = async (req, res) => {
                     userId: req.user.id,
                     hotelId: hotelId,
                     roomId: nonReserveRoom.id,
-                    checkIn: new Date(),
-                    amountPaid: 0,
+                    checkIn: checkIn,
+                    amountPaid: totalAmount,
                     ReservationStatus: "pending",
                     paymentStatus: "pending",
                     reservationsDuration: reservationsDuration,
@@ -87,7 +105,7 @@ export const reserveHotel = async (req, res) => {
                     id: nonReserveRoom.id,
                 },
                 data: {
-                    isReserved: true,
+                    isReserved: false,
                 },
             });
             if (!updateRoomStatus) {
@@ -135,7 +153,24 @@ export const reserveHotel = async (req, res) => {
 //alogrithm
 //1. get the necessary information
 //2. check there is rooms are available or not
-//3. if available then make the payment
 //4. find the non reserved room
-//4. if payment successfull reserve the room
+//4. reserve the room with payment status unverifyed with payment
 //5. After reserve the room update the hotel availabe rooms and isAvailable status
+// data need to make this first phase reservation
+{ /*
+    userid
+    hotelid
+    roomid
+    chekin date
+    checkout date
+    amount
+
+
+    payment dbhotelId
+    userId
+    amount
+    paymentmethod
+    status
+    roodID
+*/
+}

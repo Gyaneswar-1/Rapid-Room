@@ -5,8 +5,9 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
+        "watch": "tsc -w",
         "build": "tsc -b",
-        "dev": "node dist/index.js",
+        "dev": "nodemon dist/index.js",
         "start": "tsc -b && nodemon dist/index.js"
     },
     "author": "gynaeswar_and_bibek",
