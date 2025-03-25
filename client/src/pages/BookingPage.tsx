@@ -68,7 +68,7 @@ export default function BookingPage() {
       .then(async (res) => {
         if (res.success === true) {
           //here set the data to the store user recoil or redux for better state management
-          console.log(res.data);
+          console.log("here is the data from backend",res.data);
           dispatch(setHotelType(res.data.type));
           dispatch(setHotelImages(res.data.images));
           dispatch(

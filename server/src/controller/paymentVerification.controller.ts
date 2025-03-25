@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
-import { makeFakePayment } from "../helper/fakePayment.helper.js";
 import { sendEmail } from "../helper/SendEmail.helper.js";
 
 export async function paymentVerification(req:Request,res:Response){

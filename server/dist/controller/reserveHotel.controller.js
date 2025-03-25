@@ -1,7 +1,6 @@
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
-import { makeFakePayment } from "../helper/fakePayment.helper.js";
 import { sendEmail } from "../helper/SendEmail.helper.js";
 export const reserveHotel = async (req, res) => {
     const { hotelId, reservationsDuration } = req.body;
@@ -29,18 +28,6 @@ export const reserveHotel = async (req, res) => {
             }
             const totalAmount = reservationsDuration * isAvailable?.perNight;
             //make the payment
-            const doFakePayment = await makeFakePayment({
-                hotelId: hotelId,
-                userId: req.user.id,
-                amount: totalAmount,
-                paymentMethod: "UPI",
-                status: "successfull",
-            });
-            if (doFakePayment.success === false) {
-                return res
-                    .status(500)
-                    .json(new ApiError(false, {}, "Failed", "Payment was uncussessfull", 500));
-            }
             //reserve the room process
             // step 1 find non reserve room
             const nonReserveRoom = await prisma.rooms.findFirst({
@@ -65,6 +52,9 @@ export const reserveHotel = async (req, res) => {
                     hotelId: hotelId,
                     roomId: nonReserveRoom.id,
                     checkIn: new Date(),
+                    amountPaid: 0,
+                    ReservationStatus: "pending",
+                    paymentStatus: "pending",
                     reservationsDuration: reservationsDuration,
                     checkOut: new Date(new Date().getTime() +
                         reservationsDuration * 24 * 60 * 60 * 1000),
@@ -126,7 +116,7 @@ export const reserveHotel = async (req, res) => {
                 subject: "Hotel booked successfully",
                 text: `
                 Hotel: ${isAvailable.hotelName}
-                Room number: ${reserveRoom.room.roomNumber}
+                Room number: 1
                 Checkin date: ${`${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`}
                 Pernight cost: ${isAvailable.perNight}
                 Total cost: ${totalAmount}

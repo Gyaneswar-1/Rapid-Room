@@ -53,9 +53,12 @@ export const addNewHotel = async (req, res) => {
                     //     },
                     // },
                 },
+                //adimin feture to store the images in the db uding url through postman
             });
             if (!hotelRes) {
-                return res.status(400).json(new ApiError(false, {}, "Failse", "Unable to creaet hote at create hotel controller", 400));
+                return res
+                    .status(400)
+                    .json(new ApiError(false, {}, "Failse", "Unable to creaet hote at create hotel controller", 400));
             }
             //create bulkrooms
             const rooms = [];
@@ -67,6 +70,16 @@ export const addNewHotel = async (req, res) => {
             }
             //push these to db
             const roomsRes = await prisma.rooms.createMany({ data: rooms });
+            // for purpose of createing rooms for the hotels
+            // 2. Store Images
+            if (images && images.length > 0) {
+                await prisma.images.createMany({
+                    data: images.map((url) => ({
+                        imageUrl: url,
+                        hotelId: hotelRes.id,
+                    })),
+                });
+            }
             if (!roomsRes || !hotelRes) {
                 res.status(400).json(new ApiError(false, {}, "failed", "Unknown error occured , dontd tell me what to do", 400));
                 return;
