@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import Signin from "../UserAuth/Signin";
 import Signup from "../UserAuth/Signup";
-import { flipSignin, flipSignUp } from "../../store/reducers/showAuthCard.reducers";
+import {
+  flipSignin,
+  flipSignUp,
+} from "../../store/reducers/showAuthCard.reducers";
+import UserMenu from "../Navbar/UserMenu";
 
 export default function WelcomePageNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,16 +62,16 @@ export default function WelcomePageNavBar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center justify-center gap-3">
-            <div className="relative flex w-12 h-12">
+            <div className="flex items-center gap-2 cursor-pointer transition hover:opacity-80">
               <img
-                src={MainLogo}
-                alt="RapidRoom Logo"
-                className="object-contain"
+                className="rounded-full hidden md:block h-10 w-10 object-contain"
+                src={MainLogo || "/placeholder.svg"}
+                alt="RapidRoom"
               />
+              <span className="font-bold text-teal-600 text-xl hidden sm:block">
+                RapidRoom
+              </span>
             </div>
-            <span className="text-2xl font-bold text-gray-900 hidden md:block">
-              RapidRoom
-            </span>
           </Link>
 
           {/* Authentication Buttons */}
@@ -89,83 +93,7 @@ export default function WelcomePageNavBar() {
               </>
             ) : (
               <div className="flex items-center gap-4">
-                {/* Custom Dropdown Menu */}
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors focus:outline-none"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
-                      <User className="h-5 w-5 text-teal-600" />
-                    </div>
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform ${
-                        isDropdownOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {/* Dropdown Content */}
-                  <AnimatePresence>
-                    {isDropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-200"
-                      >
-                        <div className="px-4 py-2 border-b border-gray-100">
-                          <p className="font-medium text-gray-900">
-                            My Account
-                          </p>
-                        </div>
-
-                        <Link
-                          to="/profile"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-teal-600"
-                          onClick={() => setIsDropdownOpen(false)}
-                        >
-                          Profile
-                        </Link>
-                        <Link
-                          to="/bookings"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-teal-600"
-                          onClick={() => setIsDropdownOpen(false)}
-                        >
-                          My Bookings
-                        </Link>
-                        <Link
-                          to="/settings"
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-teal-600"
-                          onClick={() => setIsDropdownOpen(false)}
-                        >
-                          Settings
-                        </Link>
-
-                        <div className="border-t border-gray-100 mt-1 pt-1">
-                          <button
-                            onClick={() => {
-                              handleLogout();
-                              setIsDropdownOpen(false);
-                            }}
-                            className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50"
-                          >
-                            <LogOut className="mr-2 h-4 w-4" />
-                            <span>Log out</span>
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <button
-                  className="px-4 py-2 border-2 border-red-500 text-red-500 font-medium rounded-lg hover:bg-red-500 hover:text-white transition-colors"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+                <UserMenu showRapidYourRoom={false} />
               </div>
             )}
           </div>

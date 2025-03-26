@@ -22,6 +22,7 @@ import EarningsPage from "../components/HostingPage/EarningsPage";
 import UserProfile from "../pages/UserProfile";
 import Dashboard from "../pages/Dashboard";
 import IsHost from "./IsHost";
+import AdminDashboard from "../pages/AdminDashboard";
 
 function RouterHandler() {
   return (
@@ -29,6 +30,7 @@ function RouterHandler() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/home" element={<Home />} />
           <Route path="/comeingsoon" element={<ComeingSoon />} />
           {/* need authentication to access */}

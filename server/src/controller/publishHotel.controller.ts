@@ -39,7 +39,7 @@ export const publishHotel = async (req: Request | any, res: Response | any) => {
             const updatedHotel = await prisma.hotels.update({
                 where: { id: parseInt(hotelId) },
                 data: {
-                    drafted: false,
+                    status: "PENDING",
                 },
             });
             return res

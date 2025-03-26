@@ -18,11 +18,13 @@ model Users {
   id               Int            @id @default(autoincrement())
   fullName         String
   email            String         @unique
+  isEmailVerified Boolean @default(false)
   password         String
   profileImage     String?
   address          Address?       @relation(fields: [addressId], references: [id])
   addressId        Int?
   isHost           Boolean        @default(false)
+  status           status         @default(PENDING)
   hostExperience   Int?
   hostRating       Int?           @default(5)
   hostResponseRate Int?           @default(100)
@@ -69,7 +71,12 @@ model Hotels {
   WishList      WishList[]
   type          HotelType?      @default(BEACH)
   Payments      Payments[]
-  drafted       Boolean        @default(true)
+  status        status        @default(PENDING)
+}
+enum status {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 enum HotelType {

@@ -29,6 +29,7 @@ import {
 } from "../../store/reducers/showAuthCard.reducers";
 import Signin from "../UserAuth/Signin";
 import Signup from "../UserAuth/Signup";
+import { FaUserCircle } from "react-icons/fa";
 
 function UserMenu({ showRapidYourRoom }: UserMenuProps) {
   const { isHost, profileImage, fullName }: userStoreType = useSelector(
@@ -39,7 +40,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
     (state: RootState) => state.showAuthCardReducer
   );
 
-  console.log("Profile", profileImage, fullName);
+  console.log("Profile", profileImage, fullName,isHost);
 
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,21 +66,15 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
     };
   }, []);
 
-  // console.log("the image", profileImage);
-  // function dispatch(arg0: { payload: any; type: "showAuthCardSlice/flipSignin"; }) {
-  //   throw new Error("Function not implemented.");
-  // }
-
   return (
     <div className="relative" ref={menuRef}>
       <SetUserDataToStore />
       <div className="flex items-center gap-3">
-        {/* Host Button */}
         {showRapidYourRoom && (
           <div>
             {isHost ? (
               <button
-                onClick={() => navigate("/hosting")}
+                onClick={() => navigate("/dashbord")}
                 className="hidden  cursor-pointer lg:block text-sm font-medium py-2 px-4 rounded-full hover:bg-gray-100 transition"
               >
                 Switch to Hosting
@@ -102,11 +97,17 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
         >
           <AiOutlineMenu className="text-gray-600" size={18} />
           <div className="hidden md:block">
-            <img
-              src={profileImage}
-              alt="user profile"
-              className="hidden md:block h-10 w-10 rounded-full object-center object-fill"
-            />
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="user profile"
+                className="hidden md:block h-10 w-10 rounded-full object-center object-fill"
+              />
+            ) : (
+              <div className="">
+                <FaUserCircle className="hidden md:block h-10 w-10 rounded-full object-center object-fill " />
+              </div>
+            )}
           </div>
         </button>
       </div>

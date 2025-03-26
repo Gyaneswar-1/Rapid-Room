@@ -43,6 +43,11 @@ app.use(
 import healthCheckRoute from "./routes/healthCheck.routes.js";
 app.use("/api/v1/healthcheck",healthCheckRoute);
 
+import AdminRouter from "./routes/admin.routes.js";
+app.use("/api/v1/admin",AdminRouter);
+
+
+
 //user authentication
 import userRouter from "./routes/user.routes.js";
 app.use("/api/v1/user", userRouter);
