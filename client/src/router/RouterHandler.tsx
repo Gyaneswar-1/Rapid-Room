@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
 import IsAuth from "./IsAuth";
 import AddHotels from "../pages/AddHotels";
-import AdminConfirm from "../pages/AdminConfirm";
+import AdminConfirm from "../pages/HostConfirm";
 import BookingPage from "../pages/BookingPage";
 import ComeingSoon from "../pages/ComeingSoon";
 import ErrorPage from "../pages/ErrorPage";

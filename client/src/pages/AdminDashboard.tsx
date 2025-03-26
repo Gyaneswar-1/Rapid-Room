@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import {
   Home,
@@ -25,6 +23,7 @@ import {
   HelpCircle,
   ChevronLeft,
 } from "lucide-react"
+import { getAdminHotels } from "../service/admin/allHotel.service"
 
 export default function AdminDashboard() {
   // State for active tab and sidebar
@@ -34,6 +33,9 @@ export default function AdminDashboard() {
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState<any>(null)
   const [activeSubTab, setActiveSubTab] = useState("pending")
+  const [hotels,setHotels] = useState<any[]>([]);
+
+
 
   // Check if mobile on mount and window resize
   useEffect(() => {
@@ -44,7 +46,10 @@ export default function AdminDashboard() {
       } else {
         setIsSidebarOpen(true)
       }
+      
     }
+
+    getHotels()
     
     checkIfMobile()
     window.addEventListener("resize", checkIfMobile)
@@ -53,6 +58,13 @@ export default function AdminDashboard() {
       window.removeEventListener("resize", checkIfMobile)
     }
   }, [])
+
+  async function getHotels(){
+    const response = await getAdminHotels(1,10)
+    console.log("ressss",response.data);
+    setHotels(response.data)
+    
+  }
 
   // Mock data for dashboard
   const stats = [
@@ -731,43 +743,38 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {hotelRequests
-                        .filter(hotel => {
-                          if (activeSubTab === "all") return true;
-                          return hotel.status === activeSubTab;
-                        })
-                        .map((hotel) => (
+                      {hotels.map((hotel) => (
                         <tr key={hotel.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center space-x-3">
                               <div className="relative flex-shrink-0 w-12 h-12 rounded-md overflow-hidden">
                                 <img
                                   src={hotel.images[0] || "/placeholder.svg"}
-                                  alt={hotel.name}
+                                  alt={hotel.hotelName}
                                   
                                   className="object-cover"
                                 />
                               </div>
                               <div>
-                                <p className="text-sm font-medium text-gray-900">{hotel.name}</p>
+                                <p className="text-sm font-medium text-gray-900">{hotel.hotelName}</p>
                                 <p className="text-xs text-gray-500">{hotel.id}</p>
                               </div>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {hotel.location}
+                            {hotel.address.city}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {hotel.host}
+                            {hotel.perNight}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {new Date(hotel.submitted).toLocaleDateString()}
+                            {/* {new Date(hotel.submitted).toLocaleDateString()} */}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              hotel.status === 'pending' 
+                              hotel.status === 'PENDING' 
                                 ? 'bg-amber-100 text-amber-800' 
-                                : hotel.status === 'approved' 
+                                : hotel.status === 'APPROVED' 
                                   ? 'bg-green-100 text-green-800' 
                                   : 'bg-red-100 text-red-800'
                             }`}>

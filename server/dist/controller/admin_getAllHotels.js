@@ -2,17 +2,20 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 export const admin_getAllHotels = async (req, res) => {
-    const { page, limit } = req.query;
+    // Set default values for pagination
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
     try {
         const hotels = await prisma.hotels.findMany({
             skip: Number(offset),
-            take: parseInt(limit),
+            take: Number(limit), // Fix: Ensure take is explicitly included and is a number
             select: {
                 id: true,
                 hotelName: true,
                 perNight: true,
                 type: true,
+                status: true, // Include status to show pending/approved/rejected
                 address: {
                     select: {
                         country: true,
@@ -43,13 +46,14 @@ export const admin_getAllHotels = async (req, res) => {
             pagination: {
                 totalHotels,
                 totalPages,
-                currentPage: parseInt(page),
-                pageSize: parseInt(limit),
+                currentPage: page,
+                pageSize: limit,
             },
-        }, "success"));
+        }, "Hotels fetched successfully"));
     }
     catch (error) {
-        return res.status(200).json(new ApiError(false, { error }, "failed"));
+        console.error("Error fetching hotels:", error);
+        return res.status(500).json(new ApiError(false, { error }, "Failed to fetch hotels"));
     }
     finally {
         prisma.$disconnect();

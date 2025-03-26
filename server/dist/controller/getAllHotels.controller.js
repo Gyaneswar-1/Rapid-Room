@@ -35,6 +35,9 @@ export const getAllHotels = async (req, res) => {
                     }
                 }
             },
+            where: {
+                status: "APPROVED"
+            }
         });
         const totalHotels = await prisma.hotels.count();
         const totalPages = Math.ceil(totalHotels / limit);
