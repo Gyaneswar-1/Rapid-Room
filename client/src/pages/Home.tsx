@@ -163,7 +163,7 @@ function Home() {
       </main>
 
       <div className="fixed bottom-0 left-0 right-0 z-10">
-        <BottomNav />
+        <BottomNav /> 
       </div>
 
       {showSignin && <Signin />}

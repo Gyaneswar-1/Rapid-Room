@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -21,27 +19,38 @@ interface UserMenuProps {
 }
 
 import { userStoreType } from "../../store/reducers/user.reducers";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
 import { TfiDashboard } from "react-icons/tfi";
 import SetUserDataToStore from "../../service/userdata/SetDataToStore";
+import {
+  flipSignin,
+  flipSignUp,
+} from "../../store/reducers/showAuthCard.reducers";
+import Signin from "../UserAuth/Signin";
+import Signup from "../UserAuth/Signup";
 
 function UserMenu({ showRapidYourRoom }: UserMenuProps) {
-  const { isHost, profileImage,fullName }: userStoreType = useSelector(
+  const { isHost, profileImage, fullName }: userStoreType = useSelector(
     (state: RootState) => state.userReducer
   );
 
-  console.log("Profile",profileImage,fullName);
+  const { showSignup, showSignin } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
 
+  console.log("Profile", profileImage, fullName);
+
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const isLoggedIn = localStorage.getItem("loggedin");
-  
+
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
-  
+
   // Handle click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,17 +58,21 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
         setIsOpen(false);
       }
     };
-    
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
-  console.log("the image", profileImage);
+
+  // console.log("the image", profileImage);
+  // function dispatch(arg0: { payload: any; type: "showAuthCardSlice/flipSignin"; }) {
+  //   throw new Error("Function not implemented.");
+  // }
+
   return (
     <div className="relative" ref={menuRef}>
-      <SetUserDataToStore/>
+      <SetUserDataToStore />
       <div className="flex items-center gap-3">
         {/* Host Button */}
         {showRapidYourRoom && (
@@ -67,7 +80,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
             {isHost ? (
               <button
                 onClick={() => navigate("/hosting")}
-                className="hidden cursor-pointer md:block text-sm font-medium py-2 px-4 rounded-full hover:bg-gray-100 transition"
+                className="hidden  cursor-pointer lg:block text-sm font-medium py-2 px-4 rounded-full hover:bg-gray-100 transition"
               >
                 Switch to Hosting
               </button>
@@ -155,7 +168,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
-                      navigate("/dashbord")
+                      navigate("/dashbord");
                       setIsOpen(false);
                     }}
                     label="Dashbord"
@@ -176,16 +189,14 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                 <>
                   <MenuItem
                     onClick={() => {
-                      // Handle signup
-                      setIsOpen(false);
+                      dispatch(flipSignin(showSignin));
                     }}
                     label="Sign up"
                     icons={BsBoxArrowInLeft}
                   />
                   <MenuItem
                     onClick={() => {
-                      // Handle login
-                      setIsOpen(false);
+                      dispatch(flipSignUp(showSignup));
                     }}
                     label="Log in"
                     icons={BsSignpostSplit}
@@ -195,8 +206,10 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>      
+      </AnimatePresence>
 
+      {showSignin && <Signin />}
+      {showSignup && <Signup />}
     </div>
   );
 }

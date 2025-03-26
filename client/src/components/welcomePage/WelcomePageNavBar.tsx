@@ -1,44 +1,56 @@
-
-
-import { useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, LogOut, User, ChevronDown } from "lucide-react"
-import { Link } from "react-router-dom"
-import MainLogo from "../../assets/images/MainLogo.png"
-
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, LogOut, User, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
+import MainLogo from "../../assets/images/MainLogo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import Signin from "../UserAuth/Signin";
+import Signup from "../UserAuth/Signup";
+import { flipSignin, flipSignUp } from "../../store/reducers/showAuthCard.reducers";
 
 export default function WelcomePageNavBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { showSignup, showSignin } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
+
+  const dispatch: AppDispatch = useDispatch();
 
   // In Next.js, we'd use a different approach for checking login status
   // This is just to maintain the logic from your original code
-  const isLoggedIn = typeof window !== "undefined" ? localStorage.getItem("loggedin") : false
+  const isLoggedIn =
+    typeof window !== "undefined" ? localStorage.getItem("loggedin") : false;
 
   const handleLogout = async () => {
     // Implement your logout logic here
-    console.log("Logging out...")
+    console.log("Logging out...");
     // For demo purposes, we'll just simulate the logout
     if (typeof window !== "undefined") {
-      localStorage.removeItem("loggedin")
-      window.location.reload()
+      localStorage.removeItem("loggedin");
+      window.location.reload();
     }
-  }
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false)
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [dropdownRef])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <header className="bg-white sticky top-0 z-50 shadow-sm">
@@ -47,9 +59,15 @@ export default function WelcomePageNavBar() {
           {/* Logo */}
           <Link to="/" className="flex items-center justify-center gap-3">
             <div className="relative flex w-12 h-12">
-              <img src={MainLogo} alt="RapidRoom Logo"  className="object-contain" />
+              <img
+                src={MainLogo}
+                alt="RapidRoom Logo"
+                className="object-contain"
+              />
             </div>
-            <span className="text-2xl font-bold text-gray-900 hidden md:block">RapidRoom</span>
+            <span className="text-2xl font-bold text-gray-900 hidden md:block">
+              RapidRoom
+            </span>
           </Link>
 
           {/* Authentication Buttons */}
@@ -58,13 +76,13 @@ export default function WelcomePageNavBar() {
               <>
                 <button
                   className="px-4 py-2 border-2 border-teal-600 text-teal-600 font-medium rounded-lg hover:bg-teal-600 hover:text-white transition-colors"
-                  onClick={() => console.log("Sign up clicked")}
+                  onClick={() => dispatch(flipSignUp(showSignup))}
                 >
                   Sign Up
                 </button>
                 <button
                   className="px-4 py-2 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors"
-                  onClick={() => console.log("Sign in clicked")}
+                  onClick={() => dispatch(flipSignin(showSignin))}
                 >
                   Sign In
                 </button>
@@ -79,9 +97,12 @@ export default function WelcomePageNavBar() {
                   >
                     <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
                       <User className="h-5 w-5 text-teal-600" />
-                      
                     </div>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        isDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
 
                   {/* Dropdown Content */}
@@ -95,7 +116,9 @@ export default function WelcomePageNavBar() {
                         className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-200"
                       >
                         <div className="px-4 py-2 border-b border-gray-100">
-                          <p className="font-medium text-gray-900">My Account</p>
+                          <p className="font-medium text-gray-900">
+                            My Account
+                          </p>
                         </div>
 
                         <Link
@@ -123,8 +146,8 @@ export default function WelcomePageNavBar() {
                         <div className="border-t border-gray-100 mt-1 pt-1">
                           <button
                             onClick={() => {
-                              handleLogout()
-                              setIsDropdownOpen(false)
+                              handleLogout();
+                              setIsDropdownOpen(false);
                             }}
                             className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50"
                           >
@@ -153,7 +176,11 @@ export default function WelcomePageNavBar() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
@@ -206,8 +233,8 @@ export default function WelcomePageNavBar() {
                     <button
                       className="w-full px-4 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors"
                       onClick={() => {
-                        console.log("Sign in clicked")
-                        setIsMenuOpen(false)
+                        console.log("Sign in clicked");
+                        setIsMenuOpen(false);
                       }}
                     >
                       Sign In
@@ -215,8 +242,8 @@ export default function WelcomePageNavBar() {
                     <button
                       className="w-full px-4 py-3 border-2 border-teal-600 text-teal-600 font-medium rounded-lg hover:bg-teal-600 hover:text-white transition-colors"
                       onClick={() => {
-                        console.log("Sign up clicked")
-                        setIsMenuOpen(false)
+                        console.log("Sign up clicked");
+                        setIsMenuOpen(false);
                       }}
                     >
                       Sign Up
@@ -235,8 +262,8 @@ export default function WelcomePageNavBar() {
                     <button
                       className="w-full px-4 py-3 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
                       onClick={() => {
-                        handleLogout()
-                        setIsMenuOpen(false)
+                        handleLogout();
+                        setIsMenuOpen(false);
                       }}
                     >
                       <LogOut className="h-4 w-4" />
@@ -250,7 +277,8 @@ export default function WelcomePageNavBar() {
         )}
       </AnimatePresence>
 
+      {showSignin && <Signin />}
+      {showSignup && <Signup />}
     </header>
-  )
+  );
 }
-
