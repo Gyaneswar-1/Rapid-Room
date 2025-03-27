@@ -3,11 +3,22 @@ import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 export const reserveHotel = async (req, res) => {
     const { hotelId, checkIn, checkOut } = req.body;
+    console.log(hotelId, checkIn, checkOut);
     //validate the input data here
     if (!hotelId || !checkIn || !checkOut) {
         return res
             .status(400)
             .json(new ApiError(false, {}, "filed", "Insufficiend input date", 400));
+    }
+    // check if the checkin date is less than the curren date return
+    const [day, month, year] = checkIn.split("-").map(Number);
+    const checkInDate = new Date(year, month - 1, day); // Month is 0-based in JS Date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to compare only date
+    if (checkInDate < today) {
+        return res
+            .status(400)
+            .json(new ApiError(false, {}, "filed", "INvalid checkin date", 400));
     }
     try {
         // get the reservation duration
@@ -131,7 +142,12 @@ export const reserveHotel = async (req, res) => {
             }
             return res
                 .status(200)
-                .json(new ApiResponse(true, { resevationId: reserveRoom.id, roomId: nonReserveRoom.id, hotelId: hotelId, paymentId: paymentEntry.id }, "Successfull", "Successfully reserved the room", 200));
+                .json(new ApiResponse(true, {
+                resevationId: reserveRoom.id,
+                roomId: nonReserveRoom.id,
+                hotelId: hotelId,
+                paymentId: paymentEntry.id,
+            }, "Successfull", "Successfully reserved the room", 200));
         });
     }
     catch (error) {

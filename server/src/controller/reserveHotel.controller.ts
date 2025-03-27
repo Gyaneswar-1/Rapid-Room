@@ -12,6 +12,7 @@ type reservationType = {
 
 export const reserveHotel = async (req: Request | any, res: Response | any) => {
     const { hotelId, checkIn, checkOut }: reservationType = req.body;
+    console.log(hotelId, checkIn, checkOut);
 
     //validate the input data here
     if (!hotelId || !checkIn || !checkOut) {
@@ -28,6 +29,20 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
             );
     }
 
+    // check if the checkin date is less than the curren date return
+    const [day, month, year] = checkIn.split("-").map(Number);
+    const checkInDate = new Date(year, month - 1, day); // Month is 0-based in JS Date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to compare only date
+
+    if (checkInDate < today) {
+        return res
+            .status(400)
+            .json(
+                new ApiError(false, {}, "filed", "INvalid checkin date", 400),
+            );
+    }
+
     try {
         // get the reservation duration
         const parseDate = (dateStr: string) => {
@@ -36,9 +51,8 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
         };
         const checkInDate = parseDate(checkIn);
         const checkOutDate = parseDate(checkOut);
-        const diffTime =
-            checkOutDate.getTime() - checkInDate.getTime();
-            const reservationsDuration = diffTime / (1000 * 60 * 60 * 24);
+        const diffTime = checkOutDate.getTime() - checkInDate.getTime();
+        const reservationsDuration = diffTime / (1000 * 60 * 60 * 24);
         console.log(reservationsDuration);
         //initialize the tracsactio for multiple db operation
         const trancation = await prisma.$transaction(async (prisma) => {
@@ -190,14 +204,17 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
                     );
             }
 
-            
-
             return res
                 .status(200)
                 .json(
                     new ApiResponse(
                         true,
-                        { resevationId:reserveRoom.id, roomId:nonReserveRoom.id, hotelId: hotelId, paymentId:paymentEntry.id },
+                        {
+                            resevationId: reserveRoom.id,
+                            roomId: nonReserveRoom.id,
+                            hotelId: hotelId,
+                            paymentId: paymentEntry.id,
+                        },
                         "Successfull",
                         "Successfully reserved the room",
                         200,

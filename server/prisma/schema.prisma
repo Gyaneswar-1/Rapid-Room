@@ -142,7 +142,7 @@ model Reservations {
   reservationsDuration Int?
   checkOut             DateTime
   amountPaid           Int
-  ReservationStatus    reservtionStatus
+  ReservationStatus    reservtionStatus @default(pending)
   paymentStatus paymentStatus @default(pending)
 
 }
