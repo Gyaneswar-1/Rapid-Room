@@ -8,7 +8,7 @@ function ConfirmButton() {
   const [checkbox, setCheckbox] = useState(false);
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white p-8 rounded-2xl shadow-sm">
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white p-8 rounded-2xl">
       <div className="flex items-start gap-3">
         <input
           type="checkbox"

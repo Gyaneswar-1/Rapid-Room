@@ -6,7 +6,7 @@ function TermsSection() {
   return (
     <div>
            <div className="mb-16">
-          <div className="bg-gray-50 rounded-2xl p-8 shadow-sm">
+          <div className="bg-gray-50 rounded-2xl p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Terms & Conditions</h2>
 
             <div className="space-y-6">

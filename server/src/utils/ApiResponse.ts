@@ -3,14 +3,14 @@ import { Response } from "express";
 export class ApiResponse extends Response {
     success: boolean;
     data: object;
-    customStatus: string;
+    customstatus: "APPROVED" | "PENDING" | "REJECTED";
     message: string;
     statusCode: number;
 
     constructor(
         success: boolean = true,
         data: object = {},
-        customStatus: string = 'OK',
+        customstatus: "APPROVED" | "PENDING" | "REJECTED" = 'OK',
         message: string = 'success!',
         statusCode: number = 200
     ) {

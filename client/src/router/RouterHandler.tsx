@@ -43,7 +43,7 @@ function RouterHandler() {
               path="my-bookings"
               element={<UserBookings></UserBookings>}
             ></Route>
-            <Route path="admin-confirm" element={<AdminConfirm />} />
+            <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
               element={<TermsAndConditionsForAdmin />}

@@ -14,7 +14,7 @@ function IsHost({ element }: IsHostProps) {
       (state: RootState) => state.userReducer
     );
     
-  return isHost ? element : <Navigate to="/admin-confirm" />;
+  return isHost ? element : <Navigate to="/host-confirm" />;
 }
 
 export default IsHost;

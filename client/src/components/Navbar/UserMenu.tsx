@@ -81,7 +81,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
               </button>
             ) : (
               <button
-                onClick={() => navigate("/admin-confirm")}
+                onClick={() => navigate("/host-confirm")}
                 className="hidden cursor-pointer md:block text-sm font-medium py-2 px-4 rounded-full hover:bg-gray-100 transition"
               >
                 rapid your Room

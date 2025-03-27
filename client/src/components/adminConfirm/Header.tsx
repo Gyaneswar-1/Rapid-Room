@@ -5,7 +5,7 @@ function Header() {
   const navigate = useNavigate();
   return (
     <div className="mb-16">
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 bg-white p-8 rounded-2xl shadow-sm">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 bg-white p-8 rounded-2xl">
       <motion.div
         initial={{ x: -40, opacity: 0 }}
         whileInView={{ x: 0, opacity: 1 }}

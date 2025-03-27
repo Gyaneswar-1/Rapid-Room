@@ -5,7 +5,7 @@ function CompareTable() {
     <div className="mb-24">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">How We Compare</h2>
 
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl border overflow-hidden">
             <div className="grid grid-cols-3 border-b">
               <div className="p-6 font-semibold text-gray-800">Features</div>
               <div className="p-6 font-semibold text-teal-600 text-center">RapidRoom</div>
