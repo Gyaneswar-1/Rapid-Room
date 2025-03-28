@@ -33,7 +33,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 export default function BookingPage() {
-  //delay functon
+  //delay functon 
   // async function delay() {
   //   await new Promise((res) => {
   //     setTimeout(() => {

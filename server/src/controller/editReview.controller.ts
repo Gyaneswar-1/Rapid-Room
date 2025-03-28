@@ -32,7 +32,7 @@ export const editReview = async (req: Request, res: Response | any) => {
                 reviewComment: content !== undefined ? content : review.reviewComment,
             },
         });
-        return res.status(200).json(new ApiResponse(true,result));
+        return res.status(200).json(new ApiResponse(true, result, "Review updated successfully"));
     } catch (error) {
         return res.status(500).json(new ApiError(false,{error}))
     }

@@ -2,12 +2,12 @@ import { Search, Filter, ChevronDown } from "lucide-react"
 import HotelsTabs from "./HotelsTabs"
 import HotelsTable from "../hosts/HostsTable"
 import Pagination from "../ui/Pagination"
-import type { Hotel } from "../AdminDashboard"
+import type { HotelInterface } from "../AdminDashboard"
 
 interface HotelsViewProps {
   activeSubTab: string
   setActiveSubTab: (tab: string) => void
-  hotels: Hotel[]
+  hotels: HotelInterface[]
   openModal: (type: string, item: any) => void
   handleAction: (type: string, id: string, action: "approve" | "reject") => void
 }
@@ -18,7 +18,12 @@ export default function HotelsView({
   hotels,
   openModal,
   handleAction,
-}: HotelsViewProps) {
+}: HotelsViewProps) 
+
+
+
+{
+
   return (
     <div className="space-y-6">
       {/* Header with filters */}

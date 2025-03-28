@@ -7,7 +7,7 @@ export class ApiError {
     constructor(
         success: boolean = false,
         data: object = {},
-        status: "APPROVED" | "PENDING" | "REJECTED" = "Error",
+        status: string = "Error",
         message: string = "error occured",
         statusCode: number = 500,
     ) {

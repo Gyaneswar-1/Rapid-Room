@@ -7,20 +7,56 @@ import HostsView from "./hosts/HostsView"
 import UsersView from "./users/UsersView"
 import Modal from "./ui/Modal"
 import { HelpCircle } from "lucide-react"
-import { getAdminHotels } from "./service/admin/getAdminHotels"
+import { admin_getAdminHotels } from "../../service/admin/admin_getAdminHotels.service"
 
-export interface Hotel {
-  id: string
-  hotelName: string
+// Hotel interface for admin dashboard
+export interface HotelInterface {
+  id: number;
+  hotelName: string;
+  perNight: number;
+  type: HotelType;
+  status: "PENDING" | "APPROVED" | "REJECTED";
   address: {
-    city: string
-  }
-  perNight: number
-  host?: string
-  hostId?: string
-  submitted?: string
-  status: "APPROVED" | "PENDING" | "REJECTED"
-  images: string[]
+    country: string;
+    city: string;
+  };
+  images: {
+    imageUrl: string;
+  }[];
+  reviews: {
+    overallRating?: number;
+    // Add other review fields if needed
+  }[];
+}
+
+// Hotel type enum
+export enum HotelType {
+  BEACH = "BEACH",
+  CITY = "CITY",
+  MOUNTAIN = "MOUNTAIN",
+  RESORT = "RESORT",
+  BUDGET = "BUDGET",
+  LUXURY = "LUXURY",
+  AMAZING_VIEWS = "AMAZING_VIEWS",
+  AMAZING_POOLS = "AMAZING_POOLS",
+  FARMS = "FARMS",
+  HISTORICAL_HOMES = "HISTORICAL_HOMES",
+  SURFING = "SURFING",
+  BEACHFRONT = "BEACHFRONT",
+  LAKEFRONT = "LAKEFRONT",
+  CASTLES = "CASTLES",
+  CAMPING = "CAMPING",
+  BOATS = "BOATS",
+  TROPICAL = "TROPICAL",
+  TOP_OF_THE_WORLD = "TOP_OF_THE_WORLD",
+  TOP_CITIES = "TOP_CITIES",
+  ARCTIC = "ARCTIC",
+  TREEHOUSES = "TREEHOUSES",
+  CABINS = "CABINS",
+  TINY_HOMES = "TINY_HOMES",
+  ISLANDS = "ISLANDS",
+  COUNTRYSIDE = "COUNTRYSIDE",
+  MANSIONS = "MANSIONS"
 }
 
 export interface Host {
@@ -36,14 +72,13 @@ export interface Host {
 }
 
 export default function AdminDashboard() {
-  // State for active tab and sidebar
   const [activeTab, setActiveTab] = useState("dashboard")
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState<any>(null)
   const [activeSubTab, setActiveSubTab] = useState("pending")
-  const [hotels, setHotels] = useState<Hotel[]>([])
+  const [hotels, setHotels] = useState<HotelInterface[]>([])
 
   // Check if mobile on mount and window resize
   useEffect(() => {
@@ -68,7 +103,7 @@ export default function AdminDashboard() {
 
   async function getHotels() {
     try {
-      const response = await getAdminHotels(1, 10)
+      const response = await admin_getAdminHotels(1, 10)
       console.log("ressss", response.data)
       setHotels(response.data)
     } catch (error) {

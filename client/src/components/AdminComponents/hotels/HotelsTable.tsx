@@ -3,7 +3,7 @@
 import { Eye, CheckCircle, XCircle } from "lucide-react"
 import type { Hotel } from "../AdminDashboard"
 import { useEffect, useState } from "react"
-import { getAdminHotels } from "../../../service/admin/allHotel.service"
+import { getAdminHotels } from "../../../service/admin/admin_getAdminHotels.service"
 
 
 interface HotelsTableProps {

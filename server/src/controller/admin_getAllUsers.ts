@@ -4,13 +4,23 @@ import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
 export const admin_getAllUsers = async (req: Request | any, res: Response | any) => {
-    const { page = 1, limit = 10 } = req.query;
-    const offset = (page - 1) * limit;
-
     try {
+        // Set default values and convert to numbers
+        const page = parseInt(req.query.page || "1");
+        const limit = parseInt(req.query.limit || "10");
+        
+        // Validate pagination parameters
+        if (isNaN(page) || page < 1 || isNaN(limit) || limit < 1) {
+            return res.status(400).json(
+                new ApiError(false, {}, "Invalid pagination parameters")
+            );
+        }
+        
+        const offset = (page - 1) * limit;
+
         const users = await prisma.users.findMany({
-            skip: Number(offset),
-            take: parseInt(limit),
+            skip: offset,
+            take: limit,
             select: {
                 id: true,
                 fullName: true,
@@ -19,7 +29,7 @@ export const admin_getAllUsers = async (req: Request | any, res: Response | any)
                 isHost: true,
                 profileImage: true,
                 createdAt: true,
-                status:true,
+                status: true,
                 address: {
                     select: {
                         country: true,
@@ -29,6 +39,15 @@ export const admin_getAllUsers = async (req: Request | any, res: Response | any)
                 },
             },
         });
+        console.log(users);
+
+           // Convert BigInt values to strings before JSON serialization
+           const serializedUsers = users.map(user => ({
+            ...user,
+            phoneNumber: user.phoneNumber ? String(user.phoneNumber) : null,
+
+        }));
+        
 
         const totalUsers = await prisma.users.count();
         const totalPages = Math.ceil(totalUsers / limit);
@@ -37,20 +56,21 @@ export const admin_getAllUsers = async (req: Request | any, res: Response | any)
             new ApiResponse(
                 true,
                 {
-                    users,
+                    users: serializedUsers, // Use serialized users, not the original
                     pagination: {
                         totalUsers,
                         totalPages,
-                        currentPage: parseInt(page),
-                        pageSize: parseInt(limit),
+                        currentPage: page,
+                        pageSize: limit,
                     },
                 },
                 "Users fetched successfully"
             ),
         );
     } catch (error) {
-        return res.status(500).json(new ApiError(false, { error }, "Failed to fetch users"));
+        console.error("Error fetching users:", error);
+        return res.status(500).json(new ApiError(false, {}, "Failed to fetch users "));
     } finally {
-        prisma.$disconnect();
+        await prisma.$disconnect();
     }
 };

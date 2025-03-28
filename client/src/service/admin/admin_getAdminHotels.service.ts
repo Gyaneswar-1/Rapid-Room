@@ -2,7 +2,7 @@ import axios from "axios";
 import API from "../api";
 
 
-export const getAdminHotels = async (page: number, limit: number) => {
+export const admin_getAdminHotels = async (page: number, limit: number) => {
   try {
     const response = await axios.get(
       `${API}/admin/hotels/?page=${page}&limit=${limit}`

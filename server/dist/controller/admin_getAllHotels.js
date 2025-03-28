@@ -27,11 +27,6 @@ export const admin_getAllHotels = async (req, res) => {
                         overallRating: true,
                     },
                 },
-                WishList: {
-                    select: {
-                        hotelId: true,
-                    },
-                },
                 images: {
                     select: {
                         imageUrl: true
