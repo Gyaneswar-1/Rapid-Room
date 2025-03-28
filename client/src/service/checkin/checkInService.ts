@@ -26,11 +26,15 @@ export default async function checkInHandler({amount,email,name, phNumber,hotelI
 
     const orderRes = await axios.post(`${API}/user/payment/`,{
         amount: amount
+    },{
+      withCredentials: true
     })
     
     
     
-    const razorpayKey = await axios.get(`${API}/razorpay/getkey`);
+    const razorpayKey = await axios.get(`${API}/razorpay/getkey`,{
+      withCredentials: true
+    });
     
     if(!orderRes || !razorpayKey){
       return {success: false}

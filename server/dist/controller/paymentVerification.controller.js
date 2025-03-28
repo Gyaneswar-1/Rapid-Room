@@ -2,6 +2,7 @@ import prisma from "../db/db.config.js";
 export async function paymentVerification(req, res) {
     const { razorpay_order_id, razorpay_payment_id } = req.body;
     console.log(razorpay_order_id, razorpay_payment_id);
+    return;
     const { hotelId, reservationId, paymentId, roomId } = req.query;
     //strictly get these infomation
     console.log(hotelId, reservationId, paymentId, roomId);

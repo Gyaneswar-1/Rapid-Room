@@ -11,6 +11,7 @@ export async function paymentVerification(
 ) {
     const { razorpay_order_id, razorpay_payment_id } = req.body;
     console.log(razorpay_order_id, razorpay_payment_id);
+    
     const { hotelId, reservationId, paymentId, roomId } = req.query;
 
     //strictly get these infomation
