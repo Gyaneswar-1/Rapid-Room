@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface CalendarProps {
@@ -11,142 +11,152 @@ interface CalendarProps {
 }
 
 export default function Calendar({ selectedDate, onChange, minDate, maxDate }: CalendarProps) {
-  const [currentMonth, setCurrentMonth] = useState(selectedDate ? new Date(selectedDate) : new Date())
+  const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [calendarDays, setCalendarDays] = useState<Array<{ date: Date | null; isCurrentMonth: boolean }>>([])
 
-  // Set day to 1 to get the first day of the month
-  currentMonth.setDate(1)
+  // Initialize with current month if no date is selected
+  useEffect(() => {
+    if (selectedDate) {
+      setCurrentMonth(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1))
+    } else {
+      setCurrentMonth(new Date(new Date().getFullYear(), new Date().getMonth(), 1))
+    }
+  }, [])
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ]
+  // Generate calendar days whenever the current month changes
+  useEffect(() => {
+    generateCalendarDays()
+  }, [currentMonth])
 
-  const daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+  const generateCalendarDays = () => {
+    const year = currentMonth.getFullYear()
+    const month = currentMonth.getMonth()
 
-  // Get the number of days in the current month
-  const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate()
+    // First day of the month
+    const firstDayOfMonth = new Date(year, month, 1)
+    // Last day of the month
+    const lastDayOfMonth = new Date(year, month + 1, 0)
 
-  // Get the day of the week for the first day of the month (0-6, where 0 is Sunday)
-  const firstDayOfMonth = currentMonth.getDay()
+    // Day of the week for the first day (0 = Sunday, 6 = Saturday)
+    const firstDayOfWeek = firstDayOfMonth.getDay()
 
-  // Create an array of day numbers for the current month
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1)
+    // Total days in the month
+    const daysInMonth = lastDayOfMonth.getDate()
 
-  // Create an array of empty cells for days before the first day of the month
-  const emptyCells = Array.from({ length: firstDayOfMonth }, (_, ) => null)
+    // Generate array of days
+    const days: Array<{ date: Date | null; isCurrentMonth: boolean }> = []
 
-  // Combine empty cells and days
-  const calendarDays = [...emptyCells, ...days]
+    // Add days from previous month to fill the first week
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      const prevMonthDay = new Date(year, month, -firstDayOfWeek + i + 1)
+      days.push({ date: prevMonthDay, isCurrentMonth: false })
+    }
 
-  // Navigate to previous month
-  const prevMonth = () => {
-    const newMonth = new Date(currentMonth)
-    newMonth.setMonth(newMonth.getMonth() - 1)
-    setCurrentMonth(newMonth)
+    // Add days of the current month
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push({ date: new Date(year, month, i), isCurrentMonth: true })
+    }
+
+    // Add days from next month to fill the last week
+    const remainingDays = 42 - days.length // 6 rows of 7 days
+    for (let i = 1; i <= remainingDays; i++) {
+      const nextMonthDay = new Date(year, month + 1, i)
+      days.push({ date: nextMonthDay, isCurrentMonth: false })
+    }
+
+    setCalendarDays(days)
   }
 
-  // Navigate to next month
-  const nextMonth = () => {
-    const newMonth = new Date(currentMonth)
-    newMonth.setMonth(newMonth.getMonth() + 1)
-    setCurrentMonth(newMonth)
+  const goToPreviousMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))
   }
 
-  // Check if a date is the selected date
-  const isSelectedDate = (day: number) => {
-    if (!selectedDate) return false
+  const goToNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))
+  }
+
+  const isDateDisabled = (date: Date | null) => {
+    if (!date) return true
+
+    if (minDate && date < new Date(minDate.setHours(0, 0, 0, 0))) {
+      return true
+    }
+
+    if (maxDate && date > new Date(maxDate.setHours(23, 59, 59, 999))) {
+      return true
+    }
+
+    return false
+  }
+
+  const isDateSelected = (date: Date | null) => {
+    if (!date || !selectedDate) return false
 
     return (
-      selectedDate.getDate() === day &&
-      selectedDate.getMonth() === currentMonth.getMonth() &&
-      selectedDate.getFullYear() === currentMonth.getFullYear()
+      date.getDate() === selectedDate.getDate() &&
+      date.getMonth() === selectedDate.getMonth() &&
+      date.getFullYear() === selectedDate.getFullYear()
     )
   }
 
-  // Check if a date is before the minimum date
-  const isBeforeMinDate = (day: number) => {
-    if (!minDate) return false
+  const isToday = (date: Date | null) => {
+    if (!date) return false
 
-    const date = new Date(currentMonth)
-    date.setDate(day)
-
-    return date < minDate
+    const today = new Date()
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    )
   }
 
-  // Check if a date is after the maximum date
-  const isAfterMaxDate = (day: number) => {
-    if (!maxDate) return false
-
-    const date = new Date(currentMonth)
-    date.setDate(day)
-
-    return date > maxDate
+  const handleDateClick = (date: Date | null) => {
+    if (!date || isDateDisabled(date)) return
+    onChange(date)
   }
 
-  // Check if a date is disabled
-  const isDisabled = (day: number) => {
-    return isBeforeMinDate(day) || isAfterMaxDate(day)
+  const formatMonth = (date: Date) => {
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" })
   }
 
-  // Handle date selection
-  const handleDateClick = (day: number) => {
-    if (isDisabled(day)) return
-
-    const newDate = new Date(currentMonth)
-    newDate.setDate(day)
-    onChange(newDate)
-  }
+  const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <button onClick={prevMonth} className="p-1 rounded-full hover:bg-gray-100">
+    <div className="p-4 bg-white">
+      <div className="flex items-center justify-between mb-4">
+        <button onClick={goToPreviousMonth} className="p-1 rounded-full hover:bg-gray-100" aria-label="Previous month">
           <ChevronLeft className="h-5 w-5" />
         </button>
-        <h3 className="font-medium">
-          {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
-        </h3>
-        <button onClick={nextMonth} className="p-1 rounded-full hover:bg-gray-100">
+        <h3 className="font-medium">{formatMonth(currentMonth)}</h3>
+        <button onClick={goToNextMonth} className="p-1 rounded-full hover:bg-gray-100" aria-label="Next month">
           <ChevronRight className="h-5 w-5" />
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
-        {/* Days of week headers */}
-        {daysOfWeek.map((day) => (
-          <div key={day} className="text-center text-xs font-medium text-gray-500 py-2">
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {weekDays.map((day) => (
+          <div key={day} className="text-center text-xs font-medium text-gray-500 py-1">
             {day}
           </div>
         ))}
+      </div>
 
-        {/* Calendar days */}
+      <div className="grid grid-cols-7 gap-1">
         {calendarDays.map((day, index) => (
-          <div key={index} className="text-center py-1">
-            {day !== null ? (
-              <button
-                onClick={() => handleDateClick(day)}
-                disabled={isDisabled(day)}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm
-                  ${isSelectedDate(day) ? "bg-gray-900 text-white" : "hover:bg-gray-100"}
-                  ${isDisabled(day) ? "text-gray-300 cursor-not-allowed" : "cursor-pointer"}
-                `}
-              >
-                {day}
-              </button>
-            ) : (
-              <span></span>
-            )}
-          </div>
+          <button
+            key={index}
+            onClick={() => handleDateClick(day.date)}
+            disabled={isDateDisabled(day.date)}
+            className={`
+              h-9 w-9 flex items-center justify-center rounded-full text-sm
+              ${!day.isCurrentMonth ? "text-gray-300" : ""}
+              ${isDateDisabled(day.date) ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}
+              ${isDateSelected(day.date) ? "bg-rose-600 text-white hover:bg-rose-700" : ""}
+              ${isToday(day.date) && !isDateSelected(day.date) ? "border border-rose-600" : ""}
+            `}
+          >
+            {day.date?.getDate()}
+          </button>
         ))}
       </div>
     </div>

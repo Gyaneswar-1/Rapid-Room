@@ -3,7 +3,7 @@ import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndCondi
 import IsAuth from "./IsAuth";
 import AddHotels from "../pages/AddHotels";
 import AdminConfirm from "../pages/HostConfirm";
-import BookingPage from "../pages/BookingPage";
+
 import ComeingSoon from "../pages/ComeingSoon";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
@@ -28,6 +28,8 @@ import HostsPage from "../components/AdminComponents/HostsPage";
 import UsersPage from "../components/AdminComponents/UsersPage";
 import SettingsPage from "../components/AdminComponents/SettingsPage";
 
+import BookingPage from "../pages/BookingPage";
+
 function RouterHandler() {
   return (
     <>
@@ -40,6 +42,7 @@ function RouterHandler() {
           {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
+            
             <Route
               path="add-hotel"
               element={<IsHost element={<AddHotels />} />}
