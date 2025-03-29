@@ -8,6 +8,7 @@ import checkInReducer from "./reducers/checkIn.reducer"
 import singleHotelReducer from "./reducers/singleHotel.reducer"
 import loaderReducer from "./reducers/loader.reducer"
 import searchReducer from "./reducers/search.reducer"
+import toogleShowReseveModel from "./reducers/showReservatonModel.reducer"
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
     checkInReducer: checkInReducer,
     singleHotelReducer:singleHotelReducer,
     loaderReducer: loaderReducer,
-    searchReducer: searchReducer
+    searchReducer: searchReducer,
+    toogleShowReseveModelReducer: toogleShowReseveModel
   },
 });
 
