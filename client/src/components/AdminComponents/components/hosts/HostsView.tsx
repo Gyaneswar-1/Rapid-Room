@@ -1,43 +1,43 @@
+"use client"
+
+import { useState } from "react"
 import { Search, Filter, ChevronDown } from "lucide-react"
-import HotelsTabs from "./HotelsTabs"
-import HotelsTable from "../hosts/HostsTable"
+import HostsTabs from "./HostsTabs"
+import HostsTable from "./HostsTable"
 import Pagination from "../ui/Pagination"
-import type { HotelInterface } from "../AdminDashboard"
 
-interface HotelsViewProps {
-  activeSubTab: string
-  setActiveSubTab: (tab: string) => void
-  hotels: HotelInterface[]
-  openModal: (type: string, item: any) => void
-  handleAction: (type: string, id: string, action: "approve" | "reject") => void
-}
+export default function HostsView() {
+  const [activeSubTab, setActiveSubTab] = useState("pending")
+  const [showModal, setShowModal] = useState(false)
+  const [, setModalContent] = useState<any>(null)
 
-export default function HotelsView({
-  activeSubTab,
-  setActiveSubTab,
-  hotels,
-  openModal,
-  handleAction,
-}: HotelsViewProps) 
+  // Function to open modal with specific content
+  const openModal = (type: string, item: any) => {
+    setModalContent({ type, item })
+    setShowModal(!showModal)
+  }
 
-
-
-{
+  // Function to handle approval/rejection
+  const handleAction = (type: string, id: string, action: "approve" | "reject") => {
+    console.log(`${action} ${type} with ID: ${id}`)
+    // Here you would make an API call to update the status
+    setShowModal(false)
+  }
 
   return (
     <div className="space-y-6">
       {/* Header with filters */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Hotel Management</h2>
-          <p className="text-sm text-gray-500 mt-1">Manage and approve hotel listings</p>
+          <h2 className="text-xl font-bold text-gray-900">Host Verification</h2>
+          <p className="text-sm text-gray-500 mt-1">Verify and approve host applications</p>
         </div>
 
         <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
           <div className="relative">
             <input
               type="text"
-              placeholder="Search hotels..."
+              placeholder="Search hosts..."
               className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             />
             <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
@@ -50,19 +50,15 @@ export default function HotelsView({
               <ChevronDown className="w-4 h-4" />
             </button>
           </div>
-
-          <button className="px-4 py-2 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
-            Export Data
-          </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <HotelsTabs activeSubTab={activeSubTab} setActiveSubTab={setActiveSubTab} />
+      <HostsTabs activeSubTab={activeSubTab} setActiveSubTab={setActiveSubTab} />
 
-      {/* Hotel Table */}
+      {/* Host Verification Table */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <HotelsTable hotels={hotels} activeSubTab={activeSubTab} openModal={openModal} handleAction={handleAction} />
+        <HostsTable activeSubTab={activeSubTab} openModal={openModal} handleAction={handleAction} />
 
         {/* Pagination */}
         <Pagination />

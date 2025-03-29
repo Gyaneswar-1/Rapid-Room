@@ -1,14 +1,32 @@
 "use client"
 
-import { ArrowUpRight } from "lucide-react"
+import type React from "react"
+
+import { useState } from "react"
+import { ArrowUpRight, Eye } from "lucide-react"
+import FloatingCard from "../ui/FloatingCardProps"
 
 interface RecentHotelsProps {
   openModal: (type: string, item: any) => void
 }
 
+interface Hotel {
+  id: string
+  name: string
+  location: string
+  host: string
+  hostId: string
+  submitted: string
+  status: string
+  images: string[]
+}
+
 export default function RecentHotels({ openModal }: RecentHotelsProps) {
+  // State for floating card
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null)
+
   // Mock data for hotel approval requests
-  const hotelRequests = [
+  const hotelRequests: Hotel[] = [
     {
       id: "HTL-1001",
       name: "Sunset Beach Resort",
@@ -41,8 +59,15 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
     },
   ]
 
+  // Handle eye button click
+  const handleViewDetails = (hotel: Hotel, event: React.MouseEvent) => {
+    event.stopPropagation()
+    // Toggle the selected hotel
+    setSelectedHotel(selectedHotel?.id === hotel.id ? null : hotel)
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6 relative">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-bold text-gray-900">Recently Added Hotels</h2>
         <button className="text-sm text-teal-600 hover:text-teal-800 font-medium flex items-center">
@@ -101,8 +126,8 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
                   </span>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={() => openModal("hotel", hotel)} className="text-teal-600 hover:text-teal-900">
-                    View Details
+                  <button onClick={(e) => handleViewDetails(hotel, e)} className="text-teal-600 hover:text-teal-900">
+                    <Eye className="w-5 h-5" />
                   </button>
                 </td>
               </tr>
@@ -110,6 +135,62 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
           </tbody>
         </table>
       </div>
+
+      {/* Floating Card for Hotel Details */}
+      <FloatingCard isOpen={!!selectedHotel} onClose={() => setSelectedHotel(null)}>
+        {selectedHotel && (
+          <div className="space-y-4">
+            <div className="relative w-full h-40 rounded-lg overflow-hidden mb-4">
+              <img
+                src={selectedHotel.images?.[0] || "/placeholder.svg"}
+                alt={selectedHotel.name}
+                className="object-cover w-full h-full"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-500">Hotel Name</p>
+                <p className="text-sm text-gray-900">{selectedHotel.name}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">Location</p>
+                <p className="text-sm text-gray-900">{selectedHotel.location}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">Host</p>
+                <p className="text-sm text-gray-900">{selectedHotel.host}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">Submission Date</p>
+                <p className="text-sm text-gray-900">{new Date(selectedHotel.submitted).toLocaleDateString()}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">Status</p>
+                <span
+                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    selectedHotel.status === "pending"
+                      ? "bg-amber-100 text-amber-800"
+                      : selectedHotel.status === "approved"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {selectedHotel.status.charAt(0).toUpperCase() + selectedHotel.status.slice(1)}
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm font-medium text-gray-500 mb-1">Description</p>
+              <p className="text-sm text-gray-900">
+                This is a beautiful property located in {selectedHotel.location}. The hotel offers stunning views and
+                excellent amenities for guests.
+              </p>
+            </div>
+          </div>
+        )}
+      </FloatingCard>
     </div>
   )
 }

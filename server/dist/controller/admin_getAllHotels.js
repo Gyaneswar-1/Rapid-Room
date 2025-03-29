@@ -20,11 +20,8 @@ export const admin_getAllHotels = async (req, res) => {
                     select: {
                         country: true,
                         city: true,
-                    },
-                },
-                reviews: {
-                    select: {
-                        overallRating: true,
+                        longitude: true,
+                        latitude: true
                     },
                 },
                 images: {

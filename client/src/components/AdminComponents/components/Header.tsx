@@ -1,15 +1,36 @@
 "use client"
 
 import { Menu, Search, Bell } from "lucide-react"
+import { useLocation } from "react-router-dom"
 
 interface HeaderProps {
-  activeTab: string
   isMobile: boolean
   isSidebarOpen: boolean
   setIsSidebarOpen: (open: boolean) => void
 }
 
-export default function Header({ activeTab, isMobile, isSidebarOpen, setIsSidebarOpen }: HeaderProps) {
+export default function Header({ isMobile, isSidebarOpen, setIsSidebarOpen }: HeaderProps) {
+  const { pathname } = useLocation();
+
+  // Get page title based on current path
+  const getPageTitle = () => {
+    if (pathname.startsWith("/admin")) {
+      switch (pathname) {
+        case "/admin/hotels":
+          return "Hotel Management";
+        case "/admin/hosts":
+          return "Host Verification";
+        case "/admin/users":
+          return "User Management";
+        case "/admin/settings":
+          return "Settings";
+        default:
+          return "Admin Dashboard";
+      }
+    }
+    return "Dashboard";
+  };
+
   return (
     <header className="bg-white shadow-sm z-10">
       <div className="flex items-center justify-between p-4">
@@ -24,13 +45,7 @@ export default function Header({ activeTab, isMobile, isSidebarOpen, setIsSideba
         )}
 
         {/* Page title */}
-        <h1 className="text-xl font-semibold text-gray-800 ml-2">
-          {activeTab === "dashboard" && "Dashboard"}
-          {activeTab === "hotels" && "Hotel Management"}
-          {activeTab === "hosts" && "Host Verification"}
-          {activeTab === "users" && "User Management"}
-          {activeTab === "settings" && "Settings"}
-        </h1>
+        <h1 className="text-xl font-semibold text-gray-800 ml-2">{getPageTitle()}</h1>
 
         {/* Search and profile */}
         <div className="flex items-center space-x-4">

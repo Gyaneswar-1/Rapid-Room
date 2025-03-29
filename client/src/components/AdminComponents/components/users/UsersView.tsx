@@ -1,7 +1,11 @@
-import { Search, Filter, ChevronDown, Loader, MoreHorizontal } from "lucide-react"
-import Pagination from "../ui/Pagination"
-import { useEffect, useState } from "react"
-import { admin_getAllUsers } from "../../../service/admin/admin_getAllUsers.service"
+import {
+  Search,
+  MoreHorizontal,
+  Loader,
+} from "lucide-react";
+import Pagination from "../ui/Pagination";
+import { useEffect, useState } from "react";
+import { admin_getAllUsers } from "../../../../service/admin/admin_getAllUsers.service";
 
 interface UserInterface {
   id: number;
@@ -20,30 +24,80 @@ interface UserInterface {
 }
 
 export default function UsersView() {
-
-  const [userData,setUserData] = useState<UserInterface[]>([]);
-  const [loading,setLoading] = useState(false);
+  const [userData, setUserData] = useState<UserInterface[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   async function getUserDatas() {
     try {
       setLoading(true);
-      const response = await admin_getAllUsers(1,10);
-      setUserData(response.data.users)
+      setError(false); // Reset error state on new request
+      const response = await admin_getAllUsers(1, 10);
+  
+      if (response && response.success) {
+        setUserData(response.data.users);
+      } else {
+        setError(true);
+      }
     } catch (error) {
-      console.error(error);
-    }finally{
+      console.error("Error fetching users:", error);
+      setError(true); // Set error state on any exception
+    } finally {
       setLoading(false);
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserDatas();
-  },[])
+  }, []);
 
-  if(loading===true){
-    return <div className="flex w-full h-full items-center justify-center">
-      <Loader/>
-    </div>
+  if (loading === true) {
+    return (
+      <div className="flex w-full h-full items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error === true) {
+    return (
+      <div className="flex w-full h-full flex-col items-center justify-center gap-4 text-center p-8">
+        <div className="rounded-full bg-red-100 p-4 text-red-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-8 h-8"
+          >
+            <path d="M12 8v4m0 4h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0z"></path>
+          </svg>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold text-gray-900">
+            Error Loading Users
+          </h3>
+          <p className="text-gray-600 max-w-md">
+            We encountered a problem while fetching user data. This could be due
+            to a network issue or server problem.
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setError(false);
+            getUserDatas();
+          }}
+          className="mt-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+        >
+          Try Again
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -51,8 +105,9 @@ export default function UsersView() {
       {/* Header with filters */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">User Management</h2>
-          <p className="text-sm text-gray-500 mt-1">Manage all users on the platform</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Manage all users on the platform
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
@@ -64,14 +119,6 @@ export default function UsersView() {
             />
             <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
           </div>
-
-          <div className="relative">
-            <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 hover:bg-gray-50">
-              <Filter className="w-5 h-5" />
-              <span>Filters</span>
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       </div>
 
@@ -81,15 +128,19 @@ export default function UsersView() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  User
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Email
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Role
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Joined
                 </th>
-               
+
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
@@ -101,23 +152,29 @@ export default function UsersView() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-3">
                       <div className="relative flex-shrink-0 w-10 h-10 rounded-full overflow-hidden">
-                        <img src={user.profileImage || "/placeholder.svg"} alt={user.fullName} className="h-full w-full object-cover" />
+                        <img
+                          src={user.profileImage || "/placeholder.svg"}
+                          alt={user.fullName}
+                          className="object-cover w-full h-full"
+                        />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{user.fullName}</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          {user.fullName}
+                        </p>
                         <p className="text-xs text-gray-500">{user.id}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {user.email}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         user.isHost === true
                           ? "bg-purple-100 text-purple-800"
-                          : user.isHost === false
-                            ? "bg-blue-100 text-blue-800"
-                            : "bg-gray-100 text-gray-800"
+                          : "bg-gray-100 text-gray-800"
                       }`}
                     >
                       {user.isHost ? "Host" : "User"}
@@ -126,6 +183,7 @@ export default function UsersView() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button className="text-gray-500 hover:text-gray-700">
                       <MoreHorizontal className="w-5 h-5" />
@@ -141,6 +199,5 @@ export default function UsersView() {
         <Pagination />
       </div>
     </div>
-  )
+  );
 }
-

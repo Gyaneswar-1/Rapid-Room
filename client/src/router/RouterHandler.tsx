@@ -23,6 +23,10 @@ import UserProfile from "../pages/UserProfile";
 import Dashboard from "../pages/Dashboard";
 import IsHost from "./IsHost";
 import AdminDashboard from "../pages/AdminDashboard";
+import HotelsPage from "../components/AdminComponents/HotelsPage";
+import HostsPage from "../components/AdminComponents/HostsPage";
+import UsersPage from "../components/AdminComponents/UsersPage";
+import SettingsPage from "../components/AdminComponents/SettingsPage";
 
 function RouterHandler() {
   return (
@@ -30,18 +34,19 @@ function RouterHandler() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+
           <Route path="/home" element={<Home />} />
           <Route path="/comeingsoon" element={<ComeingSoon />} />
           {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
-            {/* <Route path="dashbord" element={<Dashbord />} /> */}
-            {/* <Route path="book-hotel2" element={<BookingPage2 />} /> */}
-            <Route path="add-hotel" element={ <IsHost element={<AddHotels />}/>} />
+            <Route
+              path="add-hotel"
+              element={<IsHost element={<AddHotels />} />}
+            />
             <Route
               path="my-bookings"
-              element={<UserBookings></UserBookings>}
+              element={<UserBookings/>}
             ></Route>
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
@@ -53,8 +58,8 @@ function RouterHandler() {
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/messages/:hostId" element={<ChatPage />} />
 
-            <Route path="dashbord" element={ <IsHost element={<Dashboard />}/>}>
-              <Route index element={ <TodayPage />} />
+            <Route path="dashbord" element={<IsHost element={<Dashboard />} />}>
+              <Route index element={<TodayPage />} />
               <Route path="today" element={<TodayPage />} />
               <Route path="listings" element={<ListingsPage />} />
               <Route path="listings/:id" element={<ListingDetailPage />} />
@@ -65,6 +70,13 @@ function RouterHandler() {
               <Route path="earnings" element={<EarningsPage />} />
             </Route>
           </Route>
+
+          {/* Admin routes */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/hotels" element={<HotelsPage />} />
+          <Route path="/admin/hosts" element={<HostsPage />} />
+          <Route path="/admin/users" element={<UsersPage />} />
+          <Route path="/admin/settings" element={<SettingsPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

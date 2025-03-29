@@ -1,17 +1,14 @@
-"use client"
-
-import { Home, Users, Building2, Settings, LogOut, X, BarChart3 } from "lucide-react"
-import MainLogo from "../../assets/images/MainLogo.png"
-
+import { Users, Building2, Settings, LogOut, X, RainbowIcon, BarChart3, UserRoundCheck } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
 interface SidebarProps {
-  activeTab: string
-  setActiveTab: (tab: string) => void
   isSidebarOpen: boolean
   setIsSidebarOpen: (open: boolean) => void
   isMobile: boolean
 }
 
-export default function Sidebar({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, isMobile }: SidebarProps) {
+export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: SidebarProps) {
+  const {pathname} = useLocation()
+
   return (
     <aside
       className={`${
@@ -21,12 +18,12 @@ export default function Sidebar({ activeTab, setActiveTab, isSidebarOpen, setIsS
       {/* Logo */}
       <div className="backdrop-blur-xs h-full w-full backdrop-brightness-40">
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
-          <div className="flex items-center space-x-2">
-            <div className=" rounded-lg ">
-              <img src={MainLogo} alt="" className="w-12 h-10 text-white" />
+          <Link to="/admin" className="flex items-center space-x-2">
+            <div className="bg-teal-500 rounded-lg p-1.5">
+              <RainbowIcon className="w-6 h-6 text-white" />
             </div>
             <span className="text-xl font-bold">RapidRoom</span>
-          </div>
+          </Link>
           {isMobile && (
             <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-white">
               <X className="w-6 h-6" />
@@ -39,63 +36,63 @@ export default function Sidebar({ activeTab, setActiveTab, isSidebarOpen, setIsS
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Main</p>
           <ul className="space-y-2">
             <li>
-              <button
-                onClick={() => setActiveTab("dashboard")}
+              <Link
+                to="/admin"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === "dashboard" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <BarChart3 className="w-5 h-5 mr-3" />
                 Dashboard
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                onClick={() => setActiveTab("hotels")}
+              <Link
+                to="/admin/hotels"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === "hotels" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/hotels" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <Building2 className="w-5 h-5 mr-3" />
                 Hotels
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                onClick={() => setActiveTab("hosts")}
+              <Link
+                to="/admin/hosts"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === "hosts" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/hosts" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
-                <Home className="w-5 h-5 mr-3" />
+                <UserRoundCheck  className="w-5 h-5 mr-3" />
                 Hosts
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                onClick={() => setActiveTab("users")}
+              <Link
+                to="/admin/users"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === "users" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/users" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <Users className="w-5 h-5 mr-3" />
                 Users
-              </button>
+              </Link>
             </li>
           </ul>
 
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-4">Settings</p>
           <ul className="space-y-2">
             <li>
-              <button
-                onClick={() => setActiveTab("settings")}
+              <Link
+                to="/admin/settings"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  activeTab === "settings" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/settings" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <Settings className="w-5 h-5 mr-3" />
                 Settings
-              </button>
+              </Link>
             </li>
             <li>
               <button

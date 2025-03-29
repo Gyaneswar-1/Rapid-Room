@@ -1,8 +1,7 @@
-import { Hotel } from "../../AdminDashboard";
 
-export const _getAdminHotels = async (page: number, pageSize: number) => {
+export const getAdminHotels = async (page: number, pageSize: number) => {
   // Replace with actual API endpoint and logic
-  const data: Hotel[] = [
+  const data = [
     {
       id: "HTL-1001",
       hotelName: "Sunset Beach Resort",
