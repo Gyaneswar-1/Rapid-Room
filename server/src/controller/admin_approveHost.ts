@@ -4,13 +4,12 @@ import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
 /**
- * Reject a user account by ID
- * @route PUT /api/admin/users/:userId/reject
+ * Approve a user account by ID
+ * @route PUT /api/admin/users/:userId/approve
  * @access Admin only
  */
-export const admin_rejectUser = async (req: Request | any, res: Response | any) => {
+export const admin_approveHost = async (req: Request | any, res: Response | any) => {
     const { userId } = req.params;
-    const { rejectionReason } = req.body; // Optional: capture reason for rejection
 
     if (!userId) {
         return res.status(400).json(
@@ -32,13 +31,13 @@ export const admin_rejectUser = async (req: Request | any, res: Response | any) 
             );
         }
 
-        // Update user status to REJECTED
+        // Update user status to APPROVED
         const updatedUser = await prisma.users.update({
             where: {
                 id: Number(userId)
             },
             data: {
-                status: "REJECTED"
+                status: "APPROVED"
             },
             select: {
                 id: true,
@@ -48,27 +47,24 @@ export const admin_rejectUser = async (req: Request | any, res: Response | any) 
                 status: true,
                 profileImage: true,
                 createdAt: true,
+                // Don't include sensitive information like password
             }
         });
 
         return res.status(200).json(
             new ApiResponse(
                 true,
-                { 
-                    user: updatedUser,
-                    rejectionReason: rejectionReason || "Did not meet platform requirements"
-                },
-                "User rejected successfully"
+                { user: updatedUser },
+                "User approved successfully"
             )
         );
     } catch (error) {
-        console.error("Error rejecting user:", error);
+        console.error("Error approving user:", error);
         return res.status(500).json(
-            new ApiError(false, { error }, "Failed to reject user")
+            new ApiError(false, { error }, "Failed to approve user")
         );
     } finally {
         await prisma.$disconnect();
     }
 };
 
-export default admin_rejectUser;

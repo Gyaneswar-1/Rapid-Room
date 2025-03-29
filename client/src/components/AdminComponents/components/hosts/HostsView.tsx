@@ -1,21 +1,35 @@
-"use client"
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Search, Filter, ChevronDown } from "lucide-react"
 import HostsTabs from "./HostsTabs"
 import HostsTable from "./HostsTable"
 import Pagination from "../ui/Pagination"
+import { admin_getAllHosts } from "../../../../service/admin/admin_getAllHosts.service"
 
 export default function HostsView() {
   const [activeSubTab, setActiveSubTab] = useState("pending")
   const [showModal, setShowModal] = useState(false)
   const [, setModalContent] = useState<any>(null)
+  // const [hosts,setHosts] = useState
 
   // Function to open modal with specific content
   const openModal = (type: string, item: any) => {
     setModalContent({ type, item })
     setShowModal(!showModal)
   }
+
+async function getHosts() {
+  try {
+    const response = await admin_getAllHosts(1,10);
+    console.log(response);
+  } catch (error) {
+    
+  }
+}
+
+
+useEffect(()=>{
+  getHosts();
+},[])
 
   // Function to handle approval/rejection
   const handleAction = (type: string, id: string, action: "approve" | "reject") => {

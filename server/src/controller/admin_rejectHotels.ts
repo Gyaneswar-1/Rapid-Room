@@ -35,8 +35,6 @@ export const admin_rejectHotel = async (req: Request | any, res: Response | any)
             },
             data: {
                 status: "REJECTED"
-                // If you had a rejectionReason field in your schema, you could add:
-                // rejectionReason: rejectionReason || "Did not meet platform standards"
             },
             select: {
                 id: true,

@@ -1,15 +1,15 @@
-
-
 import { useState } from "react";
 import { Eye, CheckCircle, XCircle } from 'lucide-react';
 import FloatingCard from "../ui/FloatingCardProps";
 import { HotelInterface } from "./HotelsView"
+import { admin_approveHotel } from "../../../../service/admin/admin_approveHotel.service";
+import { admin_rejectHotel } from "../../../../service/admin/admin_rejectHotel.service";
 
 interface HotelsTableProps {
   hotels: HotelInterface[];
   activeSubTab: string;
   openModal: (type: string, item: any) => void;
-  handleAction: (type: string, id: string, action: "APPROVE" | "REJECT") => void;
+  handleAction: (updatedHotel: HotelInterface) => void;
 }
 
 export default function HotelsTable({
@@ -17,6 +17,8 @@ export default function HotelsTable({
   activeSubTab,
   handleAction,
 }: HotelsTableProps) {
+
+  
   // State for floating card
   const [selectedHotel, setSelectedHotel] = useState<HotelInterface | null>(null);
 
@@ -25,13 +27,51 @@ export default function HotelsTable({
     if (activeSubTab === "all") return true;
     return hotel.status.toLowerCase() === activeSubTab.toLowerCase();
   });
-
+  
   // Handle eye button click
   const handleViewDetails = (hotel: HotelInterface, event: React.MouseEvent) => {
     event.stopPropagation();
     // Toggle the selected hotel
     setSelectedHotel(selectedHotel?.id === hotel.id ? null : hotel);
   };
+  
+  async function approveHotel(hotel: HotelInterface) {
+    try {
+      const response = await admin_approveHotel(hotel.id);
+      if(response.success) {
+        // Create an updated hotel object with status APPROVED
+        const updatedHotel = {
+          ...hotel,
+          status: "APPROVED"
+        };
+        // Call handleAction with the updated hotel
+        handleAction(updatedHotel);
+      } else {
+        console.error("Failed to approve hotel");
+      }
+    } catch (error) {
+      console.error("Error approving hotel:", error);
+    }
+  }
+
+  async function rejectHotel(hotel: HotelInterface) {
+    try {
+      const response = await admin_rejectHotel(hotel.id);
+      if(response.success) {
+        // Create an updated hotel object with status APPROVED
+        const updatedHotel = {
+          ...hotel,
+          status: "REJECTED"
+        };
+        // Call handleAction with the updated hotel
+        handleAction(updatedHotel);
+      } else {
+        console.error("Failed to approve hotel");
+      }
+    } catch (error) {
+      console.error("Error approving hotel:", error);
+    }
+  }
 
   return (
     <div className="overflow-x-auto relative">
@@ -114,13 +154,13 @@ export default function HotelsTable({
                   {hotel.status.toUpperCase() === "PENDING" && (
                     <>
                       <button
-                        onClick={() => handleAction("hotel", hotel.id.toString(), "APPROVE")}
+                        onClick={() => approveHotel(hotel)}
                         className="text-green-600 hover:text-green-900"
                       >
                         <CheckCircle className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => handleAction("hotel", hotel.id.toString(), "REJECT")}
+                        onClick={() => rejectHotel(hotel)}
                         className="text-red-600 hover:text-red-900"
                       >
                         <XCircle className="w-5 h-5" />
@@ -197,7 +237,7 @@ export default function HotelsTable({
               <div className="flex justify-end space-x-2 mt-4 pt-4 border-t border-gray-200">
                 <button
                   onClick={() => {
-                    handleAction("hotel", selectedHotel.id.toString(), "APPROVE");
+                    approveHotel(selectedHotel);
                     setSelectedHotel(null);
                   }}
                   className="px-3 py-1.5 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700"
@@ -206,7 +246,7 @@ export default function HotelsTable({
                 </button>
                 <button
                   onClick={() => {
-                    handleAction("hotel", selectedHotel.id.toString(), "REJECT");
+                    rejectHotel(selectedHotel);
                     setSelectedHotel(null);
                   }}
                   className="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700"
