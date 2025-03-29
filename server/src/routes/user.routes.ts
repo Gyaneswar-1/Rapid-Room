@@ -10,6 +10,7 @@ import { editUser } from "../controller/editUser.controller.js";
 import { userLogout } from "../controller/userLogout.controller.js";
 import { createAdmin } from "../controller/createAdmin.controller.js";
 
+
 const userRouter = Router();
 
 userRouter.route("/signup").post(
@@ -32,5 +33,6 @@ userRouter.route("/getInfo").get(authMiddleware,getUserInformation);
 userRouter.route("/edit").put(authMiddleware,editUser);
 
 userRouter.route("/bookHotel").post(authMiddleware,reserveHotel);
+
 
 export default userRouter;

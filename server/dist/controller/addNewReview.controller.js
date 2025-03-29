@@ -1,32 +1,40 @@
+import prisma from "../db/db.config.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import prisma from "../db/db.config.js";
-export const addNewReview = async (req, res) => {
-    const { hotelId, reviewComment, overallRating, cleanlinessRating, accuracyRating, checkInRating, communicationRating, locationRating, priceRating, parkingRating } = req.body;
+export const createReview = async (req, res) => {
     try {
-        const result = await prisma.review.create({
+        const { hotelId, reviewComment, cleanlinessRating, accuracyRating, checkInRating, communicationRating, locationRating, priceRating, parkingRating, } = req.body;
+        // Validate required fields
+        if (!hotelId || !reviewComment) {
+            return res
+                .status(400)
+                .json(new ApiError(false, {}, "Failed", "Error in review creation due to insufficient data", 400));
+        }
+        const overalRating = Math.floor((cleanlinessRating + accuracyRating + checkInRating + communicationRating + locationRating + priceRating + parkingRating) / 7);
+        // Create new review
+        const newReview = await prisma.review.create({
             data: {
                 userId: req.user.id,
-                hotelId: hotelId,
-                reviewComment: reviewComment,
-                overallRating: overallRating,
-                cleanlinessRating: cleanlinessRating,
-                accuracyRating: accuracyRating,
-                checkInRating: checkInRating,
-                communicationRating: communicationRating,
-                locationRating: locationRating,
-                priceRating: priceRating,
-                parkingRating: parkingRating,
+                hotelId,
+                reviewComment,
+                overallRating: overalRating || 5,
+                cleanlinessRating: cleanlinessRating || 5,
+                accuracyRating: accuracyRating || 5,
+                checkInRating: checkInRating || 5,
+                communicationRating: communicationRating || 5,
+                locationRating: locationRating || 5,
+                priceRating: priceRating || 5,
+                parkingRating: parkingRating || 5,
             },
         });
         return res
             .status(200)
-            .json(new ApiResponse(true, { result }, "success"));
+            .json(new ApiResponse(true, { newReview }, "Success", "Sucessfully create the review"));
     }
     catch (error) {
-        return res.status(500).json(new ApiError(false, { error }, "Error"));
-    }
-    finally {
-        prisma.$disconnect();
+        console.error("Error creating review:", error);
+        return res
+            .status(400)
+            .json(new ApiError(false, { msg: error?.message }, "Failed", "Error occured in the catch part", 400));
     }
 };
