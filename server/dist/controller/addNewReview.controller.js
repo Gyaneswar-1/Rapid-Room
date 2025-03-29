@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 export const createReview = async (req, res) => {
     try {
         const { hotelId, reviewComment, cleanlinessRating, accuracyRating, checkInRating, communicationRating, locationRating, priceRating, parkingRating, } = req.body;
+        console.log(req.body);
         // Validate required fields
         if (!hotelId || !reviewComment) {
             return res

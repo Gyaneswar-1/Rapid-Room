@@ -19,7 +19,7 @@ export const createReview = async (req: Request | any, res: Response | any) => {
             priceRating,
             parkingRating,
         } = req.body;
-
+        console.log(req.body);
         // Validate required fields
         if (!hotelId || !reviewComment) {
             return res
