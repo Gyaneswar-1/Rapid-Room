@@ -32,7 +32,8 @@ import {
   setPerNight,
   setAboutHost,
   setHotelId,
-  setHasData
+  setHasData,
+  setHotelName
 } from "../store/reducers/singleHotel.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
@@ -61,12 +62,13 @@ export default function BookingPage() {
     perNight,
     aboutHost,
     hasData,
+    hotelName
   } = useSelector((state: RootState) => state.singleHotelReducer);
   const dispatch: AppDispatch = useDispatch();
   console.log(hotelType,hotelImages)
 
   useEffect(() => {
-    if(!hasData){
+    if(true){
       getSingleHotelInformation(id)
       .then(async (res) => {
         if (res.success === true) {
@@ -74,6 +76,7 @@ export default function BookingPage() {
           console.log("here is the data from backend",res.data);
           dispatch(setHasData(true));
           dispatch(setHotelType(res.data.type));
+          dispatch(setHotelName(res.data.hotelName));
           dispatch(setHotelImages(res.data.images));
           dispatch(
             setHotelAddress({
@@ -186,10 +189,12 @@ export default function BookingPage() {
     return <BookingPageSkeliton />;
   } else {
     return (
-      <div className="min-h-screen bg-white">
+      <>
+        <Navbar show={true}></Navbar>
+      <div className="min-h-screen bg-white md:py-14">
         <main className="container mx-auto py-6 px-1 sm:px-10 md:px-26">
           <TopSection
-            type={hotelType}
+            type={hotelName}
             overalRating={2.2}
             totalReviews={200}
             city={hotelAddress.city}
@@ -205,14 +210,14 @@ export default function BookingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
             <div className="lg:col-span-2">
               <GuestInfo
-                fullName={aboutHost.fullName}
+                fullName={aboutHost.name}
                 numberOfGuests={6}
                 profileImage={aboutHost.profileImage}
                 roomType={hotelType}
               ></GuestInfo>
 
               <HotelDescription
-                description={"this is a brief hotel description"}
+                description={aboutHotel}
               ></HotelDescription>
 
               {/* Refactored "What guests are saying" section */}
@@ -233,12 +238,12 @@ export default function BookingPage() {
               ></ReviewSection>
 
               <MeetYourHost
-                fullName={"Bibek samal"}
-                hostExperience={10}
-                hostRating={5}
-                hostResponseRate={100}
-                profileImage="image"
-                totalReviews={200}
+                fullName={aboutHost.name}
+                hostExperience={aboutHost.hostExperience}
+                hostRating={aboutHost.hostRating}
+                hostResponseRate={aboutHost.hostResponseRate}
+                profileImage={aboutHost.profileImage}
+                totalReviews={10}
               ></MeetYourHost>
             </div>
 
@@ -254,12 +259,12 @@ export default function BookingPage() {
 
           {/* Map Section */}
           <MapSection
-            city="Jajpur"
-            country="India"
-            latitude={0}
-            longitude={0}
-            state="Odisha"
-            street="nh45"
+            city={hotelAddress.city}
+            country={hotelAddress.country}
+            latitude={hotelAddress.latitude}
+            longitude={hotelAddress.longitude}
+            state={hotelAddress.state}
+            street={hotelAddress.street}
           ></MapSection>
         </main>
 
@@ -292,7 +297,9 @@ export default function BookingPage() {
             totalRating={200}
           />
         )}
+        <SetUserDataToStore/>
       </div>
+      </>
     );
   }
 }
