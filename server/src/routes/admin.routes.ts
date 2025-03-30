@@ -6,6 +6,7 @@ import { admin_rejectHotel } from "../controller/admin_rejectHotels.js";
 import { admin_getAllHosts } from "../controller/admin_getAllHosts.js";
 import { admin_approveHost } from "../controller/admin_approveHost.js";
 import { admin_rejectHost } from "../controller/admin_rejectHost.js";
+import { admin_getAnalysis } from "../controller/admin_getAnalysis.js";
 
 const AdminRouter = Router();
 
@@ -24,7 +25,7 @@ AdminRouter.route("/host/:userId/approve").put(admin_approveHost);
 AdminRouter.route("/host/:userId/reject").put(admin_rejectHost);
 
 // Dashboard statistics routes
-AdminRouter.route("/stats/dashboard").get(/* adminDashboardStats controller */);
+AdminRouter.route("/stats/dashboard").get(admin_getAnalysis);
 
 // Booking management routes
 AdminRouter.route("/bookings").get(/* adminGetAllBookings controller */);

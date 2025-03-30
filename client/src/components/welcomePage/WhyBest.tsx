@@ -1,4 +1,4 @@
-"use client"
+
 
 import { motion } from "framer-motion"
 import { Zap, Shield, DollarSign, ArrowUpRight } from "lucide-react"

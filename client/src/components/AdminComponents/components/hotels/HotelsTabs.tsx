@@ -1,4 +1,4 @@
-"use client"
+
 
 interface HotelsTabsProps {
   activeSubTab: string

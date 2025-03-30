@@ -1,4 +1,4 @@
-"use client"
+
 
 import { TfiClose } from "react-icons/tfi"
 import { Country } from "country-state-city"

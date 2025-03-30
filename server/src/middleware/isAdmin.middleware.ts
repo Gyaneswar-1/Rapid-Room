@@ -6,7 +6,7 @@ export const isAdminMiddleware = async (
     res: Response | any,
     next: NextFunction | any,
 ) => {
-    if (!req.user.isHost === true) {
+    if (!(req.user.isHost === true && req.user.status === "APPROVED")) {
         return res
             .status(401)
             .json(

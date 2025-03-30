@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { Heart, Star, MapPin, X, ChevronRight } from "lucide-react"

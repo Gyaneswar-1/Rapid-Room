@@ -11,8 +11,14 @@ export interface HotelInterface {
   address: {
     city: string;
     country: string;
-    latitude: string; 
-    longitude: string; 
+    latitude: string;
+    longitude: string;
+  };
+  host: {
+    id: number;
+    email: string;
+    fullName: string;
+    profileImage: string;
   };
   images: {
     imageUrl: string;
@@ -20,7 +26,7 @@ export interface HotelInterface {
   perNight: number;
   status: string;
   type: string;
-  submitted?: string; 
+  submitted?: string;
 }
 
 export default function HotelsView() {
@@ -57,8 +63,8 @@ export default function HotelsView() {
   // Function to handle approval/rejection
   const handleAction = (updatedHotel: HotelInterface) => {
     // Update the hotels array with the updated hotel
-    setHotels(prevHotels => 
-      prevHotels.map(hotel => 
+    setHotels((prevHotels) =>
+      prevHotels.map((hotel) =>
         hotel.id === updatedHotel.id ? updatedHotel : hotel
       )
     );
@@ -95,7 +101,9 @@ export default function HotelsView() {
       {/* Hotel Table */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         {loading ? (
-          <div className="flex h-full w-full justify-between items-center"> <Loader/> </div>
+          <div className="flex w-full h-full items-center justify-center">
+            <Loader className="animate-spin h-10 w-10" />
+          </div>
         ) : (
           <HotelsTable
             hotels={hotels}

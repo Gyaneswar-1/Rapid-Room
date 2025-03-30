@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, CheckCircle, XCircle } from 'lucide-react';
+import { Eye, CheckCircle, XCircle, User } from 'lucide-react';
 import FloatingCard from "../ui/FloatingCardProps";
 import { HotelInterface } from "./HotelsView"
 import { admin_approveHotel } from "../../../../service/admin/admin_approveHotel.service";
@@ -175,15 +175,12 @@ export default function HotelsTable({
       </table>
 
       {/* Floating Card for Hotel Details */}
-      <FloatingCard
-        isOpen={!!selectedHotel}
-        onClose={() => setSelectedHotel(null)}
-      >
+      <FloatingCard isOpen={!!selectedHotel} onClose={() => setSelectedHotel(null)}>
         {selectedHotel && (
           <div className="space-y-4">
             <div className="relative w-full h-40 rounded-lg overflow-hidden mb-4">
               <img
-                src={selectedHotel.images?.[0]?.imageUrl || "/placeholder.svg"}
+                src={selectedHotel.images?.[0].imageUrl || "/placeholder.svg"}
                 alt={selectedHotel.hotelName}
                 className="object-cover w-full h-full"
               />
@@ -196,13 +193,7 @@ export default function HotelsTable({
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Location</p>
-                <p className="text-sm text-gray-900">
-                  {selectedHotel.address?.city || "N/A"}, {selectedHotel.address?.country || ""}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500">Type</p>
-                <p className="text-sm text-gray-900">{selectedHotel.type || "N/A"}</p>
+                <p className="text-sm text-gray-900">{selectedHotel.address?.city || "N/A"}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Price per Night</p>
@@ -211,9 +202,7 @@ export default function HotelsTable({
               <div>
                 <p className="text-sm font-medium text-gray-500">Submission Date</p>
                 <p className="text-sm text-gray-900">
-                  {selectedHotel.submitted
-                    ? new Date(selectedHotel.submitted).toLocaleDateString()
-                    : "N/A"}
+                  {selectedHotel.submitted ? new Date(selectedHotel.submitted).toLocaleDateString() : "N/A"}
                 </p>
               </div>
               <div>
@@ -223,41 +212,67 @@ export default function HotelsTable({
                     selectedHotel.status.toUpperCase() === "PENDING"
                       ? "bg-amber-100 text-amber-800"
                       : selectedHotel.status.toUpperCase() === "APPROVED"
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {selectedHotel.status.charAt(0).toUpperCase() +
-                    selectedHotel.status.slice(1).toLowerCase()}
+                  {selectedHotel.status.charAt(0).toUpperCase() + selectedHotel.status.slice(1).toLowerCase()}
                 </span>
               </div>
             </div>
 
-            {selectedHotel.status.toUpperCase() === "PENDING" && (
-              <div className="flex justify-end space-x-2 mt-4 pt-4 border-t border-gray-200">
-                <button
-                  onClick={() => {
-                    approveHotel(selectedHotel);
-                    setSelectedHotel(null);
-                  }}
-                  className="px-3 py-1.5 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700"
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => {
-                    rejectHotel(selectedHotel);
-                    setSelectedHotel(null);
-                  }}
-                  className="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700"
-                >
-                  Reject
-                </button>
+            {/* Host Information Section */}
+            {selectedHotel.id && selectedHotel.host.id && (
+              <div className="border-t border-gray-200 pt-4 mt-4">
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Host Information</h3>
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                    <img
+                      src={selectedHotel.host.profileImage|| "/placeholder.svg"}
+                      alt={selectedHotel.host.profileImage}
+                      className="object-cover h-full w-full"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-gray-900">{selectedHotel.host.fullName}</p>
+                    <p className="text-sm text-gray-600">{selectedHotel.host.email}</p>
+                  </div>
+                  <button
+                    className="p-2 bg-white rounded-full border border-gray-200 text-gray-500 hover:text-teal-600 hover:border-teal-600"
+                    onClick={() => console.log(`View host profile: ${selectedHotel.host.id}`)}
+                  >
+                    <User className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             )}
+
+            {selectedHotel.status.toUpperCase() === "PENDING" && (
+  <div className="flex justify-end space-x-2 mt-4 pt-4 border-t border-gray-200">
+    <button
+      onClick={() => {
+        approveHotel(selectedHotel);
+        setSelectedHotel(null);
+      }}
+      className="px-3 py-1.5 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700"
+    >
+      Approve
+    </button>
+    <button
+      onClick={() => {
+        rejectHotel(selectedHotel);
+        setSelectedHotel(null);
+      }}
+      className="px-3 py-1.5 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700"
+    >
+      Reject
+    </button>
+  </div>
+)}
           </div>
         )}
       </FloatingCard>
     </div>
   );
 }
+

@@ -62,7 +62,8 @@ export const authMiddleware = async (
                 id: true,
                 email: true,
                 fullName: true,
-                isHost: true, //used in admin middleware
+                isHost: true,
+                status:true //used in admin middleware
             },
         });
 

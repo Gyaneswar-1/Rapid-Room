@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { HiOutlineExclamationCircle, HiCalendar, HiOutlineUser, HiOutlineStar } from "react-icons/hi"

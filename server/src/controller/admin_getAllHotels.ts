@@ -3,7 +3,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
-export const admin_getAllHotels = async (req: Request | any, res: Response | any) => {
+export const admin_getAllHotels = async (
+    req: Request | any,
+    res: Response | any,
+) => {
     // Set default values for pagination
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
@@ -23,15 +26,23 @@ export const admin_getAllHotels = async (req: Request | any, res: Response | any
                     select: {
                         country: true,
                         city: true,
-                        longitude:true,
-                        latitude:true
+                        longitude: true,
+                        latitude: true,
                     },
                 },
                 images: {
                     select: {
-                        imageUrl: true
-                    }
-                }
+                        imageUrl: true,
+                    },
+                },
+                host: {
+                    select: {
+                        profileImage: true,
+                        fullName: true,
+                        email: true,
+                        id: true,
+                    },
+                },
             },
         });
 
@@ -55,7 +66,9 @@ export const admin_getAllHotels = async (req: Request | any, res: Response | any
         );
     } catch (error) {
         console.error("Error fetching hotels:", error);
-        return res.status(500).json(new ApiError(false, { error }, "Failed to fetch hotels"));
+        return res
+            .status(500)
+            .json(new ApiError(false, { error }, "Failed to fetch hotels"));
     } finally {
         prisma.$disconnect();
     }

@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import { HiOutlinePlus, HiOutlineLocationMarker, HiOutlineStar } from "react-icons/hi"

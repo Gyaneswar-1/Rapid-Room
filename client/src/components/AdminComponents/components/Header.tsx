@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Menu, Search, Bell } from "lucide-react"
 import { useLocation } from "react-router-dom"

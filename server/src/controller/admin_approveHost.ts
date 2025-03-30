@@ -3,11 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
-/**
- * Approve a user account by ID
- * @route PUT /api/admin/users/:userId/approve
- * @access Admin only
- */
+
 export const admin_approveHost = async (req: Request | any, res: Response | any) => {
     const { userId } = req.params;
 
@@ -47,7 +43,6 @@ export const admin_approveHost = async (req: Request | any, res: Response | any)
                 status: true,
                 profileImage: true,
                 createdAt: true,
-                // Don't include sensitive information like password
             }
         });
 

@@ -1,29 +1,43 @@
 import { Users, Building2, Home, Bell } from "lucide-react"
 
-export default function StatsCards() {
-  // Mock data for dashboard
-  const stats = [
+interface StatsCardsProps {
+  totalUsers?: number;
+  activeHosts?: number;
+  listedHotels?: number;
+  pendingApprovals?: number;
+  loading?: boolean;
+}
+
+export default function StatsCards({
+  totalUsers = 0,
+  activeHosts = 0,
+  listedHotels = 0,
+  pendingApprovals = 0,
+  loading = false
+}: StatsCardsProps) {
+
+  const stats = [ 
     {
       title: "Total Users",
-      value: "8,249",
-      change: "+12%",
+      value: loading ? "Loading..." : totalUsers.toLocaleString(),
+      change: "+12%", // Note: These could be calculated if we had historical data
       icon: <Users className="w-6 h-6" />,
     },
     {
       title: "Active Hosts",
-      value: "1,423",
+      value: loading ? "Loading..." : activeHosts.toLocaleString(),
       change: "+5%",
       icon: <Building2 className="w-6 h-6" />,
     },
     {
       title: "Listed Hotels",
-      value: "3,872",
+      value: loading ? "Loading..." : listedHotels.toLocaleString(),
       change: "+8%",
       icon: <Home className="w-6 h-6" />,
     },
     {
       title: "Pending Approvals",
-      value: "42",
+      value: loading ? "Loading..." : pendingApprovals.toLocaleString(),
       change: "-3%",
       icon: <Bell className="w-6 h-6" />,
     },
@@ -36,7 +50,13 @@ export default function StatsCards() {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {loading ? (
+                  <div className="h-8 w-24 bg-gray-200 animate-pulse rounded"></div>
+                ) : (
+                  stat.value
+                )}
+              </p>
             </div>
             <div
               className={`p-3 rounded-lg ${

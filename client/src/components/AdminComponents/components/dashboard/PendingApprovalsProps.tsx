@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Building2, Users, Eye, CheckCircle, XCircle, ArrowUpRight } from "lucide-react"
 
