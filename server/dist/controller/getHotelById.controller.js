@@ -2,6 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 export const getHotelById = async (req, res) => {
+    console.log("controll reached");
     try {
         const hotelResponse = await prisma.hotels.findUnique({
             where: {
@@ -27,6 +28,8 @@ export const getHotelById = async (req, res) => {
                 createdAt: true,
                 isAllReserved: true,
                 numberOfEmptyRooms: true,
+                overalRating: true,
+                totalReviews: true,
                 host: {
                     select: {
                         id: true,

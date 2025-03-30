@@ -7,6 +7,8 @@ const initialState: any = {
   hotelType: "",
   aboutHotel: "",
   roomType: "",
+  totalReviews: 0,
+  overalRating: 0,
   hotelImages: ["", "", "", "", ""],
   hotelAddress: {
     city: "",
@@ -33,6 +35,12 @@ export const singleHotelSlice = createSlice({
   reducers: {
     setHasData: (state, action) => {
       state.hasData = action.payload;
+    },
+    setTotalReviews: (state,action) => {
+      state.totalReviews = action.payload;
+    },
+    setOveralRating: (state, action) => {
+      state.overallRating = action.payload;
     },
     setHotelName:(state,action)=>{
       state.hotelName = action.payload;
@@ -75,5 +83,7 @@ export const {
   setAboutHost,
   setHotelId,
   setHasData,
-  setHotelName
+  setHotelName,
+  setOveralRating,
+  setTotalReviews
 } = singleHotelSlice.actions;

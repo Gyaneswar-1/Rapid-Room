@@ -33,7 +33,9 @@ import {
   setAboutHost,
   setHotelId,
   setHasData,
-  setHotelName
+  setHotelName,
+  setOveralRating,
+  setTotalReviews
 } from "../store/reducers/singleHotel.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";

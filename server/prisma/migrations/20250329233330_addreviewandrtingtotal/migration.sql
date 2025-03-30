@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Hotels" ADD COLUMN     "overalRating" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "totalReviews" INTEGER NOT NULL DEFAULT 0;

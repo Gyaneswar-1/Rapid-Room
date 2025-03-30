@@ -4,6 +4,7 @@ import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
 export const getHotelById = async (req: Request, res: Response | any) => {
+    console.log("controll reached")
     try {
         const hotelResponse = await prisma.hotels.findUnique({
             where: {
@@ -29,6 +30,8 @@ export const getHotelById = async (req: Request, res: Response | any) => {
                 createdAt: true,
                 isAllReserved: true,
                 numberOfEmptyRooms: true,
+                overalRating:true,
+                totalReviews:true,
                 host: {
                     select: {
                         id: true,

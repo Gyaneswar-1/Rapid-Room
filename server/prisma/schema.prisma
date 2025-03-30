@@ -61,6 +61,8 @@ model Hotels {
   hasWashingMachine    Boolean? @default(false)
   hasGarden            Boolean? @default(false)
   hasGrummingEqupments Boolean? @default(false)
+  overalRating Int @default(0)
+  totalReviews Int @default(0)
   //add other things 
 
   isAllReserved Boolean        @default(false)
