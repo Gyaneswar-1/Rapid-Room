@@ -16,10 +16,11 @@ const TopSection = ({type,overalRating,city,country,state,totalReviews}:TopSctio
               <div>
                 <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{type}</h1>
                 <div className="flex sm:items-center gap-2 mt-1 text-sm flex-col sm:flex-row">
-                  <div className="flex items-center">
+
+                  {overalRating==0?(<div className="flex items-center">
                     <Star className="h-4 w-4 mr-1 fill-current" />
                     <span>{overalRating}</span>
-                  </div>
+                  </div>):null}
                   <span className="sm:flex hidden">·</span>
                   <span className="underline hidden sm:flex">{totalReviews} reviews</span>
                   <span className="sm:flex hidden">·</span>

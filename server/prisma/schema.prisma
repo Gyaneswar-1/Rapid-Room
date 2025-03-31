@@ -63,6 +63,8 @@ model Hotels {
   hasGrummingEqupments Boolean? @default(false)
   overalRating Int @default(0)
   totalReviews Int @default(0)
+  
+  guestAllowed Int @default(1)
   //add other things 
 
   isAllReserved Boolean        @default(false)
@@ -159,6 +161,8 @@ enum paymentStatus {
   pending
   success
   failed
+  refund
+  refunded
 }
 
 model WishList {
@@ -201,6 +205,8 @@ model Payments {
   hotelId       Int
   userId        Int
   amount        Float
+  hostAmount     Float @default(0)
+  platformFee    Float @default(0)
   paymentMethod String   @default("UPI")
   status        paymentStatus   @default(pending) // pending, success, failed
   paymentDate   DateTime @default(now())

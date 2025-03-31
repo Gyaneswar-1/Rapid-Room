@@ -2,14 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: any = {
   hasData: false,
-  hotelName:"",
+  hotelName: "",
   hotelId: 0,
   hotelType: "",
   aboutHotel: "",
   roomType: "",
   totalReviews: 0,
   overalRating: 0,
+  guestAllowed: 0,
   hotelImages: ["", "", "", "", ""],
+  hotelRating: {
+    accuracy: 0,
+    checkIn: 0,
+    cleanliness: 0,
+    communication: 0,
+    location: 0,
+    value: 0,
+  },
   hotelAddress: {
     city: "",
     street: "",
@@ -36,13 +45,13 @@ export const singleHotelSlice = createSlice({
     setHasData: (state, action) => {
       state.hasData = action.payload;
     },
-    setTotalReviews: (state,action) => {
+    setTotalReviews: (state, action) => {
       state.totalReviews = action.payload;
     },
     setOveralRating: (state, action) => {
       state.overallRating = action.payload;
     },
-    setHotelName:(state,action)=>{
+    setHotelName: (state, action) => {
       state.hotelName = action.payload;
     },
     setHotelId: (state, action) => {
@@ -69,6 +78,12 @@ export const singleHotelSlice = createSlice({
     setAboutHost: (state, action) => {
       state.aboutHost = action.payload;
     },
+    setGuestAllowed: (state, action) => {
+      state.guestAllowed = action.payload;
+    },
+    setHotelRating:(state,action)=>{
+      state.hotelRating = action.payload;
+    }
   },
 });
 
@@ -85,5 +100,7 @@ export const {
   setHasData,
   setHotelName,
   setOveralRating,
-  setTotalReviews
+  setTotalReviews,
+  setGuestAllowed,
+  setHotelRating
 } = singleHotelSlice.actions;

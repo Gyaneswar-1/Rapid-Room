@@ -30,6 +30,7 @@ export const getHotelById = async (req, res) => {
                 numberOfEmptyRooms: true,
                 overalRating: true,
                 totalReviews: true,
+                guestAllowed: true,
                 host: {
                     select: {
                         id: true,

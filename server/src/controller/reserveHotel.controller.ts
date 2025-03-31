@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
-import { sendEmail } from "../helper/SendEmail.helper.js";
+
 
 type reservationType = {
     hotelId: number;
@@ -180,11 +180,17 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
             }
 
             //create the payment entry
+
+            //devide the amoutn amont the platform and the host
+            const hostAmount = Math.floor((totalAmount/100)*90);
+            const platformAmount = Math.floor((totalAmount/100)*90);
             const paymentEntry = await prisma.payments.create({
                 data: {
                     hotelId: hotelId,
                     userId: req.user.id,
                     amount: totalAmount,
+                    hostAmount: hostAmount,
+                    platformFee: platformAmount,
                     razorpay_payment_id: "null",
                     razorpay_order_id: "null",
                 },

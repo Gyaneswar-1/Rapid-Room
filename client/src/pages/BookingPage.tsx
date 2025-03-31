@@ -21,7 +21,6 @@ import getSingleHotelInformation from "../service/getSingleHotelInformation/getS
 
 //state management imports
 
-
 import { AppDispatch, RootState } from "../store/store";
 import {
   setHotelType,
@@ -35,7 +34,9 @@ import {
   setHasData,
   setHotelName,
   setOveralRating,
-  setTotalReviews
+  setTotalReviews,
+  setGuestAllowed,
+  setHotelRating,
 } from "../store/reducers/singleHotel.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
@@ -47,7 +48,6 @@ export default function BookingPage() {
   const queryParams = new URLSearchParams(location.search);
   const id = Number(queryParams.get("hotelId"));
   const [showSkeliton, setShowSkeliton] = useState(false);
-  
 
   const { showAllReview } = useSelector(
     (state: RootState) => state.toogleAllReviewsReducer
@@ -64,69 +64,85 @@ export default function BookingPage() {
     perNight,
     aboutHost,
     hasData,
-    hotelName
+    hotelName,
+    totalReviews,
+    overallRating,
+    guestAllowed,
+    hotelRating,
   } = useSelector((state: RootState) => state.singleHotelReducer);
   const dispatch: AppDispatch = useDispatch();
-  console.log(hotelType,hotelImages)
+  console.log(hotelType, hotelImages);
 
   useEffect(() => {
-    if(true){
+    if (true) {
       getSingleHotelInformation(id)
-      .then(async (res) => {
-        if (res.success === true) {
-          //here set the data to the store user recoil or redux for better state management
-          console.log("here is the data from backend",res.data);
-          dispatch(setHasData(true));
-          dispatch(setHotelType(res.data.type));
-          dispatch(setHotelName(res.data.hotelName));
-          dispatch(setHotelImages(res.data.images));
-          dispatch(
-            setHotelAddress({
-              city: res.data.address.city,
-              street: res.data.address.street,
-              state: res.data.address.state,
-              country: res.data.address.country,
-              longitude: res.data.address.longitude,
-              latitude: res.data.address.latitude,
-            })
-          );
-          dispatch(setAboutHotel(res.data.description));
-          dispatch(setRoomType(res.data.roomType));
-          dispatch(setPerNight(res.data.perNight));
-          dispatch(
-            setAboutHost({
-              name: res.data.host.fullName,
-              email: res.data.host.email,
-              hostExperience: res.data.host.hostExperience,
-              hostRating: res.data.host.hostRating,
-              hostResponseRate: res.data.host.hostResponseRate,
-              profileImage: res.data.host.profileImage,
-            })
-          );
-          // await delay();
-          setShowSkeliton(false);
-        } else {
+        .then(async (res) => {
+          if (res.success === true) {
+            //here set the data to the store user recoil or redux for better state management
+            console.log("here is the data from backend", res.data);
+            dispatch(setHasData(true));
+            dispatch(setHotelType(res.data.type));
+            dispatch(setHotelName(res.data.hotelName));
+            dispatch(setHotelImages(res.data.images));
+            dispatch(setGuestAllowed(res.data.guestAllowed));
+            dispatch(
+              setHotelAddress({
+                city: res.data.address.city,
+                street: res.data.address.street,
+                state: res.data.address.state,
+                country: res.data.address.country,
+                longitude: res.data.address.longitude,
+                latitude: res.data.address.latitude,
+              })
+            );
+            dispatch(
+              setHotelRating({
+                accuracy: 2,
+                checkIn: 3,
+                cleanliness: 5,
+                communication: 4,
+                location: 2,
+                value: 4,
+              })
+            );
+            dispatch(setAboutHotel(res.data.description));
+            dispatch(setRoomType(res.data.roomType));
+            dispatch(setPerNight(res.data.perNight));
+            dispatch(setTotalReviews(res.data.overalRating));
+            dispatch(setOveralRating(res.data.overallRating));
+            dispatch(
+              setAboutHost({
+                name: res.data.host.fullName,
+                email: res.data.host.email,
+                hostExperience: res.data.host.hostExperience,
+                hostRating: res.data.host.hostRating,
+                hostResponseRate: res.data.host.hostResponseRate,
+                profileImage: res.data.host.profileImage,
+              })
+            );
+            // await delay();
+            setShowSkeliton(false);
+          } else {
+            // navigate("/home");
+          }
+        })
+        .catch((err) => {
+          console.log("error in the booking page catch", err);
           // navigate("/home");
-        }
-      })
-      .catch((err) => {
-        console.log("error in the booking page catch", err);
-        // navigate("/home");
-      });
+        });
     }
-      
-    }, []);
-  
-    //for temporary use only
-    const images =  [
-      hotelImages[0].imageUrl,
-      hotelImages[1].imageUrl,
-      hotelImages[2].imageUrl,
-      hotelImages[3].imageUrl,
-      hotelImages[4].imageUrl,
-    ]
-  
-    console.log("Here is th hotel imags",images)
+  }, []);
+
+  //for temporary use only
+  const images = [
+    hotelImages[0].imageUrl,
+    hotelImages[1].imageUrl,
+    hotelImages[2].imageUrl,
+    hotelImages[3].imageUrl,
+    hotelImages[4].imageUrl,
+  ];
+
+  console.log("Here is th hotel imags", images);
   // Example hotel data structure
 
   const hotelReviewsx = [
@@ -186,121 +202,116 @@ export default function BookingPage() {
     },
   ];
 
-
   if (showSkeliton) {
     return <BookingPageSkeliton />;
   } else {
     return (
       <>
         <Navbar show={true}></Navbar>
-      <div className="min-h-screen bg-white md:py-14">
-        <main className="container mx-auto py-6 px-1 sm:px-10 md:px-26">
-          <TopSection
-            type={hotelName}
-            overalRating={2.2}
-            totalReviews={200}
-            city={hotelAddress.city}
-            state={hotelAddress.state}
-            country={hotelAddress.country}
-          ></TopSection>
+        <div className="min-h-screen bg-white md:py-14">
+          <main className="container mx-auto py-6 px-1 sm:px-10 md:px-26">
+            <TopSection
+              type={hotelName}
+              overalRating={overallRating}
+              totalReviews={totalReviews}
+              city={hotelAddress.city}
+              state={hotelAddress.state}
+              country={hotelAddress.country}
+            ></TopSection>
 
-          {/* Image Carousel */}
-          <ImageCarousel
-            images={images}
-          />
+            {/* Image Carousel */}
+            <ImageCarousel images={images} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-            <div className="lg:col-span-2">
-              <GuestInfo
-                fullName={aboutHost.name}
-                numberOfGuests={6}
-                profileImage={aboutHost.profileImage}
-                roomType={hotelType}
-              ></GuestInfo>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+              <div className="lg:col-span-2">
+                <GuestInfo
+                  fullName={aboutHost.name}
+                  numberOfGuests={guestAllowed}
+                  profileImage={aboutHost.profileImage}
+                  roomType={hotelName}
+                ></GuestInfo>
 
-              <HotelDescription
-                description={aboutHotel}
-              ></HotelDescription>
+                <HotelDescription description={aboutHotel}></HotelDescription>
 
-              {/* Refactored "What guests are saying" section */}
-              <RatingSection
-                accuracy={1}
-                checkIn={2}
-                cleanliness={3}
-                communication={4}
-                location={3}
-                value={4}
-              ></RatingSection>
+                {/* Refactored "What guests are saying" section */}
+                <RatingSection
+                  accuracy={hotelRating.accuracy}
+                  checkIn={hotelRating.checkIn}
+                  cleanliness={hotelRating.cleanliness}
+                  communication={hotelRating.communication}
+                  location={hotelRating.location}
+                  value={hotelRating.value}
+                ></RatingSection>
 
-              {/* Reviews Section */}
-              <ReviewSection
-                overalRating={10}
+                {/* Reviews Section */}
+                <ReviewSection
+                  overalRating={10}
+                  totalReviews={200}
+                  reviews={hotelReviewsx}
+                ></ReviewSection>
+
+                <MeetYourHost
+                  fullName={aboutHost.name}
+                  hostExperience={aboutHost.hostExperience}
+                  hostRating={aboutHost.hostRating}
+                  hostResponseRate={aboutHost.hostResponseRate}
+                  profileImage={aboutHost.profileImage}
+                  totalReviews={10}
+                ></MeetYourHost>
+              </div>
+
+              {/* Modified Price Card - Removed check-in/out and guest selection */}
+              <PriceCard
+                cleaningFee={100}
+                serviceFee={100}
+                overalRating={5}
+                pricePerNight={perNight}
                 totalReviews={200}
-                reviews={hotelReviewsx}
-              ></ReviewSection>
-
-              <MeetYourHost
-                fullName={aboutHost.name}
-                hostExperience={aboutHost.hostExperience}
-                hostRating={aboutHost.hostRating}
-                hostResponseRate={aboutHost.hostResponseRate}
-                profileImage={aboutHost.profileImage}
-                totalReviews={10}
-              ></MeetYourHost>
+              ></PriceCard>
             </div>
 
-            {/* Modified Price Card - Removed check-in/out and guest selection */}
-            <PriceCard
-              cleaningFee={100}
-              serviceFee={100}
-              overalRating={5}
-              pricePerNight={perNight}
+            {/* Map Section */}
+            <MapSection
+              city={hotelAddress.city}
+              country={hotelAddress.country}
+              latitude={hotelAddress.latitude}
+              longitude={hotelAddress.longitude}
+              state={hotelAddress.state}
+              street={hotelAddress.street}
+            ></MapSection>
+          </main>
+
+          {/* Reviews Modal */}
+          {showAllReview && (
+            <AllReviews
+              accuracy={2}
+              checkIn={3}
+              cleanliness={4}
+              location={3}
+              communication={5}
+              overall={4}
+              reviews={hotelReviewsx}
               totalReviews={200}
-            ></PriceCard>
-          </div>
+              value={4}
+            ></AllReviews>
+          )}
 
-          {/* Map Section */}
-          <MapSection
-            city={hotelAddress.city}
-            country={hotelAddress.country}
-            latitude={hotelAddress.latitude}
-            longitude={hotelAddress.longitude}
-            state={hotelAddress.state}
-            street={hotelAddress.street}
-          ></MapSection>
-        </main>
-
-        {/* Reviews Modal */}
-        {showAllReview && (
-          <AllReviews
-            accuracy={2}
-            checkIn={3}
-            cleanliness={4}
-            location={3}
-            communication={5}
-            overall={4}
-            reviews={hotelReviewsx}
-            totalReviews={200}
-            value={4}
-          ></AllReviews>
-        )}
-
-        {/* Reservation Modal */}
-        {showReservatonModel && (
-          <ReservationModal
-            city="Jajpu"
-            cleaningFee={100}
-            country={"india"}
-            hotelName="mayfair"
-            overallRating={4}
-            perNightCost={perNight}
-            serviceFee={100}
-            state={"Odisha"}
-            totalRating={200}
-          />
-        )}
-        <SetUserDataToStore/>
-      </div>
+          {/* Reservation Modal */}
+          {showReservatonModel && (
+            <ReservationModal
+              city="Jajpu"
+              cleaningFee={100}
+              country={"india"}
+              hotelName="mayfair"
+              overallRating={4}
+              perNightCost={perNight}
+              serviceFee={100}
+              state={"Odisha"}
+              totalRating={200}
+            />
+          )}
+          <SetUserDataToStore />
+        </div>
       </>
     );
   }

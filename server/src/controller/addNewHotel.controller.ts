@@ -32,6 +32,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
         country,
         longitude,
         latitude,
+        guestAllowed,
     } = req.body;
     try {
         // task to do-> Debug the image upload functionality
@@ -63,6 +64,7 @@ export const addNewHotel = async (req: Request | any, res: Response | any) => {
                     hasWashingMachine: Boolean(hasWashingMachine),
                     hasGarden: Boolean(hasGarden),
                     hasGrummingEqupments: Boolean(hasGrummingEqupments),
+                    guestAllowed: guestAllowed,
                     type: type,
                     address: {
                         create: {
