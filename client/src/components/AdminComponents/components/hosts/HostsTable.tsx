@@ -83,6 +83,8 @@ export default function HostsTable({
     setSelectedHost(selectedHost?.id === host.id ? null : host);
   };
 
+  
+
   return (
     <div className="overflow-x-auto relative">
       <table className="min-w-full divide-y divide-gray-200">
@@ -117,7 +119,7 @@ export default function HostsTable({
                     <img
                       src={host.profileImage || "/placeholder.svg"}
                       alt={host.fullName}
-                      className="object-cover"
+                      className="object-cover h-full w-full"
                     />
                   </div>
                   <div>
@@ -156,7 +158,7 @@ export default function HostsTable({
                 <div className="flex justify-end space-x-2">
                   <button
                     onClick={(e) => handleViewDetails(host, e)}
-                    className="text-gray-600 hover:text-gray-900"
+                    className="text-gray-600 hover:text-gray-900 cursor-pointer"
                     disabled={loading[host.id]}
                   >
                     <Eye className="w-5 h-5" />
@@ -165,14 +167,14 @@ export default function HostsTable({
                     <>
                       <button
                         onClick={() => approveHost(host.id)}
-                        className="text-green-600 hover:text-green-900 disabled:opacity-50"
+                        className="text-green-600 hover:text-green-900 cursor-pointer disabled:opacity-50"
                         disabled={loading[host.id]}
                       >
                         <CheckCircle className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => rejectHost(host.id)}
-                        className="text-red-600 hover:text-red-900 disabled:opacity-50"
+                        className="text-red-600 hover:text-red-900  disabled:opacity-50 cursor-pointer"
                         disabled={loading[host.id]}
                       >
                         <XCircle className="w-5 h-5" />
@@ -199,7 +201,7 @@ export default function HostsTable({
                 <img
                   src={selectedHost.profileImage || "/placeholder.svg"}
                   alt={selectedHost.fullName}
-                  className="object-cover"
+                  className="object-cover h-full w-full"
                 />
               </div>
               <div>
@@ -223,7 +225,7 @@ export default function HostsTable({
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">ID Type</p>
-                <p className="text-sm text-gray-900">{selectedHost.GovID}</p>
+                <p className="text-sm text-gray-900">Adhar card</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">ID Number</p>
@@ -305,7 +307,7 @@ export default function HostsTable({
                     approveHost(selectedHost.id);
                     setSelectedHost(null);
                   }}
-                  className="px-3 py-1.5 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700 disabled:opacity-50"
+                  className="px-3 py-1.5 bg-green-600 cursor-pointer text-white text-sm font-medium rounded hover:bg-green-700 disabled:opacity-50"
                   disabled={loading[selectedHost.id]}
                 >
                   Approve

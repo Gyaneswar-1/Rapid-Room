@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import passport from "./config/passport.js";
 import Razorpay from "razorpay";
 import paymentRoute from "./routes/payment.routes.js";
+import uploadRoutes from "./routes/upload.routes.js";
 
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
@@ -72,5 +73,8 @@ export default app;
 //razorpay routes
 app.use("/api/v1/razorpay", razorpayRoute);
 app.use("/api/v1/user",paymentRoute);
+
+// Register routes
+app.use("/api/v1/image", uploadRoutes);
 
 //payment router

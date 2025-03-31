@@ -72,9 +72,9 @@ export default function HotelsView() {
 
   return (
     <div className="space-y-6">
-      {/* Header with filters */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
         <div>
+          <h1 className="text-xl font-bold text-gray-900">Hotel Management</h1>
           <p className="text-sm text-gray-500 mt-1">
             Manage and approve hotel listings
           </p>

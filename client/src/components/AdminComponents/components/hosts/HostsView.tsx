@@ -102,14 +102,6 @@ export default function HostsView() {
             />
             <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
           </div>
-
-          <div className="relative">
-            <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 hover:bg-gray-50">
-              <Filter className="w-5 h-5" />
-              <span>Filters</span>
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       </div>
 

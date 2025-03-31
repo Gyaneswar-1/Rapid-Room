@@ -16,13 +16,13 @@ hotelCRUD
         upload.array("images", 5),
         authMiddleware,
         isAdminMiddleware,
-        addNewHotel,    
+        addNewHotel,
     );
 hotelCRUD
     .route("/delete")
     .delete(authMiddleware, isAdminMiddleware, deleteHotel);
-hotelCRUD.route("/get").get( getAllHotels);
+hotelCRUD.route("/get").get(getAllHotels);
 hotelCRUD.route("/get-hotel-info/:hotelId").get(authMiddleware, getHotelById);
-hotelCRUD.route("/publish-hotel/:hotelId").get(authMiddleware,publishHotel);
+hotelCRUD.route("/publish-hotel/:hotelId").get(authMiddleware, publishHotel);
 
 export default hotelCRUD;
