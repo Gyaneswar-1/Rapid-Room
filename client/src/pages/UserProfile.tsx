@@ -179,7 +179,7 @@ export default function UserProfile() {
                 <div className="bg-white rounded-xl shadow-sm p-6 mb-4">
                   <div className="flex flex-col items-center">
                     <div className="relative mb-4">
-                      <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center text-primary overflow-hidden">
+                      <div className="w-24 h-24 rounded-full bg-teal-100 flex items-center justify-center text-primary overflow-hidden">
                         {profileImage ? (
                           <img
                             src={profileImage}
@@ -216,7 +216,7 @@ export default function UserProfile() {
                       })}
                     </p>
                     {isHost && (
-                      <span className="inline-flex items-center gap-1 bg-white text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1 bg-teal-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">
                         <FaHotel className="text-primary" size={10} />
                         Host
                       </span>
@@ -954,7 +954,7 @@ export default function UserProfile() {
                             Host Information
                           </h4>
                           <div className="flex items-center">
-                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary mr-3">
+                            <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-primary mr-3">
                               <span className="font-bold">
                                 {selectedBooking.hostName.charAt(0)}
                               </span>
@@ -1277,7 +1277,7 @@ export default function UserProfile() {
                               <div
                                 className={`w-10 h-10 rounded-full ${
                                   message.isReceived
-                                    ? "bg-white text-primary"
+                                    ? "bg-teal-100 text-primary"
                                     : "bg-blue-100 text-blue-600"
                                 } flex items-center justify-center mr-3`}
                               >

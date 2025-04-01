@@ -23,7 +23,7 @@ export default function PaymentStats() {
       change: "+15%",
       period: "vs last month",
       icon: <DollarSign className="w-6 h-6" />,
-      color: "bg-white text-primary",
+      color: "bg-teal-100 text-primary",
     },
     {
       title: "Platform Fees",

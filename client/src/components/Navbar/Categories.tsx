@@ -4,104 +4,110 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useLocation, useSearchParams } from "react-router-dom";
 import {
-  GiBarn,
-  GiBoatFishing,
-  GiCactus,
-  GiCastle,
-  GiCaveEntrance,
-  GiForestCamp,
-  GiIsland,
-  GiWindmill,
-} from "react-icons/gi";
-import {
-  MdOutlineVilla,
   MdKeyboardArrowLeft,
   MdKeyboardArrowRight,
 } from "react-icons/md";
-import { TbBeach, TbMountain, TbPool } from "react-icons/tb";
-import { BsSnow } from "react-icons/bs";
-import { IoDiamond } from "react-icons/io5";
-import { FaSkiing } from "react-icons/fa";
 import CategoryBox from "./CategoryBox";
+import {
+  Building2,
+  Castle,
+  Diamond,
+  Eye,
+  Fish,
+  Hotel,
+  House,
+  Mountain,
+  Palmtree,
+  Ship,
+  Snowflake,
+  Sun,
+  Tent,
+  Tractor,
+  Trees,
+} from "lucide-react";
 
 export const categories = [
   {
     label: "Beach",
-    icon: TbBeach,
+    icon: Sun,
     description: "This property is close to the beach!",
   },
   {
-    label: "Windmills",
-    icon: GiWindmill,
-    description: "This property has windmills!",
+    label: "City",
+    icon: Building2,
+    description: "This property is in a vibrant city!",
   },
   {
-    label: "Modern",
-    icon: MdOutlineVilla,
-    description: "This property has a modern design!",
+    label: "Mountain",
+    icon: Mountain,
+    description: "This property is in the mountains!",
   },
   {
-    label: "Countryside",
-    icon: TbMountain,
-    description: "This property is in the countryside!",
+    label: "Resort",
+    icon: Hotel,
+    description: "This property is a resort!",
   },
   {
-    label: "Pools",
-    icon: TbPool,
-    description: "This property has a pool!",
+    label: "Luxury",
+    icon: Diamond,
+    description: "This property is luxurious!",
   },
   {
-    label: "Islands",
-    icon: GiIsland,
-    description: "This property is on an island!",
+    label: "Amazing Views",
+    icon: Eye,
+    description: "This property has amazing views!",
   },
   {
-    label: "Lake",
-    icon: GiBoatFishing,
-    description: "This property is close to a lake!",
+    label: "Farms",
+    icon: Tractor ,
+    description: "This property is on a farm!",
   },
   {
-    label: "Skiing",
-    icon: FaSkiing,
-    description: "This property has skiing activities!",
+    label: "Arctic",
+    icon: Snowflake ,
+    description: "This property is on a Arctic!",
+  },
+  {
+    label: "Historical Homes",
+    icon: House,
+    description: "This property is a historical home!",
+  },
+  {
+    label: "Beachfront",
+    icon: Sun,
+    description: "This property is right on the beachfront!",
+  },
+  {
+    label: "Lakefront",
+    icon: Ship,
+    description: "This property is on a lakefront!",
   },
   {
     label: "Castles",
-    icon: GiCastle,
+    icon: Castle,
     description: "This property is in a castle!",
   },
   {
     label: "Camping",
-    icon: GiForestCamp,
+    icon: Tent,
     description: "This property has camping activities!",
   },
   {
-    label: "Arctic",
-    icon: BsSnow,
-    description: "This property is in an arctic environment!",
+    label: "Tropical",
+    icon: Fish,
+    description: "This property is in a tropical location!",
   },
   {
-    label: "Cave",
-    icon: GiCaveEntrance,
-    description: "This property is in a cave!",
+    label: "Islands",
+    icon: Palmtree,
+    description: "This property is on an island!",
   },
   {
-    label: "Desert",
-    icon: GiCactus,
-    description: "This property is in a desert!",
-  },
-  {
-    label: "Barns",
-    icon: GiBarn,
-    description: "This property is in a barn!",
-  },
-  {
-    label: "Luxury",
-    icon: IoDiamond,
-    description: "This property is luxurious!",
+    label: "Countryside",
+    icon: Trees,
+    description: "This property is in the countryside!",
   },
 ];
-
 function Categories() {
   const location = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -170,7 +176,7 @@ useEffect(() => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex gap-6 overflow-x-auto scrollbar-hide py-1 px-1 justify-center"
+          className="flex gap-5 overflow-x-auto scrollbar-hide py-1 px-1 justify-center"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categories.map((item) => (

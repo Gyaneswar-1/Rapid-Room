@@ -18,7 +18,7 @@ model Users {
   id               Int            @id @default(autoincrement())
   fullName         String
   email            String         @unique
-  isEmailVerified Boolean @default(false)
+  isEmailVerified  Boolean        @default(false)
   password         String
   profileImage     String?
   address          Address?       @relation(fields: [addressId], references: [id])
@@ -28,8 +28,8 @@ model Users {
   hostExperience   Int?
   hostRating       Int?           @default(5)
   hostResponseRate Int?           @default(100)
-  phoneNumber      BigInt?           @default(0)
-  GovID            BigInt?           @default(0)
+  phoneNumber      BigInt?        @default(0)
+  GovID            BigInt?        @default(0)
   ReservedRooms    Reservations[]
   wishList         WishList[]
   reviews          Review[]
@@ -39,9 +39,9 @@ model Users {
 }
 
 model Hotels {
-  id                   Int     @id @default(autoincrement())
+  id                   Int      @id @default(autoincrement())
   hostId               Int
-  host                 Users   @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  host                 Users    @relation(fields: [hostId], references: [id], onDelete: Cascade)
   hotelName            String?
   description          String?
   address              Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
@@ -51,21 +51,32 @@ model Hotels {
   rooms                Rooms[]
   numberOfRooms        Int?
   numberOfEmptyRooms   Int?
-  hasParking           Boolean? @default(false)
-  hasPools             Boolean? @default(false)
-  hasWifi              Boolean? @default(false)
-  hasTv                Boolean? @default(false)
-  hasBalcony           Boolean? @default(false)
-  hasKitchen           Boolean? @default(false)
-  hasWorkSpace         Boolean? @default(false)
-  hasWashingMachine    Boolean? @default(false)
-  hasGarden            Boolean? @default(false)
-  hasGrummingEqupments Boolean? @default(false)
-  overalRating Int @default(0)
-  totalReviews Int @default(0)
-  
+  overalRating         Int      @default(0)
+  totalReviews         Int      @default(0)
+
   guestAllowed Int @default(1)
   //add other things 
+  hasWifi              Boolean   @default(false)
+  hasTv                Boolean   @default(false)
+  hasKitchen           Boolean   @default(false)
+  hasBalcony           Boolean   @default(false)
+  hasWorkSpace         Boolean   @default(false)
+  hasWashingMachine    Boolean   @default(false)
+  hasGarden            Boolean   @default(false)
+  hasParking           Boolean   @default(false)
+  hasAirConditioning   Boolean   @default(false)
+  hasDiningArea        Boolean   @default(false)
+  hasPool              Boolean   @default(false)
+  hasHotTub            Boolean   @default(false)
+  hasFirepit           Boolean   @default(false)
+  hasBBQGrill          Boolean   @default(false)
+  hasPoolTable         Boolean   @default(false)
+  hasExerciseEquipment Boolean   @default(false)
+  hasOutdoorShower     Boolean   @default(false)
+  hasSmokeAlarm        Boolean   @default(false)
+  hasFirstAidKit       Boolean   @default(false)
+  hasFireExtinguisher  Boolean   @default(false)
+  hasAccessibility     Boolean   @default(false)
 
   isAllReserved Boolean        @default(false)
   reviews       Review[]
@@ -73,10 +84,11 @@ model Hotels {
   createdAt     DateTime       @default(now())
   Reserved      Reservations[]
   WishList      WishList[]
-  type          HotelType?      @default(BEACH)
+  type          HotelType?     @default(CITY)
   Payments      Payments[]
-  status        status        @default(PENDING)
+  status        status         @default(PENDING)
 }
+
 enum status {
   PENDING
   APPROVED
@@ -84,32 +96,21 @@ enum status {
 }
 
 enum HotelType {
-  BEACH
   CITY
   MOUNTAIN
   RESORT
-  BUDGET
   LUXURY
   AMAZING_VIEWS
-  AMAZING_POOLS
   FARMS
   HISTORICAL_HOMES
-  SURFING
   BEACHFRONT
   LAKEFRONT
   CASTLES
   CAMPING
-  BOATS
   TROPICAL
-  TOP_OF_THE_WORLD
-  TOP_CITIES
   ARCTIC
-  TREEHOUSES
-  CABINS
-  TINY_HOMES
   ISLANDS
   COUNTRYSIDE
-  MANSIONS
 }
 
 model Address {
@@ -135,23 +136,22 @@ model Rooms {
 }
 
 model Reservations {
-  id                   Int      @id @default(autoincrement())
+  id                   Int              @id @default(autoincrement())
   userId               Int
-  user                 Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                 Users            @relation(fields: [userId], references: [id], onDelete: Cascade)
   hotelId              Int
-  hotel                Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotel                Hotels           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   roomId               Int
-  room                 Rooms    @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  checkIn              DateTime 
+  room                 Rooms            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  checkIn              DateTime
   reservationsDuration Int?
   checkOut             DateTime
   amountPaid           Int
   ReservationStatus    reservtionStatus @default(pending)
-  paymentStatus paymentStatus @default(pending)
-
+  paymentStatus        paymentStatus    @default(pending)
 }
 
-enum reservtionStatus{
+enum reservtionStatus {
   pending
   active
   cancled
@@ -174,21 +174,22 @@ model WishList {
 }
 
 model Review {
-  id                  Int    @id @default(autoincrement())
+  id                  Int      @id @default(autoincrement())
   userId              Int
-  user                Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   hotelId             Int
-  hotel               Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  hotel               Hotels   @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   reviewComment       String
-  overallRating       Int    @default(5)
-  cleanlinessRating   Int    @default(5)
-  accuracyRating      Int    @default(5)
-  checkInRating       Int    @default(5)
-  communicationRating Int    @default(5)
-  locationRating      Int    @default(5)
-  priceRating         Int    @default(5)
-  parkingRating       Int    @default(5)
-  createdAt DateTime @default(now())
+  overallRating       Int      @default(5)
+  cleanlinessRating   Int      @default(5)
+  accuracyRating      Int      @default(5)
+  checkInRating       Int      @default(5)
+  communicationRating Int      @default(5)
+  locationRating      Int      @default(5)
+  priceRating         Int      @default(5)
+  parkingRating       Int      @default(5)
+  createdAt           DateTime @default(now())
+
   @@unique([userId, hotelId])
 }
 
@@ -201,17 +202,17 @@ model Images {
 
 // Data base model for fake payment
 model Payments {
-  id            Int      @id @default(autoincrement())
-  hotelId       Int
-  userId        Int
-  amount        Float
-  hostAmount     Float @default(0)
-  platformFee    Float @default(0)
-  paymentMethod String   @default("UPI")
-  status        paymentStatus   @default(pending) // pending, success, failed
-  paymentDate   DateTime @default(now())
+  id                  Int           @id @default(autoincrement())
+  hotelId             Int
+  userId              Int
+  amount              Float
+  hostAmount          Float         @default(0)
+  platformFee         Float         @default(0)
+  paymentMethod       String        @default("UPI")
+  status              paymentStatus @default(pending) // pending, success, failed
+  paymentDate         DateTime      @default(now())
   razorpay_payment_id String
-  razorpay_order_id String
+  razorpay_order_id   String
 
   hotel Hotels @relation(fields: [hotelId], references: [id])
   user  Users  @relation(fields: [userId], references: [id])
@@ -219,8 +220,6 @@ model Payments {
   @@index([hotelId])
   @@index([userId])
 }
-
-
 
 // Payment Entity:
 
@@ -247,4 +246,3 @@ model Payments {
 // Content
 // Timestamp
 // Status (Unread, Read)
-
