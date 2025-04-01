@@ -29,7 +29,7 @@ export default function SecuritySection({
     <div className="border border-gray-200 rounded-lg p-5 hover:shadow-sm transition-shadow">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <div className="text-teal-600 text-xl mr-3">{icon}</div>
+          <div className="text-primary text-xl mr-3">{icon}</div>
           <div>
             <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
             <p className="text-gray-600 text-sm">{description}</p>
@@ -38,12 +38,12 @@ export default function SecuritySection({
 
         <div>
           {isToggle ? (
-            // <Switch checked={toggleValue} onCheckedChange={onToggle} className="data-[state=checked]:bg-teal-600" />
+            // <Switch checked={toggleValue} onCheckedChange={onToggle} className="data-[state=checked]:bg-primary" />
             <div>
                 
             </div>
           ) : (
-            <button onClick={onAction} className="text-teal-600 hover:text-teal-800 font-medium transition-colors">
+            <button onClick={onAction} className="text-primary hover:text-primary font-medium transition-colors">
               {actionText}
             </button>
           )}

@@ -45,8 +45,8 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordModalProp
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-xl animate-fadeIn">
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center">
-            <div className="bg-teal-100 p-2 rounded-full mr-3">
-              <CiLock className="text-teal-600 text-xl" />
+            <div className="bg-white p-2 rounded-full mr-3">
+              <CiLock className="text-primary text-xl" />
             </div>
             <h2 className="text-xl font-semibold text-gray-800">Change Password</h2>
           </div>
@@ -115,7 +115,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordModalProp
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+              className="flex-1 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors"
             >
               Update Password
             </button>

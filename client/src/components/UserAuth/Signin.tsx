@@ -82,7 +82,7 @@ const Signin = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
-              Welcome back to <span className="text-teal-600">RapidRoom</span>
+              Welcome back to <span className="text-primary">RapidRoom</span>
             </h1>
             <p className="text-gray-500 text-sm">
               Sign in to continue to your account
@@ -95,7 +95,7 @@ const Signin = () => {
             <div className="space-y-1">
               <label
                 htmlFor="email"
-                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
+                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-primary focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
               >
                 <input
                   type="email"
@@ -125,7 +125,7 @@ const Signin = () => {
             <div className="space-y-1">
               <label
                 htmlFor="password"
-                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
+                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-primary focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
               >
                 <input
                   type={showPassword ? "text" : "password"}
@@ -169,7 +169,7 @@ const Signin = () => {
             <div className="text-right">
               <a
                 href="#"
-                className="text-sm text-teal-600 hover:text-teal-700 hover:underline"
+                className="text-sm text-primary hover:text-primary hover:underline"
               >
                 Forgot password?
               </a>
@@ -179,7 +179,7 @@ const Signin = () => {
 
             {showLoader ? (
               <button
-                className="w-full py-3 px-4 flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                className="w-full py-3 px-4 flex items-center justify-center bg-primary hover:bg-primary/80 text-white font-medium rounded-lg shadow transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 <div className="flex flex-row gap-2">
                   <div
@@ -191,7 +191,7 @@ aspect-square w-8 flex justify-center items-center text-yellow-700"
             ) : (
               <button
                 type="submit"
-                className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                className="w-full py-3 px-4 bg-primary hover:bg-primary/80 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 Sign In
               </button>
@@ -246,7 +246,7 @@ aspect-square w-8 flex justify-center items-center text-yellow-700"
                 dispatch(flipSignin(showSignin));
                 dispatch(flipSignUp(showSignup));
               }}
-              className="font-medium text-teal-600 hover:text-teal-700 hover:underline"
+              className="font-medium text-primary hover:text-primary hover:underline"
             >
               Sign up
             </button>

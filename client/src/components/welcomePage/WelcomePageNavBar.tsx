@@ -68,7 +68,7 @@ export default function WelcomePageNavBar() {
                 src={MainLogo || "/placeholder.svg"}
                 alt="RapidRoom"
               />
-              <span className="font-bold text-teal-600 text-xl hidden sm:block">
+              <span className="font-bold text-primary text-xl hidden sm:block">
                 RapidRoom
               </span>
             </div>
@@ -79,13 +79,13 @@ export default function WelcomePageNavBar() {
             {!isLoggedIn ? (
               <>
                 <button
-                  className="px-4 py-2 border-2 border-teal-600 text-teal-600 font-medium rounded-lg hover:bg-teal-600 hover:text-white transition-colors"
+                  className="px-4 py-2 border-2 border-primary text-primary font-medium rounded-lg hover:bg-primary/80 hover:text-white transition-colors"
                   onClick={() => dispatch(flipSignUp(showSignup))}
                 >
                   Sign Up
                 </button>
                 <button
-                  className="px-4 py-2 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors"
+                  className="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/80 transition-colors"
                   onClick={() => dispatch(flipSignin(showSignin))}
                 >
                   Sign In
@@ -127,28 +127,28 @@ export default function WelcomePageNavBar() {
               <nav className="flex flex-col space-y-4">
                 <Link
                   to="/"
-                  className="text-gray-700 hover:text-teal-600 font-medium transition-colors py-2"
+                  className="text-gray-700 hover:text-primary font-medium transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Home
                 </Link>
                 <Link
                   to="/destinations"
-                  className="text-gray-700 hover:text-teal-600 font-medium transition-colors py-2"
+                  className="text-gray-700 hover:text-primary font-medium transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Destinations
                 </Link>
                 <Link
                   to="/about"
-                  className="text-gray-700 hover:text-teal-600 font-medium transition-colors py-2"
+                  className="text-gray-700 hover:text-primary font-medium transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   About
                 </Link>
                 <Link
                   to="/contact"
-                  className="text-gray-700 hover:text-teal-600 font-medium transition-colors py-2"
+                  className="text-gray-700 hover:text-primary font-medium transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
@@ -159,7 +159,7 @@ export default function WelcomePageNavBar() {
                 {!isLoggedIn ? (
                   <>
                     <button
-                      className="w-full px-4 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors"
+                      className="w-full px-4 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/80 transition-colors"
                       onClick={() => {
                         console.log("Sign in clicked");
                         setIsMenuOpen(false);
@@ -168,7 +168,7 @@ export default function WelcomePageNavBar() {
                       Sign In
                     </button>
                     <button
-                      className="w-full px-4 py-3 border-2 border-teal-600 text-teal-600 font-medium rounded-lg hover:bg-teal-600 hover:text-white transition-colors"
+                      className="w-full px-4 py-3 border-2 border-primary text-primary font-medium rounded-lg hover:bg-primary/80 hover:text-white transition-colors"
                       onClick={() => {
                         console.log("Sign up clicked");
                         setIsMenuOpen(false);
@@ -181,7 +181,7 @@ export default function WelcomePageNavBar() {
                   <>
                     <Link
                       to="/profile"
-                      className="flex items-center gap-2 text-gray-700 hover:text-teal-600 font-medium transition-colors py-2"
+                      className="flex items-center gap-2 text-gray-700 hover:text-primary font-medium transition-colors py-2"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <User className="w-5 h-5" />

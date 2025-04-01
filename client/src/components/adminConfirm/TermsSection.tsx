@@ -29,7 +29,7 @@ function TermsSection() {
 
               <button
                 onClick={() => navigate("/admin-terms")}
-                className="text-teal-600 font-medium hover:text-teal-800 transition-colors flex items-center gap-1"
+                className="text-primary font-medium hover:text-primary transition-colors flex items-center gap-1"
               >
                 Show more
                 <svg

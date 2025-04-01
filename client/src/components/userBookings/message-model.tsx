@@ -109,7 +109,7 @@ export default function MessageModal({ isOpen, hostName, onClose }: MessageModal
                 <textarea
                   ref={textareaRef}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 resize-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-primary resize-none"
                   placeholder={`Send a message to ${hostName}...`}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -149,7 +149,7 @@ export default function MessageModal({ isOpen, hostName, onClose }: MessageModal
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   type="submit"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                   disabled={!message.trim()}
                 >
                   <Send className="w-4 h-4 mr-2" />

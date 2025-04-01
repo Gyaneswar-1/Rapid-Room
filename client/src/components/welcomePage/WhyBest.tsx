@@ -6,19 +6,19 @@ import { Zap, Shield, DollarSign, ArrowUpRight } from "lucide-react"
 export default function WhyBest() {
   const features = [
     {
-      icon: <Zap className="w-8 h-8 text-teal-600" />,
+      icon: <Zap className="w-8 h-8 text-primary" />,
       title: "Instant Booking ⚡",
       description:
         "Skip the Wait, Book in Seconds! With RapidRoom, find and reserve your perfect stay instantly—no delays, no hassle!",
     },
     {
-      icon: <DollarSign className="w-8 h-8 text-teal-600" />,
+      icon: <DollarSign className="w-8 h-8 text-primary" />,
       title: "Best Price Guarantee 💰",
       description:
         "Luxury & Comfort at the Best Rates! We ensure you get the best deals, making every stay affordable without compromising quality.",
     },
     {
-      icon: <Shield className="w-8 h-8 text-teal-600" />,
+      icon: <Shield className="w-8 h-8 text-primary" />,
       title: "Trusted & Secure 🔒",
       description:
         "Our verified hotels and secure payment options ensure a smooth, risk-free booking experience. Your safety is our priority!",
@@ -84,7 +84,7 @@ export default function WhyBest() {
                 <p className="text-gray-600 mb-6">{feature.description}</p>
                 <a
                   href="#"
-                  className="inline-flex items-center text-teal-600 font-medium hover:text-teal-800 transition-colors group"
+                  className="inline-flex items-center text-primary font-medium hover:text-primary transition-colors group"
                 >
                   Learn More
                   <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />

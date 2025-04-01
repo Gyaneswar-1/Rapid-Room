@@ -8,7 +8,7 @@ function CompareTable() {
           <div className="bg-white rounded-2xl border overflow-hidden">
             <div className="grid grid-cols-3 border-b">
               <div className="p-6 font-semibold text-gray-800">Features</div>
-              <div className="p-6 font-semibold text-teal-600 text-center">RapidRoom</div>
+              <div className="p-6 font-semibold text-primary text-center">RapidRoom</div>
               <div className="p-6 font-semibold text-gray-600 text-center">Competitors</div>
             </div>
 
@@ -26,7 +26,7 @@ function CompareTable() {
                 <div className="p-6 text-gray-700">{item.title}</div>
                 <div className="p-6 flex justify-center items-center">
                   {item.rapidRoom ? (
-                    <svg className="h-6 w-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (

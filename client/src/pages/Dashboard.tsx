@@ -25,7 +25,7 @@ export default function Dashboard() {
               animate={{ opacity: 0 }}
               exit={{ opacity: 0, y: -1000 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="absolute inset-0 h-screen flex justify-center items-center bg-teal-700 z-53"
+              className="absolute inset-0 h-screen flex justify-center items-center bg-primary z-53"
             >
               <h1 className="text-6xl text-white font-bold">Welcome</h1>
             </motion.div>

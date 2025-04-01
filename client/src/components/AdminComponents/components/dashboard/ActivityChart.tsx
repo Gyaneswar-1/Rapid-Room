@@ -81,7 +81,7 @@ export default function ActivityChart({ pieChartData, loading = false }: Activit
       <div className="h-64 relative">
         {loading ? (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
         ) : (
           <Pie data={chartData} options={chartOptions} />
@@ -93,7 +93,7 @@ export default function ActivityChart({ pieChartData, loading = false }: Activit
             <div className="flex items-center">
               <div 
                 className={`w-3 h-3 rounded-full mr-2 ${
-                  index === 0 ? "bg-teal-500" : index === 1 ? "bg-blue-500" : "bg-amber-500"
+                  index === 0 ? "bg-primary" : index === 1 ? "bg-blue-500" : "bg-amber-500"
                 }`}
               ></div>
               <span className="text-sm text-gray-600">{item.label}</span>

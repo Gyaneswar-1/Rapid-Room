@@ -64,7 +64,7 @@ const CitySelector: React.FC<CountryData> = ({ CountryIsoCode, StateIsoCode, reg
       <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1.5">
         City name
       </label>
-      <div className="flex items-center px-3 py-2.5 w-full rounded-lg border border-gray-300 bg-white shadow-sm transition-all focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/30">
+      <div className="flex items-center px-3 py-2.5 w-full rounded-lg border border-gray-300 bg-white shadow-sm transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-teal-500/30">
         <CiBank className="flex-shrink-0 text-gray-500 mr-2 text-xl" />
         <input
           {...register("city")}

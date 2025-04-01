@@ -203,7 +203,7 @@ function CardForm({ show }: { show: (value: boolean) => void }) {
               type="submit"
               disabled={loading}
               className={`w-full py-3 mt-4 rounded-lg font-medium text-white transition-all ${
-                loading ? "bg-teal-500/70 cursor-not-allowed" : "bg-teal-600 hover:bg-teal-700 shadow-md"
+                loading ? "bg-primary/70 cursor-not-allowed" : "bg-primary hover:bg-primary/80 shadow-md"
               }`}
             >
               {loading ? (
@@ -284,7 +284,7 @@ export default CardForm
 
 //   return (
 //     <div className="fixed inset-0 w-full h-full z-15 flex items-center justify-center bg-opacity-50 backdrop-brightness-70 backdrop-blur-[2px]">
-//       <div className="w-full mx-2 md:mx-0 md:w-fit md:h-fit md:p-8 px-4 py-4 rounded-xl border-2 border-neutral-500 bg-neutral-50">
+//       <div className="w-full mx-2 md:mx-0 md:w-fit md:h-fit md:p-8 px-4 py-4 rounded-xl border-2 border-neutral-500 bg-white">
 //         <div className="flex md:flex-row flex-col">
 //           <motion.button
 //           whileHover={{
@@ -425,9 +425,9 @@ export default CardForm
 //             </div>
 //             {loading ? (
 //               <button
-//                 className="w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border opacity-55 border-neutral-700 text-lg w-fill h-full cursor-not-allowed "
+//                 className="w-full bg-primary text-white  py-1 flex justify-center items-center mt-5 rounded-md border opacity-55 border-neutral-700 text-lg w-fill h-full cursor-not-allowed "
 //               >
-//                 <div className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-neutral-50  rounded-full" role="status" aria-label="loading">
+//                 <div className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-secondary  rounded-full" role="status" aria-label="loading">
 //   <span className="sr-only">Loading...</span>
 // </div>
 //               </button>
@@ -440,7 +440,7 @@ export default CardForm
 //                 scale:0.95
 //               }}
 //                 type="submit"
-//                 className="w-full bg-teal-600 text-white  py-1 flex justify-center items-center mt-5 rounded-md border border-neutral-900 text-lg w-fill h-full cursor-pointer opacity-100"
+//                 className="w-full bg-primary text-white  py-1 flex justify-center items-center mt-5 rounded-md border border-neutral-900 text-lg w-fill h-full cursor-pointer opacity-100"
 //              >
 //                 Submit
 //               </ motion.button>

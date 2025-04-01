@@ -29,7 +29,7 @@ export default function AddressFormEdit({ title, content, button }: AddressField
         <h3 className="text-sm font-medium text-gray-500">{title}</h3>
         <button
           onClick={toggleModal}
-          className="text-teal-600 hover:text-teal-800 transition-colors flex items-center text-sm"
+          className="text-primary hover:text-primary transition-colors flex items-center text-sm"
         >
           <CiEdit className="mr-1" /> {button}
         </button>
@@ -71,7 +71,7 @@ export default function AddressFormEdit({ title, content, button }: AddressField
               </button>
               <button
                 onClick={handleSubmit}
-                className="flex-1 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+                className="flex-1 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors"
               >
                 Save
               </button>

@@ -11,7 +11,7 @@ export default function PendingApprovals({ handleAction }: PendingApprovalsProps
     <div className="bg-white rounded-xl shadow-sm p-6 lg:col-span-2">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-bold text-gray-900">Pending Approvals</h2>
-        <button className="text-sm text-teal-600 hover:text-teal-800 font-medium flex items-center">
+        <button className="text-sm text-primary hover:text-primary font-medium flex items-center">
           View All <ArrowUpRight className="w-4 h-4 ml-1" />
         </button>
       </div>

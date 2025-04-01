@@ -49,13 +49,13 @@ export default function UserReview() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">What Our Travelers Say</h2>
-          <div className="w-20 h-1 bg-teal-500 mx-auto mt-4"></div>
+          <div className="w-20 h-1 bg-primary mx-auto mt-4"></div>
         </motion.div>
 
         <div className="max-w-4xl mx-auto relative">
           {/* Review Cards */}
           <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
-            <div className="absolute top-0 left-0 w-20 h-20 bg-teal-500 rounded-br-2xl flex items-center justify-center">
+            <div className="absolute top-0 left-0 w-20 h-20 bg-primary rounded-br-2xl flex items-center justify-center">
               <Quote className="text-white w-10 h-10" />
             </div>
 
@@ -78,7 +78,7 @@ export default function UserReview() {
                     </p>
                   </blockquote>
                   <div className="flex items-center justify-center md:justify-start gap-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-teal-500">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-primary">
                       <img
                         src={review.avatar || "/placeholder.svg"}
                         alt={`${review.name} profile picture`}
@@ -114,7 +114,7 @@ export default function UserReview() {
                   key={index}
                   onClick={() => setCurrentReview(index)}
                   className={`w-2.5 h-2.5 rounded-full transition-all ${
-                    currentReview === index ? "bg-teal-500 w-6" : "bg-gray-300"
+                    currentReview === index ? "bg-primary w-6" : "bg-gray-300"
                   }`}
                   aria-label={`Go to review ${index + 1}`}
                 />

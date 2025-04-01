@@ -54,7 +54,7 @@ export default function Offer() {
                 <h3 className="font-bold text-2xl mb-2 text-gray-800">{destination.title}</h3>
                 <p className="text-gray-600">{destination.nearby}</p>
                 <div className="mt-4 pt-4 border-t border-gray-100">
-                  <button className="text-teal-600 font-medium hover:text-teal-800 transition-colors flex items-center gap-1">
+                  <button className="text-primary font-medium hover:text-primary transition-colors flex items-center gap-1">
                     Explore deals
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

@@ -75,7 +75,7 @@ export default function GuidebookPage() {
               Find everything you need to know about hosting, from creating your listing to welcoming guests and
               managing your bookings.
             </p>
-            <button className="px-4 py-2 bg-white text-teal-600 text-sm font-medium rounded-md hover:bg-rose-50 transition-colors">
+            <button className="px-4 py-2 bg-white text-primary text-sm font-medium rounded-md hover:bg-rose-50 transition-colors">
               Get started
             </button>
           </div>
@@ -100,7 +100,7 @@ export default function GuidebookPage() {
               key={guide.id}
               className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
             >
-              <div className="p-2 rounded-full bg-rose-100 text-teal-600 w-fit mb-4">{guide.icon}</div>
+              <div className="p-2 rounded-full bg-rose-100 text-primary w-fit mb-4">{guide.icon}</div>
 
               <h3 className="font-medium text-gray-900 mb-1">{guide.title}</h3>
               <p className="text-sm text-gray-500 mb-4">{guide.description}</p>
@@ -120,7 +120,7 @@ export default function GuidebookPage() {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-gray-800">Video tutorials</h2>
 
-          <button className="text-sm text-teal-600 font-medium flex items-center hover:text-rose-700">
+          <button className="text-sm text-primary font-medium flex items-center hover:text-rose-700">
             View all
             <HiOutlineExternalLink className="ml-1 h-4 w-4" />
           </button>
@@ -141,7 +141,7 @@ export default function GuidebookPage() {
                   className="w-full h-40 object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="p-3 bg-teal-600 bg-opacity-90 rounded-full text-white">
+                  <div className="p-3 bg-primary bg-opacity-90 rounded-full text-white">
                     <HiOutlineVideoCamera className="h-6 w-6" />
                   </div>
                 </div>

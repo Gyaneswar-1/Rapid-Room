@@ -15,7 +15,7 @@ function Cards({ icon, title, description, toThe }: CardProps) {
       to={toThe}
       className="group bg-white border border-gray-200 rounded-xl p-6 flex flex-col h-full transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:translate-y-[-2px]"
     >
-      <div className="text-4xl text-teal-600 mb-4">
+      <div className="text-4xl text-primary mb-4">
         {React.createElement(icon, { className: "group-hover:scale-110 transition-transform duration-200" })}
       </div>
       <div>

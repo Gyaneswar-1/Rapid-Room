@@ -4,12 +4,12 @@ import { CiHome } from "react-icons/ci"
 export default function Breadcrumb() {
   return (
     <nav className="flex items-center text-sm text-gray-500">
-      <Link to="/" className="flex items-center hover:text-teal-600 transition-colors">
+      <Link to="/" className="flex items-center hover:text-primary transition-colors">
         <CiHome className="mr-1" />
         Home
       </Link>
       <span className="mx-2">/</span>
-      <Link to="/account" className="hover:text-teal-600 transition-colors">
+      <Link to="/account" className="hover:text-primary transition-colors">
         Account
       </Link>
       <span className="mx-2">/</span>

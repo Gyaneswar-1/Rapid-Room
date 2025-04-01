@@ -68,7 +68,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       {showModal && <Modal modalContent={modalContent} setShowModal={setShowModal} handleAction={handleAction} />}
 
       {/* Help Button */}
-      <button className="fixed bottom-6 right-6 p-3 bg-teal-600 text-white rounded-full shadow-lg hover:bg-teal-700 transition-colors">
+      <button className="fixed bottom-6 right-6 p-3 bg-primary text-white rounded-full shadow-lg hover:bg-primary/80 transition-colors">
         <HelpCircle className="w-6 h-6" />
       </button>
     </div>

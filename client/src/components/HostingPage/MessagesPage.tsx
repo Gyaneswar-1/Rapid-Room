@@ -102,7 +102,7 @@ export default function MessagesPage() {
                 </div>
 
                 <div className="mt-3 flex space-x-2">
-                  <button className="px-3 py-1.5 bg-teal-600 text-white text-xs font-medium rounded-md hover:bg-rose-700 transition-colors">
+                  <button className="px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-md hover:bg-rose-700 transition-colors">
                     Reply
                   </button>
                   {!message.isRead && (

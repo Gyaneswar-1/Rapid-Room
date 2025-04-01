@@ -60,7 +60,7 @@ export default function WishlistPage() {
           </div>
           <Link
             to="#"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
           >
             Browse Hotels
           </Link>
@@ -74,7 +74,7 @@ export default function WishlistPage() {
             <div className="mt-6">
               <Link
                 to="#"
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-700 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
               >
                 Discover Hotels
               </Link>
@@ -124,7 +124,7 @@ export default function WishlistPage() {
                     </div>
                     <Link
                       to="#"
-                      className="inline-flex items-center text-sm font-medium text-teal-700 hover:text-teal-800"
+                      className="inline-flex items-center text-sm font-medium text-primary hover:text-primary"
                     >
                       View Details
                       <ChevronRight className="ml-1 h-4 w-4" />

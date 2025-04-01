@@ -45,7 +45,7 @@ function Profit() {
             <h4 className="font-medium text-gray-800 mb-2">Projected Annual Income</h4>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Based on current trends</span>
-              <span className="text-2xl font-bold text-teal-600">$4,851.84</span>
+              <span className="text-2xl font-bold text-primary">$4,851.84</span>
             </div>
           </div>
         </div>
@@ -66,19 +66,19 @@ function Profit() {
           </p>
           <ul className="space-y-3">
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Smart pricing recommendations</span>
             </li>
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Increased visibility to travelers</span>
             </li>
             <li className="flex items-start">
-              <svg className="h-6 w-6 text-teal-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
               </svg>
               <span className="text-gray-700">Lower commission rates than competitors</span>

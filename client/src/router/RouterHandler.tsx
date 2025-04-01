@@ -29,6 +29,7 @@ import UsersPage from "../components/AdminComponents/UsersPage";
 import SettingsPage from "../components/AdminComponents/SettingsPage";
 
 import BookingPage from "../pages/BookingPage";
+import PaymentsPage from "../components/AdminComponents/components/paymentPage";
 
 function RouterHandler() {
   return (
@@ -80,6 +81,7 @@ function RouterHandler() {
           <Route path="/admin/hosts" element={<HostsPage />} />
           <Route path="/admin/users" element={<UsersPage />} />
           <Route path="/admin/settings" element={<SettingsPage />} />
+          <Route path="/admin/payments" element={<PaymentsPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

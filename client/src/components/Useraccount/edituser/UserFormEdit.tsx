@@ -22,7 +22,7 @@ export default function UserFormEdit({ title, content, button }: any) {
         <h3 className="text-sm font-medium text-gray-500">{title}</h3>
         <button
           onClick={toggleEdit}
-          className="text-teal-600 hover:text-teal-800 transition-colors flex items-center text-sm"
+          className="text-primary hover:text-primary transition-colors flex items-center text-sm"
         >
           {button === "edit" ? (
             <>
@@ -50,7 +50,7 @@ export default function UserFormEdit({ title, content, button }: any) {
             >
               Cancel
             </button>
-            <button className="px-3 py-1 text-xs bg-teal-600 text-white rounded-md hover:bg-teal-700">Save</button>
+            <button className="px-3 py-1 text-xs bg-primary text-white rounded-md hover:bg-primary">Save</button>
           </div>
         </div>
       ) : (

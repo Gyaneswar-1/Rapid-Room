@@ -65,7 +65,7 @@ export default function HeroSection() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate("/home")}
-                className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white font-medium py-4 px-8 rounded-full inline-flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-primary cursor-pointer hover:bg-primary/80 text-white font-medium py-4 px-8 rounded-full inline-flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Explore
                 <svg

@@ -22,7 +22,7 @@ export default function Pagination() {
             <a
               href="#"
               aria-current="page"
-              className="z-10 bg-teal-50 border-teal-500 text-teal-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+              className="z-10 bg-teal-50 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium"
             >
               1
             </a>

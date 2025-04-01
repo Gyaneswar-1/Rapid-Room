@@ -51,7 +51,7 @@ export default function TodaySection({ title, items, emptyMessage }: TodaySectio
                 </div>
 
                 <div className="mt-4 flex space-x-2">
-                  <button className="px-3 py-1.5 bg-teal-600 text-white text-sm font-medium rounded-md hover:bg-rose-700 transition-colors">
+                  <button className="px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-md hover:bg-rose-700 transition-colors">
                     Message
                   </button>
                   <button className="px-3 py-1.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition-colors">

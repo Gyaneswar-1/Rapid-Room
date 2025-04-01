@@ -238,7 +238,7 @@ export default function HotelsTable({
                     <p className="text-sm text-gray-600">{selectedHotel.host.email}</p>
                   </div>
                   <button
-                    className="p-2 bg-white rounded-full border border-gray-200 text-gray-500 hover:text-teal-600 hover:border-teal-600"
+                    className="p-2 bg-white rounded-full border border-gray-200 text-gray-500 hover:text-primary hover:border-primary"
                     onClick={() => console.log(`View host profile: ${selectedHotel.host.id}`)}
                   >
                     <User className="w-4 h-4" />

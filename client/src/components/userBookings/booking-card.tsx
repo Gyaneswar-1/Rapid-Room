@@ -96,7 +96,7 @@ export default function BookingCard({ booking, onCancel, onMessage }: BookingCar
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-md flex items-center"
+            className="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-md flex items-center"
             onClick={onMessage}
           >
             <FaEnvelope className="mr-2" />

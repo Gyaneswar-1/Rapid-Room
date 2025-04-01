@@ -118,7 +118,7 @@ export default function UserProfile() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg text-sm font-medium flex items-center"
+                className="bg-primary hover:bg-primary/80 text-white px-3 py-2 rounded-lg text-sm font-medium flex items-center"
               >
                 <Award className="w-4 h-4 mr-2" />
                 Upgrade to Host
@@ -152,7 +152,7 @@ export default function UserProfile() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex-1 bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center"
+              className="flex-1 bg-primary hover:bg-primary/80 text-white px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center"
             >
               <Award className="w-4 h-4 mr-2" />
               Become Host
@@ -179,7 +179,7 @@ export default function UserProfile() {
                 <div className="bg-white rounded-xl shadow-sm p-6 mb-4">
                   <div className="flex flex-col items-center">
                     <div className="relative mb-4">
-                      <div className="w-24 h-24 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 overflow-hidden">
+                      <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center text-primary overflow-hidden">
                         {profileImage ? (
                           <img
                             src={profileImage}
@@ -200,7 +200,7 @@ export default function UserProfile() {
                       </div>
                       <button
                         onClick={handleProfileImageClick}
-                        className="absolute bottom-0 right-0 bg-teal-500 text-white p-1.5 rounded-full hover:bg-teal-600 transition-colors"
+                        className="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full hover:bg-primary/80 transition-colors"
                       >
                         <Camera className="w-3.5 h-3.5" />
                       </button>
@@ -216,8 +216,8 @@ export default function UserProfile() {
                       })}
                     </p>
                     {isHost && (
-                      <span className="inline-flex items-center gap-1 bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        <FaHotel className="text-teal-600" size={10} />
+                      <span className="inline-flex items-center gap-1 bg-white text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <FaHotel className="text-primary" size={10} />
                         Host
                       </span>
                     )}
@@ -233,7 +233,7 @@ export default function UserProfile() {
                           onClick={() => setActiveTab("personal-info")}
                           className={`w-full flex items-center justify-between p-4 text-left transition-colors ${
                             activeTab === "personal-info"
-                              ? "bg-teal-50 text-teal-600 border-l-4 border-teal-500"
+                              ? "bg-teal-50 text-primary border-l-4 border-primary"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}
                         >
@@ -241,7 +241,7 @@ export default function UserProfile() {
                             <User
                               className={`w-5 h-5 mr-3 ${
                                 activeTab === "personal-info"
-                                  ? "text-teal-500"
+                                  ? "text-primary"
                                   : "text-gray-400"
                               }`}
                             />
@@ -257,7 +257,7 @@ export default function UserProfile() {
                           onClick={() => setActiveTab("bookings")}
                           className={`w-full flex items-center justify-between p-4 text-left transition-colors ${
                             activeTab === "bookings"
-                              ? "bg-teal-50 text-teal-600 border-l-4 border-teal-500"
+                              ? "bg-teal-50 text-primary border-l-4 border-primary"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}
                         >
@@ -265,7 +265,7 @@ export default function UserProfile() {
                             <Calendar
                               className={`w-5 h-5 mr-3 ${
                                 activeTab === "bookings"
-                                  ? "text-teal-500"
+                                  ? "text-primary"
                                   : "text-gray-400"
                               }`}
                             />
@@ -281,7 +281,7 @@ export default function UserProfile() {
                           onClick={() => setActiveTab("reviews")}
                           className={`w-full flex items-center justify-between p-4 text-left transition-colors ${
                             activeTab === "reviews"
-                              ? "bg-teal-50 text-teal-600 border-l-4 border-teal-500"
+                              ? "bg-teal-50 text-primary border-l-4 border-primary"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}
                         >
@@ -289,7 +289,7 @@ export default function UserProfile() {
                             <Star
                               className={`w-5 h-5 mr-3 ${
                                 activeTab === "reviews"
-                                  ? "text-teal-500"
+                                  ? "text-primary"
                                   : "text-gray-400"
                               }`}
                             />
@@ -305,7 +305,7 @@ export default function UserProfile() {
                           onClick={() => setActiveTab("messages")}
                           className={`w-full flex items-center justify-between p-4 text-left transition-colors ${
                             activeTab === "messages"
-                              ? "bg-teal-50 text-teal-600 border-l-4 border-teal-500"
+                              ? "bg-teal-50 text-primary border-l-4 border-primary"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}
                         >
@@ -313,7 +313,7 @@ export default function UserProfile() {
                             <MessageSquare
                               className={`w-5 h-5 mr-3 ${
                                 activeTab === "messages"
-                                  ? "text-teal-500"
+                                  ? "text-primary"
                                   : "text-gray-400"
                               }`}
                             />
@@ -363,7 +363,7 @@ export default function UserProfile() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setIsEditing(!isEditing)}
-                      className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg flex items-center"
+                      className="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-lg flex items-center"
                     >
                       {isEditing ? "Cancel" : "Edit Profile"}
                       {!isEditing && <Edit className="ml-2 w-4 h-4" />}
@@ -383,7 +383,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="John"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -393,7 +393,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="Doe"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -403,7 +403,7 @@ export default function UserProfile() {
                         <input
                           type="email"
                           defaultValue="john.doe@example.com"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -413,7 +413,7 @@ export default function UserProfile() {
                         <input
                           type="tel"
                           defaultValue="+1 (555) 123-4567"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -423,7 +423,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="United States"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -433,7 +433,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="New York"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -443,7 +443,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="New York City"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -453,7 +453,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="123 Main Street"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -463,7 +463,7 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="johndoe@upi"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div>
@@ -473,14 +473,14 @@ export default function UserProfile() {
                         <input
                           type="text"
                           defaultValue="10001"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary outline-none"
                         />
                       </div>
                       <div className="md:col-span-2 mt-4">
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
-                          className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg"
+                          className="bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg"
                         >
                           Save Changes
                         </motion.button>
@@ -555,7 +555,7 @@ export default function UserProfile() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
-                              <PinIcon className="w-5 h-5 text-teal-500" />
+                              <PinIcon className="w-5 h-5 text-primary" />
                             </div>
                             <div>
                               <p className="text-xs text-gray-500">Zipcode</p>
@@ -585,7 +585,7 @@ export default function UserProfile() {
                           </div>
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
-                              <User className="w-5 h-5 text-teal-500" />
+                              <User className="w-5 h-5 text-primary" />
                             </div>
                             <div>
                               <p className="text-xs text-gray-500">UPI ID</p>
@@ -637,7 +637,7 @@ export default function UserProfile() {
                                       : "4.8"}
                                   </span>
                                 </div>
-                                <p className="font-medium text-xs text-teal-600">
+                                <p className="font-medium text-xs text-primary">
                                   $
                                   {item === 1
                                     ? "320"
@@ -739,7 +739,7 @@ export default function UserProfile() {
                               <p className="text-sm text-gray-500">
                                 Total Price
                               </p>
-                              <p className="text-lg font-bold text-teal-600">
+                              <p className="text-lg font-bold text-primary">
                                 $1,250
                               </p>
                             </div>
@@ -750,7 +750,7 @@ export default function UserProfile() {
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-4 py-2 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition-colors"
+                                className="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-teal-50 transition-colors"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   // Message host logic
@@ -828,7 +828,7 @@ export default function UserProfile() {
                               <p className="text-sm text-gray-500">
                                 Total Price
                               </p>
-                              <p className="text-lg font-bold text-teal-600">
+                              <p className="text-lg font-bold text-primary">
                                 $950
                               </p>
                             </div>
@@ -839,7 +839,7 @@ export default function UserProfile() {
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-4 py-2 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition-colors"
+                                className="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-teal-50 transition-colors"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   // Message host logic
@@ -954,7 +954,7 @@ export default function UserProfile() {
                             Host Information
                           </h4>
                           <div className="flex items-center">
-                            <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 mr-3">
+                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary mr-3">
                               <span className="font-bold">
                                 {selectedBooking.hostName.charAt(0)}
                               </span>
@@ -1031,7 +1031,7 @@ export default function UserProfile() {
                           <div className="border-t border-gray-100 pt-2 mt-2">
                             <div className="flex justify-between font-bold">
                               <p>Total</p>
-                              <p className="text-teal-600">
+                              <p className="text-primary">
                                 {selectedBooking.price}
                               </p>
                             </div>
@@ -1044,7 +1044,7 @@ export default function UserProfile() {
                               <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="w-full py-2.5 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors"
+                                className="w-full py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary/80 transition-colors"
                               >
                                 Modify Booking
                               </motion.button>
@@ -1060,7 +1060,7 @@ export default function UserProfile() {
                           <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="w-full py-2.5 border border-teal-600 text-teal-600 rounded-lg font-medium hover:bg-teal-50 transition-colors"
+                            className="w-full py-2.5 border border-primary text-primary rounded-lg font-medium hover:bg-teal-50 transition-colors"
                           >
                             Message Host
                           </motion.button>
@@ -1068,7 +1068,7 @@ export default function UserProfile() {
                             <motion.button
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
-                              className="w-full py-2.5 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors"
+                              className="w-full py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary/80 transition-colors"
                             >
                               Write Review
                             </motion.button>
@@ -1277,7 +1277,7 @@ export default function UserProfile() {
                               <div
                                 className={`w-10 h-10 rounded-full ${
                                   message.isReceived
-                                    ? "bg-teal-100 text-teal-600"
+                                    ? "bg-white text-primary"
                                     : "bg-blue-100 text-blue-600"
                                 } flex items-center justify-center mr-3`}
                               >
@@ -1295,7 +1295,7 @@ export default function UserProfile() {
                                       : `You → ${message.recipient}`}
                                   </h3>
                                   {message.unread && (
-                                    <span className="ml-2 w-2 h-2 bg-teal-600 rounded-full"></span>
+                                    <span className="ml-2 w-2 h-2 bg-primary rounded-full"></span>
                                   )}
                                 </div>
                                 <p className="text-sm text-gray-500">
@@ -1339,7 +1339,7 @@ export default function UserProfile() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg flex items-center justify-center"
+                      className="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-lg flex items-center justify-center"
                     >
                       <MessageSquare className="w-4 h-4 mr-2" />
                       New Message

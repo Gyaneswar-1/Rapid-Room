@@ -10,7 +10,7 @@ function BottomNav() {
           to="/home"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
-              isActive ? "text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`
           }
         >
@@ -22,7 +22,7 @@ function BottomNav() {
           to="/wishlist"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
-              isActive ? "text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`
           }
         >
@@ -34,7 +34,7 @@ function BottomNav() {
           to="/tips"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
-              isActive ? "text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`
           }
         >
@@ -46,7 +46,7 @@ function BottomNav() {
           to="/messages"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
-              isActive ? "text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`
           }
         >
@@ -58,7 +58,7 @@ function BottomNav() {
           to="/user-profile"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
-              isActive ? "text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`
           }
         >

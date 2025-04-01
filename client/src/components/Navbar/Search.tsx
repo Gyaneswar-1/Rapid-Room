@@ -66,7 +66,7 @@ function Search() {
 
         <button
           onClick={() => dispatch(setSearch(searchValue))}
-          className="p-2 cursor-pointer bg-teal-600 rounded-full text-white hover:bg-teal-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          className="p-2 cursor-pointer bg-primary rounded-full text-white hover:bg-primary/80 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
           aria-label="Search"
         >
           <svg
@@ -148,7 +148,7 @@ function Search() {
               Clear all
             </button>
             <button
-              className="px-4 py-2 bg-teal-600 cursor-pointer text-white text-sm font-medium rounded-md hover:bg-teal-700 transition-colors duration-200"
+              className="px-4 py-2 bg-primary cursor-pointer text-white text-sm font-medium rounded-md hover:bg-primary/80 transition-colors duration-200"
               onClick={() => setShowFilters(false)}
             >
               Apply filters

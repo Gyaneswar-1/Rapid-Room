@@ -24,7 +24,7 @@ function HotelSearch() {
 
         <button
           type="button"
-          className="absolute right-1 top-1/2 -translate-y-1/2 p-2 bg-teal-600 hover:bg-teal-700 text-white rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          className="absolute right-1 top-1/2 -translate-y-1/2 p-2 bg-primary hover:bg-primary/80 text-white rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           <BiSearch className="w-4 h-4" />
           <span className="sr-only">Search</span>

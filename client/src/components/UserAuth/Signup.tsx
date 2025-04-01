@@ -82,7 +82,7 @@ const Signup = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
-              Join <span className="text-teal-600">RapidRoom</span> today
+              Join <span className="text-primary">RapidRoom</span> today
             </h1>
             <p className="text-gray-500 text-sm">
               Create your account to get started
@@ -95,7 +95,7 @@ const Signup = () => {
             <div className="space-y-1">
               <label
                 htmlFor="fullName"
-                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
+                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-primary focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
               >
                 <input
                   type="text"
@@ -125,7 +125,7 @@ const Signup = () => {
             <div className="space-y-1">
               <label
                 htmlFor="email"
-                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
+                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-primary focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
               >
                 <input
                   type="email"
@@ -156,7 +156,7 @@ const Signup = () => {
             <div className="space-y-1">
               <label
                 htmlFor="password"
-                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
+                className="relative block rounded-lg overflow-hidden border border-gray-300 focus-within:border-primary focus-within:ring-1 focus-within:ring-teal-500 transition-all duration-200"
               >
                 <input
                   type={showPassword ? "text" : "password"}
@@ -213,7 +213,7 @@ const Signup = () => {
               <div className="ml-3 text-sm">
                 <label htmlFor="terms" className="text-gray-600">
                   I agree to the{" "}
-                  <a href="#" className="text-teal-600 hover:underline">
+                  <a href="#" className="text-primary hover:underline">
                     Terms and Conditions
                   </a>
                 </label>
@@ -224,7 +224,7 @@ const Signup = () => {
             {showLoader ? (
               <button
                 type="submit"
-                className="w-full py-3 px-4 flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                className="w-full py-3 px-4 flex items-center justify-center bg-primary hover:bg-primary/80 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 <div className="flex flex-row gap-2">
                   <div
@@ -236,7 +236,7 @@ aspect-square w-8 flex justify-center items-center text-yellow-700"
             ) : (
               <button
                 type="submit"
-                className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                className="w-full py-3 px-4 bg-primary hover:bg-primary/80 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 Create Account
               </button>
@@ -291,7 +291,7 @@ aspect-square w-8 flex justify-center items-center text-yellow-700"
                 dispatch(flipSignUp(showSignup));
                 dispatch(flipSignin(showSignin));
               }}
-              className="font-medium text-teal-600 hover:text-teal-700 hover:underline"
+              className="font-medium text-primary hover:text-primary hover:underline"
             >
               Sign in
             </button>

@@ -32,7 +32,7 @@ const ComeingSoon = () => {
           onClick={() => {
             navigate("/home");
           }}
-          className="mt-6 inline-block rounded-sm bg-teal-600 px-5 py-3 text-sm font-medium text-white hover:bg-teal-700 focus:ring-3 focus:outline-hidden"
+          className="mt-6 inline-block rounded-sm bg-primary px-5 py-3 text-sm font-medium text-white hover:bg-primary/80 focus:ring-3 focus:outline-hidden"
         >
           Go Back Home
         </button>

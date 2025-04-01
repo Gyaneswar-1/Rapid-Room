@@ -1,4 +1,4 @@
-import { Users, Building2, Settings, LogOut, X, RainbowIcon, BarChart3, UserRoundCheck } from "lucide-react"
+import { Users, Building2, Settings, LogOut, X, RainbowIcon, BarChart3, UserRoundCheck, CreditCard } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 interface SidebarProps {
   isSidebarOpen: boolean
@@ -19,7 +19,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
       <div className="backdrop-blur-xs h-full w-full backdrop-brightness-40">
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
           <Link to="/admin" className="flex items-center space-x-2">
-            <div className="bg-teal-500 rounded-lg p-1.5">
+            <div className="bg-primary rounded-lg p-1.5">
               <RainbowIcon className="w-6 h-6 text-white" />
             </div>
             <span className="text-xl font-bold">RapidRoom</span>
@@ -39,7 +39,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
               <Link
                 to="/admin"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === "/admin" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <BarChart3 className="w-5 h-5 mr-3" />
@@ -50,7 +50,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
               <Link
                 to="/admin/hotels"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === "/admin/hotels" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/hotels" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <Building2 className="w-5 h-5 mr-3" />
@@ -61,7 +61,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
               <Link
                 to="/admin/hosts"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === "/admin/hosts" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/hosts" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <UserRoundCheck  className="w-5 h-5 mr-3" />
@@ -72,11 +72,22 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
               <Link
                 to="/admin/users"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === "/admin/users" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/users" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <Users className="w-5 h-5 mr-3" />
                 Users
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin/payments"
+                className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                  pathname === "/admin/payments" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
+                }`}
+              >
+                <CreditCard className="w-5 h-5 mr-3" />
+                Payments
               </Link>
             </li>
           </ul>
@@ -87,7 +98,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
               <Link
                 to="/admin/settings"
                 className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === "/admin/settings" ? "bg-teal-600 text-white" : "text-gray-300 hover:bg-gray-800"
+                  pathname === "/admin/settings" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
                 }`}
               >
                 <Settings className="w-5 h-5 mr-3" />

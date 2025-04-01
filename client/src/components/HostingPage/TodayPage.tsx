@@ -105,14 +105,14 @@ export default function TodayPage() {
       <div className="border border-gray-200 rounded-lg p-6">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-lg font-semibold text-teal-600">Verify your identity</h2>
+            <h2 className="text-lg font-semibold text-primary">Verify your identity</h2>
             <p className="text-gray-600 mt-1">Required to publish</p>
             <p className="text-gray-500 text-sm mt-1">qwertyuiopkjhgfdsazxcvbnm</p>
             <button className="mt-4 px-4 py-2 border border-gray-800 rounded-lg text-gray-800 font-medium text-sm hover:bg-gray-50">
               Get started
             </button>
           </div>
-          <div className="text-teal-600">
+          <div className="text-primary">
             <HiOutlineExclamationCircle className="h-8 w-8" />
           </div>
         </div>

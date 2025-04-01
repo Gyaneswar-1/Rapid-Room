@@ -50,7 +50,7 @@ export default function EarningsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex items-center">
-            <div className="p-3 rounded-full bg-rose-100 text-teal-600 mr-4">
+            <div className="p-3 rounded-full bg-rose-100 text-primary mr-4">
               <HiOutlineCurrencyDollar className="h-6 w-6" />
             </div>
             <div>
@@ -94,7 +94,7 @@ export default function EarningsPage() {
               <button
                 onClick={() => setTimeframe("week")}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md ${
-                  timeframe === "week" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  timeframe === "week" ? "bg-primary text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 } transition-colors`}
               >
                 Week
@@ -102,7 +102,7 @@ export default function EarningsPage() {
               <button
                 onClick={() => setTimeframe("month")}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md ${
-                  timeframe === "month" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  timeframe === "month" ? "bg-primary text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 } transition-colors`}
               >
                 Month
@@ -110,7 +110,7 @@ export default function EarningsPage() {
               <button
                 onClick={() => setTimeframe("year")}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md ${
-                  timeframe === "year" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  timeframe === "year" ? "bg-primary text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 } transition-colors`}
               >
                 Year
@@ -124,7 +124,7 @@ export default function EarningsPage() {
                 <div key={index} className="flex-1 flex flex-col items-center">
                   <div className="w-full px-1">
                     <div
-                      className="w-full bg-teal-500 rounded-t"
+                      className="w-full bg-primary rounded-t"
                       style={{
                         height: `${(item.amount / maxValue) * 180}px`,
                         minHeight: item.amount > 0 ? "4px" : "0",
@@ -169,7 +169,7 @@ export default function EarningsPage() {
 
                 <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
                   <div
-                    className="bg-teal-500 h-1.5 rounded-full"
+                    className="bg-primary h-1.5 rounded-full"
                     style={{ width: `${(property.earnings / mockEarnings.properties[0].earnings) * 100}%` }}
                   ></div>
                 </div>

@@ -60,7 +60,7 @@ export default function StatsCards({
             </div>
             <div
               className={`p-3 rounded-lg ${
-                stat.title === "Pending Approvals" ? "bg-amber-100 text-amber-600" : "bg-teal-100 text-teal-600"
+                stat.title === "Pending Approvals" ? "bg-amber-100 text-amber-600" : "bg-white text-primary"
               }`}
             >
               {stat.icon}

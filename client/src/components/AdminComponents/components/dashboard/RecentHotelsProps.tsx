@@ -70,7 +70,7 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
     <div className="bg-white rounded-xl shadow-sm p-6 relative">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-bold text-gray-900">Recently Added Hotels</h2>
-        <button className="text-sm text-teal-600 hover:text-teal-800 font-medium flex items-center">
+        <button className="text-sm text-primary hover:text-primary font-medium flex items-center">
           View All <ArrowUpRight className="w-4 h-4 ml-1" />
         </button>
       </div>
@@ -126,7 +126,7 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
                   </span>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={(e) => handleViewDetails(hotel, e)} className="text-teal-600 hover:text-teal-900">
+                  <button onClick={(e) => handleViewDetails(hotel, e)} className="text-primary hover:text-primary">
                     <Eye className="w-5 h-5" />
                   </button>
                 </td>

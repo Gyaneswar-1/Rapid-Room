@@ -92,7 +92,7 @@ export default function UsersView() {
             setError(false);
             getUserDatas();
           }}
-          className="mt-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+          className="mt-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors"
         >
           Try Again
         </button>

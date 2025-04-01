@@ -13,14 +13,14 @@ function ConfirmButton() {
         <input
           type="checkbox"
           id="terms-checkbox"
-          className="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500 mt-1"
+          className="h-5 w-5 rounded border-gray-300 text-primary focus:ring-teal-500 mt-1"
           onChange={() => setCheckbox(!checkbox)}
         />
         <label htmlFor="terms-checkbox" className="text-gray-700">
           I agree with the
           <button
             onClick={() => navigate("/admin-terms")}
-            className="text-teal-600 font-medium hover:text-teal-800 transition-colors ml-1"
+            className="text-primary font-medium hover:text-primary transition-colors ml-1"
           >
             terms and conditions
           </button>
@@ -33,7 +33,7 @@ function ConfirmButton() {
         onClick={() => checkbox && setShowCard(!showCard)}
         className={`px-8 py-3 rounded-lg text-white font-medium ${
           checkbox
-            ? "bg-teal-600 hover:bg-teal-700 cursor-pointer"
+            ? "bg-primary hover:bg-primary/80 cursor-pointer"
             : "bg-gray-400 cursor-not-allowed"
         } transition-colors`}
         disabled={!checkbox}

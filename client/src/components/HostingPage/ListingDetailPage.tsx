@@ -77,7 +77,7 @@ export default function ListingDetailPage() {
             <span>{mockListing.location}</span>
             <span className="mx-2">·</span>
             <div className="flex items-center">
-              <HiOutlineStar className="h-4 w-4 text-teal-500" />
+              <HiOutlineStar className="h-4 w-4 text-primary" />
               <span className="ml-1 text-sm text-gray-700">
                 {mockListing.rating}
               </span>
@@ -92,7 +92,7 @@ export default function ListingDetailPage() {
         <div className="flex space-x-3 mt-4 lg:mt-0">
           <button
             onClick={() => navigate(`/hosting/listings/${id}/edit`)}
-            className="inline-flex items-center px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-md hover:bg-rose-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-rose-700 transition-colors"
           >
             <HiOutlinePencil className="mr-1.5 h-4 w-4" />
             Edit listing
@@ -136,7 +136,7 @@ export default function ListingDetailPage() {
             <div className="grid grid-cols-2 gap-y-2">
               {mockListing.amenities.map((amenity, index) => (
                 <div key={index} className="flex items-center text-gray-600">
-                  <span className="w-2 h-2 bg-teal-500 rounded-full mr-2"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
                   {amenity}
                 </div>
               ))}

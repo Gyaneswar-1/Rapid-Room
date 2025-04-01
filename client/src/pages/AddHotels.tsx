@@ -324,7 +324,7 @@ const AddHotelForm = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-teal-600 to-teal-700 px-6 py-8 sm:px-10">
             <h1 className="text-2xl sm:text-3xl font-bold text-white">Add New Hotel</h1>
-            <p className="text-teal-100 mt-2">Fill out the form below to list your hotel on our platform</p>
+            <p className="text-primary mt-2">Fill out the form below to list your hotel on our platform</p>
           </div>
 
           {/* Navigation Tabs */}
@@ -335,7 +335,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("basic")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "basic"
-                    ? "bg-teal-100 text-teal-800"
+                    ? "bg-white text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -350,7 +350,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("amenities")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "amenities"
-                    ? "bg-teal-100 text-teal-800"
+                    ? "bg-white text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -363,7 +363,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("location")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "location"
-                    ? "bg-teal-100 text-teal-800"
+                    ? "bg-white text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -378,7 +378,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("photos")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "photos"
-                    ? "bg-teal-100 text-teal-800"
+                    ? "bg-white text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -411,14 +411,14 @@ const AddHotelForm = () => {
                 {/* Hotel Title */}
                 <div className="col-span-1 md:col-span-2">
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaTag className="text-teal-600" />
+                    <FaTag className="text-primary" />
                     Hotel Title
                   </label>
                   <input
                     {...register("title", { required: "Hotel title is required" })}
                     type="text"
                     placeholder="e.g. Luxury Ocean View Resort"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.title && <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>}
                 </div>
@@ -426,7 +426,7 @@ const AddHotelForm = () => {
                 {/* Description */}
                 <div className="col-span-1 md:col-span-2">
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaAlignLeft className="text-teal-600" />
+                    <FaAlignLeft className="text-primary" />
                     Description
                   </label>
                   <textarea
@@ -436,7 +436,7 @@ const AddHotelForm = () => {
                     })}
                     rows={4}
                     placeholder="Describe your hotel, its unique features, and what guests can expect..."
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   ></textarea>
                   {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>}
                 </div>
@@ -444,7 +444,7 @@ const AddHotelForm = () => {
                 {/* Price per Night */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaDollarSign className="text-teal-600" />
+                    <FaDollarSign className="text-primary" />
                     Price per Night
                   </label>
                   <div className="relative">
@@ -458,7 +458,7 @@ const AddHotelForm = () => {
                       })}
                       type="text"
                       placeholder="e.g. 120.00"
-                      className="w-full pl-8 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full pl-8 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                     />
                   </div>
                   {errors.price && <p className="mt-1 text-sm text-red-600">{errors.price.message}</p>}
@@ -467,14 +467,14 @@ const AddHotelForm = () => {
                 {/* Room Number */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBuilding className="text-teal-600" />
+                    <FaBuilding className="text-primary" />
                     Room Number
                   </label>
                   <input
                     {...register("roomNumber", { required: "Room number is required" })}
                     type="text"
                     placeholder="e.g. 101, 102, etc."
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.roomNumber && <p className="mt-1 text-sm text-red-600">{errors.roomNumber.message}</p>}
                 </div>
@@ -482,12 +482,12 @@ const AddHotelForm = () => {
                 {/* Guests */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaUsers className="text-teal-600" />
+                    <FaUsers className="text-primary" />
                     Max Guests
                   </label>
                   <select
                     {...register("guests", { required: "Number of guests is required" })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                       <option key={num} value={num}>
@@ -500,12 +500,12 @@ const AddHotelForm = () => {
                 {/* Beds */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBed className="text-teal-600" />
+                    <FaBed className="text-primary" />
                     Beds
                   </label>
                   <select
                     {...register("beds", { required: "Number of beds is required" })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                       <option key={num} value={num}>
@@ -518,12 +518,12 @@ const AddHotelForm = () => {
                 {/* Bathrooms */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBath className="text-teal-600" />
+                    <FaBath className="text-primary" />
                     Bathrooms
                   </label>
                   <select
                     {...register("bathrooms", { required: "Number of bathrooms is required" })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   >
                     {[1, 2, 3, 4, 5].map((num) => (
                       <option key={num} value={num}>
@@ -538,7 +538,7 @@ const AddHotelForm = () => {
                 <button
                   type="button"
                   onClick={() => nextSection("basic", "amenities")}
-                  className="px-6 py-2.5 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+                  className="px-6 py-2.5 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors"
                 >
                   Next: Amenities
                 </button>
@@ -564,8 +564,8 @@ const AddHotelForm = () => {
               {/* Basic Amenities */}
               <div className="mb-8">
                 <div className="flex items-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center mr-3">
-                    <FaHome className="w-4 h-4 text-teal-600" />
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center mr-3">
+                    <FaHome className="w-4 h-4 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Basic amenities</h3>
                 </div>
@@ -579,21 +579,21 @@ const AddHotelForm = () => {
                         key={index}
                         className={`relative flex flex-col items-center p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
                           isSelected
-                            ? "border-teal-600 bg-teal-50 shadow-sm"
+                            ? "border-primary bg-teal-50 shadow-sm"
                             : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                         }`}
                         onClick={() => handleAmenitySelection(amenity.name)}
                       >
                         {isSelected && (
-                          <div className="absolute top-2 right-2 w-4 h-4 bg-teal-600 rounded-full flex items-center justify-center">
+                          <div className="absolute top-2 right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                             <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
                         )}
-                        <Icon className={`w-8 h-8 mb-2 ${isSelected ? "text-teal-600" : "text-gray-600"}`} />
+                        <Icon className={`w-8 h-8 mb-2 ${isSelected ? "text-primary" : "text-gray-600"}`} />
                         <p
-                          className={`text-sm text-center ${isSelected ? "font-medium text-teal-700" : "text-gray-700"}`}
+                          className={`text-sm text-center ${isSelected ? "font-medium text-primary" : "text-gray-700"}`}
                         >
                           {amenity.name}
                         </p>
@@ -621,21 +621,21 @@ const AddHotelForm = () => {
                         key={index}
                         className={`relative flex flex-col items-center p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
                           isSelected
-                            ? "border-teal-600 bg-teal-50 shadow-sm"
+                            ? "border-primary bg-teal-50 shadow-sm"
                             : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                         }`}
                         onClick={() => handleAmenitySelection(amenity.name)}
                       >
                         {isSelected && (
-                          <div className="absolute top-2 right-2 w-4 h-4 bg-teal-600 rounded-full flex items-center justify-center">
+                          <div className="absolute top-2 right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                             <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
                         )}
-                        <Icon className={`w-8 h-8 mb-2 ${isSelected ? "text-teal-600" : "text-gray-600"}`} />
+                        <Icon className={`w-8 h-8 mb-2 ${isSelected ? "text-primary" : "text-gray-600"}`} />
                         <p
-                          className={`text-sm text-center ${isSelected ? "font-medium text-teal-700" : "text-gray-700"}`}
+                          className={`text-sm text-center ${isSelected ? "font-medium text-primary" : "text-gray-700"}`}
                         >
                           {amenity.name}
                         </p>
@@ -663,21 +663,21 @@ const AddHotelForm = () => {
                         key={index}
                         className={`relative flex flex-col items-center p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
                           isSelected
-                            ? "border-teal-600 bg-teal-50 shadow-sm"
+                            ? "border-primary bg-teal-50 shadow-sm"
                             : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                         }`}
                         onClick={() => handleAmenitySelection(amenity.name)}
                       >
                         {isSelected && (
-                          <div className="absolute top-2 right-2 w-4 h-4 bg-teal-600 rounded-full flex items-center justify-center">
+                          <div className="absolute top-2 right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                             <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
                         )}
-                        <Icon className={`w-8 h-8 mb-2 ${isSelected ? "text-teal-600" : "text-gray-600"}`} />
+                        <Icon className={`w-8 h-8 mb-2 ${isSelected ? "text-primary" : "text-gray-600"}`} />
                         <p
-                          className={`text-sm text-center ${isSelected ? "font-medium text-teal-700" : "text-gray-700"}`}
+                          className={`text-sm text-center ${isSelected ? "font-medium text-primary" : "text-gray-700"}`}
                         >
                           {amenity.name}
                         </p>
@@ -695,12 +695,12 @@ const AddHotelForm = () => {
                     {Array.from(selectedAmenities).map((item, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-teal-100 text-teal-800"
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white text-primary"
                       >
                         {item}
                         <button
                           type="button"
-                          className="ml-1.5 text-teal-600 hover:text-teal-800"
+                          className="ml-1.5 text-primary hover:text-primary"
                           onClick={(e) => {
                             e.stopPropagation()
                             handleAmenitySelection(item)
@@ -733,7 +733,7 @@ const AddHotelForm = () => {
                 <button
                   type="button"
                   onClick={() => nextSection("amenities", "location")}
-                  className="px-6 py-2.5 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+                  className="px-6 py-2.5 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors"
                 >
                   Next: Location
                 </button>
@@ -764,14 +764,14 @@ const AddHotelForm = () => {
                 {/* Country */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaMapMarkerAlt className="text-teal-600" />
+                    <FaMapMarkerAlt className="text-primary" />
                     Country
                   </label>
                   <input
                     {...register("country", { required: "Country is required" })}
                     type="text"
                     placeholder="e.g. Japan"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.country && <p className="mt-1 text-sm text-red-600">{errors.country.message}</p>}
                 </div>
@@ -779,14 +779,14 @@ const AddHotelForm = () => {
                 {/* State */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBuilding className="text-teal-600" />
+                    <FaBuilding className="text-primary" />
                     State/Province
                   </label>
                   <input
                     {...register("state", { required: "State is required" })}
                     type="text"
                     placeholder="e.g. Odisha"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.state && <p className="mt-1 text-sm text-red-600">{errors.state.message}</p>}
                 </div>
@@ -794,14 +794,14 @@ const AddHotelForm = () => {
                 {/* City */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaHome className="text-teal-600" />
+                    <FaHome className="text-primary" />
                     City
                   </label>
                   <input
                     {...register("city", { required: "City is required" })}
                     type="text"
                     placeholder="e.g. Cuttack"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.city && <p className="mt-1 text-sm text-red-600">{errors.city.message}</p>}
                 </div>
@@ -809,14 +809,14 @@ const AddHotelForm = () => {
                 {/* Street */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBuilding className="text-teal-600" />
+                    <FaBuilding className="text-primary" />
                     Street
                   </label>
                   <input
                     {...register("street", { required: "Street is required" })}
                     type="text"
                     placeholder="e.g. nh45"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.street && <p className="mt-1 text-sm text-red-600">{errors.street.message}</p>}
                 </div>
@@ -824,14 +824,14 @@ const AddHotelForm = () => {
                 {/* Zipcode */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBuilding className="text-teal-600" />
+                    <FaBuilding className="text-primary" />
                     Zipcode
                   </label>
                   <input
                     {...register("zipcode", { required: "Zipcode is required" })}
                     type="text"
                     placeholder="e.g. 755049"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.zipcode && <p className="mt-1 text-sm text-red-600">{errors.zipcode.message}</p>}
                 </div>
@@ -839,7 +839,7 @@ const AddHotelForm = () => {
                 {/* Number of Rooms */}
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
-                    <FaBuilding className="text-teal-600" />
+                    <FaBuilding className="text-primary" />
                     Number of Rooms
                   </label>
                   <input
@@ -849,7 +849,7 @@ const AddHotelForm = () => {
                     })}
                     type="number"
                     placeholder="e.g. 10"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-primary"
                   />
                   {errors.numberOfRooms && <p className="mt-1 text-sm text-red-600">{errors.numberOfRooms.message}</p>}
                 </div>
@@ -867,8 +867,8 @@ const AddHotelForm = () => {
                         value={type.value}
                         className="peer sr-only"
                       />
-                      <div className="flex items-center justify-center p-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 peer-checked:border-teal-600 peer-checked:bg-teal-50 transition-colors cursor-pointer">
-                        <span className="font-medium peer-checked:text-teal-700 capitalize">{type.label}</span>
+                      <div className="flex items-center justify-center p-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 peer-checked:border-primary peer-checked:bg-teal-50 transition-colors cursor-pointer">
+                        <span className="font-medium peer-checked:text-primary capitalize">{type.label}</span>
                       </div>
                     </label>
                   ))}
@@ -927,7 +927,7 @@ const AddHotelForm = () => {
                 <button
                   type="button"
                   onClick={() => nextSection("location", "photos")}
-                  className="px-6 py-2.5 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+                  className="px-6 py-2.5 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors"
                 >
                   Next: Photos
                 </button>
@@ -966,9 +966,9 @@ const AddHotelForm = () => {
                 />
                 <label htmlFor="images" className="flex flex-col items-center justify-center cursor-pointer">
                   {uploading ? (
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-600 mb-2"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-2"></div>
                   ) : (
-                    <FaCloudUploadAlt className="w-12 h-12 text-teal-600 mb-2" />
+                    <FaCloudUploadAlt className="w-12 h-12 text-primary mb-2" />
                   )}
                   <span className="text-lg font-medium text-gray-900">
                     {uploading ? "Uploading..." : "Click to upload images"}

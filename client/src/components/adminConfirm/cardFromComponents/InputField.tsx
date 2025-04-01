@@ -23,7 +23,7 @@ function InputField({ title, placeholder, logo: Logo, type, name, errorsFor, reg
         </label>
         {errorsFor && <span className="text-xs italic text-rose-500 font-medium">{errorsFor.message}</span>}
       </div>
-      <div className="flex items-center px-3 py-2.5 w-full rounded-lg border border-gray-300 bg-white shadow-sm transition-all focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/30">
+      <div className="flex items-center px-3 py-2.5 w-full rounded-lg border border-gray-300 bg-white shadow-sm transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-teal-500/30">
         <Logo className="flex-shrink-0 text-gray-500 mr-2 text-xl" />
         <input
           type={type}

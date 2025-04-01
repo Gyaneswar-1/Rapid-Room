@@ -28,7 +28,7 @@ function Navbar({ show }: NavbarProps) {
                 src={MainLogo || "/placeholder.svg"}
                 alt="RapidRoom"
               />
-              <span className="font-bold text-teal-600 text-xl hidden sm:block">RapidRoom</span>
+              <span className="font-bold text-primary text-xl hidden sm:block">RapidRoom</span>
             </div>
 
             {/* Search Bar */}
