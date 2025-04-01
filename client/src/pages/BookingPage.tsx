@@ -18,6 +18,7 @@ import ReviewSection from "../components/bookingpage/ReviewSection";
 
 //get hotel service
 import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
+import { getRatings } from "../service/getSingleHotelInformation/getRatings";
 
 //state management imports
 
@@ -38,17 +39,23 @@ import {
   setGuestAllowed,
   setHotelRating,
 } from "../store/reducers/singleHotel.reducer";
+import {setHotelIdForCheckIn} from "../store/reducers/checkIn.reducer"
 import { useDispatch, useSelector } from "react-redux";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
+import { useNavigate } from "react-router-dom";
 
 //state managmnt
 
 export default function BookingPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const id = Number(queryParams.get("hotelId"));
+  if(!id){
+    navigate("/home");
+  }
   const [showSkeliton, setShowSkeliton] = useState(false);
-
+  
   const { showAllReview } = useSelector(
     (state: RootState) => state.toogleAllReviewsReducer
   );
@@ -70,8 +77,12 @@ export default function BookingPage() {
     guestAllowed,
     hotelRating,
   } = useSelector((state: RootState) => state.singleHotelReducer);
+  
+
   const dispatch: AppDispatch = useDispatch();
   console.log(hotelType, hotelImages);
+  dispatch(setHotelId(id));
+  dispatch(setHotelIdForCheckIn(id));
 
   useEffect(() => {
     if (true) {
@@ -129,6 +140,23 @@ export default function BookingPage() {
         .catch((err) => {
           console.log("error in the booking page catch", err);
           // navigate("/home");
+        });
+
+      getRatings(id)
+        .then((res) => {
+          dispatch(
+            setHotelRating({
+              accuracy: res.data?.accuracy,
+              checkIn: res.data?.checkIn,
+              cleanliness: res.data?.cleanliness,
+              communication: res.data?.communication,
+              location: res.data?.location,
+              value: res.data?.price,
+            })
+          );
+        })
+        .catch((err) => {
+          console.log("get error in getting ratings", err);
         });
     }
   }, []);
@@ -245,8 +273,8 @@ export default function BookingPage() {
 
                 {/* Reviews Section */}
                 <ReviewSection
-                  overalRating={10}
-                  totalReviews={200}
+                  overalRating={overallRating}
+                  totalReviews={totalReviews}
                   reviews={hotelReviewsx}
                 ></ReviewSection>
 
@@ -256,7 +284,7 @@ export default function BookingPage() {
                   hostRating={aboutHost.hostRating}
                   hostResponseRate={aboutHost.hostResponseRate}
                   profileImage={aboutHost.profileImage}
-                  totalReviews={10}
+                  totalReviews={totalReviews}
                 ></MeetYourHost>
               </div>
 
@@ -299,15 +327,15 @@ export default function BookingPage() {
           {/* Reservation Modal */}
           {showReservatonModel && (
             <ReservationModal
-              city="Jajpu"
+              city={hotelAddress.city}
               cleaningFee={100}
-              country={"india"}
-              hotelName="mayfair"
-              overallRating={4}
+              country={hotelAddress.country}
+              hotelName={hotelName}
+              overallRating={overallRating}
               perNightCost={perNight}
               serviceFee={100}
-              state={"Odisha"}
-              totalRating={200}
+              state={hotelAddress.state}
+              totalRating={totalReviews}
             />
           )}
           <SetUserDataToStore />
