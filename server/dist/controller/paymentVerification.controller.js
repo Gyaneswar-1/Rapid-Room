@@ -5,7 +5,6 @@ export async function paymentVerification(req, res) {
     const { hotelId, reservationId, paymentId, roomId } = req.query;
     //strictly get these infomation
     console.log(hotelId, reservationId, paymentId, roomId);
-    console.log(req.user.id);
     if (!razorpay_order_id ||
         !razorpay_payment_id ||
         !hotelId ||
@@ -53,7 +52,7 @@ export async function paymentVerification(req, res) {
             const paymentStatus = await prisma.payments.update({
                 where: {
                     id: parseInt(paymentId),
-                    userId: req.user.id,
+                    // userId: req.user.id,
                 },
                 data: {
                     razorpay_order_id: razorpay_order_id,
@@ -65,7 +64,7 @@ export async function paymentVerification(req, res) {
             const reservation = await prisma.reservations.update({
                 where: {
                     id: parseInt(reservationId),
-                    userId: req.user.id,
+                    // userId: req.user.id,
                     hotelId: parseInt(hotelId),
                     roomId: parseInt(roomId),
                 },
