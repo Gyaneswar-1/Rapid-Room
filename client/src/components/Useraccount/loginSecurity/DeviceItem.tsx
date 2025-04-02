@@ -30,7 +30,7 @@ export default function DeviceItem({ device }: DeviceProps) {
           <h3 className="font-medium text-gray-800">
             {device.name}
             {device.isCurrent && (
-              <span className="ml-2 text-xs bg-white text-primary px-2 py-0.5 rounded-full">Current Device</span>
+              <span className="ml-2 text-xs bg-teal-100 text-primary px-2 py-0.5 rounded-full">Current Device</span>
             )}
           </h3>
 

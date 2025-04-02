@@ -9,7 +9,6 @@ interface IsHostProps {
 }
 
 function IsHost({ element }: IsHostProps) {
-
     const { isHost}: userStoreType = useSelector(
       (state: RootState) => state.userReducer
     );

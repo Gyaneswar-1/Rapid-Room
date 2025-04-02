@@ -1,9 +1,9 @@
 import type React from "react"
-import type { IconType } from "react-icons"
+import type { LucideIcon } from "lucide-react"
 import { motion } from "framer-motion"
 
 interface CategoryBoxProps {
-  icon: IconType
+  icon: LucideIcon
   label: string
   selected?: boolean
   onClick?: () => void

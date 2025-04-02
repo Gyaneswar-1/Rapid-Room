@@ -91,24 +91,21 @@ const allAmenities: AmenityItem[] = [
 
 const hotelTypes = [
   { value: "CITY", label: "city" },
-  { value: "BEACH", label: "beach" },
   { value: "MOUNTAIN", label: "mountain" },
-  { value: "COUNTRYSIDE", label: "countryside" },
   { value: "RESORT", label: "resort" },
-  { value: "BUDGET", label: "budget" },
   { value: "LUXURY", label: "luxury" },
   { value: "AMAZING_VIEWS", label: "amazing views" },
-  { value: "AMAZING_POOLS", label: "amazing pools" },
   { value: "FARMS", label: "farms" },
   { value: "HISTORICAL_HOMES", label: "historical homes" },
-  { value: "SURFING", label: "surfing" },
   { value: "BEACHFRONT", label: "beachfront" },
   { value: "LAKEFRONT", label: "lakefront" },
   { value: "CASTLES", label: "castles" },
   { value: "CAMPING", label: "camping" },
-  { value: "BOATS", label: "boats" },
   { value: "TROPICAL", label: "tropical" },
-]
+  { value: "ARCTIC", label: "arctic" },
+  { value: "ISLANDS", label: "islands" },
+  { value: "COUNTRYSIDE", label: "countryside" },
+];
 
 const AddHotelForm = () => {
   const [selectedAmenities, setSelectedAmenities] = useState<Set<string>>(new Set())
@@ -335,7 +332,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("basic")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "basic"
-                    ? "bg-white text-primary"
+                    ? "bg-teal-100 text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -350,7 +347,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("amenities")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "amenities"
-                    ? "bg-white text-primary"
+                    ? "bg-teal-100 text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -363,7 +360,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("location")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "location"
-                    ? "bg-white text-primary"
+                    ? "bg-teal-100 text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -378,7 +375,7 @@ const AddHotelForm = () => {
                 onClick={() => setActiveSection("photos")}
                 className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap flex items-center ${
                   activeSection === "photos"
-                    ? "bg-white text-primary"
+                    ? "bg-teal-100 text-primary"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -564,7 +561,7 @@ const AddHotelForm = () => {
               {/* Basic Amenities */}
               <div className="mb-8">
                 <div className="flex items-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center mr-3">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center mr-3">
                     <FaHome className="w-4 h-4 text-primary" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Basic amenities</h3>
@@ -695,7 +692,7 @@ const AddHotelForm = () => {
                     {Array.from(selectedAmenities).map((item, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white text-primary"
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-teal-100 text-primary"
                       >
                         {item}
                         <button

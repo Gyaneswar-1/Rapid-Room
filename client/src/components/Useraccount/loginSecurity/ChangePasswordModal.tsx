@@ -45,7 +45,7 @@ export default function ChangePasswordModal({ onClose }: ChangePasswordModalProp
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-xl animate-fadeIn">
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center">
-            <div className="bg-white p-2 rounded-full mr-3">
+            <div className="bg-teal-100 p-2 rounded-full mr-3">
               <CiLock className="text-primary text-xl" />
             </div>
             <h2 className="text-xl font-semibold text-gray-800">Change Password</h2>
