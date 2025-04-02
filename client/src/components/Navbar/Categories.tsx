@@ -1,5 +1,3 @@
-
-
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -163,7 +161,7 @@ useEffect(() => {
     <div className="relative w-full py-4">
       <button
         onClick={() => scroll("left")}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 hidden md:block"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
         aria-label="Scroll left"
       >
         <MdKeyboardArrowLeft size={20} />
@@ -176,8 +174,8 @@ useEffect(() => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="flex gap-5 overflow-x-auto scrollbar-hide py-1 px-1 justify-center"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="flex gap-4 overflow-x-auto scrollbar-hide py-1 px-1 md:justify-center"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
         >
           {categories.map((item) => (
             <CategoryBox
@@ -193,7 +191,7 @@ useEffect(() => {
 
       <button
         onClick={() => scroll("right")}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 hidden md:block"
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white shadow-md hover:shadow-lg transition border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
         aria-label="Scroll right"
       >
         <MdKeyboardArrowRight size={20} />

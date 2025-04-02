@@ -35,6 +35,7 @@ export const getUserInformation = async (
                         longitude: true,
                     },
                 },
+                status:true
             },
         });
         if (!userInformation) {

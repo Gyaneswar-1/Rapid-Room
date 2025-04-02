@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogOut, User, ChevronDown } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import MainLogo from "../../assets/images/MainLogo.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,7 +61,7 @@ export default function WelcomePageNavBar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center justify-center gap-3">
+          <Link to="/home" className="flex items-center justify-center gap-3">
             <div className="flex items-center gap-2 cursor-pointer transition hover:opacity-80">
               <img
                 className="rounded-full hidden md:block h-10 w-10 object-contain"

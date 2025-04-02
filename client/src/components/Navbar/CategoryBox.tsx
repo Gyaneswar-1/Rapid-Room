@@ -17,7 +17,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({ icon: Icon, label, selected, 
       onClick={onClick}
       className={`
         flex flex-col items-center justify-center gap-1
-        py-2 px-3 rounded-xl cursor-pointer transition-all
+        py-2 px-3  cursor-pointer transition-all
         ${
           selected
             ? "border-b-2 border-primary text-primary"

@@ -1,3 +1,4 @@
+import Footer from "../components/Navbar/Footer";
 import HeroSection from "../components/welcomePage/HeroSection";
 import Offer from "../components/welcomePage/Offer";
 import Stat from "../components/welcomePage/Stat";
@@ -17,6 +18,7 @@ return (
       <Stat />
       <UserReview />
       <SetUserDataToStore/>
+      <Footer/>
     </main>
   );
 }

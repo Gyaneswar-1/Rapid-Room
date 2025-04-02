@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndConditionsForAdmin";
 import IsAuth from "./IsAuth";
 import AddHotels from "../pages/AddHotels";
@@ -30,28 +30,43 @@ import SettingsPage from "../components/AdminComponents/SettingsPage";
 
 import BookingPage from "../pages/BookingPage";
 import PaymentsPage from "../components/AdminComponents/components/paymentPage";
+import HostPendingPage from "../pages/HostPendingPage";
+import ProtectedAdminRoute from "./ProtectedAdminRoute";
+import AdminLoginPage from "../components/AdminComponents/AdminLoginPage";
 
 function RouterHandler() {
+  // Remove the automatic redirect that affects all routes
+  // localStorage.setItem("isAdmin", "true");  <- Remove this line
+  
+  // Admin check only affects the root route
+  const AdminRedirect = () => {
+    if (localStorage.getItem("isAdmin") === "true") {
+      return <Navigate to="/admin" />;
+    }
+    return <Welcome />;
+  };
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Welcome />} />
+          <Route path="/" element={<AdminRedirect />} />
 
           <Route path="/home" element={<Home />} />
           <Route path="/comeingsoon" element={<ComeingSoon />} />
           {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
-            
+
+            <Route
+              path="host-pending"
+              element={<IsHost element={<HostPendingPage />} />}
+            />
             <Route
               path="add-hotel"
               element={<IsHost element={<AddHotels />} />}
             />
-            <Route
-              path="my-bookings"
-              element={<UserBookings/>}
-            ></Route>
+            <Route path="my-bookings" element={<UserBookings />}></Route>
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
@@ -75,13 +90,32 @@ function RouterHandler() {
             </Route>
           </Route>
 
+          <Route path="/admin-login" element={<AdminLoginPage />} />
           {/* Admin routes */}
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/hotels" element={<HotelsPage />} />
-          <Route path="/admin/hosts" element={<HostsPage />} />
-          <Route path="/admin/users" element={<UsersPage />} />
-          <Route path="/admin/settings" element={<SettingsPage />} />
-          <Route path="/admin/payments" element={<PaymentsPage />} />
+          <Route
+            path="/admin"
+            element={<ProtectedAdminRoute element={<AdminDashboard />} />}
+          />
+          <Route
+            path="/admin/hotels"
+            element={<ProtectedAdminRoute element={<HotelsPage />} />}
+          />
+          <Route
+            path="/admin/hosts"
+            element={<ProtectedAdminRoute element={<HostsPage />} />}
+          />
+          <Route
+            path="/admin/users"
+            element={<ProtectedAdminRoute element={<UsersPage />} />}
+          />
+          <Route
+            path="/admin/settings"
+            element={<ProtectedAdminRoute element={<SettingsPage />} />}
+          />
+          <Route
+            path="/admin/payments"
+            element={<ProtectedAdminRoute element={<PaymentsPage />} />}
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

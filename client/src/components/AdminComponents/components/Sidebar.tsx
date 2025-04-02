@@ -1,5 +1,5 @@
 import { Users, Building2, Settings, LogOut, X, RainbowIcon, BarChart3, UserRoundCheck, CreditCard } from "lucide-react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 interface SidebarProps {
   isSidebarOpen: boolean
   setIsSidebarOpen: (open: boolean) => void
@@ -8,6 +8,12 @@ interface SidebarProps {
 
 export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: SidebarProps) {
   const {pathname} = useLocation()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAdmin")
+    navigate("/admin-login")
+  }
 
   return (
     <aside
@@ -107,7 +113,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
             </li>
             <li>
               <button
-                onClick={() => console.log("Logout clicked")}
+                onClick={handleLogout}
                 className="flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
               >
                 <LogOut className="w-5 h-5 mr-3" />

@@ -21,6 +21,7 @@ hasDataInStore: boolean,
  zipCode: string,
  longitude: string,
  latitude: string,
+ status: "APPROVED" | "PENDING" | "REJECTED";
 }
 
 const initialState:userStoreType = {
@@ -44,6 +45,7 @@ const initialState:userStoreType = {
   zipCode: "",
   longitude: "",
   latitude: "",
+  status:"PENDING"
  
 }
 
@@ -107,6 +109,9 @@ export const UserSlice = createSlice({
         },
         setUserLatitude:(state,action)=>{
           state.latitude = action.payload;
+        },
+        setUserStatus:(state,action)=>{
+          state.status = action.payload;
         },
     }
 })
