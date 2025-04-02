@@ -7,20 +7,12 @@ declare global {
   }
 }
 
-type checkInHandlerType = {
-  amount: number,
-  email: string,
-  name: string,
-  phNumber: number,
-  hotelId: number,
-  checkInDate: string,
-  stayingFor: number,
-}
 
 
 
 
-export default async function checkInHandler({amount,email,name, phNumber,hotelId,checkInDate,stayingFor}:checkInHandlerType){
+
+export default async function checkInHandler({amount,email,name, phNumber,hotelId, reservationId, paymentId, roomId}:any){
     
 
 
@@ -47,7 +39,7 @@ export default async function checkInHandler({amount,email,name, phNumber,hotelI
         name: 'RapidRoom',
         description: 'Test Transaction',
         order_id: orderRes.data.data.order.id,
-        callback_url: `${API}/user/payment-verification?hotelId=${hotelId}&checkInDate=${checkInDate}&stayingFor=${stayingFor}`, // Your success URL
+        callback_url: `${API}/user/payment-verification?hotelId=${Number(hotelId)}&reservationId=${Number(reservationId)}&paymentId=${Number(paymentId)}&roomId=${Number(roomId)}`, // Your success URL
         prefill: {
           name: name,
           email: email,

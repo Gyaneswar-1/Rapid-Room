@@ -30,6 +30,7 @@ export const getUserInformation = async (req, res) => {
                         longitude: true,
                     },
                 },
+                status: true
             },
         });
         if (!userInformation) {

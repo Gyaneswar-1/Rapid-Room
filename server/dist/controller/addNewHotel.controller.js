@@ -24,7 +24,7 @@ export const addNewHotel = async (req, res) => {
                     perNight: parseFloat(perNight),
                     roomType: roomType,
                     hasParking: Boolean(hasParking),
-                    hasPools: Boolean(hasPools),
+                    hasPool: Boolean(hasPools),
                     hasWifi: Boolean(hasWifi),
                     hasTv: Boolean(hasTv),
                     hasBalcony: Boolean(hasBalcony),
@@ -32,7 +32,6 @@ export const addNewHotel = async (req, res) => {
                     hasWorkSpace: Boolean(hasWorkSpace),
                     hasWashingMachine: Boolean(hasWashingMachine),
                     hasGarden: Boolean(hasGarden),
-                    hasGrummingEqupments: Boolean(hasGrummingEqupments),
                     guestAllowed: guestAllowed,
                     type: type,
                     address: {

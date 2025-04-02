@@ -6,11 +6,16 @@ import { AppDispatch, RootState } from "../../store/store";
 import { setShowReservModel } from "../../store/reducers/showReservatonModel.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
+import { handelReservation } from "../../service/checkin/handelReservation";
+
 import {
   setPaymentId,
   setReservationId,
   setRoomId,
+  setHotelIdForCheckIn
 } from "../../store/reducers/checkIn.reducer";
+import { toast } from "react-toastify";
+import checkInHandler from "../../service/checkin/checkInService";
 
 interface ReservationModalProps {
   perNightCost: number;
@@ -57,8 +62,8 @@ export default function ReservationModal({
 
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(true);
+  const [otpVerified, setOtpVerified] = useState(true);
   const [isRequestLoading, setIsRequestLoading] = useState(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
   const [datesSelected, setDatesSelected] = useState(true); // Default to true since we have default dates
@@ -69,6 +74,14 @@ export default function ReservationModal({
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
+  };
+
+  // Add this helper function to format date for input
+  const formatDateForInput = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
   // Convert string date to Date object
@@ -92,18 +105,18 @@ export default function ReservationModal({
 
   const calculateTotalCost = (): number => {
     const roomCost = perNightCost * nights;
-    const serviceCharge = Math.round(roomCost * 0.15); // 15% service charge
-    return roomCost + cleaningFee + serviceCharge;
+     // 15% service charge
+    return roomCost + cleaningFee + serviceFee;
   };
 
   const totalCost = calculateTotalCost();
 
-  const handleSendOtp = () => {
-    if (!email || !email.includes("@")) return;
+  // const handleSendOtp = () => {
+  //   if (!email || !email.includes("@")) return;
 
-    setOtpSent(true);
-    
-  };
+  //   setOtpSent(true);
+
+  // };
 
   const handleVerifyOtp = () => {
     if (!otp || otp.length < 4) return;
@@ -114,75 +127,66 @@ export default function ReservationModal({
     console.log("OTP verified");
   };
 
-  const handleRequestReservation = () => {
+  const handleRequestReservation = async () => {
     if (!datesSelected || !otpVerified) return;
-
     setIsRequestLoading(true);
 
-    // Format dates before logging
     const formattedCheckIn = formatDateToString(selectedCheckIn);
     const formattedCheckOut = formatDateToString(selectedCheckOut);
+
+    // Format dates before logging
     console.log(formattedCheckIn, formattedCheckOut);
 
+    //send the request to the  backent for hotl reservation
+    const response = await handelReservation(hotelId,formattedCheckIn,formattedCheckOut);
+    if(response?.success === true){
+      console.log(response)
+      dispatch(setReservationId(response.data.resevationId));
+      dispatch(setRoomId(response.data.roomId));
+      dispatch(setPaymentId(response.data.paymentId))
+      dispatch(setHotelIdForCheckIn(response.data.hotelId));
+
+      toast.success("Reservation request successfull paynow!");
+    }else{
+      toast.error("reservation request fail request again");
+    }
     // Simulate API call
+
     setIsRequestLoading(false);
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!datesSelected || !otpVerified) return;
-
     setIsPaymentLoading(true);
 
-    // Log all payment data
-    const paymentData = {
-      hotel: {
-        name: hotelName,
-        city,
-        state,
-        country,
-        roomType,
-      },
-      dates: {
-        checkIn: selectedCheckIn,
-        checkOut: selectedCheckOut,
-        nights,
-      },
-      costs: {
-        perNight: perNightCost,
-        cleaningFee,
-        serviceFee,
-        total: totalCost,
-      },
-      guest: {
-        email,
-      },
-    };
 
-    console.log("Payment Data:", paymentData);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsPaymentLoading(false);
-      console.log("Payment processed");
-      // You would typically redirect to a payment gateway or show a success message
-    }, 2000);
+    checkInHandler({amount:totalCost,email:"bibekbibek966@gmail.com",name:"bibek samal",phNumber:9178240594,hotelId:hotelId,reservationId:reservationId,paymentId:paymentId,roomId:roomId});
+    setIsPaymentLoading(false);
+    
   };
 
   const handleDateChange = (date: string, type: "checkin" | "checkout") => {
-    // Convert HTML date format (YYYY-MM-DD) to our format (DD-MM-YYYY)
-    const [year, month, day] = date.split("-");
-    const formattedDate = `${day}-${month}-${year}`;
+    const selectedDate = new Date(date);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
 
-    const selectedDate = parseDateString(formattedDate);
     if (type === "checkin") {
+      // Don't allow dates before today
+      if (selectedDate < currentDate) {
+        return;
+      }
       setSelectedCheckIn(selectedDate);
-      // If check-out date is before check-in, adjust it
-      if (selectedCheckOut < selectedDate) {
+      // If check-out date is before new check-in date, adjust it
+      if (selectedCheckOut <= selectedDate) {
         const newCheckOut = new Date(selectedDate);
         newCheckOut.setDate(selectedDate.getDate() + 1);
         setSelectedCheckOut(newCheckOut);
       }
     } else {
+      // Don't allow checkout date before checkin date
+      if (selectedDate <= selectedCheckIn) {
+        return;
+      }
       setSelectedCheckOut(selectedDate);
     }
     setDatesSelected(true);
@@ -233,8 +237,8 @@ export default function ReservationModal({
                     </label>
                     <input
                       type="date"
-                      value={formatDateToString(selectedCheckIn)}
-                      min={formatDateToString(new Date())}
+                      value={formatDateForInput(selectedCheckIn)}
+                      min={formatDateForInput(new Date())}
                       onChange={(e) =>
                         handleDateChange(e.target.value, "checkin")
                       }
@@ -247,8 +251,8 @@ export default function ReservationModal({
                     </label>
                     <input
                       type="date"
-                      value={formatDateToString(selectedCheckOut)}
-                      min={formatDateToString(
+                      value={formatDateForInput(selectedCheckOut)}
+                      min={formatDateForInput(
                         new Date(selectedCheckIn.getTime() + 86400000)
                       )}
                       onChange={(e) =>
@@ -286,7 +290,7 @@ export default function ReservationModal({
             </div>
 
             <div>
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-4">
                   Verify Your Email
                 </h3>
@@ -350,7 +354,7 @@ export default function ReservationModal({
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
 
               <div className="space-y-4 mt-8">
                 <button

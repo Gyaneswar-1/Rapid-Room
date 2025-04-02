@@ -6,6 +6,6 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 const paymentRoute = Router();
 
 paymentRoute.route("/payment").post(authMiddleware,payment);
-paymentRoute.route("/payment-verification").post(authMiddleware,paymentVerification)
+paymentRoute.route("/payment-verification").post(paymentVerification)
 
 export default paymentRoute;

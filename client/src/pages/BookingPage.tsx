@@ -106,16 +106,7 @@ export default function BookingPage() {
                 latitude: res.data.address.latitude,
               })
             );
-            dispatch(
-              setHotelRating({
-                accuracy: 2,
-                checkIn: 3,
-                cleanliness: 5,
-                communication: 4,
-                location: 2,
-                value: 4,
-              })
-            );
+            
             dispatch(setAboutHotel(res.data.description));
             dispatch(setRoomType(res.data.roomType));
             dispatch(setPerNight(res.data.perNight));

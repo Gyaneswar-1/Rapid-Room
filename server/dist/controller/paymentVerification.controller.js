@@ -15,7 +15,7 @@ export async function paymentVerification(req, res) {
         //cancel the reservation
         // navigate to the error page
         return res.json({
-            message: "failed in data validation",
+            message: "failed in data validation or in suficient data",
         });
     }
     try {

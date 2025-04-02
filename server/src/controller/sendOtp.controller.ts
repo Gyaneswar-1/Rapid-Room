@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 export async function sendOtp(req:Request | any,res:Response | any){
     
     const {email, otp} = req.body;
+    
     if(!email || !otp){
         return res.status(400).json(
             new ApiError(
@@ -21,7 +22,7 @@ export async function sendOtp(req:Request | any,res:Response | any){
     }
 
     const mailOptions = {
-            from: process.env.GOOGLE_EMAIL,
+            from: process.env.GOOGLE_EMAIL || "rapid.room27@gmail.com",
             to: email,
             subject: "Otp verification for reservation",
             text: `${otp}`,
@@ -29,6 +30,8 @@ export async function sendOtp(req:Request | any,res:Response | any){
     
         try {
            const otpResponse = await transporter.sendMail(mailOptions);
+           console.log(otpResponse);
+
            if(otpResponse){
             return res.status(200).json(
                 new ApiResponse(
