@@ -10,6 +10,7 @@ import { editUser } from "../controller/editUser.controller.js";
 import { userLogout } from "../controller/userLogout.controller.js";
 import { createAdmin } from "../controller/createAdmin.controller.js";
 import { sendOtp } from "../controller/sendOtp.controller.js";
+import { cancleReservation } from "../controller/cancelReservatin.controller.js";
 const userRouter = Router();
 userRouter.route("/signup").post(upload.fields([
     //multer middleware setup for file accesss
@@ -25,5 +26,6 @@ userRouter.route("/create-admin").post(authMiddleware, createAdmin);
 userRouter.route("/getInfo").get(authMiddleware, getUserInformation);
 userRouter.route("/edit").put(authMiddleware, editUser);
 userRouter.route("/bookHotel").post(authMiddleware, reserveHotel);
+userRouter.route("/cancel-reservation").delete(authMiddleware, cancleReservation);
 userRouter.route("/sendotp").post(sendOtp);
 export default userRouter;
