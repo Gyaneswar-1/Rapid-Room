@@ -1,0 +1,72 @@
+RAPID ROOM KNOWLEDGE BASE
+========================
+
+TABLE OF CONTENTS
+----------------
+1. General Information
+2. User Guide
+3. Host Guide
+4. Navigation Help
+5. Troubleshooting
+6. Contact Support
+
+1. GENERAL INFORMATION
+---------------------
+Q: What is Rapid Room?
+A: Rapid Room is a room booking platform developed by Bibek, Gyana, Arpita, Rajat, and Sangita, designed to help users find and book accommodations easily.
+
+Q: Is it free to use Rapid Room?
+A: Yes, creating an account and browsing rooms is free. You only pay for room bookings.
+
+2. USER GUIDE
+------------
+Q: How do I create an account?
+A: Click the "Sign Up" button in the top right corner, fill in your details, and verify your email.
+
+Q: How do I search for rooms?
+A: Use the search bar on the homepage. Enter location, check-in/out dates, and number of guests.
+
+Q: How do I make a booking?
+A: Select a room, check availability, click "Book Now", confirm details, and complete payment.
+
+Q: How can I cancel my booking?
+A: Go to "My Bookings", select the booking, and click "Cancel Booking".
+
+3. HOST GUIDE
+------------
+Q: How do I list my property?
+A: Click "Become a Host", complete property details, add photos, and set pricing.
+
+Q: How do I manage my listings?
+A: Access "Host Dashboard" to view bookings, update availability, and modify listings.
+
+Q: How do I receive payments?
+A: Add your bank details in "Payment Settings" for automatic transfers.
+
+4. NAVIGATION HELP
+-----------------
+Q: I'm stuck on the homepage, what can I do?
+A: The main navigation menu includes:
+- Home: Return to main page
+- Search: Find rooms
+- Bookings: View your reservations
+- Profile: Manage account
+- Help: Access support
+
+Q: How do I return to the previous page?
+A: Use the browser's back button or breadcrumb navigation at the top of the page.
+
+5. TROUBLESHOOTING
+-----------------
+Q: The website isn't loading, what should I do?
+A: Try refreshing the page, clearing cache, or using a different browser.
+
+Q: Payment failed, what now?
+A: Check your card details, ensure sufficient funds, or try an alternative payment method.
+
+6. CONTACT SUPPORT
+-----------------
+For additional help:
+- Email: support@rapidroom.com
+- Phone: 1-800-RAPID-RM
+- Live Chat: Available 24/7 through the website
