@@ -29,6 +29,8 @@ export const getuserData = async () => {
         country: response.data.data.address.country,
         latitude: response.data.data.address.latitude,
         longitude: response.data.data.address.longitude,
+
+        status: response.data.data.status,
       };
     }
     return {

@@ -52,8 +52,9 @@ export default function UserProfile() {
     street,
     city,
     zipCode,
+    status
   }: userStoreType = useSelector((state: RootState) => state.userReducer);
-
+  console.log(status); //gyna dekhe eith status console.log hauchi status
   // Close mobile menu when screen size changes to desktop
   useEffect(() => {
     const handleResize = () => {

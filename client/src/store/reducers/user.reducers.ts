@@ -117,4 +117,4 @@ export const UserSlice = createSlice({
 })
 
 export default UserSlice.reducer;
-export const {setHasDataInStore,setUserCity,setUserCountry,setUserCreatedAt,setUserEmail,setUserFullName,setUserGovId,setUserHostExperience,setUserHostRating,setUserHostResponseRate,setUserID,setUserIsHost,setUserLatitude,setUserLongitude,setUserPhoneNumber,setUserProfileImage,setUserState,setUserStreet,setUserZipCode} = UserSlice.actions;
+export const {setHasDataInStore,setUserCity,setUserCountry,setUserCreatedAt,setUserEmail,setUserFullName,setUserGovId,setUserHostExperience,setUserHostRating,setUserHostResponseRate,setUserID,setUserIsHost,setUserLatitude,setUserLongitude,setUserPhoneNumber,setUserProfileImage,setUserState,setUserStreet,setUserZipCode, setUserStatus} = UserSlice.actions;

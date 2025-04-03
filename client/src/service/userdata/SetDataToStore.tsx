@@ -23,6 +23,7 @@ import {
   setUserState,
   setUserStreet,
   setUserZipCode,
+  setUserStatus
 } from "../../store/reducers/user.reducers";
 import { useEffect } from "react";
 
@@ -58,6 +59,7 @@ export default function SetUserDataToStore(){
             dispatch(setUserState(data.state || ""));
             dispatch(setUserZipCode(data.zipCode || ""));
             dispatch(setUserCountry(data.country || ""));
+            dispatch(setUserStatus(data.status));
             dispatch(
               setUserLatitude(data.latitude ? Number(data.latitude) : null)
             );
