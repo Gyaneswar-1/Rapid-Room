@@ -93,14 +93,6 @@ function RouterHandler() {
               <Route path="guests" element={<GuestsPage />} />
               <Route path="analytics" element={<AnalyticsPage />} />
               <Route path="add-hotel" element={<AddHotels />}/>
-              {/*<Route path="today" element={<TodayPage />} />
-              <Route path="listings" element={<ListingsPage />} />
-              <Route path="listings/:id" element={<ListingDetailPage />} />
-              <Route path="listings/:id/edit" element={<ComeingSoon />} />
-              <Route path="listings/new" element={<ComeingSoon />} />
-              <Route path="messages" element={<MessagesPage />} />
-              <Route path="guidebook" element={<GuidebookPage />} />
-              <Route path="earnings" element={<EarningsPage />} /> */}
             </Route>
           </Route>
 

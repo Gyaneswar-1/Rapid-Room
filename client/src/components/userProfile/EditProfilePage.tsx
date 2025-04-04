@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -13,67 +13,100 @@ import {
   MapPin,
   CreditCard,
   Save,
+  Loader2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { userStoreType } from "../../store/reducers/user.reducers";
+import { RootState } from "../../store/store";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { uploadImage } from "../../service/photos/imageUpload";
+
+// Define the form data type
+type FormInputs = {
+  name: string;
+  email: string;
+  phone: string;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  zipcode: string;
+  govId: string;
+  upiId: string;
+};
+
 export default function EditProfilePage() {
+  const {
+    email,
+    profileImage,
+    fullName,
+    phoneNumber,
+    govId,
+    country,
+    state,
+    street,
+    city,
+    zipCode,
+  }: userStoreType = useSelector((state: RootState) => state.userReducer);
+
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadedImage, setUploadedImage] = useState<string>(profileImage || "");
+  const [isUploading, setIsUploading] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
 
-  // User profile state
-  const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "rapidroom@gmail.com",
-    phone: "+1 (555) 123-4567",
-    street: "225 Kukura",
-    city: "Cuttack",
-    state: "Odisha",
-    country: "India",
-    zipcode: "",
-    govId: "",
-    upiId: "johndoe@upi",
-    profileImage: "/placeholder.svg?height=200&width=200",
+  // React Hook Form setup
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormInputs>({
+    defaultValues: {
+      name: fullName || "",
+      email: email || "",
+      phone: phoneNumber ? String(phoneNumber) : "",
+      street: street || "",
+      city: city || "",
+      state: state || "",
+      country: country || "",
+      zipcode: zipCode || "",
+      govId: govId ? String(govId) : "",
+      upiId: "",
+    }
   });
 
-  // Form data for editing
-  const [formData, setFormData] = useState({ ...profile });
-
-  // Handle input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  // Handle save
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    setProfile({
-      ...profile,
-      ...formData,
-    });
-
-    // Navigate back to profile page
-    navigate("/profile");
-  };
+  // Set form values when user data changes
+  useEffect(() => {
+    setValue("name", fullName || "");
+    setValue("email", email || "");
+    setValue("phone", phoneNumber ? String(phoneNumber) : "");
+    setValue("street", street || "");
+    setValue("city", city || "");
+    setValue("state", state || "");
+    setValue("country", country || "");
+    setValue("zipcode", zipCode || "");
+    setValue("govId", govId ? String(govId) : "");
+  }, [fullName, email, phoneNumber, street, city, state, country, zipCode, govId, setValue]);
 
   // Handle profile image upload
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        if (event.target && event.target.result) {
-          setFormData({
-            ...formData,
-            profileImage: event.target.result as string,
-          });
+      setIsUploading(true);
+      
+      try {
+        const result = await uploadImage(file);
+        console.log(result);
+        
+        if (result.success) {
+          setUploadedImage(result.imageUrl);
+        } else {
+          console.error("Failed to upload image:", result.error);
+          alert("Failed to upload image. Please try again.");
         }
-      };
-
-      reader.readAsDataURL(file);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        alert("An error occurred during image upload. Please try again.");
+      } finally {
+        setIsUploading(false);
+      }
     }
   };
 
@@ -81,6 +114,32 @@ export default function EditProfilePage() {
   const triggerFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
+    }
+  };
+
+  // Form submission handler
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setFormSubmitting(true);
+    try {
+      // Include the uploaded image URL in the form data for submission
+      const formDataWithImage = {
+        ...data,
+        profileImage: uploadedImage || profileImage || ""
+      };
+
+      // Log the complete form data with the image URL
+      console.log("Form submitted with complete data:", formDataWithImage);
+      
+      // Here you would typically send the data to your API
+      // await updateUserProfile(formDataWithImage);
+      
+      // Navigate back to profile page on success
+      navigate("/profile");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile. Please try again.");
+    } finally {
+      setFormSubmitting(false);
     }
   };
 
@@ -106,7 +165,7 @@ export default function EditProfilePage() {
       </header>
 
       <main className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <form onSubmit={handleSave} className="space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Profile Image */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
@@ -119,7 +178,7 @@ export default function EditProfilePage() {
               <div className="relative mb-4">
                 <div className="h-32 w-32 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow">
                   <img
-                    src={formData.profileImage || "/placeholder.svg"}
+                    src={uploadedImage || profileImage || "/placeholder.svg"}
                     alt="Profile"
                     className="h-full w-full object-cover"
                   />
@@ -127,21 +186,29 @@ export default function EditProfilePage() {
                 <button
                   type="button"
                   onClick={triggerFileInput}
-                  className="absolute bottom-0 right-0 bg-teal-600 p-2 rounded-full text-white hover:bg-teal-700 transition-colors"
+                  disabled={isUploading}
+                  className="absolute bottom-0 right-0 bg-teal-600 p-2 rounded-full text-white hover:bg-teal-700 transition-colors disabled:bg-gray-400"
                 >
-                  <Upload className="h-4 w-4" />
+                  {isUploading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Upload className="h-4 w-4" />
+                  )}
                 </button>
                 <input
                   type="file"
                   ref={fileInputRef}
                   onChange={handleImageUpload}
-                  className="hidden "
+                  className="hidden"
                   accept="image/*"
+                  disabled={isUploading}
                 />
               </div>
 
               <p className="text-sm text-gray-500">
-                Click the upload button to change your profile photo
+                {isUploading 
+                  ? "Uploading image..." 
+                  : "Click the upload button to change your profile photo"}
               </p>
             </div>
           </div>
@@ -167,15 +234,17 @@ export default function EditProfilePage() {
                     <User className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    type="text"
-                    name="name"
                     id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
+                    {...register("name", { required: "Name is required" })}
+                    className={`focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 ${
+                      errors.name ? "border-red-500" : ""
+                    }`}
                     placeholder="Your full name"
                   />
                 </div>
+                {errors.name && (
+                  <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -191,15 +260,24 @@ export default function EditProfilePage() {
                       <Mail className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
-                      type="email"
-                      name="email"
                       id="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 "
+                      type="email"
+                      {...register("email", { 
+                        required: "Email is required",
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "Invalid email address"
+                        }
+                      })}
+                      className={`focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 ${
+                        errors.email ? "border-red-500" : ""
+                      }`}
                       placeholder="your.email@example.com"
                     />
                   </div>
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -213,15 +291,17 @@ export default function EditProfilePage() {
                       <Phone className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
-                      type="text"
-                      name="phone"
                       id="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 "
+                      {...register("phone", { required: "Phone number is required" })}
+                      className={`focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 ${
+                        errors.phone ? "border-red-500" : ""
+                      }`}
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
+                  {errors.phone && (
+                    <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -246,12 +326,9 @@ export default function EditProfilePage() {
                     <MapPin className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    type="text"
-                    name="street"
                     id="street"
-                    value={formData.street}
-                    onChange={handleChange}
-                    className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 "
+                    {...register("street")}
+                    className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
                     placeholder="Street address"
                   />
                 </div>
@@ -266,12 +343,9 @@ export default function EditProfilePage() {
                     City
                   </label>
                   <input
-                    type="text"
-                    name="city"
                     id="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 "
+                    {...register("city")}
+                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2"
                     placeholder="City"
                   />
                 </div>
@@ -284,12 +358,9 @@ export default function EditProfilePage() {
                     State
                   </label>
                   <input
-                    type="text"
-                    name="state"
                     id="state"
-                    value={formData.state}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 "
+                    {...register("state")}
+                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2"
                     placeholder="State"
                   />
                 </div>
@@ -304,12 +375,9 @@ export default function EditProfilePage() {
                     Country
                   </label>
                   <input
-                    type="text"
-                    name="country"
                     id="country"
-                    value={formData.country}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 "
+                    {...register("country")}
+                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2"
                     placeholder="Country"
                   />
                 </div>
@@ -322,12 +390,9 @@ export default function EditProfilePage() {
                     Zipcode
                   </label>
                   <input
-                    type="text"
-                    name="zipcode"
                     id="zipcode"
-                    value={formData.zipcode}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 "
+                    {...register("zipcode")}
+                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2"
                     placeholder="Zipcode"
                   />
                 </div>
@@ -353,12 +418,9 @@ export default function EditProfilePage() {
                     GOVID
                   </label>
                   <input
-                    type="text"
-                    name="govId"
                     id="govId"
-                    value={formData.govId}
-                    onChange={handleChange}
-                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 "
+                    {...register("govId")}
+                    className="mt-1 focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md py-2"
                     placeholder="Government ID"
                   />
                 </div>
@@ -375,12 +437,9 @@ export default function EditProfilePage() {
                       <CreditCard className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
-                      type="text"
-                      name="upiId"
                       id="upiId"
-                      value={formData.upiId}
-                      onChange={handleChange}
-                      className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 "
+                      {...register("upiId")}
+                      className="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2"
                       placeholder="yourname@upi"
                     />
                   </div>
@@ -399,10 +458,20 @@ export default function EditProfilePage() {
             </Link>
             <button
               type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              disabled={formSubmitting || isUploading}
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:bg-teal-400"
             >
-              <Save className="h-4 w-4 mr-2" />
-              Save Changes
+              {formSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Changes
+                </>
+              )}
             </button>
           </div>
         </form>
