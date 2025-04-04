@@ -55,7 +55,7 @@ function BottomNav() {
         </NavLink>
 
         <NavLink
-          to="/user-profile"
+          to="/profile"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
               isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"

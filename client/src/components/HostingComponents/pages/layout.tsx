@@ -1,11 +1,16 @@
+"use client"
 
+import type React from "react"
 
 import { useState, useEffect } from "react"
-import { HostSidebar } from "../components/HostingComponents/components/host/host-sidebar"
-import { HostHeader } from "../components/HostingComponents/components/host/host-header"
-import { Outlet } from "react-router-dom"
+import { HostSidebar } from "@/components/host/host-sidebar"
+import { HostHeader } from "@/components/host/host-header"
 
-export default function HostLayout() {
+export default function HostLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   useEffect(() => {
@@ -38,9 +43,7 @@ export default function HostLayout() {
       </div>
       <div className="flex flex-col flex-1 overflow-hidden">
         <HostHeader toggleSidebar={toggleSidebar} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <Outlet/>
-        </main>
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
       </div>
     </div>
   )

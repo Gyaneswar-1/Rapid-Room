@@ -135,7 +135,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
-                      navigate("/my-bookings");
+                      navigate("/profile/bookings");
                       setIsOpen(false);
                     }}
                     label="My Bookings"
@@ -161,7 +161,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
 
                   <MenuItem
                     onClick={() => {
-                      navigate("/user-profile");
+                      navigate("/profile");
                       setIsOpen(false);
                     }}
                     label="Account"

@@ -3,24 +3,20 @@ import TermsAndConditionsForAdmin from "../components/adminConfirm/TermsAndCondi
 import IsAuth from "./IsAuth";
 import AddHotels from "../pages/AddHotels";
 import AdminConfirm from "../pages/HostConfirm";
-
 import ComeingSoon from "../pages/ComeingSoon";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import Welcome from "../pages/Welcome";
 // import BookingPage2 from "../pages/BookingPage2";
-import MessageHost from "../pages/MessageHost";
-import ChatPage from "../components/messageHost/Chatpage";
 import WishlistPage from "../pages/WishlistPage";
 import UserBookings from "../pages/UserBookings";
-import TodayPage from "../components/HostingPage/TodayPage";
-import ListingsPage from "../components/HostingPage/ListingsPage";
-import MessagesPage from "../components/HostingPage/MessagesPage";
-import ListingDetailPage from "../components/HostingPage/ListingDetailPage";
-import GuidebookPage from "../components/HostingPage/GuidebookPage";
-import EarningsPage from "../components/HostingPage/EarningsPage";
+// import TodayPage from "../components/HostingPage/TodayPage";
+// import ListingsPage from "../components/HostingPage/ListingsPage";
+// import MessagesPage from "../components/HostingPage/MessagesPage";
+// import ListingDetailPage from "../components/HostingPage/ListingDetailPage";
+// import GuidebookPage from "../components/HostingPage/GuidebookPage";
+// import EarningsPage from "../components/HostingPage/EarningsPage";
 import UserProfile from "../pages/UserProfile";
-import Dashboard from "../pages/Dashboard";
 import IsHost from "./IsHost";
 import AdminDashboard from "../pages/AdminDashboard";
 import HotelsPage from "../components/AdminComponents/HotelsPage";
@@ -33,6 +29,8 @@ import PaymentsPage from "../components/AdminComponents/components/paymentPage";
 import HostPendingPage from "../pages/HostPendingPage";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
 import AdminLoginPage from "../components/AdminComponents/AdminLoginPage";
+import EditProfilePage from "../components/userProfile/EditProfilePage";
+import HostLayout from "../pages/Dashboard";
 
 function RouterHandler() {
   // Remove the automatic redirect that affects all routes
@@ -66,19 +64,23 @@ function RouterHandler() {
               path="add-hotel"
               element={<IsHost element={<AddHotels />} />}
             />
-            <Route path="my-bookings" element={<UserBookings />}></Route>
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
               element={<TermsAndConditionsForAdmin />}
             />
-            <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/messages" element={<MessageHost />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
-            <Route path="/messages/:hostId" element={<ChatPage />} />
+            <Route path="profile" >
+               <Route index element={<UserProfile/>} />
+               <Route path="edit" element={<EditProfilePage/>} />
+               <Route path="wishlist" element={<WishlistPage />} />
+               <Route path="bookings" element={<UserBookings />}/>
+            </Route>
+            {/* <Route path="/messages" element={<MessageHost />} />
+            <Route path="/messages/:hostId" element={<ChatPage />} /> */}
 
-            <Route path="dashbord" element={<IsHost element={<Dashboard />} />}>
-              <Route index element={<TodayPage />} />
+            {/* <Route path="dashbord" element={<IsHost element={<HostLayout />} />}> */}
+            <Route path="dashbord" element={<HostLayout />} >
+              {/* <Route index element={<TodayPage />} />
               <Route path="today" element={<TodayPage />} />
               <Route path="listings" element={<ListingsPage />} />
               <Route path="listings/:id" element={<ListingDetailPage />} />
@@ -86,7 +88,7 @@ function RouterHandler() {
               <Route path="listings/new" element={<ComeingSoon />} />
               <Route path="messages" element={<MessagesPage />} />
               <Route path="guidebook" element={<GuidebookPage />} />
-              <Route path="earnings" element={<EarningsPage />} />
+              <Route path="earnings" element={<EarningsPage />} /> */}
             </Route>
           </Route>
 
