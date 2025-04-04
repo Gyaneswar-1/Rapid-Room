@@ -2,8 +2,6 @@ import {
   HomeIcon,
   BuildingIcon,
   CalendarIcon,
-  CurrencyIcon,
-  GroupIcon,
   ChartBarIcon,
   MarsIcon,
 } from "lucide-react"
@@ -41,11 +39,7 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
         }`}
       >
         <div className="h-full flex flex-col">
-          <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-            <div className="flex items-center">
-              <img className="h-8 w-auto" src="/placeholder.svg?height=32&width=32" alt="Logo" />
-              <span className="ml-2 text-xl font-semibold text-gray-900">HostHub</span>
-            </div>
+          <div className="h-4 flex items-center justify-between px-4">
             <button
               type="button"
               className="text-gray-500 hover:text-gray-600 md:hidden"
@@ -66,12 +60,12 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
                     key={item.name}
                     to={item.href}
                     className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                      isActive ? "bg-indigo-50 text-indigo-600" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      isActive ? "bg-teal-400 text-black" : "text-secondary hover:bg-gray-50 hover:text-gray-900"
                     }`}
                   >
                     <item.icon
                       className={`mr-3 h-5 w-5 flex-shrink-0 ${
-                        isActive ? "text-indigo-600" : "text-gray-400 group-hover:text-gray-500"
+                        isActive ? "text-dark" : "text-dark group-hover:text-gray-500"
                       }`}
                       aria-hidden="true"
                     />
@@ -80,18 +74,6 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
                 )
               })}
             </nav>
-          </div>
-
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <img className="h-10 w-10 rounded-full" src="/placeholder.svg?height=40&width=40" alt="User avatar" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">John Smith</p>
-                <p className="text-xs text-gray-500">Host since 2021</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

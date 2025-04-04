@@ -7,8 +7,8 @@ export default function Stat() {
     {
       value: "8k+",
       label: "Total Bookings",
-      color: "bg-blue-50",
-      textColor: "text-blue-600",
+      color: "bg-teal-50",
+      textColor: "text-teal-600",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ export default function Stat() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="mx-auto mb-3 text-blue-500"
+          className="mx-auto mb-3 text-teal-500"
         >
           <path d="M2 20h20"></path>
           <path d="M5 20V8.2c0-1.12 0-1.68.218-2.108a2 2 0 0 1 .874-.874C6.52 5 7.08 5 8.2 5h7.6c1.12 0 1.68 0 2.108.218a2 2 0 0 1 .874.874C19 6.52 19 7.08 19 8.2V20"></path>

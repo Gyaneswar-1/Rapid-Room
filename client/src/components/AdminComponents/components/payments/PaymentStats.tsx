@@ -31,7 +31,7 @@ export default function PaymentStats() {
       change: "+12%",
       period: "vs last month",
       icon: <Percent className="w-6 h-6" />,
-      color: "bg-blue-100 text-blue-600",
+      color: "bg-teal-100 text-teal-600",
     },
     {
       title: "Total Transactions",
@@ -137,7 +137,7 @@ export default function PaymentStats() {
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                <div className="w-3 h-3 rounded-full bg-teal-500 mr-2"></div>
                 <span className="text-sm text-gray-600">PayPal</span>
               </div>
               <span className="text-sm font-medium">20%</span>

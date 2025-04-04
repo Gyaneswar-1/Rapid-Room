@@ -102,7 +102,7 @@ export default function HostSettingsPage() {
                         <div className="ml-5">
                           <button
                             type="button"
-                            className="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                           >
                             Change
                           </button>
@@ -122,7 +122,7 @@ export default function HostSettingsPage() {
                           id="name"
                           value={profileData.name}
                           onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
                     </div>
@@ -138,7 +138,7 @@ export default function HostSettingsPage() {
                           id="email"
                           value={profileData.email}
                           onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
                     </div>
@@ -154,7 +154,7 @@ export default function HostSettingsPage() {
                           id="phone"
                           value={profileData.phone}
                           onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
                     </div>
@@ -170,7 +170,7 @@ export default function HostSettingsPage() {
                           id="address"
                           value={profileData.address}
                           onChange={(e) => setProfileData({ ...profileData, address: e.target.value })}
-                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
                     </div>
@@ -186,7 +186,7 @@ export default function HostSettingsPage() {
                           rows={4}
                           value={profileData.bio}
                           onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
-                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                          className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
                       <p className="mt-2 text-sm text-gray-500">
@@ -198,7 +198,7 @@ export default function HostSettingsPage() {
                   <div className="mt-6 flex justify-end">
                     <button
                       type="submit"
-                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     >
                       Save Changes
                     </button>
@@ -228,7 +228,7 @@ export default function HostSettingsPage() {
                               emailNotifications: e.target.checked,
                             })
                           }
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
@@ -252,7 +252,7 @@ export default function HostSettingsPage() {
                               smsNotifications: e.target.checked,
                             })
                           }
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
@@ -276,7 +276,7 @@ export default function HostSettingsPage() {
                               newBookingAlert: e.target.checked,
                             })
                           }
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
@@ -300,7 +300,7 @@ export default function HostSettingsPage() {
                               bookingCancellationAlert: e.target.checked,
                             })
                           }
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
@@ -324,7 +324,7 @@ export default function HostSettingsPage() {
                               reviewAlert: e.target.checked,
                             })
                           }
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
@@ -348,7 +348,7 @@ export default function HostSettingsPage() {
                               paymentAlert: e.target.checked,
                             })
                           }
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                          className="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
@@ -363,7 +363,7 @@ export default function HostSettingsPage() {
                   <div className="mt-6 flex justify-end">
                     <button
                       type="submit"
-                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     >
                       Save Changes
                     </button>
@@ -389,7 +389,7 @@ export default function HostSettingsPage() {
                         name="paymentMethod"
                         value={paymentSettings.paymentMethod}
                         onChange={(e) => setPaymentSettings({ ...paymentSettings, paymentMethod: e.target.value })}
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md"
                       >
                         <option value="bank">Bank Account</option>
                         <option value="paypal">PayPal</option>
@@ -410,7 +410,7 @@ export default function HostSettingsPage() {
                               id="accountName"
                               value={paymentSettings.accountName}
                               onChange={(e) => setPaymentSettings({ ...paymentSettings, accountName: e.target.value })}
-                              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                              className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
                             />
                           </div>
                         </div>
@@ -426,7 +426,7 @@ export default function HostSettingsPage() {
                               id="accountNumber"
                               value={paymentSettings.accountNumber}
                               disabled
-                              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50"
+                              className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50"
                             />
                           </div>
                         </div>
@@ -442,7 +442,7 @@ export default function HostSettingsPage() {
                               id="routingNumber"
                               value={paymentSettings.routingNumber}
                               disabled
-                              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50"
+                              className="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-50"
                             />
                           </div>
                         </div>
@@ -458,7 +458,7 @@ export default function HostSettingsPage() {
                         name="payoutSchedule"
                         value={paymentSettings.payoutSchedule}
                         onChange={(e) => setPaymentSettings({ ...paymentSettings, payoutSchedule: e.target.value })}
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md"
                       >
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
@@ -470,7 +470,7 @@ export default function HostSettingsPage() {
                     <div>
                       <button
                         type="button"
-                        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                       >
                         Update Payment Information
                       </button>
@@ -480,7 +480,7 @@ export default function HostSettingsPage() {
                   <div className="mt-6 flex justify-end">
                     <button
                       type="submit"
-                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                     >
                       Save Changes
                     </button>

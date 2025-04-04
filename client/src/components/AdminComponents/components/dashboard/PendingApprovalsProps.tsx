@@ -46,10 +46,10 @@ export default function PendingApprovals({ handleAction }: PendingApprovalsProps
           </div>
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="flex items-center justify-between p-4 bg-teal-50 rounded-lg border border-teal-100">
           <div className="flex items-center space-x-3">
-            <div className="bg-blue-100 p-2 rounded-lg">
-              <Users className="w-5 h-5 text-blue-600" />
+            <div className="bg-teal-100 p-2 rounded-lg">
+              <Users className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <p className="font-medium text-gray-900">Host Verification: Lisa Garcia</p>

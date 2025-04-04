@@ -15,7 +15,7 @@ export function VersionSwitcher({ versions, defaultVersion }: VersionSwitcherPro
     <div className="relative">
       <button
         type="button"
-        className="w-full flex justify-between items-center px-3 py-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="w-full flex justify-between items-center px-3 py-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>Version: {selectedVersion}</span>
@@ -50,7 +50,7 @@ export function VersionSwitcher({ versions, defaultVersion }: VersionSwitcherPro
                 {version}
                 {version === selectedVersion && (
                   <svg
-                    className="h-4 w-4 text-indigo-500"
+                    className="h-4 w-4 text-teal-500"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"

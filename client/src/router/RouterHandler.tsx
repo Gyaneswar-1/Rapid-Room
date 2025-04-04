@@ -41,7 +41,7 @@ import AnalyticsPage from "../components/HostingComponents/Pages/AnalyticsPage";
 function RouterHandler() {
   // Remove the automatic redirect that affects all routes
   // localStorage.setItem("isAdmin", "true");  <- Remove this line
-  
+
   // Admin check only affects the root route
   const AdminRedirect = () => {
     if (localStorage.getItem("isAdmin") === "true") {
@@ -66,32 +66,33 @@ function RouterHandler() {
               path="host-pending"
               element={<IsHost element={<HostPendingPage />} />}
             />
-            <Route
-              path="add-hotel"
-              element={<IsHost element={<AddHotels />} />}
-            />
+           
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
               element={<TermsAndConditionsForAdmin />}
             />
-            <Route path="profile" >
-               <Route index element={<UserProfile/>} />
-               <Route path="edit" element={<EditProfilePage/>} />
-               <Route path="wishlist" element={<WishlistPage />} />
-               <Route path="bookings" element={<UserBookings />}/>
+            <Route path="profile">
+              <Route index element={<UserProfile />} />
+              <Route path="edit" element={<EditProfilePage />} />
+              <Route path="wishlist" element={<WishlistPage />} />
+              <Route path="bookings" element={<UserBookings />} />
             </Route>
             {/* <Route path="/messages" element={<MessageHost />} />
             <Route path="/messages/:hostId" element={<ChatPage />} /> */}
 
             {/* <Route path="dashbord" element={<IsHost element={<HostLayout />} />}> */}
-            <Route path="dashboard" element={<HostLayout />} >
-               <Route index element={<HostDashboard />} />
-               <Route path="hotels" element={<HostedHotels />} />
-               <Route path="reservations" element={<ReservationsPage />} />
-               <Route path="earnings" element={<EarningsPage />} />
-               <Route path="guests" element={<GuestsPage />} />
-               <Route path="analytics" element={<AnalyticsPage />} />
+            <Route
+              path="dashboard"
+              element={<IsHost element={<HostLayout />} />}
+            >
+              <Route index element={<HostDashboard />} />
+              <Route path="hotels" element={<HostedHotels />} />
+              <Route path="reservations" element={<ReservationsPage />} />
+              <Route path="earnings" element={<EarningsPage />} />
+              <Route path="guests" element={<GuestsPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="add-hotel" element={<AddHotels />}/>
               {/*<Route path="today" element={<TodayPage />} />
               <Route path="listings" element={<ListingsPage />} />
               <Route path="listings/:id" element={<ListingDetailPage />} />

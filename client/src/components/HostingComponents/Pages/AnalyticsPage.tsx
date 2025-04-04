@@ -31,15 +31,15 @@ export default function AnalyticsPage() {
                 <p className="text-gray-500">Track your hosting performance and insights</p>
               </div>
               <div className="flex items-center gap-2">
-                <button className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 h-8 gap-1">
+                <button className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 h-8 gap-1">
                   <Calendar className="h-3.5 w-3.5 mr-1" />
                   <span>Last 30 Days</span>
                 </button>
-                <button className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 h-8 gap-1">
+                <button className="inline-flex items-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 h-8 gap-1">
                   <Filter className="h-3.5 w-3.5 mr-1" />
                   <span>Filter</span>
                 </button>
-                <button className="inline-flex items-center px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 h-8 gap-1">
+                <button className="inline-flex items-center px-3 py-1.5 text-sm bg-primary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 h-8 gap-1">
                   <Download className="h-3.5 w-3.5 mr-1" />
                   <span>Export</span>
                 </button>
@@ -54,7 +54,7 @@ export default function AnalyticsPage() {
                     onClick={() => setActiveTab("overview")}
                     className={`py-3 text-sm font-medium ${
                       activeTab === "overview"
-                        ? "border-b-2 border-indigo-500 text-indigo-600"
+                        ? "border-b-2 border-teal-500 text-teal-600"
                         : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                     }`}
                   >
@@ -64,7 +64,7 @@ export default function AnalyticsPage() {
                     onClick={() => setActiveTab("bookings")}
                     className={`py-3 text-sm font-medium ${
                       activeTab === "bookings"
-                        ? "border-b-2 border-indigo-500 text-indigo-600"
+                        ? "border-b-2 border-teal-500 text-teal-600"
                         : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                     }`}
                   >
@@ -74,7 +74,7 @@ export default function AnalyticsPage() {
                     onClick={() => setActiveTab("revenue")}
                     className={`py-3 text-sm font-medium ${
                       activeTab === "revenue"
-                        ? "border-b-2 border-indigo-500 text-indigo-600"
+                        ? "border-b-2 border-teal-500 text-teal-600"
                         : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                     }`}
                   >
@@ -84,7 +84,7 @@ export default function AnalyticsPage() {
                     onClick={() => setActiveTab("guests")}
                     className={`py-3 text-sm font-medium ${
                       activeTab === "guests"
-                        ? "border-b-2 border-indigo-500 text-indigo-600"
+                        ? "border-b-2 border-teal-500 text-teal-600"
                         : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                     }`}
                   >

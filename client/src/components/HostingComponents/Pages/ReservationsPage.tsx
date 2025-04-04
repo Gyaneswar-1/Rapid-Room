@@ -97,10 +97,10 @@ export default function ReservationsPage() {
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <h1 className="text-2xl font-bold tracking-tight">Reservations</h1>
             <div className="flex items-center gap-2">
-              <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                 Export
               </button>
-              <button className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <button className="px-3 py-1.5 text-sm bg-primary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                 Add Reservation
               </button>
             </div>
@@ -114,7 +114,7 @@ export default function ReservationsPage() {
                   onClick={() => setActiveTab("all")}
                   className={`py-3 text-sm font-medium ${
                     activeTab === "all"
-                      ? "border-b-2 border-indigo-500 text-indigo-600"
+                      ? "border-b-2 border-teal-500 text-teal-600"
                       : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
@@ -124,7 +124,7 @@ export default function ReservationsPage() {
                   onClick={() => setActiveTab("confirmed")}
                   className={`py-3 text-sm font-medium ${
                     activeTab === "confirmed"
-                      ? "border-b-2 border-indigo-500 text-indigo-600"
+                      ? "border-b-2 border-teal-500 text-teal-600"
                       : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
@@ -134,7 +134,7 @@ export default function ReservationsPage() {
                   onClick={() => setActiveTab("pending")}
                   className={`py-3 text-sm font-medium ${
                     activeTab === "pending"
-                      ? "border-b-2 border-indigo-500 text-indigo-600"
+                      ? "border-b-2 border-teal-500 text-teal-600"
                       : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
@@ -144,7 +144,7 @@ export default function ReservationsPage() {
                   onClick={() => setActiveTab("cancelled")}
                   className={`py-3 text-sm font-medium ${
                     activeTab === "cancelled"
-                      ? "border-b-2 border-indigo-500 text-indigo-600"
+                      ? "border-b-2 border-teal-500 text-teal-600"
                       : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
@@ -185,7 +185,7 @@ export default function ReservationsPage() {
                               className="h-full w-full object-cover"
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-indigo-100 text-indigo-600">
+                            <div className="flex h-full w-full items-center justify-center bg-primary text-teal-600">
                               {reservation.guest.initials}
                             </div>
                           )}
@@ -232,10 +232,10 @@ export default function ReservationsPage() {
                         <div className="font-medium">{reservation.amount}</div>
                       </div>
                       <div className="flex gap-2">
-                        <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                           View
                         </button>
-                        <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                           Message
                         </button>
                       </div>
@@ -269,7 +269,7 @@ export default function ReservationsPage() {
                   />
                 </svg>
               </button>
-              <button className="inline-flex items-center px-4 py-2 border border-indigo-500 bg-indigo-50 text-sm font-medium text-indigo-600 hover:bg-indigo-100">
+              <button className="inline-flex items-center px-4 py-2 border border-teal-500 bg-primary text-sm font-medium text-teal-600 hover:bg-primary">
                 1
               </button>
               <button className="inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">

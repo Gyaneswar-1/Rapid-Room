@@ -93,7 +93,7 @@ export default function ActivityChart({ pieChartData, loading = false }: Activit
             <div className="flex items-center">
               <div 
                 className={`w-3 h-3 rounded-full mr-2 ${
-                  index === 0 ? "bg-primary" : index === 1 ? "bg-blue-500" : "bg-amber-500"
+                  index === 0 ? "bg-primary" : index === 1 ? "bg-teal-500" : "bg-amber-500"
                 }`}
               ></div>
               <span className="text-sm text-gray-600">{item.label}</span>

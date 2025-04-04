@@ -44,8 +44,8 @@ export function EarningsOverview({
 
   // Mock data for booking sources
   const bookingSources = [
-    { source: "Direct Website", percentage: 45, color: "bg-indigo-500" },
-    { source: "Online Travel Agencies", percentage: 30, color: "bg-blue-500" },
+    { source: "Direct Website", percentage: 45, color: "bg-primary" },
+    { source: "Online Travel Agencies", percentage: 30, color: "bg-teal-500" },
     { source: "Travel Agents", percentage: 15, color: "bg-green-500" },
     { source: "Corporate Bookings", percentage: 10, color: "bg-amber-500" },
   ]
@@ -63,7 +63,7 @@ export function EarningsOverview({
             <button
               onClick={() => setTimeframe("month")}
               className={`px-3 py-1 text-sm rounded-md ${
-                timeframe === "month" ? "bg-indigo-100 text-indigo-700" : "text-gray-600 hover:bg-gray-100"
+                timeframe === "month" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
               }`}
             >
               Month
@@ -71,7 +71,7 @@ export function EarningsOverview({
             <button
               onClick={() => setTimeframe("year")}
               className={`px-3 py-1 text-sm rounded-md ${
-                timeframe === "year" ? "bg-indigo-100 text-indigo-700" : "text-gray-600 hover:bg-gray-100"
+                timeframe === "year" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
               }`}
             >
               Year
@@ -79,7 +79,7 @@ export function EarningsOverview({
             <button
               onClick={() => setTimeframe("all")}
               className={`px-3 py-1 text-sm rounded-md ${
-                timeframe === "all" ? "bg-indigo-100 text-indigo-700" : "text-gray-600 hover:bg-gray-100"
+                timeframe === "all" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
               }`}
             >
               All Time
@@ -107,7 +107,7 @@ export function EarningsOverview({
             {monthlyEarnings.map((item, index) => (
               <div key={index} className="flex-1 flex flex-col items-center group">
                 <div
-                  className="w-full relative bg-gradient-to-t from-indigo-600 to-indigo-400 hover:from-indigo-700 hover:to-indigo-500 rounded-t transition-all duration-200 cursor-pointer"
+                  className="w-full relative bg-gradient-to-t from-teal-600 to-teal-400 hover:from-teal-700 hover:to-teal-500 rounded-t transition-all duration-200 cursor-pointer"
                   style={{ height: `${(item.amount / maxAmount) * 200}px` }}
                 >
                   {/* Tooltip */}
@@ -127,7 +127,7 @@ export function EarningsOverview({
         {/* Booking Sources Pie Chart */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center mb-4">
-            <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
+            <div className="p-3 rounded-full bg-primary text-teal-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -162,14 +162,14 @@ export function EarningsOverview({
 
                 {/* Pie segments */}
                 <div
-                  className="absolute inset-0 bg-indigo-500"
+                  className="absolute inset-0 bg-primary"
                   style={{
                     clipPath: `polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 50% 100%)`,
                     opacity: bookingSources[0].percentage / 100,
                   }}
                 ></div>
                 <div
-                  className="absolute inset-0 bg-blue-500"
+                  className="absolute inset-0 bg-teal-500"
                   style={{
                     clipPath: `polygon(50% 50%, 100% 0, 100% 100%)`,
                     opacity: bookingSources[1].percentage / 100,
@@ -217,7 +217,7 @@ export function EarningsOverview({
         {/* Pending Payouts */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center">
-            <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
+            <div className="p-3 rounded-full bg-primary text-teal-600">
               <CurrencyIcon className="w-6 h-6" />
             </div>
             <div className="ml-4">
@@ -226,7 +226,7 @@ export function EarningsOverview({
             </div>
           </div>
           <div className="mt-4">
-            <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+            <button className="text-sm text-teal-600 hover:text-teal-800 font-medium">
               View payout schedule →
             </button>
           </div>

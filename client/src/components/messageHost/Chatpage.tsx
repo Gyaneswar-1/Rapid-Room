@@ -214,11 +214,11 @@ console.log(hostId);
                   />
                   <div
                     className={`max-w-md px-4 py-2 rounded-lg ${
-                      message.role === "user" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-800"
+                      message.role === "user" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-800"
                     }`}
                   >
                     <p>{message.content}</p>
-                    <p className={`text-xs mt-1 ${message.role === "user" ? "text-blue-100" : "text-gray-500"}`}>
+                    <p className={`text-xs mt-1 ${message.role === "user" ? "text-teal-100" : "text-gray-500"}`}>
                       {formatTime(message.timestamp)}
                     </p>
                   </div>
@@ -256,11 +256,11 @@ console.log(hostId);
                 value={input}
                 onChange={handleInputChange}
                 placeholder="Type your message..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
               />
               <button
                 type="submit"
-                className="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="p-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 <Send className="h-5 w-5" />
               </button>

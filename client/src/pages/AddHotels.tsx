@@ -603,8 +603,8 @@ const AddHotelForm = () => {
               {/* Standout Amenities */}
               <div className="mb-8">
                 <div className="flex items-center mb-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                    <FaSwimmingPool className="w-4 h-4 text-blue-600" />
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center mr-3">
+                    <FaSwimmingPool className="w-4 h-4 text-teal-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Standout amenities</h3>
                 </div>
@@ -906,7 +906,7 @@ const AddHotelForm = () => {
                 <button
                   type="button"
                   onClick={getCurrentLocation}
-                  className="flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
                 >
                   <FaMapMarkerAlt className="mr-2" />
                   Get Current Location

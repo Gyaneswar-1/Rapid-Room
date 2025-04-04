@@ -74,7 +74,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
           <div>
             {isHost ? (
               <button
-                onClick={() => navigate("/dashbord")}
+                onClick={() => navigate("/dashboard")}
                 className="hidden  cursor-pointer lg:block text-sm font-medium py-2 px-4 rounded-full hover:bg-gray-100 transition"
               >
                 Switch to Hosting
@@ -169,7 +169,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
-                      navigate("/dashbord");
+                      navigate("/dashboard");
                       setIsOpen(false);
                     }}
                     label="Dashbord"

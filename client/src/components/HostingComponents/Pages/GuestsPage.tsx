@@ -250,7 +250,7 @@ export default function GuestsPage() {
                   <input
                     type="text"
                     placeholder="Search guests..."
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   />
                   <Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
                 </div>
@@ -365,7 +365,7 @@ export default function GuestsPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <button
                             onClick={() => handleViewGuest(guest)}
-                            className="text-indigo-600 hover:text-indigo-900"
+                            className="text-teal-600 hover:text-teal-900"
                           >
                             View Details
                           </button>
@@ -398,7 +398,7 @@ export default function GuestsPage() {
                       <a
                         href="#"
                         aria-current="page"
-                        className="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                        className="z-10 bg-primary border-teal-500 text-teal-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                       >
                         1
                       </a>
@@ -432,7 +432,7 @@ export default function GuestsPage() {
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           onClick={closeGuestDetails}
-                          className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                           <span className="sr-only">Close panel</span>
                           <svg
@@ -542,7 +542,7 @@ export default function GuestsPage() {
                                   className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                                     booking.status === "completed"
                                       ? "bg-green-100 text-green-800"
-                                      : "bg-blue-100 text-blue-800"
+                                      : "bg-teal-100 text-teal-800"
                                   }`}
                                 >
                                   {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
@@ -556,7 +556,7 @@ export default function GuestsPage() {
                                 <span className="text-sm font-medium text-gray-900">
                                   {formatCurrency(booking.amount)}
                                 </span>
-                                <button className="text-xs text-indigo-600 hover:text-indigo-900">View Details</button>
+                                <button className="text-xs text-teal-600 hover:text-teal-900">View Details</button>
                               </div>
                             </div>
                           ))}
@@ -565,10 +565,10 @@ export default function GuestsPage() {
 
                       {/* Actions */}
                       <div className="border-t border-gray-200 pt-4 flex space-x-3">
-                        <button className="flex-1 bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button className="flex-1 bg-primary py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                           Contact Guest
                         </button>
-                        <button className="flex-1 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button className="flex-1 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                           Add Note
                         </button>
                       </div>

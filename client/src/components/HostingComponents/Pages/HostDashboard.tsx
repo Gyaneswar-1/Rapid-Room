@@ -1,16 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import HostSidebar from "../components/analytics/HostSidebar"
-import HostHeader from "../components/analytics/HostHeader"
+
 import EarningsOverview from "../components/analytics/EarningsOverview"
-import { RecentReservations } from "../components/analytics/RecentReservations"
-import { HostedHotels } from "../components/analytics/HostedHotels"
-import { useNavigate } from "react-router-dom"
+
+
 
 export default function HostDashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-  const navigate = useNavigate()
+
 
   // Mock data for the host
   const hostData = {
@@ -60,7 +56,7 @@ export default function HostDashboard() {
               <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-lg font-medium text-gray-900">Room Occupancy Overview</h2>
                 <div className="flex space-x-2">
-                  <button className="px-3 py-1 text-sm rounded-md bg-indigo-100 text-indigo-700">All Properties</button>
+                  <button className="px-3 py-1 text-sm rounded-md bg-primary text-teal-700">All Properties</button>
                   <button className="px-3 py-1 text-sm rounded-md text-gray-600 hover:bg-gray-100">By Hotel</button>
                 </div>
               </div>
@@ -75,13 +71,13 @@ export default function HostDashboard() {
 
                         {/* Pie segments for room types */}
                         <div
-                          className="absolute inset-0 bg-indigo-500"
+                          className="absolute inset-0 bg-primary"
                           style={{
                             clipPath: `polygon(50% 50%, 50% 0, 100% 0, 100% 50%)`,
                           }}
                         ></div>
                         <div
-                          className="absolute inset-0 bg-blue-500"
+                          className="absolute inset-0 bg-teal-500"
                           style={{
                             clipPath: `polygon(50% 50%, 100% 0, 100% 100%, 75% 100%)`,
                           }}
@@ -118,9 +114,9 @@ export default function HostDashboard() {
                             <div
                               className={`w-3 h-3 rounded-full ${
                                 index === 0
-                                  ? "bg-indigo-500"
+                                  ? "bg-primary"
                                   : index === 1
-                                    ? "bg-blue-500"
+                                    ? "bg-teal-500"
                                     : index === 2
                                       ? "bg-green-500"
                                       : "bg-amber-500"
@@ -148,7 +144,7 @@ export default function HostDashboard() {
                       </div>
                       <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
                         <div className="text-sm text-gray-500 mb-1">Occupied</div>
-                        <div className="text-2xl font-bold text-indigo-600">41</div>
+                        <div className="text-2xl font-bold text-teal-600">41</div>
                         <div className="mt-2 text-xs text-green-600">68% occupancy rate</div>
                       </div>
                     </div>
@@ -171,9 +167,9 @@ export default function HostDashboard() {
                             <div
                               className={`h-2 rounded-full ${
                                 index === 0
-                                  ? "bg-indigo-500"
+                                  ? "bg-primary"
                                   : index === 1
-                                    ? "bg-blue-500"
+                                    ? "bg-teal-500"
                                     : index === 2
                                       ? "bg-green-500"
                                       : "bg-amber-500"
@@ -189,33 +185,6 @@ export default function HostDashboard() {
               </div>
             </div>
 
-            {/* Recent Reservations */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-              <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-                <h2 className="text-lg font-medium text-gray-900">Recent Reservations</h2>
-                <button
-                  onClick={() => navigate("/host/reservations")}
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-800"
-                >
-                  View All
-                </button>
-              </div>
-              <RecentReservations />
-            </div>
-
-            {/* Hosted Hotels */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-              <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-                <h2 className="text-lg font-medium text-gray-900">Your Hotels</h2>
-                <button
-                  onClick={() => navigate("/host/hotels")}
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-800"
-                >
-                  View All
-                </button>
-              </div>
-              <HostedHotels />
-            </div>
           </div>
         </main>
     </div>

@@ -1,5 +1,6 @@
 "use client"
 import { Edit, Star, Trash } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export function HostedHotels() {
   const hotels = [
@@ -42,9 +43,9 @@ export function HostedHotels() {
           <h3 className="text-lg font-semibold text-gray-900">Your Hotels</h3>
           <p className="text-sm text-gray-500">Manage your listed properties</p>
         </div>
-        <button className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        <Link to={"/dashboard/add-hotel"} className="px-3 py-1.5 text-sm bg-primary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
           Add New Hotel
-        </button>
+        </Link >
       </div>
       <div className="p-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -74,7 +75,7 @@ export function HostedHotels() {
                   <span className="font-medium">Occupancy:</span> {hotel.occupancyRate}
                 </div>
                 <div className="mt-3 flex gap-2">
-                  <button className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <button className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                     <Edit className="mr-1 h-4 w-4" />
                     Edit
                   </button>

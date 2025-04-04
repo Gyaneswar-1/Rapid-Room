@@ -148,7 +148,7 @@ export default function EarningsPage() {
                     <button
                       onClick={() => setTimeframe("month")}
                       className={`px-3 py-1 text-sm rounded-md ${
-                        timeframe === "month" ? "bg-indigo-100 text-indigo-700" : "text-gray-600 hover:bg-gray-100"
+                        timeframe === "month" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
                       }`}
                     >
                       Month
@@ -156,7 +156,7 @@ export default function EarningsPage() {
                     <button
                       onClick={() => setTimeframe("year")}
                       className={`px-3 py-1 text-sm rounded-md ${
-                        timeframe === "year" ? "bg-indigo-100 text-indigo-700" : "text-gray-600 hover:bg-gray-100"
+                        timeframe === "year" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
                       }`}
                     >
                       Year
@@ -178,7 +178,7 @@ export default function EarningsPage() {
                     {chartData.map((item, index) => (
                       <div key={index} className="flex-1 flex flex-col items-center">
                         <div
-                          className="w-full bg-indigo-500 hover:bg-indigo-600 rounded-t transition-all duration-200 relative group"
+                          className="w-full bg-primary hover:bg-primary rounded-t transition-all duration-200 relative group"
                           style={{ height: `${(item.amount / maxAmount) * 200}px` }}
                         >
                           {/* Tooltip */}
@@ -201,7 +201,7 @@ export default function EarningsPage() {
                 {/* Pending Payouts */}
                 <div className="bg-white rounded-lg shadow p-6">
                   <div className="flex items-center">
-                    <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                    <div className="p-3 rounded-full bg-primary text-teal-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6"
@@ -223,7 +223,7 @@ export default function EarningsPage() {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <button className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                    <button className="text-sm text-teal-600 hover:text-teal-800 font-medium">
                       View payout schedule →
                     </button>
                   </div>
@@ -320,7 +320,7 @@ export default function EarningsPage() {
                           <div className="flex items-center">
                             <div className="w-full bg-gray-200 rounded-full h-2.5">
                               <div
-                                className="bg-indigo-600 h-2.5 rounded-full"
+                                className="bg-primary h-2.5 rounded-full"
                                 style={{ width: `${hotel.occupancyRate}%` }}
                               ></div>
                             </div>
@@ -341,7 +341,7 @@ export default function EarningsPage() {
             <div className="bg-white rounded-lg shadow">
               <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-lg font-medium text-gray-900">Payout History</h2>
-                <button className="text-sm font-medium text-indigo-600 hover:text-indigo-800">View All</button>
+                <button className="text-sm font-medium text-teal-600 hover:text-teal-800">View All</button>
               </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -427,7 +427,7 @@ export default function EarningsPage() {
                       <a
                         href="#"
                         aria-current="page"
-                        className="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                        className="z-10 bg-primary border-teal-500 text-teal-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                       >
                         1
                       </a>
