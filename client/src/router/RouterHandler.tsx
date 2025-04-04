@@ -30,7 +30,13 @@ import HostPendingPage from "../pages/HostPendingPage";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
 import AdminLoginPage from "../components/AdminComponents/AdminLoginPage";
 import EditProfilePage from "../components/userProfile/EditProfilePage";
-import HostLayout from "../pages/Dashboard";
+import HostLayout from "../pages/HostDashboard";
+import HostDashboard from "../components/HostingComponents/Pages/HostDashboard";
+import { HostedHotels } from "../components/HostingComponents/components/analytics/HostedHotels";
+import ReservationsPage from "../components/HostingComponents/Pages/ReservationsPage";
+import EarningsPage from "../components/HostingComponents/Pages/EarningsPage";
+import GuestsPage from "../components/HostingComponents/Pages/GuestsPage";
+import AnalyticsPage from "../components/HostingComponents/Pages/AnalyticsPage";
 
 function RouterHandler() {
   // Remove the automatic redirect that affects all routes
@@ -79,9 +85,14 @@ function RouterHandler() {
             <Route path="/messages/:hostId" element={<ChatPage />} /> */}
 
             {/* <Route path="dashbord" element={<IsHost element={<HostLayout />} />}> */}
-            <Route path="dashbord" element={<HostLayout />} >
-              {/* <Route index element={<TodayPage />} />
-              <Route path="today" element={<TodayPage />} />
+            <Route path="dashboard" element={<HostLayout />} >
+               <Route index element={<HostDashboard />} />
+               <Route path="hotels" element={<HostedHotels />} />
+               <Route path="reservations" element={<ReservationsPage />} />
+               <Route path="earnings" element={<EarningsPage />} />
+               <Route path="guests" element={<GuestsPage />} />
+               <Route path="analytics" element={<AnalyticsPage />} />
+              {/*<Route path="today" element={<TodayPage />} />
               <Route path="listings" element={<ListingsPage />} />
               <Route path="listings/:id" element={<ListingDetailPage />} />
               <Route path="listings/:id/edit" element={<ComeingSoon />} />
