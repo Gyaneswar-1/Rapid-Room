@@ -4,21 +4,40 @@ import { FaUser, FaCalendarAlt } from "react-icons/fa";
 
 interface BookingCardProps {
   booking: {
-    id: string;
+    id: number;
+    userId: number;
+    hotelId: number;
+    roomId: number;
+    amountPaid: number;
+    checkIn: string;
+    checkOut: string;
+    paymentStatus: string;
+    ReservationStatus: string;
+    user: {
+      fullName: string;
+    };
     hotel: {
       hotelName: string;
-      host: { fullName: string };
+      images: Array<{ imageUrl: string }>;
+      host: {
+        id: number;
+        fullName: string;
+      };
       address: {
         street: string;
         city: string;
         state: string;
         country: string;
+        longitude: string;
+        latitude: string;
       };
     };
-    amountPaid: number;
-    ReservationStatus: "active" | "pending" | "cancled";
-    checkIn: string;
-    checkOut: string;
+    payment: {
+      id: number;
+    };
+    room: {
+      roomNumber: number;
+    };
   };
   onCancel: () => void;
   onMessage: () => void;
@@ -35,11 +54,13 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
   };
 
   const getStatusColor = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) {
       case "active":
         return "bg-green-100 text-green-800";
       case "pending":
         return "bg-yellow-100 text-yellow-800";
+      case "cancelled":
+      case "canceled":
       case "cancled":
         return "bg-red-100 text-red-800";
       default:
@@ -56,7 +77,10 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
         <motion.img
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
-          src="https://imgs.search.brave.com/bmv1gqHpBlHTjtmY-cUxZXWYkPBoa4TusHhDYgic_AA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/MWhvdGVscy5jb20v/c2l0ZXMvMWhvdGVs/cy5jb20vZmlsZXMv/c3R5bGVzL2NhcmQv/cHVibGljL2JyYW5k/Zm9sZGVyL2g1YmIz/M2s1d3Fzd2t3c3E5/enZqcHQ4My8xX0hv/dGVsX1NGXy1fRXh0/ZXJpb3J3MTM2MC5w/bmc_aD02YjZlNjE5/ZSZpdG9rPWEwdHB2/MWdC"
+          src={
+            booking.hotel.images[0]?.imageUrl ||
+            "https://placehold.co/600x400?text=Hotel+Image"
+          }
           alt={booking.hotel.hotelName}
           className="w-full h-full object-cover transition-transform duration-300 bg-gray-200"
           loading="lazy"

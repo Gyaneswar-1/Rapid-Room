@@ -1,82 +1,31 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { setBookings } from "../store/reducers/mybookings.reducer";
+import { RootState } from "../store/store";
 import BookingCard from "../components/userBookings/booking-card";
 import MessageModal from "../components/userBookings/message-model";
 import Navbar from "../components/Navbar/Navbar";
 import MyBookingsSkeleton from "../components/userBookings/MyBookingsSkeliton";
-
-// Dummy data for development
-const bookings = [
-  {
-    id: "1",
-    user: { fullName: "John Doe" },
-    hotel: {
-      hotelName: "Luxury Mountain Resort",
-      host: { id: 1, fullName: "Sarah Host" },
-      address: {
-        street: "123 Mountain View",
-        city: "Shimla",
-        state: "Himachal Pradesh",
-        country: "India",
-      },
-    },
-    amountPaid: 12999,
-    ReservationStatus: "active" as const,
-    checkIn: "2024-03-20",
-    checkOut: "2024-03-25",
-  },
-  {
-    id: "2",
-    user: { fullName: "Alice Smith" },
-    hotel: {
-      hotelName: "Beachfront Paradise",
-      host: { id: 2, fullName: "Mike Host" },
-      address: {
-        street: "456 Beach Road",
-        city: "Puri",
-        state: "Odisha",
-        country: "India",
-      },
-    },
-    amountPaid: 8999,
-    ReservationStatus: "cancled" as const,
-    checkIn: "2024-04-01",
-    checkOut: "2024-04-05",
-  },
-  {
-    id: "3",
-    user: { fullName: "Bob Wilson" },
-    hotel: {
-      hotelName: "City Center Suite",
-      host: { id: 3, fullName: "Lisa Host" },
-      address: {
-        street: "789 MG Road",
-        city: "Bangalore",
-        state: "Karnataka",
-        country: "India",
-      },
-    },
-    amountPaid: 15999,
-    ReservationStatus: "pending" as const,
-    checkIn: "2024-03-15",
-    checkOut: "2024-03-18",
-  },
-];
+import getUserBookings from "../service/checkin/getUserBookings";
 
 export default function UserBookings() {
+  const dispatch = useDispatch();
+  const bookingsData = useSelector(
+    (state: RootState) => state.bookingsReducer.bookings
+  );
   const [selectedHost, setSelectedHost] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [bookingsData, setBookingsData] = useState(bookings);
 
   useEffect(() => {
-    // Simulate API call
     const fetchBookings = async () => {
-      setIsLoading(true);
+      setIsLoading(true); // Set loading to true before fetching
       try {
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setBookingsData(bookings);
+        const response = await getUserBookings();
+        if (response.success) {
+          dispatch(setBookings(response.data));
+        }
       } catch (error) {
         console.error("Failed to fetch bookings:", error);
       } finally {
@@ -84,15 +33,17 @@ export default function UserBookings() {
       }
     };
 
+    // Reset bookings to empty array before fetching
+    dispatch(setBookings([]));
     fetchBookings();
-  }, []);
+  }, [dispatch]);
 
   const handleMessageHost = (hostName: string) => {
     setSelectedHost(hostName);
     setIsModalOpen(true);
   };
 
-  const handleCancelBooking = (id: string) => {
+  const handleCancelBooking = (id: number) => {
     alert(`Requesting cancellation for booking ${id}`);
   };
 
@@ -101,7 +52,7 @@ export default function UserBookings() {
       <Navbar show={true} />
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 pt-32">
         <div className="max-w-7xl mx-auto">
-          {isLoading ? (
+          {isLoading || bookingsData.length === 0 ? (
             <MyBookingsSkeleton />
           ) : (
             <>

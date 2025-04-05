@@ -7,11 +7,6 @@ declare global {
   }
 }
 
-
-
-
-
-
 export default async function checkInHandler({amount,email,name, phNumber,hotelId, reservationId, paymentId, roomId}:any){
     
 
