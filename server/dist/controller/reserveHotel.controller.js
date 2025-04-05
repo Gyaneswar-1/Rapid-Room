@@ -140,14 +140,24 @@ export const reserveHotel = async (req, res) => {
                     razorpay_order_id: "null",
                 },
             });
+            // Update the reservation with payment info
+            const reservation2Res = await prisma.reservations.update({
+                where: {
+                    id: reserveRoom.id,
+                },
+                data: {
+                    paymentId: paymentEntry.id,
+                },
+                include: {
+                    payment: true,
+                },
+            });
             if (!paymentEntry) {
                 return res
                     .status(400)
                     .json(new ApiError(false, {}, "Failed", "Can't make the payment entry", 400));
             }
-            return res
-                .status(200)
-                .json(new ApiResponse(true, {
+            return res.status(200).json(new ApiResponse(true, {
                 resevationId: reserveRoom.id,
                 roomId: nonReserveRoom.id,
                 hotelId: hotelId,

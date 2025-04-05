@@ -3,7 +3,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 
-
 type reservationType = {
     hotelId: number;
     checkIn: string;
@@ -182,8 +181,8 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
             //create the payment entry
 
             //devide the amoutn amont the platform and the host
-            const hostAmount = Math.floor((totalAmount/100)*90);
-            const platformAmount = Math.floor((totalAmount/100)*90);
+            const hostAmount = Math.floor((totalAmount / 100) * 90);
+            const platformAmount = Math.floor((totalAmount / 100) * 90);
             const paymentEntry = await prisma.payments.create({
                 data: {
                     hotelId: hotelId,
@@ -196,7 +195,18 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
                 },
             });
 
-            await prisma.reservations.update()
+            // Update the reservation with payment info
+            const reservation2Res = await prisma.reservations.update({
+                where: {
+                    id: reserveRoom.id,
+                },
+                data: {
+                    paymentId: paymentEntry.id,
+                },
+                include: {
+                    payment: true,
+                },
+            });
 
             if (!paymentEntry) {
                 return res
@@ -212,22 +222,20 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
                     );
             }
 
-            return res
-                .status(200)
-                .json(
-                    new ApiResponse(
-                        true,
-                        {
-                            resevationId: reserveRoom.id,
-                            roomId: nonReserveRoom.id,
-                            hotelId: hotelId,
-                            paymentId: paymentEntry.id,
-                        },
-                        "Successfull",
-                        "Successfully reserved the room",
-                        200,
-                    ),
-                );
+            return res.status(200).json(
+                new ApiResponse(
+                    true,
+                    {
+                        resevationId: reserveRoom.id,
+                        roomId: nonReserveRoom.id,
+                        hotelId: hotelId,
+                        paymentId: paymentEntry.id,
+                    },
+                    "Successfull",
+                    "Successfully reserved the room",
+                    200,
+                ),
+            );
         });
     } catch (error) {
         return res
