@@ -35,6 +35,12 @@ export const getMyBookings = async (
                 hotel: {
                     select: {
                         hotelName: true,
+                        images:{
+                            take: 1,
+                            select:{
+                                imageUrl: true,
+                            }
+                        },
                         host:{
                             select:{
                                 id: true,
@@ -52,6 +58,11 @@ export const getMyBookings = async (
                             },
                         },
                     },
+                },
+                payment:{
+                    select:{
+                        id: true
+                    }
                 },
                 room: {
                     select: {

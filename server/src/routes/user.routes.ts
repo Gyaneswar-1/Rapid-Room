@@ -32,7 +32,7 @@ userRouter.route("/logout").get(authMiddleware,userLogout);
 userRouter.route("/create-admin").post(authMiddleware,createAdmin);
 
 userRouter.route("/getInfo").get(authMiddleware,getUserInformation);
-userRouter.route("/edit").put(authMiddleware,editUser);
+userRouter.route("/edit").put(authMiddleware);
 
 userRouter.route("/bookHotel").post(authMiddleware,reserveHotel);
 userRouter.route("/cancel-reservation").delete(authMiddleware,cancleReservation);

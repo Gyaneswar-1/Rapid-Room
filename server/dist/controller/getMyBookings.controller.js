@@ -30,6 +30,12 @@ export const getMyBookings = async (req, res) => {
                 hotel: {
                     select: {
                         hotelName: true,
+                        images: {
+                            take: 1,
+                            select: {
+                                imageUrl: true,
+                            }
+                        },
                         host: {
                             select: {
                                 id: true,
@@ -47,6 +53,11 @@ export const getMyBookings = async (req, res) => {
                             },
                         },
                     },
+                },
+                payment: {
+                    select: {
+                        id: true
+                    }
                 },
                 room: {
                     select: {

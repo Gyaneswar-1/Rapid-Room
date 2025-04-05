@@ -196,6 +196,8 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
                 },
             });
 
+            await prisma.reservations.update()
+
             if (!paymentEntry) {
                 return res
                     .status(400)

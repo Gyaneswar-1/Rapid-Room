@@ -143,6 +143,8 @@ model Reservations {
   hotel                Hotels           @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   roomId               Int
   room                 Rooms            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  payment              Payments?        @relation(fields: [paymentId], references: [id])
+  paymentId            Int?             @unique
   checkIn              DateTime
   reservationsDuration Int?
   checkOut             DateTime
@@ -213,7 +215,7 @@ model Payments {
   paymentDate         DateTime      @default(now())
   razorpay_payment_id String
   razorpay_order_id   String
-
+  reservation         Reservations?
   hotel Hotels @relation(fields: [hotelId], references: [id])
   user  Users  @relation(fields: [userId], references: [id])
 
