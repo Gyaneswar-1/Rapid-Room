@@ -1,106 +1,149 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: any = {
+interface HotelState {
+  hasData: boolean;
+  hotelId: number;
+  hotelName: string;
+  description: string;
+  roomType: string;
+  perNight: number;
+  amenities: {
+    hasParking: boolean;
+    hasPool: boolean;
+    hasWifi: boolean;
+    hasTv: boolean;
+    hasBalcony: boolean;
+    hasKitchen: boolean;
+    hasWorkSpace: boolean;
+    hasWashingMachine: boolean;
+    hasGarden: boolean;
+  };
+  type: string;
+  isAllReserved: boolean;
+  numberOfEmptyRooms: number;
+  overalRating: number;
+  totalReviews: number;
+  guestAllowed: number;
+  host: {
+    id: number;
+    fullName: string;
+    email: string;
+    hostExperience: number | null;
+    hostResponseRate: number;
+    hostRating: number;
+    profileImage: string;
+  };
+  reviews: Array<{
+    userId: number;
+    reviewComment: string;
+    overallRating: number;
+    cleanlinessRating: number;
+    accuracyRating: number;
+    checkInRating: number;
+    communicationRating: number;
+    locationRating: number;
+    priceRating: number;
+    parkingRating: number;
+    user: {
+      fullName: string;
+      profileImage: string;
+    };
+  }>;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    country: string;
+    longitude: string;
+    latitude: string;
+  };
+  images: Array<{ imageUrl: string }>;
+}
+
+const initialState: HotelState = {
   hasData: false,
-  hotelName: "",
   hotelId: 0,
-  hotelType: "",
-  aboutHotel: "",
+  hotelName: "",
+  description: "",
   roomType: "",
-  totalReviews: 0,
-  overalRating: 0,
-  guestAllowed: 0,
-  hotelImages: ["", "", "", "", ""],
-  hotelRating: {
-    accuracy: 0,
-    checkIn: 0,
-    cleanliness: 0,
-    communication: 0,
-    location: 0,
-    value: 0,
+  perNight: 0,
+  amenities: {
+    hasParking: false,
+    hasPool: false,
+    hasWifi: false,
+    hasTv: false,
+    hasBalcony: false,
+    hasKitchen: false,
+    hasWorkSpace: false,
+    hasWashingMachine: false,
+    hasGarden: false,
   },
-  hotelAddress: {
-    city: "",
+  type: "",
+  isAllReserved: false,
+  numberOfEmptyRooms: 0,
+  overalRating: 0,
+  totalReviews: 0,
+  guestAllowed: 0,
+  host: {
+    id: 0,
+    fullName: "",
+    email: "",
+    hostExperience: null,
+    hostResponseRate: 0,
+    hostRating: 0,
+    profileImage: "",
+  },
+  reviews: [],
+  address: {
     street: "",
+    city: "",
     state: "",
     country: "",
     longitude: "",
     latitude: "",
   },
-  perNight: 0,
-  aboutHost: {
-    name: "",
-    email: "",
-    hostExperience: 0,
-    hostRating: 0,
-    hostResponseRate: 0,
-    profileImage: "",
-  },
+  images: [], // Ensure images is always an array
 };
 
 export const singleHotelSlice = createSlice({
   name: "singleHotelSlice",
   initialState,
   reducers: {
-    setHasData: (state, action) => {
-      state.hasData = action.payload;
+    setAllHotelData: (state, action) => {
+      const data = action.payload;
+      return {
+        ...state,
+        hasData: true,
+        hotelId: data.id,
+        hotelName: data.hotelName,
+        description: data.description,
+        roomType: data.roomType,
+        perNight: data.perNight,
+        amenities: {
+          hasParking: data.hasParking,
+          hasPool: data.hasPool,
+          hasWifi: data.hasWifi,
+          hasTv: data.hasTv,
+          hasBalcony: data.hasBalcony,
+          hasKitchen: data.hasKitchen,
+          hasWorkSpace: data.hasWorkSpace,
+          hasWashingMachine: data.hasWashingMachine,
+          hasGarden: data.hasGarden,
+        },
+        type: data.type,
+        isAllReserved: data.isAllReserved,
+        numberOfEmptyRooms: data.numberOfEmptyRooms,
+        overalRating: data.overalRating,
+        totalReviews: data.totalReviews,
+        guestAllowed: data.guestAllowed,
+        host: data.host,
+        reviews: data.reviews,
+        address: data.address,
+        images: data.images,
+      };
     },
-    setTotalReviews: (state, action) => {
-      state.totalReviews = action.payload;
-    },
-    setOveralRating: (state, action) => {
-      state.overallRating = action.payload;
-    },
-    setHotelName: (state, action) => {
-      state.hotelName = action.payload;
-    },
-    setHotelId: (state, action) => {
-      state.hotelId = action.payload;
-    },
-    setHotelType: (state, action) => {
-      state.hotelType = action.payload;
-    },
-    setAboutHotel: (state, action) => {
-      state.aboutHotel = action.payload;
-    },
-    setHotelImages: (state, action) => {
-      state.hotelImages = action.payload;
-    },
-    setHotelAddress: (state, action) => {
-      state.hotelAddress = action.payload;
-    },
-    setRoomType: (state, action) => {
-      state.roomType = action.payload;
-    },
-    setPerNight: (state, action) => {
-      state.perNight = action.payload;
-    },
-    setAboutHost: (state, action) => {
-      state.aboutHost = action.payload;
-    },
-    setGuestAllowed: (state, action) => {
-      state.guestAllowed = action.payload;
-    },
-    setHotelRating:(state,action)=>{
-      state.hotelRating = action.payload;
-    }
   },
 });
 
+export const { setAllHotelData } = singleHotelSlice.actions;
 export default singleHotelSlice.reducer;
-export const {
-  setHotelType,
-  setHotelImages,
-  setHotelAddress,
-  setAboutHotel,
-  setRoomType,
-  setPerNight,
-  setAboutHost,
-  setHotelId,
-  setHasData,
-  setHotelName,
-  setOveralRating,
-  setTotalReviews,
-  setGuestAllowed,
-  setHotelRating
-} = singleHotelSlice.actions;

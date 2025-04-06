@@ -6,13 +6,9 @@ export default async function getSingleHotelInformation(hotelId: number) {
     const res = await axios.get(`${API}/hotel/get-hotel-info/${hotelId}`, {
       withCredentials: true,
     });
-    if (res.data.success === true) {
-      return { success: true, data: res.data.data };
-    }
-
-    return { success: false };
+    return res.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching hotel info:", error);
     return { success: false };
   }
 }
