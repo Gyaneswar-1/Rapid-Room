@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { MdLocationOn } from "react-icons/md";
-import { FaUser, FaCalendarAlt } from "react-icons/fa";
+import { FaUser, FaCalendarAlt, FaBed } from "react-icons/fa";
+import { cancelBooking } from "../../service/checkin/cancleBooking";
+import { toast } from "react-toastify";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface BookingCardProps {
   booking: {
@@ -54,6 +57,8 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
   };
 
   const getStatusColor = (status: string) => {
+
+    
     switch (status.toLowerCase()) {
       case "active":
         return "bg-green-100 text-green-800";
@@ -68,13 +73,45 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
     }
   };
 
+  const handleCancellation = async () => {
+    if (booking.ReservationStatus === "cancled") {
+      // Handle refund request
+      toast.info("Refund request is being processed");
+      return;
+    }
+
+    try {
+      const result = await cancelBooking({
+        hotelId: booking.hotelId,
+        roomId: booking.roomId,
+        paymentId: booking.payment.id,
+        reservationId: booking.id,
+      });
+
+      if (result.success) {
+        toast.success("Booking cancelled successfully");
+        onCancel(); // This will trigger the state update in parent component
+      } else {
+        toast.error("Failed to cancel booking");
+      }
+    } catch (error) {
+      toast.error("An error occurred while cancelling the booking");
+    }
+  };
+  const  navigate = useNavigate();
   return (
     <motion.div
       whileHover={{ y: -5 }}
       className="bg-white rounded-lg overflow-hidden shadow-lg transform transition-all duration-300"
+      
     >
-      <div className="relative overflow-hidden h-48 w-full group">
+      <div className="relative overflow-hidden h-48 w-full group cursor-pointer"
+      onClick={()=>{
+        navigate(`/book-hotel?hotelId=${booking.hotelId}`)
+      }}
+      >
         <motion.img
+
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
           src={
@@ -88,6 +125,7 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
             const target = e.target as HTMLImageElement;
             target.src = "https://placehold.co/600x400?text=Hotel+Image";
           }}
+          
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 group-hover:opacity-0 transition-opacity duration-300" />
       </div>
@@ -123,6 +161,13 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
         </div>
 
         <div className="flex items-center gap-2 mb-4">
+          <FaBed className="text-teal-500" />
+          <p className="text-sm text-gray-600">
+            Room Number: {booking.room.roomNumber}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 mb-4">
           <FaUser className="text-gray-500" />
           <p className="text-sm text-gray-600">
             Hosted by {booking.hotel.host.fullName}
@@ -138,12 +183,12 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
         <div className="flex gap-3">
           <button
             onClick={onMessage}
-            className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            className="flex-1 bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
           >
             Message Host
           </button>
           <button
-            onClick={onCancel}
+            onClick={handleCancellation}
             className={`flex-1 px-4 py-2 rounded-md transition-colors ${
               booking.ReservationStatus === "cancled"
                 ? "bg-yellow-500 hover:bg-yellow-600 text-white"
@@ -151,7 +196,7 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
             }`}
           >
             {booking.ReservationStatus === "cancled"
-              ? "Request Refund"
+              ? "Refund Requested"
               : "Cancel Booking"}
           </button>
         </div>

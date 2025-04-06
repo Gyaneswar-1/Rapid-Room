@@ -44,7 +44,16 @@ export default function UserBookings() {
   };
 
   const handleCancelBooking = (id: number) => {
-    alert(`Requesting cancellation for booking ${id}`);
+    // Update the bookings data to reflect the cancellation
+    dispatch(
+      setBookings(
+        bookingsData.map((booking) =>
+          booking.id === id
+            ? { ...booking, ReservationStatus: "cancled" }
+            : booking
+        )
+      )
+    );
   };
 
   return (
