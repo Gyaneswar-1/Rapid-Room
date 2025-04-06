@@ -283,7 +283,7 @@ export default function ReservationModal({
                     className={`w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center ${
                       !datesSelected || isRequestLoading
                         ? "bg-gray-200 text-gray-500"
-                        : "bg-rose-600 hover:bg-rose-700 text-white"
+                        : "bg-primary text-white"
                     }`}
                   >
                     {isRequestLoading ? (

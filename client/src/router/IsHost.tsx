@@ -9,13 +9,15 @@ interface IsHostProps {
 }
 
 function IsHost({ element }: IsHostProps) {
-  const { isHost, status }: userStoreType = useSelector(
+  const { isHost, status,hasDataInStore }: userStoreType = useSelector(
     (state: RootState) => state.userReducer
   );
 
   console.log("this is",status,isHost);
-  
-  if (!isHost) {
+  if(!hasDataInStore){
+    return <></>
+  }
+  else if (!isHost) {
     return <Navigate to="/host-confirm" />;
   } else if (isHost && status === "PENDING") {
     return <Navigate to="/host-pending" />;

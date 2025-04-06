@@ -32,14 +32,14 @@ const PriceCard = ({cleaningFee,pricePerNight,serviceFee,overalRating,totalRevie
                   <div className="flex items-center">
                     <Star className="h-4 w-4 mr-1 fill-current text-yellow-500" />
                     <span>{overalRating} · </span>
-                    <span className="ml-1 underline">
+                    <span className="ml-1 ">
                       {totalReviews} reviews
                     </span>
                   </div>
                 </div>
 
                 <button
-                  className="w-full mb-4 bg-rose-600 hover:bg-rose-700 text-white py-3 px-4 rounded-lg font-medium"
+                  className="w-full mb-4 bg-primary text-white py-3 px-4 rounded-lg font-medium"
                   onClick={() =>{
                     
                     dispatch((setShowReservModel(!showReservatonModel)))
@@ -54,17 +54,17 @@ const PriceCard = ({cleaningFee,pricePerNight,serviceFee,overalRating,totalRevie
 
                 <div className="mt-6 space-y-4">
                   <div className="flex justify-between">
-                    <span className="underline">
+                    <span className="">
                     ₹{pricePerNight} x {1} nights
                     </span>
                     <span>₹{pricePerNight}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="underline">Cleaning fee</span>
+                    <span className="">Cleaning fee</span>
                     <span>₹{cleaningFee}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="underline">Service fee</span>
+                    <span className="">Service fee</span>
                     <span>
                       ₹{Math.round(serviceFee)}
                     </span>

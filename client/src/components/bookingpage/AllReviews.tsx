@@ -5,7 +5,6 @@ import { AppDispatch, RootState } from "../../store/store";
 import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
 
-
 type Review = {
   id: number;
   author: string;
@@ -38,8 +37,9 @@ const AllReviews = ({
   value,
   reviews,
 }: typeAllReview) => {
-
-  const { showAllReview } = useSelector((state: RootState) => state.toogleAllReviewsReducer);
+  const { showAllReview } = useSelector(
+    (state: RootState) => state.toogleAllReviewsReducer
+  );
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -51,7 +51,7 @@ const AllReviews = ({
           </h2>
           <button
             onClick={() => {
-              dispatch(toogleAllReviews(showAllReview))
+              dispatch(toogleAllReviews(showAllReview));
             }}
             className="p-2 rounded-full hover:bg-gray-100"
           >
@@ -158,13 +158,19 @@ const AllReviews = ({
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="h-10 w-10 rounded-full overflow-hidden">
-                      <img
-                        src={review.avatar || "/placeholder.svg"}
-                        alt={review.author}
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                      />
+                      {review.avatar ? (
+                        <img
+                          src={review.avatar}
+                          alt={review.author}
+                          width={40}
+                          height={40}
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center text-base font-semibold">
+                          {review.author.charAt(0).toUpperCase()}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <p className="font-medium">{review.author}</p>
