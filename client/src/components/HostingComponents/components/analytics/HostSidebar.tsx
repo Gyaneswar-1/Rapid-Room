@@ -2,8 +2,9 @@ import {
   HomeIcon,
   BuildingIcon,
   CalendarIcon,
-  ChartBarIcon,
   MarsIcon,
+  IndianRupee,
+  UsersRound
 } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 
@@ -19,9 +20,8 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
     { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
     { name: "Hotels", href: "/dashboard/hotels", icon: BuildingIcon },
     { name: "Reservations", href: "/dashboard/reservations", icon: CalendarIcon },
-    { name: "Earnings", href: "/dashboard/earnings", icon: MarsIcon },
-    { name: "Guests", href: "/dashboard/guests", icon: MarsIcon },
-    { name: "Analytics", href: "/dashboard/analytics", icon: ChartBarIcon },
+    { name: "Earnings", href: "/dashboard/earnings", icon: IndianRupee },
+    { name: "Guests", href: "/dashboard/guests", icon: UsersRound },
   ]
 
   return (
@@ -54,13 +54,13 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
           <div className="flex-1 overflow-y-auto py-4">
             <nav className="space-y-1 px-2">
               {navigation.map((item) => {
-                const isActive = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`)
+                const isActive = location.pathname === item.href || location.pathname + '/' === item.href + '/'
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
                     className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                      isActive ? "bg-teal-400 text-black" : "text-secondary hover:bg-gray-50 hover:text-gray-900"
+                      isActive ? "bg-teal-600 text-white" : "text-secondary hover:bg-neutral-200 hover:text-black"
                     }`}
                   >
                     <item.icon

@@ -1,4 +1,4 @@
-"use client"
+
 
 import AddHotels from "@/components/addHotel/AddHotels"
 

@@ -1,4 +1,4 @@
-"use client"
+
 
 interface PaymentsTabsProps {
   activeSubTab: string

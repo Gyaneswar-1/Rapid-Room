@@ -1,13 +1,14 @@
-
 import { useState, useEffect } from "react";
 import HostSidebar from "../components/HostingComponents/components/analytics/HostSidebar";
 import HostHeader from "../components/HostingComponents/components/analytics/HostHeader";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-// import Navbar from "../components/HostingComponents/components/Navbar";
+import { motion } from "framer-motion";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 export default function HostLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [showAnimation, setShowAnimation] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -18,25 +19,44 @@ export default function HostLayout() {
       }
     };
 
-    // Initial check
     handleResize();
 
-    // Add event listener
     window.addEventListener("resize", handleResize);
 
-    // Clean up
+    setTimeout(() => {
+      setShowAnimation(false);
+    }, 2500);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // const toggleSidebar = () => {
-  //   setIsSidebarOpen(!isSidebarOpen)
-  // }
+  if (showAnimation) {
+    return (
+      <>
+        {/* <SetUserDataToStore /> */}
+        <motion.div
+          className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-primary"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 2 }}
+        >
+          <motion.h1
+            className="text-4xl font-bold text-neutral-900"
+            initial={{ scale: 0.5 }}
+            animate={{ scale: 3 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+          >
+            Welcome to Dashboard
+          </motion.h1>
+        </motion.div>
+      </>
+    );
+  }
 
   return (
     <div>
-      <Navbar show={false}/>
+      <Navbar show={false} />
       <div className="flex h-screen pt-2 md:pt-14 bg-gray-50">
         <HostSidebar
           isSidebarOpen={isSidebarOpen}

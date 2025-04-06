@@ -48,11 +48,10 @@ function Home() {
   const [showLoader, setShowLoader] = useState(true)
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const [page,setPage] = useState(1)
   
-  // Get category from URL search params
   const categoryParam = searchParams.get('category')
 
-  //state management
   const { hotels,hasHotelsArray } = useSelector((state: RootState) => state.hotelReducer)
   const { showSignup, showSignin } = useSelector((state: RootState) => state.showAuthCardReducer)
   const { search } = useSelector((state: RootState) => state.searchReducer)
@@ -63,7 +62,7 @@ function Home() {
 
   useEffect(() => {
     if(!hasHotelsArray){
-      getHotels(1, 10)
+      getHotels(1, 100)
       .then(async (res) => {
         if (res.success === true) {
           setShowLoader(false)

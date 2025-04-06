@@ -13,10 +13,14 @@ function IsHost({ element }: IsHostProps) {
     (state: RootState) => state.userReducer
   );
 
+  console.log("this is",status,isHost);
   
-
-  if (isHost && status === "PENDING") {
+  if (!isHost) {
+    return <Navigate to="/host-confirm" />;
+  } else if (isHost && status === "PENDING") {
     return <Navigate to="/host-pending" />;
+  } else if (isHost && status === "REJECTED") {
+    return <Navigate to="/host-rejected" />;
   } else if (isHost && status === "APPROVED") {
     return element;
   } else {

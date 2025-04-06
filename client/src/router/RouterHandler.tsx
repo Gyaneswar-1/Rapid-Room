@@ -7,15 +7,8 @@ import ComeingSoon from "../pages/ComeingSoon";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import Welcome from "../pages/Welcome";
-// import BookingPage2 from "../pages/BookingPage2";
 import WishlistPage from "../pages/WishlistPage";
 import UserBookings from "../pages/UserBookings";
-// import TodayPage from "../components/HostingPage/TodayPage";
-// import ListingsPage from "../components/HostingPage/ListingsPage";
-// import MessagesPage from "../components/HostingPage/MessagesPage";
-// import ListingDetailPage from "../components/HostingPage/ListingDetailPage";
-// import GuidebookPage from "../components/HostingPage/GuidebookPage";
-// import EarningsPage from "../components/HostingPage/EarningsPage";
 import UserProfile from "../pages/UserProfile";
 import IsHost from "./IsHost";
 import AdminDashboard from "../pages/AdminDashboard";
@@ -23,10 +16,10 @@ import HotelsPage from "../components/AdminComponents/HotelsPage";
 import HostsPage from "../components/AdminComponents/HostsPage";
 import UsersPage from "../components/AdminComponents/UsersPage";
 import SettingsPage from "../components/AdminComponents/SettingsPage";
-
 import BookingPage from "../pages/BookingPage";
 import PaymentsPage from "../components/AdminComponents/components/paymentPage";
 import HostPendingPage from "../pages/HostPendingPage";
+import HostRejectedPage from "../pages/HostRejectedPage";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
 import AdminLoginPage from "../components/AdminComponents/AdminLoginPage";
 import EditProfilePage from "../components/userProfile/EditProfilePage";
@@ -36,7 +29,6 @@ import { HostedHotels } from "../components/HostingComponents/components/analyti
 import ReservationsPage from "../components/HostingComponents/Pages/ReservationsPage";
 import EarningsPage from "../components/HostingComponents/Pages/EarningsPage";
 import GuestsPage from "../components/HostingComponents/Pages/GuestsPage";
-import AnalyticsPage from "../components/HostingComponents/Pages/AnalyticsPage";
 import DeleteAccount from "../pages/DeleteAccount";
 
 function RouterHandler() {
@@ -59,10 +51,15 @@ function RouterHandler() {
             <Route path="book-hotel" element={<BookingPage />} />
 
             <Route
-              path="host-pending"
+              path="/host-pending"
               element={<IsHost element={<HostPendingPage />} />}
             />
-           
+
+            <Route
+              path="/host-rejected"
+              element={<IsHost element={<HostRejectedPage />} />}
+            />
+
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
@@ -75,13 +72,9 @@ function RouterHandler() {
               <Route path="bookings" element={<UserBookings />} />
               <Route path="security">
                 <Route path="password" />
-                <Route path="delete-account" element={<DeleteAccount/>} />
+                <Route path="delete-account" element={<DeleteAccount />} />
               </Route>
             </Route>
-            {/* <Route path="/messages" element={<MessageHost />} />
-            <Route path="/messages/:hostId" element={<ChatPage />} /> */}
-
-            {/* <Route path="dashbord" element={<IsHost element={<HostLayout />} />}> */}
             <Route
               path="dashboard"
               element={<IsHost element={<HostLayout />} />}
@@ -91,10 +84,9 @@ function RouterHandler() {
               <Route path="reservations" element={<ReservationsPage />} />
               <Route path="earnings" element={<EarningsPage />} />
               <Route path="guests" element={<GuestsPage />} />
-              <Route path="analytics" element={<AnalyticsPage />} />
             </Route>
           </Route>
-              <Route path="add-hotel" element={<AddHotels />}/>
+          <Route path="add-hotel" element={<AddHotels />} />
 
           <Route path="/admin-login" element={<AdminLoginPage />} />
           {/* Admin routes */}

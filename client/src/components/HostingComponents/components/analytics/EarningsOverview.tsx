@@ -1,13 +1,13 @@
-"use client"
+;
 
-import { CurrencyIcon, CalendarIcon } from "lucide-react"
-import { useState } from "react"
+import { CurrencyIcon, CalendarIcon, Star } from "lucide-react";
+import { useState } from "react";
 
 interface EarningsOverviewProps {
-  totalEarnings: number
-  pendingPayouts: number
-  totalReservations: number
-  activeListings: number
+  totalEarnings: number;
+  pendingPayouts: number;
+  totalReservations: number;
+  activeListings: number;
 }
 
 export function EarningsOverview({
@@ -16,15 +16,15 @@ export function EarningsOverview({
   totalReservations,
   activeListings,
 }: EarningsOverviewProps) {
-  const [timeframe, setTimeframe] = useState("month")
+  const [timeframe, setTimeframe] = useState("month");
 
   // Format currency
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(amount)
-  }
+    }).format(amount);
+  };
 
   // Mock data for the chart
   const monthlyEarnings = [
@@ -40,51 +40,32 @@ export function EarningsOverview({
     { month: "Oct", amount: 2200 },
     { month: "Nov", amount: 2000 },
     { month: "Dec", amount: 2400 },
-  ]
-
-
+  ];
 
   // Find the max value for scaling
-  const maxAmount = Math.max(...monthlyEarnings.map((item) => item.amount))
+  const maxAmount = Math.max(...monthlyEarnings.map((item) => item.amount));
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Earnings Chart */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 lg:col-span-2">
         <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-lg font-medium text-gray-900">Earnings Overview</h2>
-          <div className="flex space-x-2">
-            <button
-              onClick={() => setTimeframe("month")}
-              className={`px-3 py-1 text-sm rounded-md ${
-                timeframe === "month" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              Month
-            </button>
-            <button
-              onClick={() => setTimeframe("year")}
-              className={`px-3 py-1 text-sm rounded-md ${
-                timeframe === "year" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              Year
-            </button>
-            <button
-              onClick={() => setTimeframe("all")}
-              className={`px-3 py-1 text-sm rounded-md ${
-                timeframe === "all" ? "bg-primary text-teal-700" : "text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              All Time
-            </button>
-          </div>
+          <h2 className="text-lg font-medium text-gray-900">
+            Earnings Overview
+          </h2>
         </div>
         <div className="p-6">
           <div className="flex items-baseline mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">{formatCurrency(totalEarnings)}</h3>
+            <h3 className="text-2xl font-bold text-gray-900">
+              {formatCurrency(totalEarnings)}
+            </h3>
             <span className="ml-2 text-sm font-medium text-green-600 flex items-center">
-              <svg className="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                className="w-3 h-3 mr-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
@@ -93,15 +74,19 @@ export function EarningsOverview({
               </svg>
               12.5%
             </span>
-            <span className="ml-2 text-sm text-gray-500">vs last {timeframe}</span>
+            <span className="ml-2 text-sm text-gray-500">
+              vs last {timeframe}
+            </span>
           </div>
 
-          {/* Enhanced bar chart with hover effects and gradient */}
           <div className="h-64 flex items-end space-x-2">
             {monthlyEarnings.map((item, index) => (
-              <div key={index} className="flex-1 flex flex-col items-center group">
+              <div
+                key={index}
+                className="flex-1 flex flex-col items-center group"
+              >
                 <div
-                  className="w-full relative bg-gradient-to-t from-teal-600 to-teal-400 hover:from-teal-700 hover:to-teal-500 rounded-t transition-all duration-200 cursor-pointer"
+                  className="w-full relative bg-gradient-to-t bg-primary   rounded-t transition-all duration-200 cursor-pointer"
                   style={{ height: `${(item.amount / maxAmount) * 200}px` }}
                 >
                   {/* Tooltip */}
@@ -119,17 +104,19 @@ export function EarningsOverview({
       {/* Stats Cards and Booking Sources Pie Chart */}
       <div className="space-y-6">
         {/* Booking Sources Pie Chart */}
-        
 
-        {/* Pending Payouts */}
         <div className="bg-white rounded-lg shadow-sm border  border-gray-200 p-6">
           <div className="flex items-center">
-            <div className="p-3 rounded-full bg-primary text-teal-600">
+            <div className="p-3 rounded-full bg-teal-100 text-teal-600">
               <CurrencyIcon className="w-6 h-6" />
             </div>
             <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">Pending Payouts</h3>
-              <p className="text-2xl font-semibold text-gray-900">{formatCurrency(pendingPayouts)}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Pending Payouts
+              </h3>
+              <p className="text-2xl font-semibold text-gray-900">
+                {formatCurrency(pendingPayouts)}
+              </p>
             </div>
           </div>
           <div className="mt-4">
@@ -138,21 +125,28 @@ export function EarningsOverview({
             </button>
           </div>
         </div>
-
-        {/* Total Reservations */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-green-100 text-green-600">
               <CalendarIcon className="w-6 h-6" />
             </div>
             <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">Total Reservations</h3>
-              <p className="text-2xl font-semibold text-gray-900">{totalReservations}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Total Reservations
+              </h3>
+              <p className="text-2xl font-semibold text-gray-900">
+                {totalReservations}
+              </p>
             </div>
           </div>
           <div className="mt-4 flex items-center">
             <span className="text-sm text-green-600 font-medium flex items-center">
-              <svg className="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                className="w-3 h-3 mr-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
@@ -166,17 +160,22 @@ export function EarningsOverview({
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center">
-            <div className="p-3 rounded-full bg-green-100 text-green-600">
-              <CalendarIcon className="w-6 h-6" />
+            <div className="p-3 rounded-full bg-yellow-100 text-yellow-600">
+              <Star className="w-6 h-6" />
             </div>
             <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">Total Reservations</h3>
-              <p className="text-2xl font-semibold text-gray-900">{totalReservations}</p>
+              <h3 className="text-sm font-medium text-gray-500">Host Rating</h3>
+              <p className="text-2xl font-semibold text-gray-900">3.6</p>
             </div>
           </div>
           <div className="mt-4 flex items-center">
             <span className="text-sm text-green-600 font-medium flex items-center">
-              <svg className="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                className="w-3 h-3 mr-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path
                   fillRule="evenodd"
                   d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
@@ -190,9 +189,8 @@ export function EarningsOverview({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Also export as default for backward compatibility
-export default EarningsOverview
-
+export default EarningsOverview;

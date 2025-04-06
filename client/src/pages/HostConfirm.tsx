@@ -6,12 +6,14 @@ import Header from "../components/adminConfirm/Header";
 import ConfirmButton from "../components/adminConfirm/ConfirmButton";
 import CompareTable from "../components/adminConfirm/CompareTable";
 import TermsSection from "../components/adminConfirm/TermsSection";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 function AdminConfirm() {
   return (
     <div>
       <Navbar show={false} />
       <div className="container mx-auto pt-24 px-4 md:px-6 lg:px-8 pb-16">
+      <SetUserDataToStore/>
         <Header />
         <Section1 />
         <Section2 />

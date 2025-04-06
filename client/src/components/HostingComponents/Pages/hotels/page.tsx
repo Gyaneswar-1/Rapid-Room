@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState } from "react"
 import HostSidebar from "@/components/host/host-sidebar"

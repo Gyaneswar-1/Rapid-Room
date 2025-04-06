@@ -36,7 +36,7 @@ export default function HotelsView() {
   async function getHotels() {
     try {
       setLoading(true);
-      const response = await admin_getAllHotels(1, 10);
+      const response = await admin_getAllHotels(1, 100);
       setHotels(response.data);
     } catch (error) {
       console.error(error);
