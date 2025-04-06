@@ -14,7 +14,7 @@
     "license": "ISC",
     "dependencies": {
         "@bibek-samal/traveltrove": "^1.0.1",
-        "@prisma/client": "^6.2.1",
+        "@prisma/client": "^6.5.0",
         "axios": "^1.7.9",
         "bcrypt": "^5.1.1",
         "cloudinary": "^2.5.1",
@@ -48,6 +48,6 @@
         "@types/passport-google-oauth20": "^2.0.16",
         "nodemailer": "^6.10.0",
         "prettier": "^3.4.2",
-        "prisma": "^6.2.1"
+        "prisma": "^6.5.0"
     }
 }

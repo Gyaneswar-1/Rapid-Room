@@ -39,44 +39,47 @@ model Users {
 }
 
 model Hotels {
-  id                   Int      @id @default(autoincrement())
-  hostId               Int
-  host                 Users    @relation(fields: [hostId], references: [id], onDelete: Cascade)
-  hotelName            String?
-  description          String?
-  address              Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
-  addressId            Int?
-  perNight             Float?
-  roomType             String?
-  rooms                Rooms[]
-  numberOfRooms        Int?
-  numberOfEmptyRooms   Int?
-  overalRating         Int      @default(0)
-  totalReviews         Int      @default(0)
+  id                 Int      @id @default(autoincrement())
+  hostId             Int
+  host               Users    @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hotelName          String?
+  description        String?
+  address            Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId          Int?
+  perNight           Float?
+  roomType           String?
+  rooms              Rooms[]
+  numberOfRooms      Int?
+  numberOfGuests     Int      @default(1)
+  numberOfBeds       Int      @default(1)
+  numberOfBathrooms  Int      @default(1)
+  numberOfEmptyRooms Int?
+  overalRating       Int      @default(0)
+  totalReviews       Int      @default(0)
 
-  guestAllowed Int @default(1)
+  guestAllowed         Int     @default(1)
   //add other things 
-  hasWifi              Boolean   @default(false)
-  hasTv                Boolean   @default(false)
-  hasKitchen           Boolean   @default(false)
-  hasBalcony           Boolean   @default(false)
-  hasWorkSpace         Boolean   @default(false)
-  hasWashingMachine    Boolean   @default(false)
-  hasGarden            Boolean   @default(false)
-  hasParking           Boolean   @default(false)
-  hasAirConditioning   Boolean   @default(false)
-  hasDiningArea        Boolean   @default(false)
-  hasPool              Boolean   @default(false)
-  hasHotTub            Boolean   @default(false)
-  hasFirepit           Boolean   @default(false)
-  hasBBQGrill          Boolean   @default(false)
-  hasPoolTable         Boolean   @default(false)
-  hasExerciseEquipment Boolean   @default(false)
-  hasOutdoorShower     Boolean   @default(false)
-  hasSmokeAlarm        Boolean   @default(false)
-  hasFirstAidKit       Boolean   @default(false)
-  hasFireExtinguisher  Boolean   @default(false)
-  hasAccessibility     Boolean   @default(false)
+  hasWifi              Boolean @default(false)
+  hasTv                Boolean @default(false)
+  hasKitchen           Boolean @default(false)
+  hasBalcony           Boolean @default(false)
+  hasWorkSpace         Boolean @default(false)
+  hasWashingMachine    Boolean @default(false)
+  hasGarden            Boolean @default(false)
+  hasParking           Boolean @default(false)
+  hasAirConditioning   Boolean @default(false)
+  hasDiningArea        Boolean @default(false)
+  hasPool              Boolean @default(false)
+  hasHotTub            Boolean @default(false)
+  hasFirepit           Boolean @default(false)
+  hasBBQGrill          Boolean @default(false)
+  hasPoolTable         Boolean @default(false)
+  hasExerciseEquipment Boolean @default(false)
+  hasOutdoorShower     Boolean @default(false)
+  hasSmokeAlarm        Boolean @default(false)
+  hasFirstAidKit       Boolean @default(false)
+  hasFireExtinguisher  Boolean @default(false)
+  hasAccessibility     Boolean @default(false)
 
   isAllReserved Boolean        @default(false)
   reviews       Review[]
@@ -216,8 +219,8 @@ model Payments {
   razorpay_payment_id String
   razorpay_order_id   String
   reservation         Reservations?
-  hotel Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade )
-  user  Users  @relation(fields: [userId], references: [id] , onDelete: Cascade )
+  hotel               Hotels        @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  user                Users         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([hotelId])
   @@index([userId])
