@@ -54,11 +54,11 @@ export const getMyBookings = async (req, res) => {
                         },
                     },
                 },
-                payment: {
-                    select: {
-                        id: true
-                    }
-                },
+                // payment:{
+                //     select:{
+                //         id: true
+                //     }
+                // },
                 room: {
                     select: {
                         roomNumber: true,

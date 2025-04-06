@@ -216,35 +216,9 @@ model Payments {
   razorpay_payment_id String
   razorpay_order_id   String
   reservation         Reservations?
-  hotel Hotels @relation(fields: [hotelId], references: [id])
-  user  Users  @relation(fields: [userId], references: [id])
+  hotel Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade )
+  user  Users  @relation(fields: [userId], references: [id] , onDelete: Cascade )
 
   @@index([hotelId])
   @@index([userId])
 }
-
-// Payment Entity:
-
-// ID
-// Booking ID
-// Payment Date
-// Amount
-// Payment Status (Pending, Completed, Refunded)
-
-// Message Entity:
-
-// ID
-// Sender ID
-// Receiver ID
-// Booking ID
-// Content
-// Timestamp
-
-// Notification Entity:
-
-// ID
-// User ID
-// Booking ID
-// Content
-// Timestamp
-// Status (Unread, Read)

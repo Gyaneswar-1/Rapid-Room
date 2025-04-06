@@ -5,12 +5,13 @@ import bcrypt from "bcrypt";
 import { deleteOnCloudinary } from "../utils/cloudinaryImageHandel.js";
 
 export const deleteUser = async (req: Request | any, res: Response | any) => {
-    const { email, password } = req.body;
+    const { password } = req.body;
 
     try {
-        const user = await prisma.users.findUnique({
+        // Using findFirst instead of findUnique since we're not sure which field is the unique identifier
+        const user = await prisma.users.findFirst({
             where: {
-                email: email,
+                id: req.user.id,
             },
             select: {
                 email: true,
@@ -19,20 +20,21 @@ export const deleteUser = async (req: Request | any, res: Response | any) => {
         });
 
         if (!user) {
-            return res.status(500).json(new ApiError(false));
+            return res.status(404).json(new ApiError(false, {}, "User not found"));
         }
 
         const isValidPass = await bcrypt.compare(password, user?.password);
 
-        if (user.email === email && isValidPass) {
+        if (isValidPass) {
             const result = await prisma.users.delete({
                 where: {
-                    email: email,
+                    id: req.user.id,
                 },
                 select: {
                     profileImage: true,
                 },
             });
+            
             const imageDelete = await deleteOnCloudinary(result.profileImage!);
 
             return res
@@ -48,10 +50,11 @@ export const deleteUser = async (req: Request | any, res: Response | any) => {
 
         return res
             .status(401)
-            .json(new ApiResponse(false, {}, "error in password", "failed!"));
+            .json(new ApiResponse(false, {}, "Invalid password", "failed!"));
     } catch (error: any) {
+        console.error("Error deleting user:", error);
         return res
-            .status(200)
+            .status(500)  // Changed from 200 to 500 which is more appropriate for errors
             .json(new ApiError(false, error, "error deleting user"));
     } finally {
         prisma.$disconnect();

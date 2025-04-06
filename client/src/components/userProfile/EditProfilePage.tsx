@@ -16,11 +16,24 @@ import {
   Loader2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { userStoreType } from "../../store/reducers/user.reducers";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setUserCity,
+  setUserCountry,
+  setUserEmail,
+  setUserFullName,
+  setUserGovId,
+  setUserPhoneNumber,
+  setUserProfileImage,
+  setUserState,
+  setUserZipCode,
+  userStoreType,
+} from "../../store/reducers/user.reducers";
 import { RootState } from "../../store/store";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { uploadImage } from "../../service/photos/imageUpload";
+import { deleteImage } from "../../service/photos/deleteUpload";
+import { updateUserData } from "../../service/userdata/updateUserData";
 
 // Define the form data type
 type FormInputs = {
@@ -52,12 +65,20 @@ export default function EditProfilePage() {
 
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [uploadedImage, setUploadedImage] = useState<string>(profileImage || "");
+  const [uploadedImage, setUploadedImage] = useState<string>(
+    profileImage || ""
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
+  const [originalProfileImage, setOriginalProfileImage] = useState<string>(profileImage || "");
 
   // React Hook Form setup
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormInputs>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormInputs>({
     defaultValues: {
       name: fullName || "",
       email: email || "",
@@ -69,7 +90,7 @@ export default function EditProfilePage() {
       zipcode: zipCode || "",
       govId: govId ? String(govId) : "",
       upiId: "",
-    }
+    },
   });
 
   // Set form values when user data changes
@@ -83,18 +104,42 @@ export default function EditProfilePage() {
     setValue("country", country || "");
     setValue("zipcode", zipCode || "");
     setValue("govId", govId ? String(govId) : "");
-  }, [fullName, email, phoneNumber, street, city, state, country, zipCode, govId, setValue]);
+  }, [
+    fullName,
+    email,
+    phoneNumber,
+    street,
+    city,
+    state,
+    country,
+    zipCode,
+    govId,
+    setValue,
+  ]);
+
+  // Update originalProfileImage when profileImage changes
+  useEffect(() => {
+    setOriginalProfileImage(profileImage || "");
+  }, [profileImage]);
 
   // Handle profile image upload
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setIsUploading(true);
-      
+
       try {
+        if (profileImage) {
+          const deleteResult = await deleteImage(profileImage);
+          
+          if (!deleteResult.success) {
+            console.error("Failed to delete previous image:", deleteResult.error);
+          }
+        }
+
+        // Upload the new image
         const result = await uploadImage(file);
-        console.log(result);
-        
+
         if (result.success) {
           setUploadedImage(result.imageUrl);
         } else {
@@ -102,8 +147,8 @@ export default function EditProfilePage() {
           alert("Failed to upload image. Please try again.");
         }
       } catch (error) {
-        console.error("Error uploading image:", error);
-        alert("An error occurred during image upload. Please try again.");
+        console.error("Error handling image:", error);
+        alert("An error occurred during image processing. Please try again.");
       } finally {
         setIsUploading(false);
       }
@@ -117,24 +162,48 @@ export default function EditProfilePage() {
     }
   };
 
-  // Form submission handler
+  const dispatch = useDispatch();
+
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setFormSubmitting(true);
     try {
-      // Include the uploaded image URL in the form data for submission
+      if (uploadedImage && originalProfileImage && uploadedImage !== originalProfileImage) {
+        console.log("Deleting previous profile image:", originalProfileImage);
+        const deleteResult = await deleteImage(originalProfileImage);
+        
+        if (!deleteResult.success) {
+          console.error("Failed to delete previous profile image:", deleteResult.error);
+        }
+      }
+
       const formDataWithImage = {
         ...data,
-        profileImage: uploadedImage || profileImage || ""
+        profileImage: uploadedImage || profileImage || "",
       };
 
-      // Log the complete form data with the image URL
-      console.log("Form submitted with complete data:", formDataWithImage);
-      
-      // Here you would typically send the data to your API
-      // await updateUserProfile(formDataWithImage);
-      
-      // Navigate back to profile page on success
-      navigate("/profile");
+      const result = await updateUserData(formDataWithImage);
+      if (result.success) {
+        dispatch(setUserFullName(formDataWithImage.name));
+        dispatch(setUserEmail(formDataWithImage.email));
+        dispatch(setUserPhoneNumber(formDataWithImage.phone));
+        dispatch(setUserState(formDataWithImage.state));
+        dispatch(setUserCity(formDataWithImage.city));
+        dispatch(setUserState(formDataWithImage.state));
+        dispatch(setUserCountry(formDataWithImage.country));
+        dispatch(setUserZipCode(formDataWithImage.zipcode));
+        dispatch(setUserGovId(formDataWithImage.govId));
+        dispatch(
+          setUserProfileImage(uploadedImage || formDataWithImage.profileImage)
+        );
+
+        // Update the original image reference after successful update
+        setOriginalProfileImage(uploadedImage || formDataWithImage.profileImage);
+        
+        alert("Profile updated successfully!");
+        navigate("/profile");
+      } else {
+        alert(result.error || "Failed to update profile. Please try again.");
+      }
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile. Please try again.");
@@ -206,8 +275,8 @@ export default function EditProfilePage() {
               </div>
 
               <p className="text-sm text-gray-500">
-                {isUploading 
-                  ? "Uploading image..." 
+                {isUploading
+                  ? "Uploading image..."
                   : "Click the upload button to change your profile photo"}
               </p>
             </div>
@@ -243,7 +312,9 @@ export default function EditProfilePage() {
                   />
                 </div>
                 {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.name.message}
+                  </p>
                 )}
               </div>
 
@@ -262,12 +333,12 @@ export default function EditProfilePage() {
                     <input
                       id="email"
                       type="email"
-                      {...register("email", { 
+                      {...register("email", {
                         required: "Email is required",
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Invalid email address"
-                        }
+                          message: "Invalid email address",
+                        },
                       })}
                       className={`focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 ${
                         errors.email ? "border-red-500" : ""
@@ -276,7 +347,9 @@ export default function EditProfilePage() {
                     />
                   </div>
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.email.message}
+                    </p>
                   )}
                 </div>
                 <div>
@@ -292,7 +365,9 @@ export default function EditProfilePage() {
                     </div>
                     <input
                       id="phone"
-                      {...register("phone", { required: "Phone number is required" })}
+                      {...register("phone", {
+                        required: "Phone number is required",
+                      })}
                       className={`focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 ${
                         errors.phone ? "border-red-500" : ""
                       }`}
@@ -300,7 +375,9 @@ export default function EditProfilePage() {
                     />
                   </div>
                   {errors.phone && (
-                    <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.phone.message}
+                    </p>
                   )}
                 </div>
               </div>

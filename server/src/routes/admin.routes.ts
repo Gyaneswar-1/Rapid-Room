@@ -7,6 +7,7 @@ import { admin_getAllHosts } from "../controller/admin_getAllHosts.js";
 import { admin_approveHost } from "../controller/admin_approveHost.js";
 import { admin_rejectHost } from "../controller/admin_rejectHost.js";
 import { admin_getAnalysis } from "../controller/admin_getAnalysis.js";
+import { admin_paymentDashboard } from "../controller/admin_paymentDashboard.js";
 
 const AdminRouter = Router();
 
@@ -27,10 +28,6 @@ AdminRouter.route("/host/:userId/reject").put(admin_rejectHost);
 // Dashboard statistics routes
 AdminRouter.route("/stats/dashboard").get(admin_getAnalysis);
 
-// Booking management routes
-AdminRouter.route("/bookings").get(/* adminGetAllBookings controller */);
-
-// Payment management routes
-AdminRouter.route("/payments").get(/* adminGetAllPayments controller */);
+AdminRouter.route("/payments").get(admin_paymentDashboard);
 
 export default AdminRouter;

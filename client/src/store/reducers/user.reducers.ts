@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type userStoreType = {
 
@@ -113,8 +113,11 @@ export const UserSlice = createSlice({
         setUserStatus:(state,action)=>{
           state.status = action.payload;
         },
+        resetUserData: () => {
+          initialState===null;
+        }
     }
 })
 
 export default UserSlice.reducer;
-export const {setHasDataInStore,setUserCity,setUserCountry,setUserCreatedAt,setUserEmail,setUserFullName,setUserGovId,setUserHostExperience,setUserHostRating,setUserHostResponseRate,setUserID,setUserIsHost,setUserLatitude,setUserLongitude,setUserPhoneNumber,setUserProfileImage,setUserState,setUserStreet,setUserZipCode, setUserStatus} = UserSlice.actions;
+export const {setHasDataInStore,setUserCity,setUserCountry,setUserCreatedAt,setUserEmail,setUserFullName,setUserGovId,setUserHostExperience,setUserHostRating,setUserHostResponseRate,setUserID,setUserIsHost,setUserLatitude,setUserLongitude,setUserPhoneNumber,setUserProfileImage,setUserState,setUserStreet,setUserZipCode, setUserStatus, resetUserData} = UserSlice.actions;

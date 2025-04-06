@@ -37,12 +37,9 @@ import ReservationsPage from "../components/HostingComponents/Pages/Reservations
 import EarningsPage from "../components/HostingComponents/Pages/EarningsPage";
 import GuestsPage from "../components/HostingComponents/Pages/GuestsPage";
 import AnalyticsPage from "../components/HostingComponents/Pages/AnalyticsPage";
+import DeleteAccount from "../pages/DeleteAccount";
 
 function RouterHandler() {
-  // Remove the automatic redirect that affects all routes
-  // localStorage.setItem("isAdmin", "true");  <- Remove this line
-
-  // Admin check only affects the root route
   const AdminRedirect = () => {
     if (localStorage.getItem("isAdmin") === "true") {
       return <Navigate to="/admin" />;
@@ -58,7 +55,6 @@ function RouterHandler() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/comeingsoon" element={<ComeingSoon />} />
-          {/* need authentication to access */}
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
 
@@ -77,6 +73,10 @@ function RouterHandler() {
               <Route path="edit" element={<EditProfilePage />} />
               <Route path="wishlist" element={<WishlistPage />} />
               <Route path="bookings" element={<UserBookings />} />
+              <Route path="security">
+                <Route path="password" />
+                <Route path="delete-account" element={<DeleteAccount/>} />
+              </Route>
             </Route>
             {/* <Route path="/messages" element={<MessageHost />} />
             <Route path="/messages/:hostId" element={<ChatPage />} /> */}
@@ -92,9 +92,9 @@ function RouterHandler() {
               <Route path="earnings" element={<EarningsPage />} />
               <Route path="guests" element={<GuestsPage />} />
               <Route path="analytics" element={<AnalyticsPage />} />
-              <Route path="add-hotel" element={<AddHotels />}/>
             </Route>
           </Route>
+              <Route path="add-hotel" element={<AddHotels />}/>
 
           <Route path="/admin-login" element={<AdminLoginPage />} />
           {/* Admin routes */}

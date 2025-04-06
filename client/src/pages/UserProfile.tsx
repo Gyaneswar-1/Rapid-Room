@@ -1,14 +1,11 @@
-import type React from "react";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   Edit,
-  Heart,
-  Calendar,
   ChevronRight,
   Settings,
   List,
-  Clock,
+  Trash,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
@@ -28,102 +25,23 @@ export default function ProfilePage() {
     govId,
     createdAt,
     isHost,
-    hostExperience,
-    hostRating,
-    hostResponseRate,
+    // hostExperience,
+    // hostRating,
+    // hostResponseRate,
     country,
     state,
     street,
     city,
     zipCode,
-    longitude,
-    latitude,
+    // longitude,
+    // latitude,
   }: userStoreType = useSelector((state: RootState) => state.userReducer);
 
   console.log(email);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Mock data for wishlist
-  const [wishlist, setWishlist] = useState([
-    {
-      id: "wish1",
-      name: "Sunset Beach Resort",
-      location: "Bali, Indonesia",
-      price: "$120/night",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: "wish2",
-      name: "Mountain View Lodge",
-      location: "Aspen, Colorado",
-      price: "$150/night",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-  ]);
 
-  // Mock data for recent bookings (showing only 2 for the main page)
-  const [recentBookings, setRecentBookings] = useState([
-    {
-      id: "BKG-1001",
-      hotelName: "Oceanview Villa",
-      location: "Maldives",
-      checkIn: "2023-04-15",
-      checkOut: "2023-04-20",
-      amount: "$850",
-      status: "completed",
-      paymentStatus: "paid",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: "BKG-1002",
-      hotelName: "City Center Suites",
-      location: "New York",
-      checkIn: "2023-05-10",
-      checkOut: "2023-05-15",
-      amount: "$720",
-      status: "upcoming",
-      paymentStatus: "paid",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-  ]);
-
-  // Handle profile image upload
-  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const file = e.target.files[0]
-  //     const reader = new FileReader()
-
-  //     reader.onload = (event) => {
-  //       if (event.target && event.target.result) {
-  //         setProfile({
-  //           ...profile,
-  //           profileImage: event.target.result as string,
-  //         })
-  //       }
-  //     }
-
-  //     reader.readAsDataURL(file)
-  //   }
-  // }
-
-  // Trigger file input click
-  const triggerFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  // Format date for display
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("en-US", options);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -327,7 +245,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Recent Bookings */}
-            <div className="bg-white shadow rounded-lg overflow-hidden">
+            {/* <div className="bg-white shadow rounded-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                 <h2 className="text-lg font-medium text-gray-900">
                   Recent Bookings
@@ -427,12 +345,12 @@ export default function ProfilePage() {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="space-y-6">
             {/* My Wishlist */}
-            <div className="bg-white shadow rounded-lg overflow-hidden">
+            {/* <div className="bg-white shadow rounded-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                 <div className="flex items-center">
                   <Heart className="h-5 w-5 text-red-500 mr-2" />
@@ -484,7 +402,7 @@ export default function ProfilePage() {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Account Security */}
             <div className="bg-white shadow rounded-lg overflow-hidden mb-20">
@@ -506,6 +424,27 @@ export default function ProfilePage() {
                     <div>
                       <p className="text-sm font-medium text-gray-900">
                         Change Password
+                      </p>
+                      <p className="text-xs text-gray-500">
+                      otp varification requied
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-gray-400" />
+                </Link>
+              </div>
+              <div className="p-6 space-y-4">
+                <Link
+                  to="/profile/security/delete-account"
+                  className="flex justify-between items-center py-2 px-3 hover:bg-gray-50 rounded-md transition-colors"
+                >
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-3">
+                      <Trash className="h-4 w-4 text-rose-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">
+                        Delete Account
                       </p>
                       <p className="text-xs text-gray-500">
                         Last updated 3 months ago

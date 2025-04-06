@@ -59,11 +59,11 @@ export const getMyBookings = async (
                         },
                     },
                 },
-                payment:{
-                    select:{
-                        id: true
-                    }
-                },
+                // payment:{
+                //     select:{
+                //         id: true
+                //     }
+                // },
                 room: {
                     select: {
                         roomNumber: true,

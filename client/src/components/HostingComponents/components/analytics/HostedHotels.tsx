@@ -43,7 +43,7 @@ export function HostedHotels() {
           <h3 className="text-lg font-semibold text-gray-900">Your Hotels</h3>
           <p className="text-sm text-gray-500">Manage your listed properties</p>
         </div>
-        <Link to={"/dashboard/add-hotel"} className="px-3 py-1.5 text-sm bg-primary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+        <Link to={"/add-hotel"} className="px-3 py-1.5 text-sm bg-primary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
           Add New Hotel
         </Link >
       </div>

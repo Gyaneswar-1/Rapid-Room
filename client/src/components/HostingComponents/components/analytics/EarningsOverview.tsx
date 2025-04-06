@@ -42,13 +42,7 @@ export function EarningsOverview({
     { month: "Dec", amount: 2400 },
   ]
 
-  // Mock data for booking sources
-  const bookingSources = [
-    { source: "Direct Website", percentage: 45, color: "bg-primary" },
-    { source: "Online Travel Agencies", percentage: 30, color: "bg-teal-500" },
-    { source: "Travel Agents", percentage: 15, color: "bg-green-500" },
-    { source: "Corporate Bookings", percentage: 10, color: "bg-amber-500" },
-  ]
+
 
   // Find the max value for scaling
   const maxAmount = Math.max(...monthlyEarnings.map((item) => item.amount))
@@ -125,97 +119,10 @@ export function EarningsOverview({
       {/* Stats Cards and Booking Sources Pie Chart */}
       <div className="space-y-6">
         {/* Booking Sources Pie Chart */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center mb-4">
-            <div className="p-3 rounded-full bg-primary text-teal-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
-                />
-              </svg>
-            </div>
-            <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-900">Booking Sources</h3>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center mb-4">
-            <div className="relative w-32 h-32">
-              {/* Create pie chart segments */}
-              <div className="absolute inset-0 rounded-full overflow-hidden">
-                <div className="absolute inset-0 bg-gray-100"></div>
-
-                {/* Pie segments */}
-                <div
-                  className="absolute inset-0 bg-primary"
-                  style={{
-                    clipPath: `polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 50% 100%)`,
-                    opacity: bookingSources[0].percentage / 100,
-                  }}
-                ></div>
-                <div
-                  className="absolute inset-0 bg-teal-500"
-                  style={{
-                    clipPath: `polygon(50% 50%, 100% 0, 100% 100%)`,
-                    opacity: bookingSources[1].percentage / 100,
-                  }}
-                ></div>
-                <div
-                  className="absolute inset-0 bg-green-500"
-                  style={{
-                    clipPath: `polygon(50% 50%, 100% 100%, 0 100%)`,
-                    opacity: bookingSources[2].percentage / 100,
-                  }}
-                ></div>
-                <div
-                  className="absolute inset-0 bg-amber-500"
-                  style={{
-                    clipPath: `polygon(50% 50%, 0 100%, 0 0, 50% 0)`,
-                    opacity: bookingSources[3].percentage / 100,
-                  }}
-                ></div>
-              </div>
-
-              {/* Center circle */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-medium text-gray-900">Sources</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Legend */}
-          <div className="space-y-2">
-            {bookingSources.map((source, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className={`w-3 h-3 rounded-full ${source.color} mr-2`}></div>
-                  <span className="text-sm text-gray-600">{source.source}</span>
-                </div>
-                <span className="text-sm font-medium">{source.percentage}%</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        
 
         {/* Pending Payouts */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-lg shadow-sm border  border-gray-200 p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-primary text-teal-600">
               <CurrencyIcon className="w-6 h-6" />
@@ -233,6 +140,30 @@ export function EarningsOverview({
         </div>
 
         {/* Total Reservations */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center">
+            <div className="p-3 rounded-full bg-green-100 text-green-600">
+              <CalendarIcon className="w-6 h-6" />
+            </div>
+            <div className="ml-4">
+              <h3 className="text-sm font-medium text-gray-500">Total Reservations</h3>
+              <p className="text-2xl font-semibold text-gray-900">{totalReservations}</p>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center">
+            <span className="text-sm text-green-600 font-medium flex items-center">
+              <svg className="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              8.2%
+            </span>
+            <span className="ml-2 text-sm text-gray-500">vs last month</span>
+          </div>
+        </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-green-100 text-green-600">

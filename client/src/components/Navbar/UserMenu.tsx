@@ -18,7 +18,7 @@ interface UserMenuProps {
   showRapidYourRoom: boolean;
 }
 
-import { userStoreType } from "../../store/reducers/user.reducers";
+import { userStoreType, resetUserData } from "../../store/reducers/user.reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { TfiDashboard } from "react-icons/tfi";
@@ -66,6 +66,14 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
     };
   }, []);
 
+  // Function to handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("loggedin");
+    dispatch(resetUserData());
+    navigate("/");
+    setIsOpen(false);
+  };
+
   return (
     <div className="relative" ref={menuRef}>
       <SetUserDataToStore />
@@ -96,12 +104,12 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
           className="flex items-center cursor-pointer gap-2 p-1.5 border border-gray-200 rounded-full hover:shadow-md transition"
         >
           <AiOutlineMenu className="text-gray-600" size={18} />
-          <div className="hidden md:block">
+          <div className="hidden md:block h-10 w-10">
             {profileImage ? (
               <img
                 src={profileImage}
                 alt="user profile"
-                className="hidden md:block h-10 w-10 rounded-full object-center object-fill"
+                className="hidden md:block h-full w-full rounded-full object-center object-cover"
               />
             ) : (
               <div className="">
@@ -176,11 +184,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                     icons={TfiDashboard}
                   />
                   <MenuItem
-                    onClick={() => {
-                      localStorage.removeItem("loggedin");
-                      navigate("/");
-                      setIsOpen(false);
-                    }}
+                    onClick={handleLogout}
                     style="text-red-600"
                     label="Logout"
                     icons={BsBoxArrowRight}
