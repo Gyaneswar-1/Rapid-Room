@@ -1,5 +1,3 @@
-
-
 import type React from "react"
 
 import { useState } from "react"
@@ -8,6 +6,7 @@ import FloatingCard from "../ui/FloatingCardProps"
 
 interface RecentHotelsProps {
   openModal: (type: string, item: any) => void
+  hotels?: Hotel[] // Make hotels optional prop
 }
 
 interface Hotel {
@@ -16,48 +15,15 @@ interface Hotel {
   location: string
   host: string
   hostId: string
-  submitted: string
+  createdAt: string
   status: string
   images: string[]
 }
 
-export default function RecentHotels({ openModal }: RecentHotelsProps) {
-  // State for floating card
+export default function RecentHotels({ hotels = [] }: RecentHotelsProps) {
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null)
 
-  // Mock data for hotel approval requests
-  const hotelRequests: Hotel[] = [
-    {
-      id: "HTL-1001",
-      name: "Sunset Beach Resort",
-      location: "Bali, Indonesia",
-      host: "John Smith",
-      hostId: "HOST-501",
-      submitted: "2023-03-15",
-      status: "pending",
-      images: ["/placeholder.svg?height=80&width=120"],
-    },
-    {
-      id: "HTL-1002",
-      name: "Mountain View Lodge",
-      location: "Aspen, Colorado",
-      host: "Emma Johnson",
-      hostId: "HOST-502",
-      submitted: "2023-03-14",
-      status: "pending",
-      images: ["/placeholder.svg?height=80&width=120"],
-    },
-    {
-      id: "HTL-1003",
-      name: "City Center Suites",
-      location: "Paris, France",
-      host: "Robert Chen",
-      hostId: "HOST-503",
-      submitted: "2023-03-12",
-      status: "approved",
-      images: ["/placeholder.svg?height=80&width=120"],
-    },
-  ]
+  // Static data removed, now accepting data through props with empty array as default
 
   // Handle eye button click
   const handleViewDetails = (hotel: Hotel, event: React.MouseEvent) => {
@@ -94,7 +60,7 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {hotelRequests.map((hotel) => (
+            {hotels.map((hotel) => (
               <tr key={hotel.id} className="hover:bg-gray-50">
                 <td className="px-4 py-4 whitespace-nowrap">
                   <div className="flex items-center space-x-3">
@@ -110,7 +76,7 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
                 <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{hotel.location}</td>
                 <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{hotel.host}</td>
                 <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(hotel.submitted).toLocaleDateString()}
+                  {new Date(hotel.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
                   <span
@@ -163,7 +129,7 @@ export default function RecentHotels({ openModal }: RecentHotelsProps) {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Submission Date</p>
-                <p className="text-sm text-gray-900">{new Date(selectedHotel.submitted).toLocaleDateString()}</p>
+                <p className="text-sm text-gray-900">{new Date(selectedHotel.createdAt).toLocaleDateString()}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Status</p>

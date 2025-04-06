@@ -14,20 +14,34 @@ import {
 // Register the required Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, Title)
 
-export default function PaymentStats() {
-  // Mock data for payment stats
+interface PaymentStatsProps {
+  data: {
+    pieChart: {
+      [key: string]: number;
+    };
+    topCards: {
+      AverageCommission: number;
+      PlatformFees: number;
+      TotalRevenue: number;
+      TotalTransactions: number;
+    };
+  };
+}
+
+export default function PaymentStats({ data }: PaymentStatsProps) {
+  // Create stats from passed data
   const stats = [
     {
       title: "Total Revenue",
-      value: "$128,450",
-      change: "+15%",
+      value: `$${data.topCards.TotalRevenue.toLocaleString()}`,
+      change: "+15%", // You might want to calculate this dynamically in the future
       period: "vs last month",
       icon: <DollarSign className="w-6 h-6" />,
       color: "bg-teal-100 text-primary",
     },
     {
       title: "Platform Fees",
-      value: "$15,890",
+      value: `$${data.topCards.PlatformFees.toLocaleString()}`,
       change: "+12%",
       period: "vs last month",
       icon: <Percent className="w-6 h-6" />,
@@ -35,7 +49,7 @@ export default function PaymentStats() {
     },
     {
       title: "Total Transactions",
-      value: "1,245",
+      value: data.topCards.TotalTransactions.toLocaleString(),
       change: "+8%",
       period: "vs last month",
       icon: <CreditCard className="w-6 h-6" />,
@@ -43,7 +57,7 @@ export default function PaymentStats() {
     },
     {
       title: "Average Commission",
-      value: "12.4%",
+      value: `${data.topCards.AverageCommission.toFixed(1)}%`,
       change: "+0.5%",
       period: "vs last month",
       icon: <TrendingUp className="w-6 h-6" />,
@@ -51,19 +65,25 @@ export default function PaymentStats() {
     },
   ]
 
+  // Get pie chart data from the passed data
+  const pieChartLabels = Object.keys(data.pieChart);
+  const pieChartValues = Object.values(data.pieChart);
+
   // Chart data for payment methods
   const paymentMethodsData = {
-    labels: ["Success", "failed", "pending", "refunded"],
+    labels: pieChartLabels,
     datasets: [
       {
-        data: [65, 20, 10, 50],
+        data: pieChartValues,
         backgroundColor: [
           "rgb(20, 184, 166)", // teal-500
           "rgb(59, 130, 246)", // blue-500
           "rgb(139, 92, 246)", // purple-500
           "rgb(245, 158, 11)", // amber-500
+          "rgb(156, 163, 175)", // gray-400 - in case there are more than 4 categories
         ],
         borderColor: [
+          "rgb(255, 255, 255)",
           "rgb(255, 255, 255)",
           "rgb(255, 255, 255)",
           "rgb(255, 255, 255)",
@@ -99,6 +119,32 @@ export default function PaymentStats() {
     },
   }
 
+  // Helper function to get a color based on index
+  const getColorClass = (index: number) => {
+    const colors = [
+      "bg-primary",
+      "bg-teal-500", 
+      "bg-purple-500",
+      "bg-amber-500",
+      "bg-gray-400"
+    ];
+    return colors[index % colors.length];
+  };
+
+  // Create the list of payment methods from the pie chart data
+  const paymentMethodsList = pieChartLabels.map((label, index) => {
+    const value = pieChartValues[index];
+    return (
+      <div key={index} className="flex items-center justify-between">
+        <div className="flex items-center">
+          <div className={`w-3 h-3 rounded-full ${getColorClass(index)} mr-2`}></div>
+          <span className="text-sm text-gray-600">{label}</span>
+        </div>
+        <span className="text-sm font-medium">{value}%</span>
+      </div>
+    );
+  });
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
       {/* Stats cards */}
@@ -128,46 +174,11 @@ export default function PaymentStats() {
             <Pie data={paymentMethodsData} options={chartOptions} />
           </div>
           <div className="lg:col-span-2 space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-primary mr-2"></div>
-                <span className="text-sm text-gray-600">Credit Card</span>
-              </div>
-              <span className="text-sm font-medium">65%</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-teal-500 mr-2"></div>
-                <span className="text-sm text-gray-600">PayPal</span>
-              </div>
-              <span className="text-sm font-medium">20%</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
-                <span className="text-sm text-gray-600">Bank Transfer</span>
-              </div>
-              <span className="text-sm font-medium">10%</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-amber-500 mr-2"></div>
-                <span className="text-sm text-gray-600">Crypto</span>
-              </div>
-              <span className="text-sm font-medium">3%</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
-                <span className="text-sm text-gray-600">Other</span>
-              </div>
-              <span className="text-sm font-medium">2%</span>
-            </div>
+            {paymentMethodsList}
             <div className="pt-4 mt-4 border-t border-gray-200">
               <p className="text-sm text-gray-600">
-                Credit cards remain the most popular payment method, accounting for 65% of all transactions. PayPal
-                follows at 20%, while bank transfers make up 10% of payments. Cryptocurrency payments are growing, now
-                at 3%.
+                This chart shows the distribution of payment methods used on the platform.
+                The most popular payment method accounts for {Math.max(...pieChartValues)}% of all transactions.
               </p>
             </div>
           </div>

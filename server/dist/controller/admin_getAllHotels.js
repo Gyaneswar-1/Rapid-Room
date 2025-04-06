@@ -16,6 +16,7 @@ export const admin_getAllHotels = async (req, res) => {
                 perNight: true,
                 type: true,
                 status: true, // Include status to show pending/approved/rejected
+                createdAt: true,
                 address: {
                     select: {
                         country: true,

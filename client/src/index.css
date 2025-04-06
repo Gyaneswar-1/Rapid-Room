@@ -17,7 +17,9 @@ body {
   font-style: normal;
 }
 
-
+button{
+  cursor: pointer;
+}
 /* Add these to your index.css */
 .bg-primary { background-color: var(--color-primary); }
 .bg-secondary { background-color: var(--color-secondary); }

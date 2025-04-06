@@ -125,8 +125,8 @@ export default function HotelsTable({
                 ${hotel.perNight || "N/A"}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {hotel.submitted
-                  ? new Date(hotel.submitted).toLocaleDateString()
+                {hotel.createdAt
+                  ? new Date(hotel.createdAt).toLocaleDateString()
                   : "N/A"}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -202,7 +202,7 @@ export default function HotelsTable({
               <div>
                 <p className="text-sm font-medium text-gray-500">Submission Date</p>
                 <p className="text-sm text-gray-900">
-                  {selectedHotel.submitted ? new Date(selectedHotel.submitted).toLocaleDateString() : "N/A"}
+                  {selectedHotel.createdAt ? new Date(selectedHotel.createdAt).toLocaleDateString() : "N/A"}
                 </p>
               </div>
               <div>

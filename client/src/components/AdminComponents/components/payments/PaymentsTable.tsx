@@ -4,12 +4,13 @@ import { useState } from "react"
 import { Eye, FileText, AlertCircle, CheckCircle, RefreshCw } from "lucide-react"
 import type { Payment } from "./PaymentsView"
 import FloatingCard from "../ui/FloatingCardProps"
+import { PaymentList } from "./PaymentsView"
 
 interface PaymentsTableProps {
-  activeSubTab: string
+  activeSubTab: string,data:PaymentList[]
 }
 
-export default function PaymentsTable({ activeSubTab }: PaymentsTableProps) {
+export default function PaymentsTable({ activeSubTab,data }: PaymentsTableProps) {
   const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null)
 
   // Mock data for payments
@@ -140,46 +141,61 @@ export default function PaymentsTable({ activeSubTab }: PaymentsTableProps) {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {filteredPayments.map((payment) => (
-            <tr key={payment.id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{payment.id}</td>
+          {data.map((d: PaymentList) => (
+            <tr key={d.id} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{d.id}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{payment.hotelName}</p>
-                  <p className="text-xs text-gray-500">Host: {payment.hostName}</p>
+                  <p className="text-sm font-medium text-gray-900">{d.hotel.hotelName}</p>
+                  <p className="text-xs text-gray-500">Host: {d.hotel.host.fullName}</p>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{payment.guestName}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{d.user.fullName}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {formatCurrency(payment.amount)}
+                {formatCurrency(d.amount)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{formatCurrency(payment.platformFee)}</p>
-                  <p className="text-xs text-gray-500">{calculateCommissionPercentage(payment)}</p>
+                  <p className="text-sm font-medium text-gray-900">{formatCurrency(d.platformFee)}</p>
+                  <p className="text-xs text-gray-500">12.4%</p>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {new Date(payment.date).toLocaleDateString()}
+                {new Date(d.paymentDate).toLocaleDateString()}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span
                   className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    payment.status === "completed"
+                    d.status === "completed"
                       ? "bg-green-100 text-green-800"
-                      : payment.status === "pending"
+                      : d.status === "pending"
                         ? "bg-amber-100 text-amber-800"
-                        : payment.status === "failed"
+                        : d.status === "failed"
                           ? "bg-red-100 text-red-800"
                           : "bg-gray-100 text-gray-800"
                   }`}
                 >
-                  {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+                  {d.status.charAt(0).toUpperCase() + d.status.slice(1)}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div className="flex justify-end space-x-2">
-                  <button onClick={() => handleViewDetails(payment)} className="text-gray-600 hover:text-gray-900">
+                  <button onClick={() => handleViewDetails({
+                    id: String(d.id),
+                    bookingId: d.bookingId,
+                    hotelName: d.hotel.hotelName,
+                    hotelId: d.hotel.hotelId,
+                    hostName: d.hotel.host.fullName,
+                    hostId: d.hotel.host.id,
+                    guestName: d.user.fullName,
+                    guestId: d.user.id,
+                    amount: d.amount,
+                    platformFee: d.platformFee,
+                    hostPayout: d.hostPayout,
+                    status: d.status,
+                    date: d.paymentDate,
+                    paymentMethod: d.paymentMethod,
+                  })} className="text-gray-600 hover:text-gray-900">
                     <Eye className="w-5 h-5" />
                   </button>
                   <button className="text-gray-600 hover:text-gray-900">

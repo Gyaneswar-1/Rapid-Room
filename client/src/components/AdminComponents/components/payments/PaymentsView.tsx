@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Filter, ChevronDown, Calendar, Download } from "lucide-react";
+import {
+  Search,
+  Filter,
+  ChevronDown,
+  Calendar,
+  Download,
+  Loader,
+} from "lucide-react";
 import PaymentsTabs from "./PaymentsTabs";
 import PaymentsTable from "./PaymentsTable";
 import PaymentStats from "./PaymentStats";
 import Pagination from "../ui/Pagination";
 import { admin_getAdminPayments } from "../../../../service/admin/admin_getAdminPayments";
+import { admin_getPayments } from "../../../../service/admin/admin_getPayments.service";
 export interface Payment {
   id: string;
   bookingId: string;
@@ -23,17 +31,81 @@ export interface Payment {
   date: string;
   paymentMethod: string;
 }
+export interface PaymentList {
+  hostPayout: number;
+  paymentMethod: string;
+  bookingId: string;
+  id: number;
+  amount: number;
+  platformFee: number;
+  paymentDate: string; 
+  status: "pending" | "completed" | "failed"; 
+
+  user: {
+    id: string;
+    fullName: string;
+  };
+
+  hotel: {
+    hotelId: string;
+    hotelName: string;
+    host: {
+      id: string;
+      fullName: string;
+    };
+  };
+}
 
 export default function PaymentsView() {
   const [activeSubTab, setActiveSubTab] = useState("all");
+  const [loader, setLoader] = useState(false);
+  const [error, setError] = useState(false);
+  const [data, setData] = useState({
+    pieChart: {},
+    topCards: {
+      AverageCommission: 0,
+      PlatformFees: 0,
+      TotalRevenue: 0,
+      TotalTransactions: 0,
+    },
+  });
+  const [paymentList, setPaymentList] = useState<PaymentList[]>([]);
 
   useEffect(() => {
     async function getData() {
-      const response = await admin_getAdminPayments();
-      console.log(response);
+      try {
+        setLoader(true);
+        const response = await admin_getAdminPayments();
+        const response2 = await admin_getPayments();
+        console.log(response);
+        console.log("res list:", response2);
+        if (response.success && response2.success) {
+          setData(response.data);
+          setPaymentList(response2.data.payments); // Corrected to use response2.data for paymentList
+        } else {
+          setError(true);
+        }
+        console.log(data);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoader(false);
+      }
     }
     getData();
   }, []);
+
+  if (error) {
+    return <div>ERROR</div>;
+  }
+
+  if (loader) {
+    return (
+      <div className="flex w-full h-full items-center justify-center">
+        <Loader className="animate-spin h-10 w-10" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -82,7 +154,7 @@ export default function PaymentsView() {
       </div>
 
       {/* Payment Stats */}
-      <PaymentStats />
+      <PaymentStats data={data} />
 
       {/* Tabs */}
       <PaymentsTabs
@@ -92,7 +164,7 @@ export default function PaymentsView() {
 
       {/* Payments Table */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <PaymentsTable activeSubTab={activeSubTab} />
+        <PaymentsTable activeSubTab={activeSubTab} data={paymentList}/>
 
         {/* Pagination */}
         <Pagination />

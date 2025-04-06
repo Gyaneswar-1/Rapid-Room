@@ -4,7 +4,7 @@ import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
 export const admin_paymentDashboard = async (
-    // req: Request | any,
+    req: Request | any,
     res: Response | any,
 ) => {
     try {

@@ -1,9 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
-export const admin_paymentDashboard = async (
-// req: Request | any,
-res) => {
+export const admin_paymentDashboard = async (req, res) => {
     try {
         const TotalTransactionsCount = await prisma.payments.count();
         const TotalTransactions = TotalTransactionsCount || 0;

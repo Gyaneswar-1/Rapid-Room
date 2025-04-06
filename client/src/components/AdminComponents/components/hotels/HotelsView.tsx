@@ -26,7 +26,7 @@ export interface HotelInterface {
   perNight: number;
   status: string;
   type: string;
-  submitted?: string;
+  createdAt: string;
 }
 
 export default function HotelsView() {
@@ -38,7 +38,6 @@ export default function HotelsView() {
       setLoading(true);
       const response = await admin_getAllHotels(1, 10);
       setHotels(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     } finally {
