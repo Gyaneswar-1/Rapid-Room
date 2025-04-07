@@ -21,7 +21,7 @@ export const addNewHotel = async (req, res) => {
                     numberOfRooms: parseInt(numberOfRooms),
                     numberOfEmptyRooms: parseInt(numberOfRooms),
                     perNight: parseFloat(perNight),
-                    roomType: `${numberOfBeds} beds with ${numberOfBathrooms}`,
+                    roomType: `${numberOfBeds} beds with ${numberOfBathrooms} bathrooms`,
                     numberOfGuests: parseInt(numberOfGuests),
                     guestAllowed: parseInt(numberOfGuests),
                     numberOfBeds: parseInt(numberOfBeds),
