@@ -3,8 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 export const addNewHotel = async (req, res) => {
     console.log("controll reached");
-    const { hotelName, description, numberOfRooms, perNight, roomType, hasParking, hasPools, hasWifi, hasTv, hasBalcony, hasKitchen, hasWorkSpace, hasWashingMachine, hasGarden, hasGrummingEqupments, images, //this images is an array or url coming direct from cliend ( for temporary testing purpose )
-    type, state, street, city, zipcode, country, longitude, latitude, guestAllowed, } = req.body;
+    const { hotelName, description, numberOfRooms, perNight, numberOfGuests, numberOfBeds, numberOfBathrooms, hasParking, hasPool, hasWifi, hasTv, hasBalcony, hasKitchen, hasWorkSpace, hasWashingMachine, hasGarden, hasAirConditioning, hasDiningArea, hasHotTub, hasFirepit, hasBBQGrill, hasPoolTable, hasExerciseEquipment, hasOutdoorShower, hasSmokeAlarm, hasFirstAidKit, hasFireExtinguisher, hasAccessibility, images, type, state, street, city, zipcode, country, longitude, latitude, } = req.body;
     try {
         // task to do-> Debug the image upload functionality
         // const imageUrls = await Promise.all(
@@ -22,9 +21,13 @@ export const addNewHotel = async (req, res) => {
                     numberOfRooms: parseInt(numberOfRooms),
                     numberOfEmptyRooms: parseInt(numberOfRooms),
                     perNight: parseFloat(perNight),
-                    roomType: roomType,
+                    roomType: `${numberOfBeds} beds with ${numberOfBathrooms}`,
+                    numberOfGuests: parseInt(numberOfGuests),
+                    guestAllowed: parseInt(numberOfGuests),
+                    numberOfBeds: parseInt(numberOfBeds),
+                    numberOfBathrooms: parseInt(numberOfBathrooms),
                     hasParking: Boolean(hasParking),
-                    hasPool: Boolean(hasPools),
+                    hasPool: Boolean(hasPool),
                     hasWifi: Boolean(hasWifi),
                     hasTv: Boolean(hasTv),
                     hasBalcony: Boolean(hasBalcony),
@@ -32,7 +35,18 @@ export const addNewHotel = async (req, res) => {
                     hasWorkSpace: Boolean(hasWorkSpace),
                     hasWashingMachine: Boolean(hasWashingMachine),
                     hasGarden: Boolean(hasGarden),
-                    guestAllowed: guestAllowed,
+                    hasAirConditioning: Boolean(hasAirConditioning),
+                    hasDiningArea: Boolean(hasDiningArea),
+                    hasHotTub: Boolean(hasHotTub),
+                    hasFirepit: Boolean(hasFirepit),
+                    hasBBQGrill: Boolean(hasBBQGrill),
+                    hasPoolTable: Boolean(hasPoolTable),
+                    hasExerciseEquipment: Boolean(hasExerciseEquipment),
+                    hasOutdoorShower: Boolean(hasOutdoorShower),
+                    hasSmokeAlarm: Boolean(hasSmokeAlarm),
+                    hasFirstAidKit: Boolean(hasFirstAidKit),
+                    hasFireExtinguisher: Boolean(hasFireExtinguisher),
+                    hasAccessibility: Boolean(hasAccessibility),
                     type: type,
                     address: {
                         create: {
