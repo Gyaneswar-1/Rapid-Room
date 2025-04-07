@@ -1,4 +1,4 @@
-import { Edit, ShovelIcon, Star, Trash } from "lucide-react";
+import { Edit, ShovelIcon, Star, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getHostHotels } from "../../../../service/manageHostData/getHostHotels";
@@ -24,6 +24,7 @@ export function HostedHotels() {
   const [loader, showLoader] = useState(false);
   const [error, showError] = useState(false);
   const [data, setData] = useState<HotelsDataInterface[]>([]);
+  const [hotelToDelete, setHotelToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     async function getData() {
@@ -45,6 +46,12 @@ export function HostedHotels() {
     }
     getData();
   }, []);
+
+  const handleDelete = (id: number) => {
+    // Actual delete logic would go here
+    setData(data.filter(hotel => hotel.id !== id));
+    setHotelToDelete(null);
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -114,7 +121,10 @@ export function HostedHotels() {
                     <Edit className="mr-1 h-4 w-4" />
                     Edit
                   </button>
-                  <button className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                  <button 
+                    onClick={() => setHotelToDelete(hotel.id)}
+                    className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  >
                     <Trash className="mr-1 h-4 w-4" />
                     Remove
                   </button>
@@ -124,6 +134,42 @@ export function HostedHotels() {
           ))}
         </div>
       </div>
+
+      {/* Delete confirmation modal */}
+      {hotelToDelete !== null && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Confirm Removal</h3>
+              <button 
+                onClick={() => setHotelToDelete(null)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="mb-6">
+              <p className="text-gray-600">
+                Are you sure you want to remove this hotel from your listings? This action cannot be undone.
+              </p>
+            </div>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setHotelToDelete(null)}
+                className="px-4 py-2 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete(hotelToDelete)}
+                className="px-4 py-2 text-sm border border-transparent rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              >
+                Confirm Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
