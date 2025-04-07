@@ -52,7 +52,7 @@ export const reserveHotel = async (req, res) => {
                     .status(500)
                     .json(new ApiError(false, {}, "Failed", "No room's are available", 500));
             }
-            const totalAmount = reservationsDuration * isAvailable?.perNight;
+            const totalAmount = 200 + reservationsDuration * isAvailable?.perNight;
             //make the payment
             //reserve the room process
             // step 1 find non reserve room
@@ -128,7 +128,7 @@ export const reserveHotel = async (req, res) => {
             //create the payment entry
             //devide the amoutn amont the platform and the host
             const hostAmount = Math.floor((totalAmount / 100) * 90);
-            const platformAmount = Math.floor((totalAmount / 100) * 90);
+            const platformAmount = Math.floor((totalAmount / 100) * 10);
             const paymentEntry = await prisma.payments.create({
                 data: {
                     hotelId: hotelId,

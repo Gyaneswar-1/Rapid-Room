@@ -83,7 +83,7 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
                         ),
                     );
             }
-            const totalAmount = reservationsDuration * isAvailable?.perNight!;
+            const totalAmount = 200 + reservationsDuration * isAvailable?.perNight!;
 
             //make the payment
 
@@ -182,7 +182,7 @@ export const reserveHotel = async (req: Request | any, res: Response | any) => {
 
             //devide the amoutn amont the platform and the host
             const hostAmount = Math.floor((totalAmount / 100) * 90);
-            const platformAmount = Math.floor((totalAmount / 100) * 90);
+            const platformAmount = Math.floor((totalAmount / 100) * 10);
             const paymentEntry = await prisma.payments.create({
                 data: {
                     hotelId: hotelId,
