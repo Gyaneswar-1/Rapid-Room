@@ -20,7 +20,15 @@ export const instance = new Razorpay({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: ["http://localhost:5173", "https://rapid-room-client.onrender.com"], credentials: true }));
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173",
+            "https://rapid-room-client.onrender.com",
+        ],
+        credentials: true,
+    }),
+);
 app.use(cookieParser());
 app.use(passport.initialize());
 
@@ -42,12 +50,15 @@ app.use(
 
 //healthCheck
 import healthCheckRoute from "./routes/healthCheck.routes.js";
-app.use("/api/v1/healthcheck",healthCheckRoute);
+app.use("/api/v1/healthcheck", healthCheckRoute);
 
+//super admin routes
 import AdminRouter from "./routes/admin.routes.js";
-app.use("/api/v1/admin",AdminRouter);
+app.use("/api/v1/admin", AdminRouter);
 
-
+// host routes
+import hostdashboard from "./routes/HostDashboard.routes.js";
+app.use("/api/v1/host", hostdashboard);
 
 //user authentication
 import userRouter from "./routes/user.routes.js";
@@ -68,13 +79,14 @@ app.use("/api/v1/wishlist", wishlist);
 import reviewRouter from "./routes/review.routes.js";
 import razorpayRoute from "./routes/razorpay.routes.js";
 app.use("/api/v1/review", reviewRouter);
-export default app;
 
 //razorpay routes
 app.use("/api/v1/razorpay", razorpayRoute);
-app.use("/api/v1/user",paymentRoute);
+app.use("/api/v1/user", paymentRoute);
 
 // Register routes
 app.use("/api/v1/image", uploadRoutes);
 
 //payment router
+
+export default app;

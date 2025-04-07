@@ -30,6 +30,7 @@ model Users {
   hostResponseRate Int?           @default(100)
   phoneNumber      BigInt?        @default(0)
   GovID            BigInt?        @default(0)
+  upiID            String?        @default("")
   ReservedRooms    Reservations[]
   wishList         WishList[]
   reviews          Review[]
