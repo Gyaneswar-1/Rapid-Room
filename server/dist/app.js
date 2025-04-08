@@ -7,6 +7,7 @@ import passport from "./config/passport.js";
 import Razorpay from "razorpay";
 import paymentRoute from "./routes/payment.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import { emailRouter } from "./routes/emailVerification.route.js";
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
 //razorpay instance
@@ -68,5 +69,7 @@ app.use("/api/v1/razorpay", razorpayRoute);
 app.use("/api/v1/user", paymentRoute);
 // Register routes
 app.use("/api/v1/image", uploadRoutes);
+//email verification
+app.use("/api/v1", emailRouter);
 //payment router
 export default app;

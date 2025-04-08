@@ -1,0 +1,197 @@
+To create a Data Flow Diagram (DFD) for the backend application:
+
+### DFD Level 0
+- **System**: Rapid Room Backend System
+- **Entities**:
+  - User
+  - Admin
+  - Host
+  - Payment Gateway (Razorpay)
+- **Processes**:
+  - Single process representing the entire backend system
+- **Data Stores**:
+  - Users Table
+  - Hotels Table
+  - Reservations Table
+  - Payments Table
+  - Reviews Table
+  - Wishlists Table
+- **Data Flows**:
+  - User sends data (signup/login, reservation, wishlist, review, payment) → Rapid Room Backend System → Relevant Data Stores
+  - Host sends hotel details → Rapid Room Backend System → Hotels Table
+  - Admin sends actions (approve/reject, view data) → Rapid Room Backend System → Relevant Data Stores
+  - Payment Gateway sends payment status → Rapid Room Backend System → Payments Table
+
+### Diagramming Instructions for Level 0
+1. Use a tool like **Lucidchart**, **Draw.io**, or **Microsoft Visio**.
+2. Represent the entire backend system as a single process (circle or rounded rectangle).
+3. Show external entities (rectangles) interacting with the system.
+4. Connect the system to the data stores (open-ended rectangles) and external entities using labeled arrows for data flows.
+
+### DFD Level 1
+- **Entities**:
+  - User
+  - Admin
+  - Host
+  - Payment Gateway (Razorpay)
+
+- **Processes**:
+  1. User Authentication (Signup, Login, Logout)
+  2. Hotel Management (Add Hotel, Edit Hotel, Delete Hotel)
+  3. Reservation Management (Reserve Hotel, Cancel Reservation)
+  4. Payment Processing (Initiate Payment, Verify Payment)
+  5. Wishlist Management (Add to Wishlist, Remove from Wishlist)
+  6. Review Management (Add Review, Edit Review, Delete Review)
+  7. Admin Dashboard (View Users, Approve/Reject Hotels, View Payments)
+
+- **Data Stores**:
+  - Users Table
+  - Hotels Table
+  - Reservations Table
+  - Payments Table
+  - Reviews Table
+  - Wishlists Table
+
+- **Data Flows**:
+  - User sends signup/login data → User Authentication Process → Users Table
+  - Host sends hotel details → Hotel Management Process → Hotels Table
+  - User sends reservation details → Reservation Management Process → Reservations Table
+  - User initiates payment → Payment Processing Process → Payments Table
+  - User adds/removes wishlist → Wishlist Management Process → Wishlists Table
+  - User submits review → Review Management Process → Reviews Table
+  - Admin views/approves/rejects data → Admin Dashboard Process → Relevant Tables
+
+### DFD Level 2
+#### Process 1: User Authentication
+- **Input**: User credentials (email, password, profile image)
+- **Output**: Authentication token, user profile
+- **Data Store**: Users Table
+- **Entities**: User
+
+#### Process 2: Hotel Management
+- **Input**: Hotel details (name, description, amenities, address, images)
+- **Output**: Hotel record in the database
+- **Data Store**: Hotels Table
+- **Entities**: Host, Admin
+
+#### Process 3: Reservation Management
+- **Input**: Reservation details (hotel ID, check-in, check-out)
+- **Output**: Reservation confirmation, updated room availability
+- **Data Store**: Reservations Table, Rooms Table
+- **Entities**: User
+
+#### Process 4: Payment Processing
+- **Input**: Payment details (amount, reservation ID)
+- **Output**: Payment confirmation, updated payment status
+- **Data Store**: Payments Table
+- **Entities**: User, Payment Gateway
+
+#### Process 5: Wishlist Management
+- **Input**: Hotel ID
+- **Output**: Updated wishlist
+- **Data Store**: Wishlists Table
+- **Entities**: User
+
+#### Process 6: Review Management
+- **Input**: Review details (rating, comment)
+- **Output**: Updated review record
+- **Data Store**: Reviews Table
+- **Entities**: User
+
+#### Process 7: Admin Dashboard
+- **Input**: Admin actions (approve/reject, view data)
+- **Output**: Updated records, analytics data
+- **Data Store**: Users Table, Hotels Table, Payments Table
+- **Entities**: Admin
+
+### Diagramming Instructions
+1. Use a tool like **Lucidchart**, **Draw.io**, or **Microsoft Visio**.
+2. Create a **DFD Level 1** with the entities, processes, and data stores connected by labeled arrows representing data flows.
+3. For **DFD Level 2**, break down each process into sub-processes and show detailed data flows between them and the data stores.
+4. Use consistent symbols:
+   - **Entities**: Rectangles
+   - **Processes**: Circles or rounded rectangles
+   - **Data Stores**: Open-ended rectangles
+   - **Data Flows**: Arrows
+
+### UML Diagram Instructions for ER Model
+To create an Entity-Relationship (ER) model for the backend application:
+
+#### Entities and Attributes
+1. **Users**:
+   - Attributes: id, fullName, email, isEmailVerified, password, profileImage, addressId, isHost, status, hostExperience, hostRating, hostResponseRate, phoneNumber, GovID, upiID, createdAt
+   - Relationships: 
+     - One-to-Many with Reservations (ReservedRooms)
+     - One-to-Many with WishList (wishList)
+     - One-to-Many with Review (reviews)
+     - One-to-Many with Hotels (listedHotels)
+     - One-to-Many with Payments (payments)
+     - Optional One-to-One with Address
+
+2. **Hotels**:
+   - Attributes: id, hostId, hotelName, description, addressId, perNight, roomType, numberOfRooms, numberOfGuests, numberOfBeds, numberOfBathrooms, numberOfEmptyRooms, overalRating, totalReviews, createdAt, status
+   - Relationships:
+     - Many-to-One with Users (host)
+     - One-to-Many with Rooms (rooms)
+     - One-to-Many with Reservations (Reserved)
+     - One-to-Many with WishList (WishList)
+     - One-to-Many with Review (reviews)
+     - One-to-Many with Images (images)
+     - One-to-Many with Payments (Payments)
+     - Optional One-to-One with Address
+
+3. **Reservations**:
+   - Attributes: id, userId, hotelId, roomId, paymentId, checkIn, reservationsDuration, checkOut, amountPaid, ReservationStatus, paymentStatus
+   - Relationships:
+     - Many-to-One with Users (user)
+     - Many-to-One with Hotels (hotel)
+     - Many-to-One with Rooms (room)
+     - Optional One-to-One with Payments (payment)
+
+4. **Payments**:
+   - Attributes: id, hotelId, userId, amount, hostAmount, platformFee, paymentMethod, status, paymentDate, razorpay_payment_id, razorpay_order_id
+   - Relationships:
+     - Many-to-One with Users (user)
+     - Many-to-One with Hotels (hotel)
+     - Optional One-to-One with Reservations (reservation)
+
+5. **WishList**:
+   - Attributes: id, userId, hotelId
+   - Relationships:
+     - Many-to-One with Users (user)
+     - Many-to-One with Hotels (hotel)
+
+6. **Review**:
+   - Attributes: id, userId, hotelId, reviewComment, overallRating, cleanlinessRating, accuracyRating, checkInRating, communicationRating, locationRating, priceRating, parkingRating, createdAt
+   - Relationships:
+     - Many-to-One with Users (user)
+     - Many-to-One with Hotels (hotel)
+
+7. **Rooms**:
+   - Attributes: id, isReserved, roomNumber, hotelId
+   - Relationships:
+     - Many-to-One with Hotels (hotel)
+     - One-to-Many with Reservations (Reserved)
+
+8. **Address**:
+   - Attributes: id, street, city, state, zipCode, country, longitude, latitude
+   - Relationships:
+     - One-to-Many with Users (users)
+     - One-to-Many with Hotels (hotels)
+
+9. **Images**:
+   - Attributes: id, imageUrl, hotelId
+   - Relationships:
+     - Many-to-One with Hotels (hotel)
+
+#### Diagramming Instructions
+1. Use a UML diagramming tool like **Lucidchart**, **Draw.io**, or **Microsoft Visio**.
+2. Represent each entity as a class with attributes listed inside.
+3. Use lines to represent relationships:
+   - Solid lines for mandatory relationships.
+   - Dashed lines for optional relationships.
+4. Add multiplicity to relationships:
+   - `1` for one-to-one.
+   - `1..*` for one-to-many.
+   - `*` for many-to-many.
+5. Highlight enums (`status`, `HotelType`, `reservtionStatus`, `paymentStatus`) as separate classes and connect them to relevant entities.

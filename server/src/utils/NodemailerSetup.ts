@@ -6,7 +6,7 @@ export const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.GOOGLE_EMAIL!,
-    pass: process.env.GOOGLE_PASSWORD!,
+    user: process.env.GOOGLE_EMAIL,
+    pass: process.env.GOOGLE_PASSWORD,
   },
 });
