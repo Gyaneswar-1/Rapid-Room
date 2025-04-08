@@ -1,4 +1,4 @@
-import { Edit, ShovelIcon, Star, Trash, X } from "lucide-react";
+import { Edit, Loader, Star, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getHostHotels } from "../../../../service/manageHostData/getHostHotels";
@@ -52,6 +52,11 @@ export function HostedHotels() {
     setData(data.filter(hotel => hotel.id !== id));
     setHotelToDelete(null);
   };
+  if(loader){
+    <div className="flex w-full h-full items-center justify-center">
+            <Loader className="animate-spin h-10 w-10" />
+          </div>
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -135,7 +140,6 @@ export function HostedHotels() {
         </div>
       </div>
 
-      {/* Delete confirmation modal */}
       {hotelToDelete !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">

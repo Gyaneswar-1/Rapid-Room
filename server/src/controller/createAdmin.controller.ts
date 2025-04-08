@@ -4,9 +4,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Request, Response } from "express";
 
 export const createAdmin = async (req: Request | any, res: Response | any) => {
-    const { GovID, phoneNo, country, state, street, city, zipcode } = req.body;
+    const { govID, phoneNumber, country, state, street, city, zip,upiId } = req.body;
 
     try {
+        console.log(req.body);
         const isHost = await prisma.users.findUnique({
             where: {
                 id: req.user.id,
@@ -20,14 +21,15 @@ export const createAdmin = async (req: Request | any, res: Response | any) => {
                 },
                 data: {
                     isHost: true,
-                    GovID: GovID ? BigInt(GovID) : null,
-                    phoneNumber: phoneNo ? BigInt(phoneNo) : null,
+                    GovID: govID ? BigInt(govID) : null,
+                    phoneNumber: phoneNumber ? BigInt(phoneNumber) : null,
+                    upiID: upiId,
                     address: {
                         create: {
                             street: street,
                             state: state,
                             city: city,
-                            zipCode: zipcode,
+                            zipCode: zip,
                             country: country,
                         },
                     },
