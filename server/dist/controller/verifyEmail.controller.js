@@ -6,7 +6,7 @@ import prisma from "../db/db.config.js";
 export const verifyEmail = async (req, res) => {
     const bodySchema = z.object({
         email: z.string().email(),
-        otp: z.string().length(4, "Otp must be an 4 digit"),
+        otp: z.string().length(6, "Otp must be an 6 digit string"),
     });
     //vefify the body
     const validData = bodySchema.safeParse(req.body);

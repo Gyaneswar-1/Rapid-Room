@@ -3,13 +3,12 @@ import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { sendEmail } from "../helper/SendEmail.helper.js";
 import prisma from "../db/db.config.js";
 
 export const verifyEmail = async (req: Request | any, res: Response | any) => {
     const bodySchema = z.object({
         email: z.string().email(),
-        otp: z.string().length(4, "Otp must be an 4 digit"),
+        otp: z.string().length(6, "Otp must be an 6 digit string"),
     });
 
     interface tokenPayload {

@@ -30,7 +30,7 @@ export const sendMail = async (req: Request | any, res: Response | any) => {
         
         const { email } = req.body;
         // generate the otp
-        const otp = Math.floor(1000 + Math.random() * 9000).toString();
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(process.env.JWTS)
         //generate the jwt token for otp sequrity
         const otpToken = await jwt.sign(
