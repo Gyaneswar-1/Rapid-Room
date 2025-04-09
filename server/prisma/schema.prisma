@@ -31,6 +31,7 @@ model Users {
   phoneNumber      BigInt?        @default(0)
   GovID            BigInt?        @default(0)
   upiID            String?        @default("")
+  otpToken String? @default("")
   ReservedRooms    Reservations[]
   wishList         WishList[]
   reviews          Review[]
