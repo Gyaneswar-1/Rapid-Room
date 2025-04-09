@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState:any = {
     showSignup:false,
-    showSignin: false
+    showSignin: false,
+    showOtpVerificaton: true,
 }
 
 export const showAuthCardSlice = createSlice({
@@ -16,8 +17,11 @@ export const showAuthCardSlice = createSlice({
         
         state.showSignin = !action.payload;
       },
+      flipOtpverificaton: (state, action) => {
+        state.showOtpVerificaton = !action.payload
+      }
     },
   });
 
   export default showAuthCardSlice.reducer
-  export const {flipSignUp, flipSignin} = showAuthCardSlice.actions
+  export const {flipSignUp, flipSignin, flipOtpverificaton} = showAuthCardSlice.actions

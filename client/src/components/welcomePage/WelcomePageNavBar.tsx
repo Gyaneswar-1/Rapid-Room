@@ -7,18 +7,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import Signin from "../UserAuth/Signin";
 import Signup from "../UserAuth/Signup";
+
 import {
   flipSignin,
   flipSignUp,
 } from "../../store/reducers/showAuthCard.reducers";
 import UserMenu from "../Navbar/UserMenu";
+import OtpVerification from "../UserAuth/OtpVerification";
 
 export default function WelcomePageNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const { showSignup, showSignin } = useSelector(
+  const { showSignup, showSignin, showOtpVerificaton } = useSelector(
     (state: RootState) => state.showAuthCardReducer
   );
 
@@ -207,6 +210,7 @@ export default function WelcomePageNavBar() {
 
       {showSignin && <Signin />}
       {showSignup && <Signup />}
+      {showOtpVerificaton && <OtpVerification />}
     </header>
   );
 }
