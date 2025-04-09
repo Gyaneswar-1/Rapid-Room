@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState:any = {
     showSignup:false,
     showSignin: false,
-    showOtpVerificaton: true,
+    showOtpVerificaton: false,
 }
 
 export const showAuthCardSlice = createSlice({

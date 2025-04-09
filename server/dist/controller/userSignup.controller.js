@@ -75,7 +75,7 @@ export const userSignup = async (req, res) => {
         });
         return res
             .status(200)
-            .json(new ApiResponse(true, {}, "success", "User signed up", 200));
+            .json(new ApiResponse(true, { email: result.email }, "success", "User signed up", 200));
     }
     catch (error) {
         return res

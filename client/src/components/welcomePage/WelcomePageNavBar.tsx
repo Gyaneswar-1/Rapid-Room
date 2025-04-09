@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import Signin from "../UserAuth/Signin";
 import Signup from "../UserAuth/Signup";
+import OtpVerification from "../UserAuth/OtpVerification";
 
 import {
   flipSignin,
   flipSignUp,
 } from "../../store/reducers/showAuthCard.reducers";
 import UserMenu from "../Navbar/UserMenu";
-import OtpVerification from "../UserAuth/OtpVerification";
 
 export default function WelcomePageNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

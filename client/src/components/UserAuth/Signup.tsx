@@ -7,14 +7,18 @@ import type { signupTypeFrontend } from "@bibek-samal/traveltrove";
 import { signupManual } from "../../service/exportServices";
 import { useNavigate } from "react-router-dom";
 import { notifyError, notifySuccess } from "../../lib/Toast";
+import { setEmail } from "../../store/reducers/email.reducer";
 
 // State management
 import type { AppDispatch, RootState } from "../../store/store";
 import {
   flipSignUp,
   flipSignin,
+  flipOtpverificaton
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import API from "../../service/api";
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
@@ -36,7 +40,7 @@ const Signup = () => {
   };
 
   // State management
-  const { showSignup, showSignin } = useSelector(
+  const { showSignup, showSignin, showOtpVerificaton } = useSelector(
     (state: RootState) => state.showAuthCardReducer
   );
   const dispatch: AppDispatch = useDispatch();
@@ -53,10 +57,34 @@ const Signup = () => {
     setShowLoader(true);
     const res = await signupManual(data);
     if (res.success === true) {
-      localStorage.setItem("loggedin", "true");
-      setShowLoader(false);
-      navigate("/home");
-      notifySuccess("Welcome to RapidRoom!");
+      //send the otp reqest from fronted to backend
+      //open the otp panned
+      //send the opt and email to the backend
+      //verify the enmail
+      // set islogedin true
+      try {
+        dispatch(setEmail(res.email));
+        const otpRes = await axios.post(`${API}/send-otp`,{
+          email: res.email
+        })
+        console.log("Here is the opt res",otpRes)
+        if(otpRes.data.success === true){
+          //open the otp pannel
+          dispatch(flipOtpverificaton(showOtpVerificaton));
+        }
+
+
+      } catch (error) {
+        console.log(error);
+        notifyError("Error in otp verification")
+      }
+      
+
+
+      // localStorage.setItem("loggedin", "true");
+      // setShowLoader(false);
+      // navigate("/home");
+      // notifySuccess("Welcome to RapidRoom!");
       dispatch(flipSignUp(showSignup));
     } else {
       notifyError(res.message);

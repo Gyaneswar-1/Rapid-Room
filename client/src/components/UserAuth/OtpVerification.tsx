@@ -3,12 +3,6 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { IoMdClose } from "react-icons/io"
 
-interface OtpVerificationProps {
-  email: string
-  onClose: () => void
-  onVerify: (otp: string) => void
-  onResend: () => void
-}
 
 //state management 
 import { AppDispatch, RootState } from "../../store/store";
@@ -16,6 +10,10 @@ import {
   flipOtpverificaton
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import API from "../../service/api";
+import { useNavigate } from "react-router-dom"
+import { notifyError, notifySuccess } from "../../lib/Toast";
 
 const OtpVerification = () => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""))
@@ -24,12 +22,56 @@ const OtpVerification = () => {
   const [isVerifying, setIsVerifying] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
-    const email = "bibekbibek@gmail.com"
-  function onResend(){
-    
+  const navigate = useNavigate();
+  const {email } = useSelector(
+      (state: RootState) => state.emailReducer
+    );
+  async function onResend(){
+    //send the opt again
+    try {
+      if(email === ""){
+        localStorage.removeItem("loggedin");
+        navigate("/")
+      }
+      const otpRes = await axios.post(`${API}/send-otp`,{
+        email: email
+      })
+      console.log("Here is the opt res",otpRes)
+      if(otpRes.data.success === true){
+        //open the otp pannel
+        dispatch(flipOtpverificaton(showOtpVerificaton));
+        notifySuccess("Welcome to Rapidroom")
+        navigate("/home")
+      }
+
+
+    } catch (error) {
+      console.log(error);
+      notifyError("Error in otp verification")
+    }
   }
-  function onVerify(otpString:any){
-    console.log(otpString)
+  async function onVerify(otpString:any){
+    //send the verification reques to the backend
+    if(email === ""){
+      localStorage.removeItem("loggedin");
+      navigate("/")
+    }
+    const emailRes = await axios.post(`${API}/verify-email`,{
+      email:email,
+      otp: otpString
+    })
+    console.log(emailRes);
+    if(emailRes.data.success === true){
+      dispatch(flipOtpverificaton(true))
+      localStorage.setItem("loggedin", "true");
+      navigate("/home");
+      notifySuccess("Welcome to RapidRoom!");
+    }
+    else{
+
+      notifyError("Email verification failed")
+    }
+
   }
   const { showOtpVerificaton } = useSelector(
     (state: RootState) => state.showAuthCardReducer
@@ -119,7 +161,7 @@ const OtpVerification = () => {
       return
     }
 
-    setIsVerifying(true)
+    // setIsVerifying(true)
     onVerify(otpString)
   }
 
