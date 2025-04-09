@@ -150,53 +150,53 @@ function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/comeingsoon"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     1on1 Coaching{" "}
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/comeingsoon"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     Company Review{" "}
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/comeingsoon"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     Accounts Review{" "}
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/comeingsoon"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     HR Consulting{" "}
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/comeingsoon"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     SEO Optimisation{" "}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -206,33 +206,30 @@ function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/about-us"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    {" "}
-                    About{" "}
-                  </a>
+                    About us
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/why-choose-us"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    {" "}
-                    Meet the Team{" "}
-                  </a>
+                    Why choose us
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/contact-us"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    {" "}
-                    Accounts Review{" "}
-                  </a>
+                    Contact us
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -242,13 +239,12 @@ function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/contact-us"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    {" "}
-                    Contact{" "}
-                  </a>
+                    Contact
+                  </Link>
                 </li>
 
                 <li>
@@ -286,34 +282,26 @@ function Footer() {
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/terms-and-conditions"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     Returns Policy{" "}
-                  </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/terms-and-conditions"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     {" "}
                     Refund Policy{" "}
-                  </a>
+                  </Link>
                 </li>
 
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-700 transition hover:opacity-75"
-                  >
-                    {" "}
-                    Hiring-3 Statistics{" "}
-                  </a>
-                </li>
+               
               </ul>
             </div>
           </div>

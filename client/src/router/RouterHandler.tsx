@@ -30,6 +30,10 @@ import ReservationsPage from "../components/HostingComponents/Pages/Reservations
 import EarningsPage from "../components/HostingComponents/Pages/EarningsPage";
 import GuestsPage from "../components/HostingComponents/Pages/GuestsPage";
 import DeleteAccount from "../pages/DeleteAccount";
+import WhyChooseUs from "../pages/WhyChooseUs";
+import AboutUs from "../pages/AboutUs";
+import ContactUs from "../pages/ContactUs";
+import TermsAndConditions from "../pages/TermsAndConditions";
 
 function RouterHandler() {
   const AdminRedirect = () => {
@@ -47,6 +51,10 @@ function RouterHandler() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/comeingsoon" element={<ComeingSoon />} />
+          <Route path="/why-choose-us"  element={<WhyChooseUs />} />
+          <Route path="/about-us"  element={<AboutUs />} />
+          <Route path="/contact-us"  element={<ContactUs />} />
+          <Route path="/terms-and-conditions"  element={<TermsAndConditions />} />
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
 

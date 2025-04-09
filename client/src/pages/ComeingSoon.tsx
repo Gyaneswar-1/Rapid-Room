@@ -30,7 +30,7 @@ const ComeingSoon = () => {
 
         <button
           onClick={() => {
-            navigate("/home");
+            navigate(-1);
           }}
           className="mt-6 inline-block rounded-sm bg-primary px-5 py-3 text-sm font-medium text-white hover:bg-primary/80 focus:ring-3 focus:outline-hidden"
         >
