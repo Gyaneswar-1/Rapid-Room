@@ -10,8 +10,8 @@ import {
   setRoomId,
   setHotelIdForCheckIn,
 } from "../../store/reducers/checkIn.reducer";
-import { toast } from "react-toastify";
 import checkInHandler from "../../service/checkin/checkInService";
+import { notifyError, notifySuccess } from "../../lib/Toast";
 
 interface ReservationModalProps {
   perNightCost: number;
@@ -117,12 +117,12 @@ export default function ReservationModal({
         dispatch(setPaymentId(response.data.paymentId));
         dispatch(setHotelIdForCheckIn(response.data.hotelId));
         setReservationSuccess(true);
-        toast.success("Reservation successful! Please proceed to payment.");
+        notifySuccess("Reservation successful! Please proceed to payment.");
       } else {
-        toast.error("Reservation failed. Please try again.");
+        notifyError("Reservation failed. Please try again.");
       }
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      notifyError("Something went wrong. Please try again.");
     } finally {
       setIsRequestLoading(false);
     }
@@ -147,7 +147,7 @@ export default function ReservationModal({
       setPaymentSuccess(true);
       
     } catch (error) {
-      toast.error("Payment processing failed. Please try again.");
+      notifyError("Payment processing failed. Please try again.");
     } finally {
       setIsPaymentLoading(false);
     }

@@ -71,6 +71,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
     localStorage.removeItem("loggedin");
     dispatch(resetUserData());
     navigate("/");
+    location.reload();
     setIsOpen(false);
   };
 

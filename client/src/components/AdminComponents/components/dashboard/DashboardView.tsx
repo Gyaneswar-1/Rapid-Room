@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react"
 import StatsCards from "./StatsCards"
 import ActivityChart from "./ActivityChart"
@@ -10,6 +9,19 @@ interface PieChartData {
   count: number;
 }
 
+interface HotelImage {
+  id: number;
+  imageUrl: string;
+  hotelId: number;
+}
+
+interface Hotel {
+  id: number;
+  hotelName: string;
+  status: string;
+  images: HotelImage[];
+}
+
 interface DashboardData {
   activeHosts: number;
   listedHotels: number;
@@ -19,6 +31,7 @@ interface DashboardData {
   pendingUsers: number;
   totalUsers: number;
   pieChartData: PieChartData[];
+  recentHotels: Hotel[];
 }
 
 export default function DashboardView() {
@@ -97,22 +110,48 @@ export default function DashboardView() {
             <div className="text-center py-4 text-red-500">
               Failed to load recent activity
             </div>
-          ) : (
+          ) : stats?.recentHotels && stats.recentHotels.length > 0 ? (
             <div className="space-y-4">
-              {[1, 2, 3].map((item) => (
-                <div key={item} className="flex items-start space-x-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 flex-shrink-0"></div>
-                  <div>
-                    <p className="text-sm font-medium">New hotel listing submitted</p>
-                    <p className="text-xs text-gray-500">3 hours ago</p>
+              {stats.recentHotels.map((hotel) => (
+                <div key={hotel.id} className="flex items-start space-x-4">
+                  <div className="w-10 h-10 rounded bg-gray-200 flex-shrink-0 overflow-hidden">
+                    {hotel.images && hotel.images.length > 0 ? (
+                      <img 
+                        src={hotel.images[0].imageUrl} 
+                        alt={hotel.hotelName} 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-100 text-xs text-gray-400">
+                        No img
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center">
+                      <p className="text-sm font-medium">{hotel.hotelName}</p>
+                      <span className={`px-2 py-0.5 text-xs rounded-full ${
+                        hotel.status === 'APPROVED' ? 'bg-green-100 text-green-800' :
+                        hotel.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {hotel.status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500">New hotel listing</p>
                   </div>
                 </div>
               ))}
+            </div>
+          ) : (
+            <div className="text-center py-4 text-gray-500">
+              No recent hotel activity
             </div>
           )}
         </div>
       </div>
 
+      {/* We can remove this comment since we're showing hotels in the activity section */}
       {/* Recent Hotels */}
       {/* <RecentHotels openModal={openModal} /> */}
     </div>

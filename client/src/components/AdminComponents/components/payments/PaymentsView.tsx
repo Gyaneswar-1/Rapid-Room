@@ -1,12 +1,6 @@
-;
-
 import { useEffect, useState } from "react";
 import {
-  Search,
-  Filter,
-  ChevronDown,
-  Calendar,
-  Download,
+
   Loader,
 } from "lucide-react";
 import PaymentsTabs from "./PaymentsTabs";
@@ -119,7 +113,7 @@ export default function PaymentsView() {
             Monitor and manage all platform payments and commissions
           </p>
         </div>
-
+{/* 
         <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
           <div className="relative">
             <input
@@ -150,7 +144,7 @@ export default function PaymentsView() {
             <Download className="w-5 h-5" />
             <span>Export</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Payment Stats */}

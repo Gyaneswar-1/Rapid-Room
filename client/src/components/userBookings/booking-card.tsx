@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { MdLocationOn } from "react-icons/md";
 import { FaUser, FaCalendarAlt, FaBed } from "react-icons/fa";
 import { cancelBooking } from "../../service/checkin/cancleBooking";
-import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
+import { notifySuccess,notifyError, notifyInfo } from "../../lib/Toast";
 
 interface BookingCardProps {
   booking: {
@@ -76,7 +76,7 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
   const handleCancellation = async () => {
     if (booking.ReservationStatus === "cancled") {
       // Handle refund request
-      toast.info("Refund request is being processed");
+      notifyInfo("Refund request is being processed");
       return;
     }
 
@@ -89,13 +89,13 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
       });
 
       if (result.success) {
-        toast.success("Booking cancelled successfully");
+        notifySuccess("Booking cancelled successfully");
         onCancel(); // This will trigger the state update in parent component
       } else {
-        toast.error("Failed to cancel booking");
+        notifyError("Failed to cancel booking");
       }
     } catch (error) {
-      toast.error("An error occurred while cancelling the booking");
+      notifyError("An error occurred while cancelling the booking");
     }
   };
   const  navigate = useNavigate();

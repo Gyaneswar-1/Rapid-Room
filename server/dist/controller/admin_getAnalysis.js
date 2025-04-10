@@ -12,6 +12,9 @@ export const admin_getAnalysis = async (req, res) => {
         let newSignups = 0;
         const oneHourAgo = new Date();
         oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+        // Create a date for one day ago
+        const oneDayAgo = new Date();
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
         totalUsers = await prisma.users.count();
         activeHosts = await prisma.users.count({
             where: {
@@ -34,9 +37,22 @@ export const admin_getAnalysis = async (req, res) => {
         newSignups = await prisma.users.count({
             where: {
                 createdAt: {
-                    gte: oneHourAgo,
+                    gte: oneDayAgo,
                 },
             },
+        });
+        // Get 5 recent hotels in increasing order (oldest to newest)
+        const recentHotels = await prisma.hotels.findMany({
+            select: {
+                id: true,
+                hotelName: true,
+                images: true,
+                status: true,
+            },
+            orderBy: {
+                createdAt: 'asc'
+            },
+            take: 5
         });
         const pendingApprovals = pendingUsers + pendingHotels;
         const activeHostsPercentage = totalUsers > 0
@@ -57,6 +73,7 @@ export const admin_getAnalysis = async (req, res) => {
             pendingUsers,
             pendingHotels,
             newSignups,
+            recentHotels,
             pieChartData: [
                 {
                     label: "Active Hosts",
@@ -64,7 +81,7 @@ export const admin_getAnalysis = async (req, res) => {
                     count: activeHosts,
                 },
                 {
-                    label: "New Signups (1h)",
+                    label: "New Signups (24h)",
                     value: Number(newSignupsPercentage),
                     count: newSignups,
                 },

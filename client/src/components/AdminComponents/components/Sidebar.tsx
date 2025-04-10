@@ -1,5 +1,7 @@
 import { Users, Building2, Settings, LogOut, X, RainbowIcon, BarChart3, UserRoundCheck, CreditCard } from "lucide-react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
+import MainLogo from "client/src/assets/images/MainLogo.png";
+
 interface SidebarProps {
   isSidebarOpen: boolean
   setIsSidebarOpen: (open: boolean) => void
@@ -25,9 +27,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
       <div className="backdrop-blur-xs h-full w-full backdrop-brightness-40">
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
           <Link to="/admin" className="flex items-center space-x-2">
-            <div className="bg-primary rounded-lg p-1.5">
-              <RainbowIcon className="w-6 h-6 text-white" />
-            </div>
+              <img src={MainLogo} alt="" className="w-12 h-10 text-white" />
             <span className="text-xl font-bold">RapidRoom</span>
           </Link>
           {isMobile && (
@@ -100,17 +100,6 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
 
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-4">Settings</p>
           <ul className="space-y-2">
-            <li>
-              <Link
-                to="/admin/settings"
-                className={`flex items-center w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === "/admin/settings" ? "bg-primary text-white" : "text-gray-300 hover:bg-gray-800"
-                }`}
-              >
-                <Settings className="w-5 h-5 mr-3" />
-                Settings
-              </Link>
-            </li>
             <li>
               <button
                 onClick={handleLogout}

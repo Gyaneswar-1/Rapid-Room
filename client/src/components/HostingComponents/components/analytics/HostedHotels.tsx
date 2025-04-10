@@ -2,6 +2,8 @@ import { Edit, Loader, Star, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getHostHotels } from "../../../../service/manageHostData/getHostHotels";
+import { deleteHotel } from "../../../../service/manageHostData/deleteHotel";
+import { notifyError, notifySuccess } from "../../../../lib/Toast";
 
 interface HotelsDataInterface {
   address: {
@@ -25,6 +27,7 @@ export function HostedHotels() {
   const [error, showError] = useState(false);
   const [data, setData] = useState<HotelsDataInterface[]>([]);
   const [hotelToDelete, setHotelToDelete] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     async function getData() {
@@ -47,15 +50,32 @@ export function HostedHotels() {
     getData();
   }, []);
 
-  const handleDelete = (id: number) => {
-    // Actual delete logic would go here
-    setData(data.filter(hotel => hotel.id !== id));
-    setHotelToDelete(null);
+  const handleDelete = async (id: number) => {
+    try {
+      setIsDeleting(true);
+      const response = await deleteHotel(id);
+      
+      if (response.success) {
+        setData(data.filter(hotel => hotel.id !== id));
+        notifySuccess("Hotel deleted successfully");
+      } else {
+        notifyError(response.message || "Failed to delete hotel");
+      }
+    } catch (error) {
+      console.error("Error in handleDelete:", error);
+      notifyError("An error occurred while deleting the hotel");
+    } finally {
+      setIsDeleting(false);
+      setHotelToDelete(null);
+    }
   };
+
   if(loader){
-    <div className="flex w-full h-full items-center justify-center">
-            <Loader className="animate-spin h-10 w-10" />
-          </div>
+    return (
+      <div className="flex w-full h-full items-center justify-center">
+        <Loader className="animate-spin h-10 w-10" />
+      </div>
+    );
   }
 
   return (
@@ -141,13 +161,14 @@ export function HostedHotels() {
       </div>
 
       {hotelToDelete !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Confirm Removal</h3>
               <button 
                 onClick={() => setHotelToDelete(null)}
                 className="text-gray-500 hover:text-gray-700"
+                disabled={isDeleting}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -156,19 +177,31 @@ export function HostedHotels() {
               <p className="text-gray-600">
                 Are you sure you want to remove this hotel from your listings? This action cannot be undone.
               </p>
+              <p className="text-gray-600 mt-2">
+                All images associated with this hotel will also be permanently deleted.
+              </p>
             </div>
             <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setHotelToDelete(null)}
                 className="px-4 py-2 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                disabled={isDeleting}
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(hotelToDelete)}
-                className="px-4 py-2 text-sm border border-transparent rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                className="px-4 py-2 text-sm border border-transparent rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 flex items-center"
+                disabled={isDeleting}
               >
-                Confirm Remove
+                {isDeleting ? (
+                  <>
+                    <Loader className="animate-spin h-4 w-4 mr-2" />
+                    Deleting...
+                  </>
+                ) : (
+                  "Confirm Remove"
+                )}
               </button>
             </div>
           </div>

@@ -15,7 +15,6 @@ import AdminDashboard from "../pages/AdminDashboard";
 import HotelsPage from "../components/AdminComponents/HotelsPage";
 import HostsPage from "../components/AdminComponents/HostsPage";
 import UsersPage from "../components/AdminComponents/UsersPage";
-import SettingsPage from "../components/AdminComponents/SettingsPage";
 import BookingPage from "../pages/BookingPage";
 import PaymentsPage from "../components/AdminComponents/components/paymentPage";
 import HostPendingPage from "../pages/HostPendingPage";
@@ -113,10 +112,6 @@ function RouterHandler() {
           <Route
             path="/admin/users"
             element={<ProtectedAdminRoute element={<UsersPage />} />}
-          />
-          <Route
-            path="/admin/settings"
-            element={<ProtectedAdminRoute element={<SettingsPage />} />}
           />
           <Route
             path="/admin/payments"

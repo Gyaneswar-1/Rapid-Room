@@ -18,7 +18,7 @@ import ReviewSection from "../components/bookingpage/ReviewSection";
 
 //get hotel service
 import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
-import { getRatings } from "../service/getSingleHotelInformation/getRatings";
+// import { getRatings } from "../service/getSingleHotelInformation/getRatings";
 
 //state management imports
 
