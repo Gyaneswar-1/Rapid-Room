@@ -14,7 +14,7 @@ function Footer() {
               >
                 <div className="flex items-center gap-2 cursor-pointer transition hover:opacity-80">
                   <img
-                    className="rounded-full hidden md:block h-10 w-10 object-contain"
+                    className="rounded-full hidden md:block h-8 w-8 object-contain"
                     src={MainLogo || "/placeholder.svg"}
                     alt="RapidRoom"
                   />
