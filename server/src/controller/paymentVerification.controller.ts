@@ -96,10 +96,8 @@ export async function paymentVerification(
         });
 
         //navigate to the booking page
-        //    return  res.redirect("http://localhost:5173/comeingsoon");
-        return res.json({
-            message: "sucessfull the payment",
-        });
+           return  res.redirect("http://localhost:5173/profile/bookings");
+        
     } catch (error) {
         //cancel the reservation, navigate to the error page
         console.log(error);

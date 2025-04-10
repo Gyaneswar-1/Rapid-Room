@@ -45,7 +45,7 @@ function Card({ hotelName, perNight, country, city, onclick, image, overalRating
         <p className="text-gray-600 text-sm mb-1 truncate">
           {city}, {country}
         </p>
-        <p className="text-gray-500 text-xs mb-2">3-12 mar</p>
+        {/* <p className="text-gray-500 text-xs mb-2">3-12 mar</p> */}
         <p className="font-semibold">
           ₹{perNight} <span className="font-normal text-sm">night</span>
         </p>
