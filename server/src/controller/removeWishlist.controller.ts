@@ -6,11 +6,11 @@ export const removeWishlist = async (
     req: Request | any,
     res: Response | any,
 ) => {
-    const { userId, hotelId } = req.body;
+    const { hotelId } = req.body;
     try {
         const result = await prisma.wishList.deleteMany({
             where: {
-                userId: parseInt(userId),
+                userId: parseInt(req.user.id),
                 hotelId: parseInt(hotelId),
             },
         });

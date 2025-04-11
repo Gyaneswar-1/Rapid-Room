@@ -152,7 +152,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
-                      navigate("/wishlist");
+                      navigate("/profile/wishlist");
                       setIsOpen(false);
                     }}
                     label="Wishlist"

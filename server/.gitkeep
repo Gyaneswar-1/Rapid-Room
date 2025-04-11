@@ -5,6 +5,7 @@
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
 # DATABASE_URL="postgresql://neondb_owner:npg_r7cDTAsZ3YqS@ep-snowy-wildflower-a1zjt17w-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+
 PORT=3000
 JWT_SECRET=okok
 EXPIRY_TIME=11d
@@ -18,6 +19,9 @@ API_SECREATE=6wWnOKXQZ-hbYEuQQTABn3vBwJw
 
 GOOGLE_CLIENT_ID=771696950246-itjtbq8fij55t1j9bc4bg9m5na1dj3nd.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=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
+
+GOOGLE_EMAIL=rapidroom27@gmail.com
+GOOGLE_PASSWORD="jsuc umiw pxvz dqhf"
 
 FB_APP_ID=950459640095594
 FB_APP_SECRET=c687530e2744e2770b87172a2dfa65b9

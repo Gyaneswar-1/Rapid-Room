@@ -178,6 +178,9 @@ model WishList {
   user    Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   hotelId Int
   hotel   Hotels @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, hotelId])
+
 }
 
 model Review {

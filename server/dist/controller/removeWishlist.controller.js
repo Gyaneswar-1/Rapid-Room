@@ -2,11 +2,11 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 export const removeWishlist = async (req, res) => {
-    const { userId, hotelId } = req.body;
+    const { hotelId } = req.body;
     try {
         const result = await prisma.wishList.deleteMany({
             where: {
-                userId: parseInt(userId),
+                userId: parseInt(req.user.id),
                 hotelId: parseInt(hotelId),
             },
         });
