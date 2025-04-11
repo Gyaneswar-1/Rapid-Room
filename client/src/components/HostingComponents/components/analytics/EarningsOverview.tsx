@@ -8,6 +8,13 @@ interface EarningsOverviewProps {
   pendingPayouts: number;
   totalReservations: number;
   activeListings: number;
+  monthlyPayments: {
+    _sum: {
+      amount: number;
+    };
+    paymentDate: string;
+  }[];
+  averageRating: number;
 }
 
 export function EarningsOverview({
@@ -15,6 +22,8 @@ export function EarningsOverview({
   pendingPayouts,
   totalReservations,
   activeListings,
+  monthlyPayments,
+  averageRating,
 }: EarningsOverviewProps) {
   const [timeframe, setTimeframe] = useState("month");
 
@@ -27,20 +36,11 @@ export function EarningsOverview({
   };
 
   // Mock data for the chart
-  const monthlyEarnings = [
-    { month: "Jan", amount: 950 },
-    { month: "Feb", amount: 1200 },
-    { month: "Mar", amount: 1100 },
-    { month: "Apr", amount: 1400 },
-    { month: "May", amount: 1300 },
-    { month: "Jun", amount: 1600 },
-    { month: "Jul", amount: 1800 },
-    { month: "Aug", amount: 2100 },
-    { month: "Sep", amount: 1900 },
-    { month: "Oct", amount: 2200 },
-    { month: "Nov", amount: 2000 },
-    { month: "Dec", amount: 2400 },
-  ];
+  const monthlyEarnings = monthlyPayments?.map((item) => {
+    const date = new Date(item.paymentDate);
+    const month = date.toLocaleString('default', { month: 'short' });
+    return { month: month, amount: item._sum.amount || 0 };
+  }) || [];
 
   // Find the max value for scaling
   const maxAmount = Math.max(...monthlyEarnings.map((item) => item.amount));
@@ -165,7 +165,7 @@ export function EarningsOverview({
             </div>
             <div className="ml-4">
               <h3 className="text-sm font-medium text-gray-500">Host Rating</h3>
-              <p className="text-2xl font-semibold text-gray-900">3.6</p>
+              <p className="text-2xl font-semibold text-gray-900">{averageRating}</p>
             </div>
           </div>
           <div className="mt-4 flex items-center">

@@ -11,52 +11,32 @@ export const getHostAllReservations = async (req, res) => {
                 }
             },
             select: {
-                id: true,
-                checkIn: true,
-                checkOut: true,
-                amountPaid: true,
-                reservationsDuration: true,
-                ReservationStatus: true,
-                paymentStatus: true,
+                id: true, //
+                checkIn: true, //
+                checkOut: true, //
+                amountPaid: true, //
+                reservationsDuration: true, //
+                ReservationStatus: true, //
+                paymentStatus: true, //
                 hotel: {
                     select: {
-                        id: true,
                         hotelName: true,
-                        perNight: true,
-                        images: {
-                            select: {
-                                imageUrl: true
-                            },
-                            take: 1
-                        }
-                    }
-                },
-                room: {
-                    select: {
-                        id: true,
-                        roomNumber: true
                     }
                 },
                 user: {
                     select: {
-                        id: true,
                         fullName: true,
-                        email: true,
                         profileImage: true
                     }
                 },
                 payment: {
                     select: {
-                        id: true,
                         amount: true,
-                        status: true,
-                        paymentMethod: true,
-                        paymentDate: true
                     }
                 }
             },
             orderBy: {
-                checkIn: 'desc'
+                checkIn: 'asc'
             }
         });
         // Return formatted response without pagination

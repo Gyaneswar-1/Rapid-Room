@@ -1,8 +1,51 @@
+import { getHostStats } from "../../../service/manageHostData/getHostStats";
 import SetUserDataToStore from "../../../service/userdata/SetDataToStore";
 import EarningsOverview from "../components/analytics/EarningsOverview";
+import { useEffect, useState } from "react";
+
+interface HotelStatsDataInterface {
+  totalRevenue: {
+    _sum: {
+      hostAmount: number;
+    };
+  };
+  TotalBookings: number;
+  OccupancyRate: {
+    _avg: {
+      numberOfRooms: number;
+    };
+  };
+  averageRating: number;
+  totalPendingPayments: number;
+  totalReservations: number;
+  monthlyPayments: {
+    _sum: {
+      amount: number;
+    };
+    paymentDate: string;
+  }[];
+  userHotelStats: {
+    totalHotels: number;
+    totalRooms: number;
+    averageRoomsPerHotel: number;
+  };
+}
 
 export default function HostDashboard() {
+  const [hotelStats, setHotelStats] = useState<HotelStatsDataInterface | null>(null);
 
+  useEffect(() => {
+    const fetchHostStats = async () => {
+      const response = await getHostStats();
+      if (response.success) {
+        setHotelStats(response.data);
+      } else {
+        console.error("Failed to fetch host stats");
+      }
+    };
+
+    fetchHostStats();
+  }, []);
 
   // Mock data for the host
   const hostData = {
@@ -17,7 +60,7 @@ export default function HostDashboard() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-    <SetUserDataToStore/>
+      <SetUserDataToStore />
 
       <main className="flex-1 overflow-y-auto p-4 md:p-6">
         <div className="max-w-7xl mx-auto space-y-6">
@@ -41,7 +84,9 @@ export default function HostDashboard() {
                       Total Revenue
                     </h3>
                   </div>
-                  <div className="text-2xl font-bold">$12,450.75</div>
+                  <div className="text-2xl font-bold">
+                    {hotelStats?.totalRevenue?._sum?.hostAmount || 0}
+                  </div>
                   <p className="text-xs text-gray-500">+15% from last month</p>
                 </div>
                 <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
@@ -50,7 +95,7 @@ export default function HostDashboard() {
                       Bookings
                     </h3>
                   </div>
-                  <div className="text-2xl font-bold">48</div>
+                  <div className="text-2xl font-bold">{hotelStats?.TotalBookings || 0}</div>
                   <p className="text-xs text-gray-500">+8% from last month</p>
                 </div>
                 <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
@@ -59,7 +104,9 @@ export default function HostDashboard() {
                       Occupancy Rate
                     </h3>
                   </div>
-                  <div className="text-2xl font-bold">68%</div>
+                  <div className="text-2xl font-bold">
+                    {hotelStats?.OccupancyRate?._avg?.numberOfRooms || 0}%
+                  </div>
                   <p className="text-xs text-gray-500">+5% from last month</p>
                 </div>
                 <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
@@ -68,18 +115,17 @@ export default function HostDashboard() {
                       Average Rating
                     </h3>
                   </div>
-                  <div className="text-2xl font-bold">4.8</div>
+                  <div className="text-2xl font-bold">{hotelStats?.averageRating || 0}</div>
                   <p className="text-xs text-gray-500">+0.2 from last month</p>
                 </div>
               </div>
             </div>
           </div>
           <EarningsOverview
-            totalEarnings={hostData.totalEarnings}
+            totalEarnings={hotelStats?.totalRevenue}
             pendingPayouts={hostData.pendingPayouts}
             totalReservations={hostData.totalReservations}
-            activeListings={hostData.activeListings}
-          />
+            activeListings={hostData.activeListings} monthlyPayments={[]} averageRating={0}          />
         </div>
       </main>
     </div>
