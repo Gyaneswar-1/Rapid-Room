@@ -52,7 +52,8 @@ const OtpVerification = () => {
   }
   async function onVerify(otpString:any){
     //send the verification reques to the backend
-    if(email === ""){
+    if(email === "" || !otpString){
+      notifyError("Insufficient credential")
       localStorage.removeItem("loggedin");
       navigate("/")
     }
@@ -70,6 +71,7 @@ const OtpVerification = () => {
     else{
 
       notifyError("Email verification failed")
+      navigate("/")
     }
 
   }

@@ -12,12 +12,23 @@ passport.use("google", new GoogleStrategy({
         let user = await prisma.users.findUnique({
             where: { email: profile.emails[0].value },
         });
+        if (user) {
+            user = await prisma.users.update({
+                where: {
+                    email: profile.emails[0].value
+                },
+                data: {
+                    isEmailVerified: true
+                }
+            });
+        }
         if (!user) {
             user = await prisma.users.create({
                 data: {
                     email: profile.emails[0].value,
                     password: "google",
                     fullName: profile.displayName,
+                    isEmailVerified: true,
                     profileImage: profile.photos?.[0]?.value || null,
                 },
             });
@@ -42,12 +53,23 @@ passport.use("facebook", new FacebookStrategy({
         let user = await prisma.users.findUnique({
             where: { email: profile.emails[0].value },
         });
+        if (user) {
+            user = await prisma.users.update({
+                where: {
+                    email: profile.emails[0].value
+                },
+                data: {
+                    isEmailVerified: true
+                }
+            });
+        }
         if (!user) {
             user = await prisma.users.create({
                 data: {
                     fullName: profile.displayName,
                     email: profile.emails?.[0]?.value || null,
                     profileImage: profile.photos?.[0]?.value || null,
+                    isEmailVerified: true,
                     password: "facebook",
                 },
             });

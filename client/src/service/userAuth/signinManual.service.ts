@@ -10,7 +10,9 @@ export default async function signinManual(data:SigninType) {
         });
 
         if(res.data.success === true){
-            return {success: true, message: res.data.message?res.data.message: "User successfully logind in"}
+            console.log("signin res",res.data.data)
+            return {success: true, message: res.data.message?res.data.message: "User successfully logind in", isEmailVerifyed: res.data.data.isEmailVerifyed
+            }
         }
 
         return{success:false, message:res.data.message?res.data.message: "User logedin fail"}

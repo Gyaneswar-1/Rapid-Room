@@ -21,6 +21,7 @@ export const userLogin = async (req, res) => {
             select: {
                 email: true,
                 password: true,
+                isEmailVerified: true,
                 id: true,
             },
         });
@@ -45,7 +46,9 @@ export const userLogin = async (req, res) => {
         });
         return res
             .status(200)
-            .json(new ApiResponse(true, {}, "Logged in", "user logged in successfully", 200));
+            .json(new ApiResponse(true, { isEmailVerifyed: isExists.isEmailVerified,
+            email: isExists.email
+        }, "Logged in", "user logged in successfully", 200));
     }
     catch (error) {
         return res
