@@ -233,10 +233,11 @@ export default function ReservationsPage() {
                   {formattedReservations.map((reservation) => (
                     <div
                       key={reservation.id}
-                      className="flex flex-col justify-between gap-4 rounded-lg border border-gray-200 p-4 sm:flex-row sm:items-center"
+                      className="flex flex-col md:flex-row justify-between gap-4 rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
                     >
-                      <div className="flex items-center gap-4">
-                        <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-200">
+                      {/* Guest and room info */}
+                      <div className="flex items-center gap-4 min-w-[250px]">
+                        <div className="relative h-12 w-12 overflow-hidden rounded-full bg-gray-200 flex-shrink-0">
                           {reservation.guest.avatar ? (
                             <img
                               src={reservation.guest.avatar}
@@ -244,61 +245,76 @@ export default function ReservationsPage() {
                               className="h-full w-full object-cover"
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-primary text-teal-600">
+                            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-600 font-medium">
                               {reservation.guest.initials}
                             </div>
                           )}
                         </div>
                         <div>
-                          <div className="font-medium">
+                          <div className="font-medium text-gray-900">
                             {reservation.guest.name}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {reservation.hotel} - {reservation.room}
+                            {reservation.email}
+                          </div>
+                          <div className="text-sm text-gray-600 mt-1">
+                            {reservation.hotel} • {reservation.room}
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-wrap items-center gap-4">
+
+                      {/* Stay details */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:flex-1 mt-3 md:mt-0">
                         <div>
-                          <div className="text-sm font-medium">Check-in</div>
-                          <div className="text-sm text-gray-500">
-                            {String(reservation.checkIn)}
+                          <div className="text-xs uppercase font-medium text-gray-500">Check-in</div>
+                          <div className="text-sm font-medium">
+                            {reservation.checkIn}
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm font-medium">Check-out</div>
-                          <div className="text-sm text-gray-500">
-                            {String(reservation.checkOut)}
+                          <div className="text-xs uppercase font-medium text-gray-500">Check-out</div>
+                          <div className="text-sm font-medium">
+                            {reservation.checkOut}
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm font-medium">Nights</div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-xs uppercase font-medium text-gray-500">Nights</div>
+                          <div className="text-sm font-medium">
                             {reservation.guests}
                           </div>
                         </div>
-                        <span
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                            reservation.status === "confirmed"
-                              ? "bg-green-100 text-green-800"
+                        <div>
+                          <div className="text-xs uppercase font-medium text-gray-500">Amount</div>
+                          <div className="text-sm font-medium">
+                            {reservation.amount}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-xs uppercase font-medium text-gray-500">Status</div>
+                          <span
+                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                              reservation.status === "confirmed"
+                                ? "bg-green-100 text-green-800"
+                                : reservation.status === "pending"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
+                            }`}
+                          >
+                            {reservation.status === "confirmed"
+                              ? "Confirmed"
                               : reservation.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                              : "bg-red-100 text-red-800 border border-red-200"
-                          }`}
-                        >
-                          {reservation.status === "confirmed"
-                            ? "Confirmed"
-                            : reservation.status === "pending"
-                            ? "Pending"
-                            : "Cancelled"}
-                        </span>
-                        <div className="font-medium">{reservation.amount}</div>
+                              ? "Pending"
+                              : "Cancelled"}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+
+                      {/* Action buttons */}
+                      <div className="flex gap-2 mt-3 md:mt-0 self-end md:self-center">
+                        <button className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                           View
                         </button>
-                        <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                        <button className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                           Message
                         </button>
                       </div>
