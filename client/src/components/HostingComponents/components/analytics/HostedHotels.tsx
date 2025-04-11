@@ -38,7 +38,6 @@ export function HostedHotels() {
 
         if (response.success) {
           setData(response.data);
-          console.log("datas", data);
         } else {
         }
       } catch (error) {

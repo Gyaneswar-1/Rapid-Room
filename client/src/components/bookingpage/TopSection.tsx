@@ -1,4 +1,7 @@
 import { Heart, Share, Star } from "lucide-react";
+import { addWishlist } from "../../service/wishlist/addWishlist";
+import { useParams, useSearchParams } from "react-router-dom";
+import { removeWishlist } from "../../service/wishlist/removeWishlist";
 
 type TopSctionPropType = {
   type: string;
@@ -19,7 +22,23 @@ const TopSection = ({
   totalReviews,
   isWishlisted,
 }: TopSctionPropType) => {
-  // console.log("Yoo",isWishlisted);
+
+  const {hotelid} = useParams();
+  const [searchParams] = useSearchParams();
+  const hotelId = searchParams.get('hotelId') || hotelid;
+  
+  const handleWishlist = (set:boolean) =>{
+    try {
+      if(set){
+        addWishlist(hotelId)
+      }else{
+        removeWishlist(hotelId);
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   
   return (
     <div className="mb-6 flex justify-between items-start">
@@ -51,12 +70,16 @@ const TopSection = ({
         </button>
 
         {isWishlisted ? (
-          <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100">
+          <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100" onClick={()=>{
+            handleWishlist(false)
+          }} >
             <Heart className="h-5 w-5 fill-red-600 border-red-600 outline-red-600 text-red-600" />
             <span className="hidden md:inline">Saved</span>
           </button>
         ) : (
-          <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100">
+          <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100" onClick={()=>{
+            handleWishlist(true)
+          }} >
             <Heart className="h-5 w-6" />
             <span className="hidden md:inline">Save</span>
           </button>

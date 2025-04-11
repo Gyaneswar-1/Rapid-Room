@@ -1,93 +1,104 @@
-;
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getHostReservations } from "../../../service/manageHostData/getHostReservations";
 
 export default function ReservationsPage() {
   const [activeTab, setActiveTab] = useState("all");
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  useEffect(() => {
+    const fetchReservations = async () => {
+      setLoading(true);
+      try {
+        const response = await getHostReservations();
+        console.log("Reservations data:", response.data);
+        if (response.success) {
+          setReservations(response.data.reservations || []);
+          setError("");
+        } else {
+          setError("Failed to fetch reservations");
+          setReservations([]);
+        }
+      } catch (err) {
+        console.error("Error fetching reservations:", err);
+        setError("An error occurred while fetching reservations");
+        setReservations([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const reservations = [
-    {
-      id: "RES-1234",
-      guest: {
-        name: "Emma Wilson",
-        avatar: "/placeholder.svg?height=40&width=40",
-        initials: "EW",
-      },
-      hotel: "Seaside Resort",
-      room: "Deluxe Ocean View",
-      checkIn: "Apr 15, 2023",
-      checkOut: "Apr 20, 2023",
-      status: "confirmed",
-      amount: "$1,250.00",
-      guests: 2,
-    },
-    {
-      id: "RES-1235",
-      guest: {
-        name: "Michael Brown",
-        avatar: "/placeholder.svg?height=40&width=40",
-        initials: "MB",
-      },
-      hotel: "Mountain Lodge",
-      room: "Suite with Fireplace",
-      checkIn: "Apr 18, 2023",
-      checkOut: "Apr 22, 2023",
-      status: "pending",
-      amount: "$980.00",
-      guests: 3,
-    },
-    {
-      id: "RES-1236",
-      guest: {
-        name: "Sophia Chen",
-        avatar: "/placeholder.svg?height=40&width=40",
-        initials: "SC",
-      },
-      hotel: "City Suites",
-      room: "Executive Suite",
-      checkIn: "Apr 20, 2023",
-      checkOut: "Apr 25, 2023",
-      status: "confirmed",
-      amount: "$1,450.00",
-      guests: 1,
-    },
-    {
-      id: "RES-1237",
-      guest: {
-        name: "James Rodriguez",
-        avatar: "/placeholder.svg?height=40&width=40",
-        initials: "JR",
-      },
-      hotel: "Seaside Resort",
-      room: "Family Suite",
-      checkIn: "Apr 22, 2023",
-      checkOut: "Apr 29, 2023",
-      status: "confirmed",
-      amount: "$2,100.00",
-      guests: 4,
-    },
-    {
-      id: "RES-1238",
-      guest: {
-        name: "Olivia Taylor",
-        avatar: "/placeholder.svg?height=40&width=40",
-        initials: "OT",
-      },
-      hotel: "Mountain Lodge",
-      room: "Deluxe King Room",
-      checkIn: "Apr 25, 2023",
-      checkOut: "Apr 28, 2023",
-      status: "pending",
-      amount: "$750.00",
-      guests: 2,
-    },
-  ];
+    fetchReservations();
+  }, [activeTab]); // Refetch when active tab changes
 
-  const filteredReservations =
-    activeTab === "all"
-      ? reservations
-      : reservations.filter((r) => r.status === activeTab);
+  // Map reservation status to display status
+  const mapReservationStatus = (status) => {
+    switch (status) {
+      case "active":
+        return "confirmed";
+      case "pending":
+        return "pending";
+      case "cancled":
+        return "cancelled";
+      default:
+        return status;
+    }
+  };
+
+  // Filter reservations based on active tab
+  const filteredReservations = activeTab === "all" 
+    ? reservations 
+    : reservations.filter(r => mapReservationStatus(r.ReservationStatus) === activeTab);
+
+  // Format date from ISO to readable format
+  const formatDate = (dateString) => {
+    try {
+      if (!dateString) return "N/A";
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    } catch (e) {
+      console.error("Date formatting error:", e);
+      return dateString || "N/A";
+    }
+  };
+
+  // Generate initials from full name
+  const getInitials = (name) => {
+    if (!name) return "?";
+    return name
+      .split(" ")
+      .map(n => n[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
+  // Get formatted reservations for display
+  const formattedReservations = filteredReservations.map(reservation => {
+    console.log("Processing reservation:", reservation); // Debug log
+    
+    // Get first image if available
+    const imageUrl = reservation.hotel?.images?.[0]?.imageUrl || null;
+    
+    return {
+      id: reservation.id || 0,
+      guest: {
+        name: reservation.user?.fullName || "Guest",
+        avatar: reservation.user?.profileImage || null,
+        initials: getInitials(reservation.user?.fullName),
+      },
+      hotel: reservation.hotel?.hotelName || "Hotel",
+      room: reservation.room?.roomNumber ? `Room ${reservation.room.roomNumber}` : "Room",
+      checkIn: formatDate(reservation.checkIn),
+      checkOut: formatDate(reservation.checkOut),
+      status: mapReservationStatus(reservation.ReservationStatus || "pending"),
+      amount: `$${reservation.amountPaid || (reservation.payment?.amount || 0)}`,
+      guests: reservation.reservationsDuration || 1,
+      hotelImage: imageUrl,
+      email: reservation.user?.email || "No email",
+    };
+  });
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -167,9 +178,24 @@ export default function ReservationsPage() {
                 </h3>
               </div>
 
-              {filteredReservations.length > 0 ? (
+              {loading ? (
+                <div className="text-center py-10">
+                  <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-teal-500 border-r-transparent"></div>
+                  <p className="mt-2 text-gray-600">Loading reservations...</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-10 text-red-500">
+                  <p>{error}</p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="mt-2 text-sm text-teal-600 hover:underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : formattedReservations.length > 0 ? (
                 <div className="space-y-4 mt-4">
-                  {filteredReservations.map((reservation) => (
+                  {formattedReservations.map((reservation) => (
                     <div
                       key={reservation.id}
                       className="flex flex-col justify-between gap-4 rounded-lg border border-gray-200 p-4 sm:flex-row sm:items-center"
@@ -178,9 +204,7 @@ export default function ReservationsPage() {
                         <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-200">
                           {reservation.guest.avatar ? (
                             <img
-                              src={
-                                reservation.guest.avatar || "/placeholder.svg"
-                              }
+                              src={reservation.guest.avatar}
                               alt={reservation.guest.name}
                               className="h-full w-full object-cover"
                             />
@@ -213,7 +237,7 @@ export default function ReservationsPage() {
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm font-medium">Guests</div>
+                          <div className="text-sm font-medium">Nights</div>
                           <div className="text-sm text-gray-500">
                             {reservation.guests}
                           </div>
@@ -222,12 +246,16 @@ export default function ReservationsPage() {
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                             reservation.status === "confirmed"
                               ? "bg-green-100 text-green-800"
-                              : "bg-yellow-100 text-yellow-800 border border-yellow-200"
+                              : reservation.status === "pending"
+                              ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+                              : "bg-red-100 text-red-800 border border-red-200"
                           }`}
                         >
                           {reservation.status === "confirmed"
                             ? "Confirmed"
-                            : "Pending"}
+                            : reservation.status === "pending"
+                            ? "Pending"
+                            : "Cancelled"}
                         </span>
                         <div className="font-medium">{reservation.amount}</div>
                       </div>
@@ -243,62 +271,21 @@ export default function ReservationsPage() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-6 text-gray-500">
-                  No {activeTab} reservations found.
+                <div className="text-center py-10 text-gray-500">
+                  <p>No {activeTab} reservations found.</p>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Pagination */}
-          <div className="flex items-center justify-end">
-            <div className="flex items-center space-x-2">
-              <button className="inline-flex items-center px-2 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span className="sr-only">Previous</span>
-                <svg
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-              <button className="inline-flex items-center px-4 py-2 border border-teal-500 bg-primary text-sm font-medium text-teal-600 hover:bg-primary">
-                1
-              </button>
-              <button className="inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                2
-              </button>
-              <button className="inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                3
-              </button>
-              <span className="inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                ...
-              </span>
-              <button className="inline-flex items-center px-2 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span className="sr-only">Next</span>
-                <svg
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+          {/* Pagination - simplified for now */}
+          {formattedReservations.length > 0 && (
+            <div className="flex items-center justify-end">
+              <div className="text-sm text-gray-700">
+                Showing <span className="font-medium">{formattedReservations.length}</span> reservation(s)
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
     </div>

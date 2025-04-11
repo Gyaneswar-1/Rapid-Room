@@ -35,7 +35,6 @@ export default function SetUserDataToStore(){
     if(!hasDataInStore){
         getuserData()
         .then((data) => {
-          console.log("data from fun",data);
           if (data.success === true) {
             dispatch(setHasDataInStore(true));
             dispatch(setUserEmail(data.email));
