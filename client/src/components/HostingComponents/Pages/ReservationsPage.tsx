@@ -1,9 +1,44 @@
 import { useState, useEffect } from "react";
 import { getHostReservations } from "../../../service/manageHostData/getHostReservations";
 
+interface ReservationInterface {
+  ReservationStatus: 'active' | 'pending' | 'cancled' | string;
+  amountPaid: number;
+  checkIn: string; // ISO date string
+  checkOut: string; // ISO date string
+  hotel: {
+    hotelName: string;
+    id: number;
+    images: {
+      imageUrl: string;
+    }[];
+    perNight: number;
+  };
+  id: number;
+  payment: {
+    amount: number;
+    id: number;
+    paymentDate: string; // ISO date string
+    paymentMethod: 'UPI' | string; // Allowing string for other payment methods
+    status: 'success' | string; // Allowing string for other statuses
+  };
+  paymentStatus: 'success' | 'pending' | string;
+  reservationsDuration: number;
+  room: {
+    id: number;
+    roomNumber: number;
+  };
+  user: {
+    id: number;
+    fullName: string;
+    email: string;
+    profileImage: string;
+  };
+}
+
 export default function ReservationsPage() {
   const [activeTab, setActiveTab] = useState("all");
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState<ReservationInterface[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -33,7 +68,7 @@ export default function ReservationsPage() {
   }, [activeTab]); // Refetch when active tab changes
 
   // Map reservation status to display status
-  const mapReservationStatus = (status) => {
+  const mapReservationStatus = (status: string) => {
     switch (status) {
       case "active":
         return "confirmed";
@@ -52,7 +87,7 @@ export default function ReservationsPage() {
     : reservations.filter(r => mapReservationStatus(r.ReservationStatus) === activeTab);
 
   // Format date from ISO to readable format
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string | number | Date) => {
     try {
       if (!dateString) return "N/A";
       const date = new Date(dateString);
@@ -64,7 +99,7 @@ export default function ReservationsPage() {
   };
 
   // Generate initials from full name
-  const getInitials = (name) => {
+  const getInitials = (name: string) => {
     if (!name) return "?";
     return name
       .split(" ")
@@ -227,13 +262,13 @@ export default function ReservationsPage() {
                         <div>
                           <div className="text-sm font-medium">Check-in</div>
                           <div className="text-sm text-gray-500">
-                            {reservation.checkIn}
+                            {String(reservation.checkIn)}
                           </div>
                         </div>
                         <div>
                           <div className="text-sm font-medium">Check-out</div>
                           <div className="text-sm text-gray-500">
-                            {reservation.checkOut}
+                            {String(reservation.checkOut)}
                           </div>
                         </div>
                         <div>
