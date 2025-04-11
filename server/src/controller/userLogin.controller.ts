@@ -35,6 +35,7 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
             select: {
                 email: true,
                 password: true,
+                isEmailVerified: true,
                 id: true,
             },
         });
@@ -88,7 +89,9 @@ export const userLogin = async (req: Request | any, res: Response | any) => {
             .json(
                 new ApiResponse(
                     true,
-                    {},
+                    {isEmailVerifyed: isExists.isEmailVerified,
+                      email: isExists.email
+                    },
                     "Logged in",
                     "user logged in successfully",
                     200,

@@ -53,6 +53,16 @@ passport.use("facebook", new FacebookStrategy({
         let user = await prisma.users.findUnique({
             where: { email: profile.emails[0].value },
         });
+        if (user) {
+            user = await prisma.users.update({
+                where: {
+                    email: profile.emails[0].value
+                },
+                data: {
+                    isEmailVerified: true
+                }
+            });
+        }
         if (!user) {
             user = await prisma.users.create({
                 data: {

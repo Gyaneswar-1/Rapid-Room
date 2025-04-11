@@ -53,6 +53,13 @@ const Signin = () => {
     const res = await signinManual(data);
     console.log(res);
     if (res.success === true) {
+          //check the email is verifyed or not
+          if(!res.isEmailVerifyed){
+            //store the email in the store
+            //open the otp panel
+          
+          }
+
       localStorage.setItem("loggedin", "true");
       setShowLoader(false);
       navigate("/home");
