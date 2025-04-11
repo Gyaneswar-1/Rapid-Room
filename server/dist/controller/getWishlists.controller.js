@@ -8,7 +8,31 @@ export const getWishlist = async (req, res) => {
                 userId: req.user.id,
             },
             include: {
-                hotel: true,
+                hotel: {
+                    select: {
+                        images: {
+                            take: 1
+                        },
+                        reviews: {
+                            select: {
+                                overallRating: true,
+                            },
+                        },
+                        _count: {
+                            select: {
+                                reviews: true
+                            }
+                        },
+                        hotelName: true,
+                        address: {
+                            select: {
+                                city: true,
+                                country: true,
+                            },
+                        },
+                        perNight: true,
+                    },
+                },
             },
         });
         return res

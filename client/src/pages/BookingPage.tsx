@@ -18,9 +18,6 @@ import ReviewSection from "../components/bookingpage/ReviewSection";
 
 //get hotel service
 import getSingleHotelInformation from "../service/getSingleHotelInformation/getSingleHotelInfo";
-// import { getRatings } from "../service/getSingleHotelInformation/getRatings";
-
-//state management imports
 
 import { AppDispatch, RootState } from "../store/store";
 import { setAllHotelData } from "../store/reducers/singleHotel.reducer"; // Only import setAllHotelData
@@ -45,6 +42,9 @@ export default function BookingPage() {
   );
   const { showReservatonModel } = useSelector(
     (state: RootState) => state.toogleShowReseveModelReducer
+  );
+  const { isWishlisted } = useSelector(
+    (state: RootState) => state.singleHotelReducer
   );
   const {
     images = [],
@@ -87,6 +87,7 @@ export default function BookingPage() {
   }
 
   return (
+    
     <>
       <Navbar show={true} />
       <div className="min-h-screen bg-white md:py-14">
@@ -98,6 +99,7 @@ export default function BookingPage() {
             city={address.city}
             state={address.state}
             country={address.country}
+            isWishlisted={isWishlisted}
           />
 
           <ImageCarousel

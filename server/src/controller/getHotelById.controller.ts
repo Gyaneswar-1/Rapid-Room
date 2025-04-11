@@ -3,7 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 import { Request, Response } from "express";
 
-export const getHotelById = async (req: Request, res: Response | any) => {
+export const getHotelById = async (req: Request | any, res: Response | any) => {
     console.log("controll reached")
     try {
         const hotelResponse = await prisma.hotels.findUnique({
@@ -32,6 +32,15 @@ export const getHotelById = async (req: Request, res: Response | any) => {
                 overalRating:true,
                 totalReviews:true,
                 guestAllowed: true,
+                WishList:{
+                    where:{
+                        userId:req.user.id
+                    },
+                    select: {
+                        id: true,
+                        userId: true
+                    }
+                },
                 host: {
                     select: {
                         id: true,
@@ -91,10 +100,15 @@ export const getHotelById = async (req: Request, res: Response | any) => {
         });
         
         if(hotelResponse){
+            // Add isWishlisted property to indicate if hotel is in user's wishlist
+            const responseWithWishlistStatus = {
+                ...hotelResponse,
+                isWishlisted: hotelResponse.WishList.length > 0
+            };
 
             return res
                 .status(200)
-                .json(new ApiResponse(true,hotelResponse,"Success","Get the hotel infromation", 200));
+                .json(new ApiResponse(true, responseWithWishlistStatus, "Success", "Get the hotel information", 200));
         }else{
             return res.status(400).json(
                 new ApiError(false,{},"Failed","can't get the hotel information",400)

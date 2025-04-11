@@ -7,6 +7,7 @@ interface HotelState {
   description: string;
   roomType: string;
   perNight: number;
+  isWishlisted:boolean;
   amenities: {
     hasParking: boolean;
     hasPool: boolean;
@@ -67,6 +68,7 @@ const initialState: HotelState = {
   description: "",
   roomType: "",
   perNight: 0,
+  isWishlisted:false,
   amenities: {
     hasParking: false,
     hasPool: false,
@@ -119,6 +121,7 @@ export const singleHotelSlice = createSlice({
         description: data.description,
         roomType: data.roomType,
         perNight: data.perNight,
+        isWishlisted:data.isWishlisted,
         amenities: {
           hasParking: data.hasParking,
           hasPool: data.hasPool,
@@ -144,6 +147,5 @@ export const singleHotelSlice = createSlice({
     },
   },
 });
-
 export const { setAllHotelData } = singleHotelSlice.actions;
 export default singleHotelSlice.reducer;
