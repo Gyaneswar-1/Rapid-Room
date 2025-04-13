@@ -32,7 +32,8 @@ export const getHostAllReservations = async (req: Request | any, res: Response |
                 user: {
                     select: {
                         fullName: true,
-                        profileImage: true
+                        profileImage: true,
+                        email:true,
                     }
                 },
                 payment: {

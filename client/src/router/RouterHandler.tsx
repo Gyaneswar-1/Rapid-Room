@@ -27,13 +27,11 @@ import HostDashboard from "../components/HostingComponents/Pages/HostDashboard";
 import { HostedHotels } from "../components/HostingComponents/components/analytics/HostedHotels";
 import ReservationsPage from "../components/ReservationsPage";
 import EarningsPage from "../components/HostingComponents/Pages/EarningsPage";
-import GuestsPage from "../components/HostingComponents/Pages/GuestsPage";
 import DeleteAccount from "../pages/DeleteAccount";
 import WhyChooseUs from "../pages/WhyChooseUs";
 import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import TermsAndConditions from "../pages/TermsAndConditions";
-import Loader from "../components/Loader";
 import TodayCheckinsPage from "../pages/TodayCheckinsPage";
 
 function RouterHandler() {
@@ -58,17 +56,14 @@ function RouterHandler() {
           <Route path="/terms-and-conditions"  element={<TermsAndConditions />} />
           <Route element={<IsAuth />}>
             <Route path="book-hotel" element={<BookingPage />} />
-
             <Route
               path="/host-pending"
               element={<IsHost element={<HostPendingPage />} />}
             />
-
             <Route
               path="/host-rejected"
               element={<IsHost element={<HostRejectedPage />} />}
             />
-
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
               path="admin-terms"
@@ -98,7 +93,6 @@ function RouterHandler() {
           <Route path="add-hotel" element={<AddHotels />} />
 
           <Route path="/admin-login" element={<AdminLoginPage />} />
-          {/* Admin routes */}
           <Route
             path="/admin"
             element={<ProtectedAdminRoute element={<AdminDashboard />} />}

@@ -5,6 +5,7 @@ import { isAdminMiddleware } from "../middleware/isAdmin.middleware.js";
 import { getHostHotels } from "../controller/getHostHotels.controller.js";
 import { getHostAllReservations } from "../controller/getHostAllReservations.controller.js";
 import { getHostEarnings } from "../controller/getHostEarnings.controller.js";
+import { getHostTodayCheckins } from "../controller/getHostTodayCheckin.controller.js";
 
 const hostdashboard = Router()
 
@@ -12,6 +13,7 @@ hostdashboard.route("/stats").get( authMiddleware,isAdminMiddleware, getHostStat
 hostdashboard.route("/hotels").get( authMiddleware,isAdminMiddleware, getHostHotels)
 hostdashboard.route("/reservations").get( authMiddleware,isAdminMiddleware, getHostAllReservations)
 hostdashboard.route("/earnings").get( authMiddleware,isAdminMiddleware, getHostEarnings)
+hostdashboard.route("/today-checkin").get( authMiddleware,isAdminMiddleware, getHostTodayCheckins)
 
 
 export default hostdashboard;

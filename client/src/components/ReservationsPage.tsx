@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState, useEffect } from "react"
 import { getHostReservations } from "../service/manageHostData/getHostReservations"
@@ -146,7 +146,7 @@ export default function ReservationsPage() {
       amount: `$${reservation.amountPaid || reservation.payment?.amount || 0}`,
       guests: reservation.reservationsDuration || 1,
       hotelImage: imageUrl,
-      email: reservation.user?.email || "No email",
+      email: reservation.user.email || "No email",
       originalData: reservation, // Store the original data for the detail view
     }
   })

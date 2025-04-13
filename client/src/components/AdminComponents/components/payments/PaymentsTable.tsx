@@ -112,7 +112,7 @@ export default function PaymentsTable({ activeSubTab,data }: PaymentsTableProps)
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "INR",
     }).format(amount)
   }
 

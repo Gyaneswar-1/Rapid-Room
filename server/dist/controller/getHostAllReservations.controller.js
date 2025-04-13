@@ -26,7 +26,8 @@ export const getHostAllReservations = async (req, res) => {
                 user: {
                     select: {
                         fullName: true,
-                        profileImage: true
+                        profileImage: true,
+                        email: true,
                     }
                 },
                 payment: {

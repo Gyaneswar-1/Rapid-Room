@@ -1,59 +1,37 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import ReservationDetailCard from "../components/ReservationDetailCard"
 import { Link } from "react-router-dom"
-import { getHostReservations } from "./getHostReservations"
+import { getTodayCheckins } from "../service/manageHostData/getTodayCheckins"
 
-interface ReservationInterface {
-  ReservationStatus: "active" | "pending" | "cancled" | string
-  amountPaid: number
-  checkIn: string // ISO date string
-  checkOut: string // ISO date string
-  hotel: {
-    hotelName: string
-    id: number
-    images: {
-      imageUrl: string
-    }[]
-    perNight: number
-  }
-  id: number
-  payment: {
-    amount: number
-    id: number
-    paymentDate: string // ISO date string
-    paymentMethod: "UPI" | string
-    status: "success" | string
-  }
-  paymentStatus: "success" | "pending" | string
-  reservationsDuration: number
-  room: {
-    id: number
-    roomNumber: number
-  }
-  user: {
-    id: number
-    fullName: string
-    email: string
-    profileImage: string
-  }
+interface BookingInteraface {
+  bookingId: number;
+  checkIn: string; // ISO date string
+  checkOut: string; // ISO date string
+  guestEmail: string;
+  guestName: string;
+  guestProfile: string; // URL to profile image
+  numberOfDays: number;
+  paymentStatus: string;
+  roomNumber: number;
+  hotelImage:string
+  hotelName:string,
 }
 
 export default function TodayCheckinsPage() {
-  const [reservations, setReservations] = useState<ReservationInterface[]>([])
+  const [reservations, setReservations] = useState<BookingInteraface[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [selectedReservation, setSelectedReservation] = useState<ReservationInterface | null>(null)
+  const [selectedReservation, setSelectedReservation] = useState<BookingInteraface | null>(null)
 
   useEffect(() => {
     const fetchReservations = async () => {
       setLoading(true)
       try {
-        const response = await getHostReservations()
+        const response = await getTodayCheckins()
+        console.log(response);
         if (response.success) {
           // Filter for today's check-ins
-          const todayCheckins = filterTodayCheckins(response.data.reservations || [])
+          const todayCheckins = filterTodayCheckins(response.data || [])
           setReservations(todayCheckins)
           setError("")
         } else {
@@ -73,7 +51,7 @@ export default function TodayCheckinsPage() {
   }, [])
 
   // Filter reservations for today's check-ins
-  const filterTodayCheckins = (allReservations: ReservationInterface[]) => {
+  const filterTodayCheckins = (allReservations: BookingInteraface[]) => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
 
@@ -133,7 +111,7 @@ export default function TodayCheckinsPage() {
   }
 
   // Handle view reservation details
-  const handleViewReservation = (reservation: ReservationInterface) => {
+  const handleViewReservation = (reservation: BookingInteraface) => {
     setSelectedReservation(reservation)
   }
 
@@ -232,30 +210,28 @@ export default function TodayCheckinsPage() {
                 <div className="space-y-4">
                   {reservations.map((reservation) => (
                     <div
-                      key={reservation.id}
+                      key={reservation.bookingId}
                       className="flex flex-col md:flex-row justify-between gap-4 rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
                     >
                       {/* Guest and room info */}
                       <div className="flex items-center gap-4 min-w-[250px]">
                         <div className="relative h-12 w-12 overflow-hidden rounded-full bg-gray-200 flex-shrink-0">
-                          {reservation.user?.profileImage ? (
+                          {reservation.guestProfile ? (
                             <img
-                              src={reservation.user.profileImage || "/placeholder.svg"}
-                              alt={reservation.user?.fullName || "Guest"}
+                              src={reservation.guestProfile || "/placeholder.svg"}
+                              alt={reservation.guestName || "Guest"}
                               className="h-full w-full object-cover"
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-600 font-medium">
-                              {getInitials(reservation.user?.fullName || "")}
+                              {getInitials(reservation.guestName || "")}
                             </div>
                           )}
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{reservation.user?.fullName || "Guest"}</div>
-                          <div className="text-sm text-gray-500">{reservation.user?.email || "No email"}</div>
-                          <div className="text-sm text-gray-600 mt-1">
-                            {reservation.hotel?.hotelName || "Hotel"} • Room {reservation.room?.roomNumber || "N/A"}
-                          </div>
+                          <div className="font-medium text-gray-900">{reservation.guestName || "Guest"}</div>
+                          <div className="text-sm text-gray-500">{reservation.guestEmail || "No email"}</div>
+                          
                         </div>
                       </div>
 
@@ -271,7 +247,7 @@ export default function TodayCheckinsPage() {
                         </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Nights</div>
-                          <div className="text-sm font-medium">{reservation.reservationsDuration || "N/A"}</div>
+                          <div className="text-sm font-medium">{reservation.numberOfDays || "N/A"}</div>
                         </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Payment Status</div>
@@ -301,9 +277,9 @@ export default function TodayCheckinsPage() {
                         >
                           View Details
                         </button>
-                        <button className="px-3 py-1.5 text-xs font-medium bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                        {/* <button className="px-3 py-1.5 text-xs font-medium bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                           Check In
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   ))}

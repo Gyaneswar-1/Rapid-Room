@@ -43,11 +43,9 @@ export default function HostDashboard() {
         console.error("Failed to fetch host stats");
       }
     };
-
     fetchHostStats();
   }, []);
 
-  // Mock data for the host
   const hostData = {
     name: "John Smith",
     email: "john.smith@example.com",
@@ -122,7 +120,7 @@ export default function HostDashboard() {
             </div>
           </div>
           <EarningsOverview
-            totalEarnings={hotelStats?.totalRevenue}
+            totalEarnings={hotelStats?.totalRevenue?._sum?.hostAmount || 0}
             pendingPayouts={hostData.pendingPayouts}
             totalReservations={hostData.totalReservations}
             activeListings={hostData.activeListings} monthlyPayments={[]} averageRating={0}          />
