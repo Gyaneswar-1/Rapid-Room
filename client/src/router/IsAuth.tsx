@@ -9,7 +9,7 @@ function IsAuth() {
         to="/"
         replace
       />
-    }
+    } 
     
   return (
     <>
