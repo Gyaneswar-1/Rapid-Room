@@ -82,20 +82,7 @@ export default function TodayCheckinsPage() {
       }
     }
 
-  // Format time only
-  const formatTime = (dateString: string | number | Date) => {
-    try {
-      if (!dateString) return "N/A"
-      const date = new Date(dateString)
-      return date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    } catch (e) {
-      console.error("Time formatting error:", e)
-      return "N/A"
-    }
-  }
+
 
   // Generate initials from full name
   const getInitials = (name: string) => {

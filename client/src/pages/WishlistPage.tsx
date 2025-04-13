@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Heart, Star, MapPin, X, ChevronRight } from "lucide-react"
 import { Link } from "react-router-dom"
 import { getWishlists } from "../service/wishlist/getWishlists"
+import Navbar from "../components/Navbar/Navbar";
 
 interface HotelInterface {
   id: number;
@@ -46,8 +47,10 @@ export default function WishlistPage() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+   <div>
+    <Navbar show={false}/> 
+     <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 pt-22 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">My Wishlist</h1>
@@ -138,6 +141,7 @@ export default function WishlistPage() {
         )}
       </div>
     </div>
+   </div>
   )
 }
 

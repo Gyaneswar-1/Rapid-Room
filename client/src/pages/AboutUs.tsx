@@ -48,24 +48,34 @@ export default function AboutUs() {
   // Team members
   const teamMembers = [
     {
-      name: "Alex Johnson",
-      role: "Founder & CEO",
+      name: "Bibek",
+      role: "Lead Devloper",
       image: "/placeholder.svg?height=150&width=150",
+      link:""
     },
     {
-      name: "Sarah Chen",
-      role: "CTO",
-      image: "/placeholder.svg?height=150&width=150",
+      name: "Gyaneswar Rout",
+      role: "2nd Lead Dev",
+      image: "https://gyaneswar.me/GyaneswarME.jpg",
+      link:"https://gyaneswar.me"
     },
     {
       name: "Michael Rodriguez",
       role: "Lead Developer",
       image: "/placeholder.svg?height=150&width=150",
+      link:""
     },
     {
       name: "Emily Patel",
       role: "UI/UX Designer",
       image: "/placeholder.svg?height=150&width=150",
+      link:""
+    },
+    {
+      name: "Emily Patel",
+      role: "UI/UX Designer",
+      image: "/placeholder.svg?height=150&width=150",
+      link:""
     },
   ]
 
@@ -211,9 +221,15 @@ export default function AboutUs() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
             {teamMembers.map((member, index) => (
-              <div key={index} className="text-center">
+              <a 
+                key={index} 
+                className="text-center" 
+                href={member.link ? (member.link.startsWith('http') ? member.link : `https://${member.link}`) : "#"} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
                 <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 overflow-hidden rounded-full">
                   <img
                     src={member.image || "/placeholder.svg"}
@@ -223,7 +239,7 @@ export default function AboutUs() {
                 </div>
                 <h3 className="text-lg font-bold text-gray-800">{member.name}</h3>
                 <p className="text-sm text-gray-600">{member.role}</p>
-              </div>
+              </a>
             ))}
           </div>
         </div>

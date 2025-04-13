@@ -24,7 +24,7 @@ function Navbar({ show }: NavbarProps) {
               onClick={() => navigate("/home")}
             >
               <img
-                className="rounded-full hidden md:block h-8 w-8 object-contain"
+                className="rounded-full  block h-8 w-8 object-contain"
                 src={MainLogo || "/placeholder.svg"}
                 alt="RapidRoom"
               />
