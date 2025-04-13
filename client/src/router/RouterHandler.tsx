@@ -25,7 +25,7 @@ import EditProfilePage from "../components/userProfile/EditProfilePage";
 import HostLayout from "../pages/HostDashboard";
 import HostDashboard from "../components/HostingComponents/Pages/HostDashboard";
 import { HostedHotels } from "../components/HostingComponents/components/analytics/HostedHotels";
-import ReservationsPage from "../components/HostingComponents/Pages/ReservationsPage";
+import ReservationsPage from "../components/ReservationsPage";
 import EarningsPage from "../components/HostingComponents/Pages/EarningsPage";
 import GuestsPage from "../components/HostingComponents/Pages/GuestsPage";
 import DeleteAccount from "../pages/DeleteAccount";
@@ -34,6 +34,7 @@ import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import TermsAndConditions from "../pages/TermsAndConditions";
 import Loader from "../components/Loader";
+import TodayCheckinsPage from "../pages/TodayCheckinsPage";
 
 function RouterHandler() {
   const AdminRedirect = () => {
@@ -91,7 +92,7 @@ function RouterHandler() {
               <Route path="hotels" element={<HostedHotels />} />
               <Route path="reservations" element={<ReservationsPage />} />
               <Route path="occupancy" element={<EarningsPage />} />
-              <Route path="guests" element={<GuestsPage />} />
+              <Route path="today-checkin" element={<TodayCheckinsPage />} />
             </Route>
           </Route>
           <Route path="add-hotel" element={<AddHotels />} />

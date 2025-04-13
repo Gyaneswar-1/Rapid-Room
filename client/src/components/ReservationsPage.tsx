@@ -1,121 +1,136 @@
-import { useState, useEffect } from "react";
-import { getHostReservations } from "../../../service/manageHostData/getHostReservations";
+"use client"
+
+import { useState, useEffect } from "react"
+import { getHostReservations } from "../service/manageHostData/getHostReservations"
+import ReservationDetailCard from "../components/ReservationDetailCard"
 
 interface ReservationInterface {
-  ReservationStatus: 'active' | 'pending' | 'cancled' | string;
-  amountPaid: number;
-  checkIn: string; // ISO date string
-  checkOut: string; // ISO date string
+  ReservationStatus: "active" | "pending" | "cancled" | string
+  amountPaid: number
+  checkIn: string // ISO date string
+  checkOut: string // ISO date string
   hotel: {
-    hotelName: string;
-    id: number;
+    hotelName: string
+    id: number
     images: {
-      imageUrl: string;
-    }[];
-    perNight: number;
-  };
-  id: number;
+      imageUrl: string
+    }[]
+    perNight: number
+  }
+  id: number
   payment: {
-    amount: number;
-    id: number;
-    paymentDate: string; // ISO date string
-    paymentMethod: 'UPI' | string; // Allowing string for other payment methods
-    status: 'success' | string; // Allowing string for other statuses
-  };
-  paymentStatus: 'success' | 'pending' | string;
-  reservationsDuration: number;
+    amount: number
+    id: number
+    paymentDate: string // ISO date string
+    paymentMethod: "UPI" | string // Allowing string for other payment methods
+    status: "success" | string // Allowing string for other statuses
+  }
+  paymentStatus: "success" | "pending" | string
+  reservationsDuration: number
   room: {
-    id: number;
-    roomNumber: number;
-  };
+    id: number
+    roomNumber: number
+  }
   user: {
-    id: number;
-    fullName: string;
-    email: string;
-    profileImage: string;
-  };
+    id: number
+    fullName: string
+    email: string
+    profileImage: string
+  }
 }
 
 export default function ReservationsPage() {
-  const [activeTab, setActiveTab] = useState("all");
-  const [reservations, setReservations] = useState<ReservationInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("all")
+  const [reservations, setReservations] = useState<ReservationInterface[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [selectedReservation, setSelectedReservation] = useState<ReservationInterface | null>(null)
 
   useEffect(() => {
     const fetchReservations = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
-        const response = await getHostReservations();
-        console.log("Reservations data:", response.data);
+        const response = await getHostReservations()
+        console.log("Reservations data:", response.data)
         if (response.success) {
-          setReservations(response.data.reservations || []);
-          setError("");
+          setReservations(response.data.reservations || [])
+          setError("")
         } else {
-          setError("Failed to fetch reservations");
-          setReservations([]);
+          setError("Failed to fetch reservations")
+          setReservations([])
         }
       } catch (err) {
-        console.error("Error fetching reservations:", err);
-        setError("An error occurred while fetching reservations");
-        setReservations([]);
+        console.error("Error fetching reservations:", err)
+        setError("An error occurred while fetching reservations")
+        setReservations([])
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchReservations();
-  }, [activeTab]); // Refetch when active tab changes
+    fetchReservations()
+  }, [activeTab]) // Refetch when active tab changes
 
   // Map reservation status to display status
   const mapReservationStatus = (status: string) => {
     switch (status) {
       case "active":
-        return "confirmed";
+        return "confirmed"
       case "pending":
-        return "pending";
+        return "pending"
       case "cancled":
-        return "cancelled";
+        return "cancelled"
       default:
-        return status;
+        return status
     }
-  };
+  }
 
   // Filter reservations based on active tab
-  const filteredReservations = activeTab === "all" 
-    ? reservations 
-    : reservations.filter(r => mapReservationStatus(r.ReservationStatus) === activeTab);
+  const filteredReservations =
+    activeTab === "all"
+      ? reservations
+      : reservations.filter((r) => mapReservationStatus(r.ReservationStatus) === activeTab)
 
   // Format date from ISO to readable format
   const formatDate = (dateString: string | number | Date) => {
     try {
-      if (!dateString) return "N/A";
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      if (!dateString) return "N/A"
+      const date = new Date(dateString)
+      return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
     } catch (e) {
-      console.error("Date formatting error:", e);
-      return dateString || "N/A";
+      console.error("Date formatting error:", e)
+      return dateString || "N/A"
     }
-  };
+  }
 
   // Generate initials from full name
   const getInitials = (name: string) => {
-    if (!name) return "?";
+    if (!name) return "?"
     return name
       .split(" ")
-      .map(n => n[0])
+      .map((n) => n[0])
       .join("")
       .toUpperCase()
-      .substring(0, 2);
-  };
+      .substring(0, 2)
+  }
+
+  // Handle view reservation details
+  const handleViewReservation = (reservation: ReservationInterface) => {
+    setSelectedReservation(reservation)
+  }
+
+  // Close reservation detail card
+  const handleCloseDetailCard = () => {
+    setSelectedReservation(null)
+  }
 
   // Get formatted reservations for display
-  const formattedReservations = filteredReservations.map(reservation => {
-    console.log("Processing reservation:", reservation); // Debug log
-    
+  const formattedReservations = filteredReservations.map((reservation) => {
+    console.log("Processing reservation:", reservation) // Debug log
+
     // Get first image if available
-    const imageUrl = reservation.hotel?.images?.[0]?.imageUrl || null;
-    
+    const imageUrl = reservation.hotel?.images?.[0]?.imageUrl || null
+
     return {
       id: reservation.id || 0,
       guest: {
@@ -128,12 +143,13 @@ export default function ReservationsPage() {
       checkIn: formatDate(reservation.checkIn),
       checkOut: formatDate(reservation.checkOut),
       status: mapReservationStatus(reservation.ReservationStatus || "pending"),
-      amount: `$${reservation.amountPaid || (reservation.payment?.amount || 0)}`,
+      amount: `$${reservation.amountPaid || reservation.payment?.amount || 0}`,
       guests: reservation.reservationsDuration || 1,
       hotelImage: imageUrl,
       email: reservation.user?.email || "No email",
-    };
-  });
+      originalData: reservation, // Store the original data for the detail view
+    }
+  })
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -146,7 +162,7 @@ export default function ReservationsPage() {
               <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                 Export
               </button>
-              <button className="px-3 py-1.5 text-sm bg-primary text-white rounded-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+              <button className="px-3 py-1.5 text-sm bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                 Add Reservation
               </button>
             </div>
@@ -206,10 +222,10 @@ export default function ReservationsPage() {
                   {activeTab === "all"
                     ? "All Reservations"
                     : activeTab === "confirmed"
-                    ? "Confirmed Reservations"
-                    : activeTab === "pending"
-                    ? "Pending Reservations"
-                    : "Cancelled Reservations"}
+                      ? "Confirmed Reservations"
+                      : activeTab === "pending"
+                        ? "Pending Reservations"
+                        : "Cancelled Reservations"}
                 </h3>
               </div>
 
@@ -221,7 +237,7 @@ export default function ReservationsPage() {
               ) : error ? (
                 <div className="text-center py-10 text-red-500">
                   <p>{error}</p>
-                  <button 
+                  <button
                     onClick={() => window.location.reload()}
                     className="mt-2 text-sm text-teal-600 hover:underline"
                   >
@@ -240,7 +256,7 @@ export default function ReservationsPage() {
                         <div className="relative h-12 w-12 overflow-hidden rounded-full bg-gray-200 flex-shrink-0">
                           {reservation.guest.avatar ? (
                             <img
-                              src={reservation.guest.avatar}
+                              src={reservation.guest.avatar || "/placeholder.svg"}
                               alt={reservation.guest.name}
                               className="h-full w-full object-cover"
                             />
@@ -251,12 +267,8 @@ export default function ReservationsPage() {
                           )}
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">
-                            {reservation.guest.name}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {reservation.email}
-                          </div>
+                          <div className="font-medium text-gray-900">{reservation.guest.name}</div>
+                          <div className="text-sm text-gray-500">{reservation.email}</div>
                           <div className="text-sm text-gray-600 mt-1">
                             {reservation.hotel} • {reservation.room}
                           </div>
@@ -267,27 +279,19 @@ export default function ReservationsPage() {
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:flex-1 mt-3 md:mt-0">
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Check-in</div>
-                          <div className="text-sm font-medium">
-                            {reservation.checkIn}
-                          </div>
+                          <div className="text-sm font-medium">{String(reservation.checkIn)}</div>
                         </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Check-out</div>
-                          <div className="text-sm font-medium">
-                            {reservation.checkOut}
-                          </div>
+                          <div className="text-sm font-medium">{String(reservation.checkOut)}</div>
                         </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Nights</div>
-                          <div className="text-sm font-medium">
-                            {reservation.guests}
-                          </div>
+                          <div className="text-sm font-medium">{reservation.guests}</div>
                         </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Amount</div>
-                          <div className="text-sm font-medium">
-                            {reservation.amount}
-                          </div>
+                          <div className="text-sm font-medium">{reservation.amount}</div>
                         </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Status</div>
@@ -296,22 +300,25 @@ export default function ReservationsPage() {
                               reservation.status === "confirmed"
                                 ? "bg-green-100 text-green-800"
                                 : reservation.status === "pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-red-100 text-red-800"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : "bg-red-100 text-red-800"
                             }`}
                           >
                             {reservation.status === "confirmed"
                               ? "Confirmed"
                               : reservation.status === "pending"
-                              ? "Pending"
-                              : "Cancelled"}
+                                ? "Pending"
+                                : "Cancelled"}
                           </span>
                         </div>
                       </div>
 
                       {/* Action buttons */}
                       <div className="flex gap-2 mt-3 md:mt-0 self-end md:self-center">
-                        <button className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                        <button
+                          onClick={() => handleViewReservation(reservation.originalData)}
+                          className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                        >
                           View
                         </button>
                         <button className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
@@ -339,6 +346,11 @@ export default function ReservationsPage() {
           )}
         </div>
       </main>
+
+      {/* Reservation Detail Card Modal */}
+      {selectedReservation && (
+        <ReservationDetailCard reservation={selectedReservation} onClose={handleCloseDetailCard} />
+      )}
     </div>
-  );
+  )
 }

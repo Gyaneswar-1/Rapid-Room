@@ -4,7 +4,8 @@ import {
   CalendarIcon,
   MarsIcon,
   IndianRupee,
-  UsersRound
+  UsersRound,
+  TicketCheck
 } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 
@@ -21,7 +22,7 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
     { name: "Hotels", href: "/dashboard/hotels", icon: BuildingIcon },
     { name: "Reservations", href: "/dashboard/reservations", icon: CalendarIcon },
     { name: "Occupancy", href: "/dashboard/occupancy", icon: IndianRupee },
-    { name: "Guests", href: "/dashboard/guests", icon: UsersRound },
+    { name: "Todays Checkins", href: "/dashboard/today-checkin", icon: TicketCheck  },
   ]
 
   return (
