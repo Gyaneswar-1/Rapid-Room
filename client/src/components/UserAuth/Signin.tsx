@@ -11,10 +11,14 @@ import { notifyError, notifySuccess } from "../../lib/Toast";
 // State management
 import { AppDispatch, RootState } from "../../store/store";
 import {
+  flipOtpverificaton,
   flipSignUp,
   flipSignin,
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
+import { setEmail } from "../../store/reducers/email.reducer";
+import axios from "axios";
+import API from "../../service/api";
 
 const handleGoogleLogin = () => {
   window.open("http://localhost:3000/api/v1/auth/google", "_self");
@@ -30,13 +34,13 @@ const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
-
+  const { email } = useSelector((state: RootState) => state.emailReducer);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   // State management
-  const { showSignup, showSignin } = useSelector(
+  const { showSignup, showSignin, showOtpVerificaton } = useSelector(
     (state: RootState) => state.showAuthCardReducer
   );
   const dispatch: AppDispatch = useDispatch();
@@ -51,20 +55,44 @@ const Signin = () => {
   const onSubmit: SubmitHandler<SigninType> = async (data) => {
     setShowLoader(true);
     const res = await signinManual(data);
-    console.log(res);
+    console.log("are rs", res);
     if (res.success === true) {
-          //check the email is verifyed or not
-          if(!res.isEmailVerifyed){
-            //store the email in the store
-            //open the otp panel
-          
-          }
+      if (res.isEmailVerifyed) {
+        // signin the user if the email is verifyed
+        localStorage.setItem("loggedin", "true");
+        setShowLoader(false);
+        navigate("/home");
+        notifySuccess("Welcome back!");
+        dispatch(flipSignin(showSignin));
 
-      localStorage.setItem("loggedin", "true");
-      setShowLoader(false);
-      navigate("/home");
-      notifySuccess("Welcome back!");
-      dispatch(flipSignin(showSignin));
+        
+      } else {
+        //store the email in the store
+        
+        try {
+          dispatch(setEmail(res.email));
+          
+          const otpRes = await axios.post(`${API}/send-otp`, {
+            email: res.email,
+          });
+
+          if (otpRes.data.success === true) {
+            //open the otp pannel
+            notifySuccess("Otp send successfully ");
+            dispatch(flipSignin(showSignin));
+            dispatch(flipOtpverificaton(showOtpVerificaton));
+            return;
+          } else {
+            notifyError("Otp Send fail");
+            return;
+          }
+        } catch (error) {
+          notifyError("Failed to send the otp");
+          setShowLoader(false);
+          return;
+        }
+        
+      }
     } else {
       notifyError("Signin failed!");
       setShowLoader(false);
@@ -185,9 +213,7 @@ const Signin = () => {
             {/* Submit button */}
 
             {showLoader ? (
-              <button
-                className="w-full py-3 px-4 flex items-center justify-center bg-primary hover:bg-primary/80 text-white font-medium rounded-lg shadow transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-              >
+              <button className="w-full py-3 px-4 flex items-center justify-center bg-primary hover:bg-primary/80 text-white font-medium rounded-lg shadow transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                 <div className="flex flex-row gap-2">
                   <div
                     className="loader border-t-2 rounded-full border-teal-950 bg-transparent animate-spin

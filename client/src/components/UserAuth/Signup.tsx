@@ -160,7 +160,7 @@ const Signup = () => {
                   id="email"
                   className="w-full px-4 pt-6 pb-2 bg-transparent focus:outline-none text-gray-800"
                   placeholder=" "
-                  defaultValue={email}
+                  
                   {...register("email", {
                     required: "Email is required",
                     pattern: {

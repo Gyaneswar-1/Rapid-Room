@@ -7,7 +7,8 @@ import { IoMdClose } from "react-icons/io"
 //state management 
 import { AppDispatch, RootState } from "../../store/store";
 import {
-  flipOtpverificaton
+  flipOtpverificaton,
+  flipSignin
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -31,23 +32,29 @@ const OtpVerification = () => {
     try {
       if(email === ""){
         localStorage.removeItem("loggedin");
-        navigate("/")
+        navigate("/");
+        window.location.reload();
+        return;
       }
       const otpRes = await axios.post(`${API}/send-otp`,{
         email: email
       })
-      console.log("Here is the opt res",otpRes)
+      
       if(otpRes.data.success === true){
         //open the otp pannel
-        dispatch(flipOtpverificaton(showOtpVerificaton));
-        notifySuccess("Welcome to Rapidroom")
-        navigate("/home")
+        notifySuccess("Otp send successfully ")
+        return;
+      }
+      else{
+        notifyError("Otp Send fail")
+        return;
       }
 
 
     } catch (error) {
       console.log(error);
-      notifyError("Error in otp verification")
+      notifyError("Error in otp Rsend");
+      return;
     }
   }
   async function onVerify(otpString:any){
@@ -55,24 +62,34 @@ const OtpVerification = () => {
     if(email === "" || !otpString){
       notifyError("Insufficient credential")
       localStorage.removeItem("loggedin");
-      navigate("/")
+      return;
     }
-    const emailRes = await axios.post(`${API}/verify-email`,{
-      email:email,
-      otp: otpString
-    })
-    console.log(emailRes);
-    if(emailRes.data.success === true){
-      dispatch(flipOtpverificaton(true))
-      localStorage.setItem("loggedin", "true");
-      navigate("/home");
-      notifySuccess("Welcome to RapidRoom!");
+    try {
+      const emailRes = await axios.post(`${API}/verify-email`,{
+        email:email,
+        otp: otpString
+      })
+      console.log(emailRes);
+      if(emailRes.data.success === true){
+        dispatch(flipOtpverificaton(true))
+        dispatch(flipSignin(true));
+        localStorage.setItem("loggedin", "true");
+        navigate("/home");
+        notifySuccess("Welcome to RapidRoom!");
+        return;
+      }
+      else{
+        notifyError("Email verification failed Check otp")
+      localStorage.removeItem("loggedin");
+      return;
+      }
+    } catch (error) {
+      notifyError("Email verification failed Check otp")
+      localStorage.removeItem("loggedin");
+      return;
     }
-    else{
-
-      notifyError("Email verification failed")
-      navigate("/")
-    }
+  
+    
 
   }
   const { showOtpVerificaton } = useSelector(
