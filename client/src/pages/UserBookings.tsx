@@ -23,6 +23,7 @@ export default function UserBookings() {
       setIsLoading(true); // Set loading to true before fetching
       try {
         const response = await getUserBookings();
+        console.log("Here is the bookings data",response.data)
         if (response.success) {
           dispatch(setBookings(response.data));
         }

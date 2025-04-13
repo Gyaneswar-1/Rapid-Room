@@ -81,6 +81,7 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
     }
 
     try {
+      console.log("reservationid",booking);
       const result = await cancelBooking({
         hotelId: booking.hotelId,
         roomId: booking.roomId,
@@ -95,6 +96,7 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
         notifyError("Failed to cancel booking");
       }
     } catch (error) {
+      console.log(error)
       notifyError("An error occurred while cancelling the booking");
     }
   };
