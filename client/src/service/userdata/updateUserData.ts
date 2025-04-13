@@ -12,6 +12,7 @@ interface UpdateUserDataRequest {
   zipcode?: string;
   govId?: string;
   profileImage?: string;
+  upiId?: string; // Changed from upiID to upiId to match the form field name
 }
 
 interface UpdateUserDataResponse {

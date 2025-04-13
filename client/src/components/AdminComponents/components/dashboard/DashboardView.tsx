@@ -35,8 +35,7 @@ interface DashboardData {
 }
 
 export default function DashboardView() {
-  const [showModal, setShowModal] = useState(false)
-  const [modalContent, setModalContent] = useState<any>(null)
+
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,18 +58,6 @@ export default function DashboardView() {
     getStatsData();
   }, [])
 
-  // Function to open modal with specific content
-  const openModal = (type: string, item: any) => {
-    setModalContent({ type, item })
-    setShowModal(true)
-  }
-
-  // Function to handle approval/rejection
-  const handleAction = (type: string, id: string, action: "approve" | "reject") => {
-    console.log(`${action} ${type} with ID: ${id}`)
-    // Here you would make an API call to update the status
-    setShowModal(false)
-  }
 
   return (
     <div className="space-y-6">

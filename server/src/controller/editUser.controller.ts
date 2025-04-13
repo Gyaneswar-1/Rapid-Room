@@ -30,6 +30,7 @@ export const editUser = async (req: Request | any, res: Response | any) => {
             zipcode,
             govId,
             profileImage,
+            upiId
         } = req.body;
 
         // Update user using Prisma transaction
@@ -57,6 +58,7 @@ export const editUser = async (req: Request | any, res: Response | any) => {
                         phoneNumber: phone || existingUser.phoneNumber,
                         GovID: govId || existingUser.GovID,
                         profileImage: profileImage || existingUser.profileImage,
+                        upiID: upiId || existingUser.upiID, // Add UPI ID to the update operation
                     },
                 });
 

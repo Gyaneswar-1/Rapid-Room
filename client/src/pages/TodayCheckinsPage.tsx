@@ -3,17 +3,37 @@ import ReservationDetailCard from "../components/ReservationDetailCard"
 import { getTodayCheckins } from "../service/manageHostData/getTodayCheckins"
 
 interface BookingInteraface {
+  id: number;
   bookingId: number;
-  checkIn: string; // ISO date string
-  checkOut: string; // ISO date string
-  guestEmail: string;
   guestName: string;
-  guestProfile: string; // URL to profile image
-  numberOfDays: number;
-  paymentStatus: string;
+  guestEmail: string;
+  guestProfile: string;
+  hotelName: string;
+  hotelImage: string;
   roomNumber: number;
-  hotelImage:string
-  hotelName:string,
+  checkIn: string;
+  checkOut: string;
+  numberOfDays: number;
+  paymentStatus: 'pending' | 'success' | 'failed' | 'refund' | 'refunded';
+  reservationStatus: 'pending' | 'active' | 'cancled';
+  amountPaid: number;
+  reservationsDuration?: number;
+  hotel?: {
+    hotelName: string;
+    images?: { imageUrl: string }[];
+  };
+  room?: {
+    roomNumber: number;
+  };
+  user?: {
+    fullName: string;
+    email: string;
+    profileImage?: string;
+  };
+  payment?: {
+    paymentDate: string;
+    amount: number;
+  };
 }
 
 export default function TodayCheckinsPage() {
@@ -97,7 +117,29 @@ export default function TodayCheckinsPage() {
 
   // Handle view reservation details
   const handleViewReservation = (reservation: BookingInteraface) => {
-    setSelectedReservation(reservation)
+    // Ensure all required nested properties exist before showing the detail card
+    const preparedReservation: BookingInteraface = {
+      ...reservation,
+      // If nested user object doesn't exist, create it from flat properties
+      user: reservation.user || {
+        fullName: reservation.guestName || '',
+        email: reservation.guestEmail || '',
+        profileImage: reservation.guestProfile || ''
+      },
+      // If nested hotel object doesn't exist, create it from flat properties
+      hotel: reservation.hotel || {
+        hotelName: reservation.hotelName || '',
+        images: reservation.hotelImage ? [{ imageUrl: reservation.hotelImage }] : []
+      },
+      // If nested room object doesn't exist, create it from flat properties
+      room: reservation.room || {
+        roomNumber: reservation.roomNumber || 0
+      },
+      // Ensure reservationsDuration exists (fallback to numberOfDays)
+      reservationsDuration: reservation.reservationsDuration || reservation.numberOfDays || 0
+    };
+    
+    setSelectedReservation(preparedReservation);
   }
 
   // Close reservation detail card

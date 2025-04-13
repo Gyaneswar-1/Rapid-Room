@@ -16,7 +16,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [modalContent, setModalContent] = useState<any>(null)
+  const [modalContent] = useState<any>(null)
 
   // Check if mobile on mount and window resize
   useEffect(() => {
@@ -37,11 +37,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
   }, [])
 
-  // Function to open modal with specific content
-  const openModal = (type: string, item: any) => {
-    setModalContent({ type, item })
-    setShowModal(true)
-  }
+  // // Function to open modal with specific content
+  // const openModal = (type: string, item: any) => {
+  //   setModalContent({ type, item })
+  //   setShowModal(true)
+  // }
 
   // Function to handle approval/rejection
   const handleAction = (type: string, id: string, action: "approve" | "reject") => {

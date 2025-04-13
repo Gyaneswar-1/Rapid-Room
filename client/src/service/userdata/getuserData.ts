@@ -12,7 +12,6 @@ export const getuserData = async () => {
         id: response.data.data.id,
         email: response.data.data.email,
         fullName: response.data.data.fullName,
-
         phoneNumber: response.data.data.phoneNumber,
         profileImage: response.data.data.profileImage,
         GovID: response.data.data.GovID,
@@ -21,7 +20,6 @@ export const getuserData = async () => {
         hostExperience: response.data.data.hostExperience,
         hostRating: response.data.data.hostRating,
         hostResponseRate: response.data.data.hostResponseRate,
-
         street: response.data.data.address.street,
         city: response.data.data.address.city,
         state: response.data.data.address.state,
@@ -29,8 +27,8 @@ export const getuserData = async () => {
         country: response.data.data.address.country,
         latitude: response.data.data.address.latitude,
         longitude: response.data.data.address.longitude,
-
         status: response.data.data.status,
+        upiID: response.data.data.upiID, // Added upiID here
       };
     }
     return {

@@ -1,50 +1,40 @@
 import { useEffect, useRef } from "react";
 
-interface Image {
+interface BookingInteraface {
   id: number;
-  imageUrl: string;
-  hotelId: number;
-}
-
-interface Hotel {
+  bookingId: number;
+  guestName: string;
+  guestEmail: string;
+  guestProfile: string;
   hotelName: string;
-  images: Image[];
-}
-
-interface Room {
-  id: number;
-  isReserved: boolean;
+  hotelImage: string;
   roomNumber: number;
-  hotelId: number;
-}
-
-interface User {
-  fullName: string;
-  profileImage: string;
-  email: string;
-}
-
-interface Payment {
-  amount: number;
-  paymentDate: string;
-}
-
-interface ReservationInterface {
-  id: number;
   checkIn: string;
   checkOut: string;
+  numberOfDays: number;
+  paymentStatus: 'pending' | 'success' | 'failed' | 'refund' | 'refunded';
+  reservationStatus: 'pending' | 'active' | 'cancled'; // Match the enum in schema (with typo)
   amountPaid: number;
-  reservationsDuration: number;
-  ReservationStatus: 'active' | 'pending';
-  paymentStatus: 'success' | 'pending';
-  room: Room;
-  hotel: Hotel;
-  user: User;
-  payment: Payment;
+  reservationsDuration?: number;
+  hotel?: {
+    hotelName: string;
+    images?: { imageUrl: string }[];
+  };
+  room?: {
+    roomNumber: number;
+  };
+  user?: {
+    fullName: string;
+    email: string;
+    profileImage?: string;
+  };
+  payment?: {
+    paymentDate: string;
+    amount: number;
+  };
 }
-
 interface ReservationDetailCardProps {
-  reservation: ReservationInterface;
+  reservation: BookingInteraface;
   onClose: () => void;
 }
 
@@ -81,7 +71,7 @@ export default function ReservationDetailCard({
 
   // Map reservation status to display status and color
   const getStatusDetails = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) { // Add toLowerCase() for case-insensitive comparison
       case "active":
         return {
           label: "Confirmed",
@@ -94,7 +84,7 @@ export default function ReservationDetailCard({
           bgColor: "bg-yellow-100",
           textColor: "text-yellow-800",
         };
-      case "cancled":
+      case "cancled": // Keep the typo to match schema
         return {
           label: "Cancelled",
           bgColor: "bg-red-100",
@@ -139,12 +129,20 @@ export default function ReservationDetailCard({
 
   if (!reservation) return null;
 
-  const statusDetails = getStatusDetails(reservation.ReservationStatus);
-  const totalNights = reservation.reservationsDuration || 0;
-  const perNight = reservation.amountPaid / totalNights || 0;
+  const statusDetails = getStatusDetails(reservation.reservationStatus);
+  const totalNights = reservation.reservationsDuration || reservation.numberOfDays || 0;
+  const perNight = totalNights > 0 ? (reservation.amountPaid / totalNights) : 0;
   
-  // Get the first hotel image if available
-  const hotelImage = reservation.hotel?.images?.[0]?.imageUrl || "/placeholder.svg";
+  // Get the hotel image with proper fallbacks
+  const hotelImage = reservation.hotel?.images?.[0]?.imageUrl || reservation.hotelImage || "/placeholder.svg";
+  
+  // Get guest information with fallbacks
+  const guestName = reservation.user?.fullName || reservation.guestName || "Guest";
+  const guestEmail = reservation.user?.email || reservation.guestEmail || "No email";
+  const guestProfile = reservation.user?.profileImage || reservation.guestProfile;
+  
+  // Get room information with fallbacks
+  const roomNumber = reservation.room?.roomNumber || reservation.roomNumber || "N/A";
 
   return (
     <div className="fixed inset-0 backdrop-brightness-60 backdrop-blur-xl bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -202,13 +200,13 @@ export default function ReservationDetailCard({
             </div>
             <div className="w-full md:w-2/3">
               <h3 className="text-xl font-bold text-gray-900 mb-2">
-                {reservation.hotel?.hotelName || "Hotel"}
+                {reservation.hotel?.hotelName || reservation.hotelName || "Hotel"}
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Room Number</p>
                   <p className="font-medium">
-                    {reservation.room?.roomNumber || "N/A"}
+                    {roomNumber}
                   </p>
                 </div>
                 <div>
@@ -248,15 +246,15 @@ export default function ReservationDetailCard({
             </h4>
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
-                {reservation.user?.profileImage ? (
+                {guestProfile ? (
                   <img
-                    src={reservation.user.profileImage}
-                    alt={reservation.user?.fullName || "Guest"}
+                    src={guestProfile}
+                    alt={guestName}
                     className="h-full w-full object-cover"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-600 font-medium">
-                    {reservation.user?.fullName
+                    {guestName
                       ?.split(" ")
                       .map((n) => n[0])
                       .join("")
@@ -267,10 +265,10 @@ export default function ReservationDetailCard({
               </div>
               <div>
                 <p className="font-medium text-gray-900">
-                  {reservation.user?.fullName || "Guest"}
+                  {guestName}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {reservation.user?.email || "No email"}
+                  {guestEmail}
                 </p>
               </div>
             </div>

@@ -13,6 +13,7 @@ export const getUserInformation = async (req, res) => {
                 email: true,
                 phoneNumber: true,
                 profileImage: true,
+                upiID: true,
                 GovID: true,
                 isHost: true,
                 createdAt: true,

@@ -35,29 +35,35 @@ export const getHostTodayCheckins = async (
             include: {
                 user: {
                     select: {
-                        fullName:true,
+                        id: true,
+                        fullName: true,
                         email: true,
                         profileImage: true,
                     },
                 },
                 room: {
                     select: {
+                        id: true,
                         roomNumber: true,
                     },
                 },
                 payment: {
                     select: {
+                        id: true,
                         status: true,
+                        amount: true,
+                        paymentDate: true,
+                        paymentMethod: true,
                     },
                 },
                 hotel: {
                     select: {
-                        hotelName:true,
+                        id: true,
+                        hotelName: true,
                         images: {
                             select: {
                                 imageUrl: true,
                             },
-                            take: 1,
                         },
                     },
                 },
@@ -73,17 +79,39 @@ export const getHostTodayCheckins = async (
             );
 
             return {
+                id: booking.id,
                 bookingId: booking.id,
-                roomNumber: booking.room?.roomNumber,
                 guestName: booking.user.fullName,
                 guestEmail: booking.user.email,
                 guestProfile: booking.user.profileImage,
+                hotelName: booking.hotel?.hotelName,
+                hotelImage: booking.hotel?.images[0]?.imageUrl || null,
+                roomNumber: booking.room?.roomNumber,
                 checkIn: booking.checkIn,
                 checkOut: booking.checkOut,
                 numberOfDays: numberOfDays,
-                paymentStatus: booking.payment?.status || "Pending",
-                hotelImage: booking.hotel?.images[0]?.imageUrl || null,
-                hotelName: booking.hotel?.hotelName,
+                reservationsDuration: booking.reservationsDuration || numberOfDays,
+                paymentStatus: booking.paymentStatus || "pending",
+                reservationStatus: booking.ReservationStatus || "pending", // Use the field name from schema
+                amountPaid: booking.amountPaid || booking.payment?.amount || 0,
+                
+                // Nested objects to match the interface
+                hotel: {
+                    hotelName: booking.hotel?.hotelName,
+                    images: booking.hotel?.images || [],
+                },
+                room: {
+                    roomNumber: booking.room?.roomNumber,
+                },
+                user: {
+                    fullName: booking.user.fullName,
+                    email: booking.user.email,
+                    profileImage: booking.user.profileImage,
+                },
+                payment: {
+                    paymentDate: booking.payment?.paymentDate,
+                    amount: booking.payment?.amount || booking.amountPaid || 0,
+                },
             };
         });
 

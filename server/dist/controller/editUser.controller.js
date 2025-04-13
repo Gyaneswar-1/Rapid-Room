@@ -8,7 +8,7 @@ export const editUser = async (req, res) => {
                 .status(401)
                 .json(new ApiError(false, {}, "Unauthorized", "Unauthorized access. Please login again.", 401));
         }
-        const { name, email, phone, street, city, state, country, zipcode, govId, profileImage, } = req.body;
+        const { name, email, phone, street, city, state, country, zipcode, govId, profileImage, upiId } = req.body;
         // Update user using Prisma transaction
         const transaction = await prisma
             .$transaction(async (prisma) => {
@@ -32,6 +32,7 @@ export const editUser = async (req, res) => {
                     phoneNumber: phone || existingUser.phoneNumber,
                     GovID: govId || existingUser.GovID,
                     profileImage: profileImage || existingUser.profileImage,
+                    upiID: upiId || existingUser.upiID, // Add UPI ID to the update operation
                 },
             });
             // Update or create address if address-related fields are provided

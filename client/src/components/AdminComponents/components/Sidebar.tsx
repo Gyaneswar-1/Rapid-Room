@@ -27,7 +27,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, isMobile }: S
       <div className="backdrop-blur-xs h-full w-full backdrop-brightness-40">
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
           <Link to="/admin" className="flex items-center space-x-2">
-              <img src={MainLogo} alt="" className="w-12 h-10 text-white" />
+              <img src={MainLogo} alt="" className="w-10 h-10 text-white" />
             <span className="text-xl font-bold">RapidRoom</span>
           </Link>
           {isMobile && (

@@ -1,12 +1,5 @@
-
 import { useState } from "react";
-import {
-  Edit,
-  ChevronRight,
-  Settings,
-  List,
-  Trash,
-} from "lucide-react";
+import { Edit, ChevronRight, Settings, List, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import { RootState } from "../store/store";
@@ -25,28 +18,21 @@ export default function ProfilePage() {
     govId,
     createdAt,
     isHost,
-    // hostExperience,
-    // hostRating,
-    // hostResponseRate,
     country,
     state,
     street,
     city,
     zipCode,
-    // longitude,
-    // latitude,
+    upiID,
   }: userStoreType = useSelector((state: RootState) => state.userReducer);
 
-  console.log(email);
+  console.log(upiID);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-
 
   return (
     <div className="min-h-screen bg-gray-50">
       <SetUserDataToStore />
-      {/* Header */}
       <Navbar show={false} />
 
       {/* Mobile menu */}
@@ -106,7 +92,6 @@ export default function ProfilePage() {
       )}
 
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        {/* Profile Overview */}
         <div className="bg-white shadow rounded-lg overflow-hidden mb-6 mt-20">
           <div className="p-6">
             <div className="flex flex-col sm:flex-row items-center sm:items-start">
@@ -120,10 +105,26 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="text-center sm:text-left">
-                <h1 className="text-2xl font-bold text-gray-900">{fullName}</h1>
+              <div className="text-center sm:text-left w-full">
+                <div className="md:flex gap-2 md:w-full md:justify-between">
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    {fullName}
+                  </h1>
+                  {isHost ? (
+                    <p className="mt-1 md:block hidden h-fit text-sm bg-green-200 w-fit border border-green-700 text-green-700 font-semibold px-2 rounded-full">
+                      Host
+                    </p>
+                  ) : (
+                    <p className="mt-1 md:block hidden h-fit text-sm bg-indigo-200 w-fit border border-indigo-700 text-indigo-700 font-semibold px-2 rounded-full">
+                      User
+                    </p>
+                  )}
+                </div>
                 <p className="text-gray-600">{email}</p>
-                <p className="text-gray-600">joined since {new Date(createdAt).getFullYear()}</p>                <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
+                <p className="text-gray-600">
+                  joined since {new Date(createdAt).getFullYear()}
+                </p>{" "}
+                <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
                   <Link
                     to="/profile/edit"
                     className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
@@ -181,12 +182,12 @@ export default function ProfilePage() {
 
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">
-                      Account Type
+                      Upi ID
                     </h3>
-                    {isHost ? (
-                      <p className="mt-1 text-sm bg-green-200 w-fit border border-green-700 text-green-700 font-semibold px-2 rounded-full">Host</p>
+                    {upiID ? (
+                      <p className="mt-1 text-sm text-gray-900">{upiID}</p>
                     ) : (
-                      <p className="mt-1 text-sm bg-indigo-200 w-fit border border-indigo-700 text-indigo-700 font-semibold px-2 rounded-full">User</p>
+                      <p className="mt-1 text-sm text-gray-900">Not added</p>
                     )}
                   </div>
                 </div>
@@ -426,7 +427,7 @@ export default function ProfilePage() {
                         Change Password
                       </p>
                       <p className="text-xs text-gray-500">
-                      otp varification requied
+                        otp varification requied
                       </p>
                     </div>
                   </div>

@@ -28,6 +28,7 @@ export const getHostTodayCheckins = async (req, res) => {
             include: {
                 user: {
                     select: {
+                        id: true,
                         fullName: true,
                         email: true,
                         profileImage: true,
@@ -35,22 +36,27 @@ export const getHostTodayCheckins = async (req, res) => {
                 },
                 room: {
                     select: {
+                        id: true,
                         roomNumber: true,
                     },
                 },
                 payment: {
                     select: {
+                        id: true,
                         status: true,
+                        amount: true,
+                        paymentDate: true,
+                        paymentMethod: true,
                     },
                 },
                 hotel: {
                     select: {
+                        id: true,
                         hotelName: true,
                         images: {
                             select: {
                                 imageUrl: true,
                             },
-                            take: 1,
                         },
                     },
                 },
@@ -62,17 +68,38 @@ export const getHostTodayCheckins = async (req, res) => {
             const checkOutDate = new Date(booking.checkOut);
             const numberOfDays = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 3600 * 24));
             return {
+                id: booking.id,
                 bookingId: booking.id,
-                roomNumber: booking.room?.roomNumber,
                 guestName: booking.user.fullName,
                 guestEmail: booking.user.email,
                 guestProfile: booking.user.profileImage,
+                hotelName: booking.hotel?.hotelName,
+                hotelImage: booking.hotel?.images[0]?.imageUrl || null,
+                roomNumber: booking.room?.roomNumber,
                 checkIn: booking.checkIn,
                 checkOut: booking.checkOut,
                 numberOfDays: numberOfDays,
-                paymentStatus: booking.payment?.status || "Pending",
-                hotelImage: booking.hotel?.images[0]?.imageUrl || null,
-                hotelName: booking.hotel?.hotelName,
+                reservationsDuration: numberOfDays,
+                paymentStatus: booking.payment?.status || "pending",
+                reservationStatus: booking.ReservationStatus || "pending",
+                amountPaid: booking.payment?.amount || booking.amountPaid || 0,
+                // Nested objects to match the interface
+                hotel: {
+                    hotelName: booking.hotel?.hotelName,
+                    images: booking.hotel?.images || [],
+                },
+                room: {
+                    roomNumber: booking.room?.roomNumber,
+                },
+                user: {
+                    fullName: booking.user.fullName,
+                    email: booking.user.email,
+                    profileImage: booking.user.profileImage,
+                },
+                payment: {
+                    paymentDate: booking.payment?.paymentDate,
+                    amount: booking.payment?.amount || booking.amountPaid || 0,
+                },
             };
         });
         return res

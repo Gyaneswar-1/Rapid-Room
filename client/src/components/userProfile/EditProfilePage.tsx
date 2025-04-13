@@ -26,6 +26,7 @@ import {
   setUserPhoneNumber,
   setUserProfileImage,
   setUserState,
+  setUserUpiID,
   setUserZipCode,
   userStoreType,
 } from "../../store/reducers/user.reducers";
@@ -61,6 +62,7 @@ export default function EditProfilePage() {
     street,
     city,
     zipCode,
+    upiID
   }: userStoreType = useSelector((state: RootState) => state.userReducer);
 
   const navigate = useNavigate();
@@ -89,7 +91,7 @@ export default function EditProfilePage() {
       country: country || "",
       zipcode: zipCode || "",
       govId: govId ? String(govId) : "",
-      upiId: "",
+      upiId: upiID || "",
     },
   });
 
@@ -104,6 +106,7 @@ export default function EditProfilePage() {
     setValue("country", country || "");
     setValue("zipcode", zipCode || "");
     setValue("govId", govId ? String(govId) : "");
+    setValue("upiId",upiID ? String(upiID):"")
   }, [
     fullName,
     email,
@@ -115,6 +118,7 @@ export default function EditProfilePage() {
     zipCode,
     govId,
     setValue,
+    upiID
   ]);
 
   // Update originalProfileImage when profileImage changes
@@ -181,7 +185,13 @@ export default function EditProfilePage() {
         profileImage: uploadedImage || profileImage || "",
       };
 
-      const result = await updateUserData(formDataWithImage);
+      // Rename upiId to match what the API expects
+      const formDataForApi = {
+        ...formDataWithImage,
+        upiID: formDataWithImage.upiId, // Add this mapping to ensure server gets the right field
+      };
+
+      const result = await updateUserData(formDataForApi);
       if (result.success) {
         dispatch(setUserFullName(formDataWithImage.name));
         dispatch(setUserEmail(formDataWithImage.email));
@@ -192,6 +202,7 @@ export default function EditProfilePage() {
         dispatch(setUserCountry(formDataWithImage.country));
         dispatch(setUserZipCode(formDataWithImage.zipcode));
         dispatch(setUserGovId(formDataWithImage.govId));
+        dispatch(setUserUpiID(formDataWithImage.upiId)); // Make sure we're using the correct field name
         dispatch(
           setUserProfileImage(uploadedImage || formDataWithImage.profileImage)
         );

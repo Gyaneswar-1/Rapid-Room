@@ -1,5 +1,8 @@
 import { getuserData } from "./getuserData";
-import {userStoreType} from "../../store/reducers/user.reducers"
+import {
+  setUserUpiID,
+  userStoreType,
+} from "../../store/reducers/user.reducers";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../../store/store";
@@ -23,17 +26,18 @@ import {
   setUserState,
   setUserStreet,
   setUserZipCode,
-  setUserStatus
+  setUserStatus,
 } from "../../store/reducers/user.reducers";
 import { useEffect } from "react";
 
-
-export default function SetUserDataToStore(){
-   const { hasDataInStore,email,profileImage }:userStoreType = useSelector((state: RootState) => state.userReducer);
-   const dispatch: AppDispatch = useDispatch();   
-   useEffect(()=>{
-    if(!hasDataInStore){
-        getuserData()
+export default function SetUserDataToStore() {
+  const { hasDataInStore, email, profileImage }: userStoreType = useSelector(
+    (state: RootState) => state.userReducer
+  );
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    if (!hasDataInStore) {
+      getuserData()
         .then((data) => {
           if (data.success === true) {
             dispatch(setHasDataInStore(true));
@@ -47,6 +51,7 @@ export default function SetUserDataToStore(){
               )
             );
             dispatch(setUserGovId(data.GovID ? Number(data.GovID) : null));
+            dispatch(setUserUpiID(data.upiID));
             dispatch(setUserIsHost(data.isHost));
             dispatch(setUserHostExperience(data.hostExperience));
             dispatch(setUserHostRating(data.hostRating));
@@ -70,12 +75,9 @@ export default function SetUserDataToStore(){
         .catch((err: any) => {
           console.log("error in user Data", err);
         });
-      }
-   },[])
-   console.log("Datas",email,profileImage);
-   
-   return(
-    <>
-    </>
-   )
+    }
+  }, []);
+  console.log("Datas", email, profileImage);
+
+  return <></>;
 }

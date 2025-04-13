@@ -18,6 +18,7 @@ export const getUserInformation = async (
                 email: true,
                 phoneNumber: true,
                 profileImage: true,
+                upiID:true,
                 GovID: true,
                 isHost: true,
                 createdAt: true,
