@@ -2,7 +2,10 @@ import { Heart, Share, Star } from "lucide-react";
 import { addWishlist } from "../../service/wishlist/addWishlist";
 import { useParams, useSearchParams } from "react-router-dom";
 import { removeWishlist } from "../../service/wishlist/removeWishlist";
-import { notifySuccess } from "../../lib/Toast";
+import { notifyError, notifySuccess } from "../../lib/Toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toogleIsWishListed } from "../../store/reducers/singleHotel.reducer";
 
 type TopSctionPropType = {
   type: string;
@@ -27,16 +30,42 @@ const TopSection = ({
   const {hotelid} = useParams();
   const [searchParams] = useSearchParams();
   const hotelId = searchParams.get('hotelId') || hotelid;
-  
-  const handleWishlist = (set:boolean) =>{
+  const dispatch = useDispatch();
+  const handleWishlist = async (set:boolean) =>{
     try {
-      if(set){
-        addWishlist(hotelId)
+      if(!set){
+        //add this hotel to the wishlist
+        if (hotelId) {
+          const res = await addWishlist(parseInt(hotelId));
+          if(res.success === true){
+            notifySuccess("Hotel added to wishlist");
+            //update the state for efficient rendering
+            dispatch(toogleIsWishListed(false))
+            return;
+          }
+        } else {
+          notifyError("Adding to wishlist failed");
+          return;
+        }
       }else{
-        removeWishlist(hotelId);
+        //remove this hotel towish list
+        if(hotelId){
+          const res = await removeWishlist(parseInt(hotelId));
+          if(res.success === true){
+            notifySuccess("Successfylly remove from wishlist");
+            //update to  state for efficient rendering
+            dispatch(toogleIsWishListed(true))
+            return;
+          }
+        }else{
+          notifyError("Removing from wishlist failed");
+          return;
+        }
       }
     } catch (error) {
       console.log(error);
+      notifyError("Wishlist operation failed")
+      return;
       
     }
   }
@@ -69,7 +98,7 @@ const TopSection = ({
         onClick={()=>{
           navigator.clipboard.writeText(window.location.href)
   .then(() => {
-    notifySuccess("Link copied successfylly")
+    notifySuccess("Link copied successfully")
   })
   .catch(err => {
     notifySuccess("Failed to copy the link")
@@ -82,14 +111,14 @@ const TopSection = ({
 
         {isWishlisted ? (
           <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100" onClick={()=>{
-            handleWishlist(false)
+            handleWishlist(isWishlisted)
           }} >
             <Heart className="h-5 w-5 fill-red-600 border-red-600 outline-red-600 text-red-600" />
             <span className="hidden md:inline">Saved</span>
           </button>
         ) : (
           <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100" onClick={()=>{
-            handleWishlist(true)
+            handleWishlist(isWishlisted);
           }} >
             <Heart className="h-5 w-6" />
             <span className="hidden md:inline">Save</span>

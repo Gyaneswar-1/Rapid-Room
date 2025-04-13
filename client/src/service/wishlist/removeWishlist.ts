@@ -1,14 +1,16 @@
 import axios from "axios";
 import API from "../api";
 
-export const removeWishlist = async (hotelId: string|undefined) => {
+export const removeWishlist = async (hotelId: number) => {
   try {
-    const response = await axios.delete(
+    const response = await axios.post(
       `${API}/wishlist/remove`,
       {
-        data: { hotelId },
-        withCredentials: true
-      }
+         hotelId:hotelId 
+        },{
+
+          withCredentials: true
+        }
     );
     
     if (response.data.success === true) {

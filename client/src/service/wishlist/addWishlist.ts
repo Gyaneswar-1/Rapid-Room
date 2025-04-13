@@ -1,13 +1,13 @@
 import axios from "axios";
 import API from "../api";
 
-export const addWishlist = async (hotelId: string|undefined) => {
+export const addWishlist = async (hotelId:number) => {
   try {
-    console.log("Hotel DI save",hotelId);
+    
     
     const response = await axios.post(
       `${API}/wishlist/add`,
-      { hotelId },
+      { hotelId:hotelId},
       {
         withCredentials: true
       }

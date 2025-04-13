@@ -181,7 +181,10 @@ export const singleHotelSlice = createSlice({
         images: data.images,
       };
     },
+    toogleIsWishListed:(state,action) => {
+      state.isWishlisted = !action.payload;
+    }
   },
 });
-export const { setAllHotelData } = singleHotelSlice.actions;
+export const { setAllHotelData,toogleIsWishListed } = singleHotelSlice.actions;
 export default singleHotelSlice.reducer;

@@ -43,9 +43,7 @@ export default function BookingPage() {
   const { showReservatonModel } = useSelector(
     (state: RootState) => state.toogleShowReseveModelReducer
   );
-  const { isWishlisted } = useSelector(
-    (state: RootState) => state.singleHotelReducer
-  );
+  
   const {
     images = [],
     roomType,
@@ -94,6 +92,7 @@ export default function BookingPage() {
       hasFireExtinguisher: false,
       hasAccessibility: false,
     },
+    isWishlisted,
   } = useSelector((state: RootState) => state.singleHotelReducer);
 
   const dispatch: AppDispatch = useDispatch();

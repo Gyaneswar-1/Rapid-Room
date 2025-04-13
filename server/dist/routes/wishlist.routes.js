@@ -5,6 +5,6 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 import { getWishlist } from "../controller/getWishlists.controller.js";
 const wishlist = Router();
 wishlist.route("/add").post(authMiddleware, addWishlist);
-wishlist.route("/remove").delete(authMiddleware, removeWishlist);
+wishlist.route("/remove").post(authMiddleware, removeWishlist);
 wishlist.route("/get").get(authMiddleware, getWishlist);
 export default wishlist;
