@@ -58,11 +58,11 @@ function RouterHandler() {
             <Route path="book-hotel" element={<BookingPage />} />
             <Route
               path="/host-pending"
-              element={<IsHost element={<HostPendingPage />} />}
+              element={<HostPendingPage/>}
             />
             <Route
               path="/host-rejected"
-              element={<IsHost element={<HostRejectedPage />} />}
+              element={<HostRejectedPage />}
             />
             <Route path="host-confirm" element={<AdminConfirm />} />
             <Route
