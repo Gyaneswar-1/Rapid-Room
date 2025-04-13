@@ -2,6 +2,7 @@ import { Heart, Share, Star } from "lucide-react";
 import { addWishlist } from "../../service/wishlist/addWishlist";
 import { useParams, useSearchParams } from "react-router-dom";
 import { removeWishlist } from "../../service/wishlist/removeWishlist";
+import { notifySuccess } from "../../lib/Toast";
 
 type TopSctionPropType = {
   type: string;
@@ -64,7 +65,17 @@ const TopSection = ({
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100"
+        onClick={()=>{
+          navigator.clipboard.writeText(window.location.href)
+  .then(() => {
+    notifySuccess("Link copied successfylly")
+  })
+  .catch(err => {
+    notifySuccess("Failed to copy the link")
+  });
+        }}
+        >
           <Share className="h-4 w-4" />
           <span className="hidden md:inline">Share</span>
         </button>
