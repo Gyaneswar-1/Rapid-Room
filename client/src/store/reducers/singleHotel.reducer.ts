@@ -7,7 +7,7 @@ interface HotelState {
   description: string;
   roomType: string;
   perNight: number;
-  isWishlisted:boolean;
+  isWishlisted: boolean;
   amenities: {
     hasParking: boolean;
     hasPool: boolean;
@@ -18,6 +18,18 @@ interface HotelState {
     hasWorkSpace: boolean;
     hasWashingMachine: boolean;
     hasGarden: boolean;
+    hasAirConditioning: boolean;
+    hasDiningArea: boolean;
+    hasHotTub: boolean;
+    hasFirepit: boolean;
+    hasBBQGrill: boolean;
+    hasPoolTable: boolean;
+    hasExerciseEquipment: boolean;
+    hasOutdoorShower: boolean;
+    hasSmokeAlarm: boolean;
+    hasFirstAidKit: boolean;
+    hasFireExtinguisher: boolean;
+    hasAccessibility: boolean;
   };
   type: string;
   isAllReserved: boolean;
@@ -68,7 +80,7 @@ const initialState: HotelState = {
   description: "",
   roomType: "",
   perNight: 0,
-  isWishlisted:false,
+  isWishlisted: false,
   amenities: {
     hasParking: false,
     hasPool: false,
@@ -79,6 +91,18 @@ const initialState: HotelState = {
     hasWorkSpace: false,
     hasWashingMachine: false,
     hasGarden: false,
+    hasAirConditioning: false,
+    hasDiningArea: false,
+    hasHotTub: false,
+    hasFirepit: false,
+    hasBBQGrill: false,
+    hasPoolTable: false,
+    hasExerciseEquipment: false,
+    hasOutdoorShower: false,
+    hasSmokeAlarm: false,
+    hasFirstAidKit: false,
+    hasFireExtinguisher: false,
+    hasAccessibility: false,
   },
   type: "",
   isAllReserved: false,
@@ -121,17 +145,29 @@ export const singleHotelSlice = createSlice({
         description: data.description,
         roomType: data.roomType,
         perNight: data.perNight,
-        isWishlisted:data.isWishlisted,
+        isWishlisted: data.isWishlisted,
         amenities: {
           hasParking: data.hasParking,
           hasPool: data.hasPool,
-          hasWifi: data.hasWifi,
+          hasWifi: data.haswifi,
           hasTv: data.hasTv,
           hasBalcony: data.hasBalcony,
           hasKitchen: data.hasKitchen,
           hasWorkSpace: data.hasWorkSpace,
           hasWashingMachine: data.hasWashingMachine,
           hasGarden: data.hasGarden,
+          hasAirConditioning: data.hasAirConditioning,
+          hasDiningArea: data.hasDiningArea,
+          hasHotTub: data.hasHotTub,
+          hasFirepit: data.hasFirepit,
+          hasBBQGrill: data.hasBBQGrill,
+          hasPoolTable: data.hasPoolTable,
+          hasExerciseEquipment: data.hasExerciseEquipment,
+          hasOutdoorShower: data.hasOutdoorShower,
+          hasSmokeAlarm: data.hasSmokeAlarm,
+          hasFirstAidKit: data.hasFirstAidKit,
+          hasFireExtinguisher: data.hasFireExtinguisher,
+          hasAccessibility: data.hasAccessibility,
         },
         type: data.type,
         isAllReserved: data.isAllReserved,

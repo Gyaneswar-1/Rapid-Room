@@ -1,9 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
-import { Request, Response } from "express";
-
-export const getHotelById = async (req: Request | any, res: Response | any) => {
+export const getHotelById = async (req, res) => {
     console.log("controll reached");
     try {
         const hotelResponse = await prisma.hotels.findUnique({
@@ -16,7 +14,6 @@ export const getHotelById = async (req: Request | any, res: Response | any) => {
                 description: true,
                 roomType: true,
                 perNight: true,
-
                 hasParking: true,
                 hasPool: true,
                 hasWifi: true,
@@ -38,7 +35,6 @@ export const getHotelById = async (req: Request | any, res: Response | any) => {
                 hasFirstAidKit: true,
                 hasFireExtinguisher: true,
                 hasAccessibility: true,
-
                 type: true,
                 createdAt: true,
                 isAllReserved: true,
@@ -79,7 +75,6 @@ export const getHotelById = async (req: Request | any, res: Response | any) => {
                         locationRating: true,
                         priceRating: true,
                         parkingRating: true,
-
                         user: {
                             select: {
                                 fullName: true,
@@ -112,49 +107,25 @@ export const getHotelById = async (req: Request | any, res: Response | any) => {
                 },
             },
         });
-
         if (hotelResponse) {
             // Add isWishlisted property to indicate if hotel is in user's wishlist
             const responseWithWishlistStatus = {
                 ...hotelResponse,
                 isWishlisted: hotelResponse.WishList.length > 0,
             };
-
             return res
                 .status(200)
-                .json(
-                    new ApiResponse(
-                        true,
-                        responseWithWishlistStatus,
-                        "Success",
-                        "Get the hotel information",
-                        200,
-                    ),
-                );
-        } else {
+                .json(new ApiResponse(true, responseWithWishlistStatus, "Success", "Get the hotel information", 200));
+        }
+        else {
             return res
                 .status(400)
-                .json(
-                    new ApiError(
-                        false,
-                        {},
-                        "Failed",
-                        "can't get the hotel information",
-                        400,
-                    ),
-                );
+                .json(new ApiError(false, {}, "Failed", "can't get the hotel information", 400));
         }
-    } catch (error) {
+    }
+    catch (error) {
         return res
             .status(400)
-            .json(
-                new ApiError(
-                    false,
-                    {},
-                    "Failed",
-                    "can't get the hotel information",
-                    400,
-                ),
-            );
+            .json(new ApiError(false, {}, "Failed", "can't get the hotel information", 400));
     }
 };

@@ -71,6 +71,29 @@ export default function BookingPage() {
     },
     description,
     reviews = [],
+    amenities={
+      hasParking: false,
+      hasPool: false,
+      hasWifi: false,
+      hasTv: false,
+      hasBalcony: false,
+      hasKitchen: false,
+      hasWorkSpace: false,
+      hasWashingMachine: false,
+      hasGarden: false,
+      hasAirConditioning: false,
+      hasDiningArea: false,
+      hasHotTub: false,
+      hasFirepit: false,
+      hasBBQGrill: false,
+      hasPoolTable: false,
+      hasExerciseEquipment: false,
+      hasOutdoorShower: false,
+      hasSmokeAlarm: false,
+      hasFirstAidKit: false,
+      hasFireExtinguisher: false,
+      hasAccessibility: false,
+    },
   } = useSelector((state: RootState) => state.singleHotelReducer);
 
   const dispatch: AppDispatch = useDispatch();
@@ -129,27 +152,27 @@ export default function BookingPage() {
 
               <HotelDescription description={description} />
               <AmenitiesSection
-                hasWifi={true}
-                hasTV={true}
-                hasKitchen={true}
-                hasBalcony={true}
-                hasWorkspace={true}
-                hasWashingMachine={true}
-                hasGarden={true}
-                hasParking={true}
-                hasAirConditioning={true}
-                hasDiningArea={true}
-                hasPool={true}
-                hasHotTub={true}
-                hasFirepit={true}
-                hasBBQGrill={true}
-                hasPoolTable={true}
-                hasExerciseEquipment={true}
-                hasOutdoorShower={true}
-                hasSmokeAlarm={true}
-                hasFirstAidKit={true}
-                hasFireExtinguisher={true}
-                hasAccessibility={true}
+                hasWifi={amenities.hasWifi}
+                hasTV={amenities.hasTv}
+                hasKitchen={amenities.hasKitchen}
+                hasBalcony={amenities.hasBalcony}
+                hasWorkspace={amenities.hasWorkSpace}
+                hasWashingMachine={amenities.hasWashingMachine}
+                hasGarden={amenities.hasGarden}
+                hasParking={amenities.hasParking}
+                hasAirConditioning={amenities.hasAirConditioning}
+                hasDiningArea={amenities.hasDiningArea}
+                hasPool={amenities.hasPool}
+                hasHotTub={amenities.hasHotTub}
+                hasFirepit={amenities.hasFirepit}
+                hasBBQGrill={amenities.hasBBQGrill}
+                hasPoolTable={amenities.hasPoolTable}
+                hasExerciseEquipment={amenities.hasExerciseEquipment}
+                hasOutdoorShower={amenities.hasOutdoorShower}
+                hasSmokeAlarm={amenities.hasSmokeAlarm}
+                hasFirstAidKit={amenities.hasFirstAidKit}
+                hasFireExtinguisher={amenities.hasFireExtinguisher}
+                hasAccessibility={amenities.hasAccessibility}
               />
               <RatingSection
                 accuracy={reviews[0]?.accuracyRating || 0}
@@ -204,12 +227,13 @@ export default function BookingPage() {
 
         {showAllReview && (
           <AllReviews
-            accuracy={2}
-            checkIn={3}
-            cleanliness={4}
-            location={3}
-            communication={5}
-            overall={4}
+          accuracy={reviews[0]?.accuracyRating || 0}
+          checkIn={reviews[0]?.checkInRating || 0}
+          cleanliness={reviews[0]?.cleanlinessRating || 0}
+          communication={reviews[0]?.communicationRating || 0}
+          location={reviews[0]?.locationRating || 0}
+          value={reviews[0]?.priceRating || 0}
+          overall={overalRating}
             reviews={reviews.map((review) => ({
               id: review.userId,
               author: review.user.fullName,
@@ -218,8 +242,8 @@ export default function BookingPage() {
               rating: review.overallRating,
               avatar: review.user.profileImage,
             }))}
-            totalReviews={200}
-            value={4}
+            totalReviews={totalReviews}
+            
           />
         )}
 

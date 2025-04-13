@@ -77,7 +77,7 @@ export const createReview = async (req: Request | any, res: Response | any) => {
                     (hotel.overalRating * hotel.totalReviews + overalRating) /
                         newTotalReviews,
                 );
-
+                console.log("here is the new overal rating",newOverallRating)
                 // Update hotel ratings
                 const updatedHotel = await prisma.hotels.update({
                     where: { id: hotelId },

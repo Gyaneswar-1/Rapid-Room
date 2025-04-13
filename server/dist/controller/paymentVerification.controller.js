@@ -1,0 +1,86 @@
+import prisma from "../db/db.config.js";
+export async function paymentVerification(req, res) {
+    const { razorpay_order_id, razorpay_payment_id } = req.body;
+    console.log(razorpay_order_id, razorpay_payment_id);
+    const { hotelId, reservationId, paymentId, roomId } = req.query;
+    //strictly get these infomation
+    console.log(hotelId, reservationId, paymentId, roomId);
+    if (!razorpay_order_id ||
+        !razorpay_payment_id ||
+        !hotelId ||
+        !reservationId ||
+        !paymentId ||
+        !roomId) {
+        //cancel the reservation
+        // navigate to the error page
+        return res.json({
+            message: "failed in data validation or in suficient data",
+        });
+    }
+    try {
+        const trancation = await prisma.$transaction(async (prisma) => {
+            const updateRoomStatus = await prisma.rooms.update({
+                where: {
+                    id: parseInt(roomId),
+                    hotelId: parseInt(hotelId),
+                },
+                data: {
+                    isReserved: true,
+                },
+            });
+            // check in the hotel room is availabe or not
+            const isAvailable = await prisma.hotels.findUnique({
+                where: {
+                    id: parseInt(hotelId),
+                    isAllReserved: false,
+                },
+                select: {
+                    numberOfEmptyRooms: true,
+                },
+            });
+            // update the hotel availablity of rooms
+            const updateHotel = await prisma.hotels.update({
+                where: {
+                    id: parseInt(hotelId),
+                },
+                data: {
+                    numberOfEmptyRooms: isAvailable?.numberOfEmptyRooms - 1,
+                    isAllReserved: isAvailable?.numberOfEmptyRooms === 1 ? true : false,
+                },
+            });
+            //update the payment stats
+            const paymentStatus = await prisma.payments.update({
+                where: {
+                    id: parseInt(paymentId),
+                    // userId: req.user.id,
+                },
+                data: {
+                    razorpay_order_id: razorpay_order_id,
+                    razorpay_payment_id: razorpay_payment_id,
+                    status: "success",
+                },
+            });
+            // update the reservtionStatus
+            const reservation = await prisma.reservations.update({
+                where: {
+                    id: parseInt(reservationId),
+                    // userId: req.user.id,
+                    hotelId: parseInt(hotelId),
+                    roomId: parseInt(roomId),
+                },
+                data: {
+                    paymentStatus: "success",
+                },
+            });
+        });
+        //navigate to the booking page
+        return res.redirect("http://localhost:5173/profile/bookings");
+    }
+    catch (error) {
+        //cancel the reservation, navigate to the error page
+        console.log(error);
+        return res.json({
+            message: "failed in catch",
+        });
+    }
+}
