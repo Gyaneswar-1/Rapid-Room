@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBookings } from "../store/reducers/mybookings.reducer";
 import { RootState } from "../store/store";
 import BookingCard from "../components/userBookings/booking-card";
-import MessageModal from "../components/userBookings/message-model";
+import AddRatingCard from "../components/bookingpage/AddRatingCard";
 import Navbar from "../components/Navbar/Navbar";
 import MyBookingsSkeleton from "../components/userBookings/MyBookingsSkeliton";
 import getUserBookings from "../service/checkin/getUserBookings";
@@ -14,8 +14,11 @@ export default function UserBookings() {
   const bookingsData = useSelector(
     (state: RootState) => state.bookingsReducer.bookings
   );
-  const [selectedHost, setSelectedHost] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {showAddReview} = useSelector(
+    (state:RootState) => state.toogleAllReviewsReducer
+  )
+  
+  
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -39,10 +42,7 @@ export default function UserBookings() {
     fetchBookings();
   }, [dispatch]);
 
-  const handleMessageHost = (hostName: string) => {
-    setSelectedHost(hostName);
-    setIsModalOpen(true);
-  };
+  
 
   const handleCancelBooking = (id: number) => {
     // Update the bookings data to reflect the cancellation
@@ -91,9 +91,6 @@ export default function UserBookings() {
                     key={booking.id}
                     booking={booking}
                     onCancel={() => handleCancelBooking(booking.id)}
-                    onMessage={() =>
-                      handleMessageHost(booking.hotel.host.fullName)
-                    }
                   />
                 ))}
               </motion.div>
@@ -101,11 +98,12 @@ export default function UserBookings() {
           )}
         </div>
 
-        <MessageModal
-          isOpen={isModalOpen}
-          hostName={selectedHost || ""}
-          onClose={() => setIsModalOpen(false)}
-        />
+
+          {/* do conditional rendering of the review add section */}
+          {
+            showAddReview?(<AddRatingCard></AddRatingCard>):null
+          }
+        
       </div>
     </>
   );

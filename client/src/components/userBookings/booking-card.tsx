@@ -4,6 +4,9 @@ import { FaUser, FaCalendarAlt, FaBed } from "react-icons/fa";
 import { cancelBooking } from "../../service/checkin/cancleBooking";
 import { Navigate, useNavigate } from "react-router-dom";
 import { notifySuccess,notifyError, notifyInfo } from "../../lib/Toast";
+import { AppDispatch, RootState } from "../../store/store";
+import { flipAddReview,setHotelId } from "../../store/reducers/showReviews.reducer";
+import { useDispatch, useSelector } from "react-redux";
 
 interface BookingCardProps {
   booking: {
@@ -43,10 +46,15 @@ interface BookingCardProps {
     };
   };
   onCancel: () => void;
-  onMessage: () => void;
+  
 }
 
-const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
+const BookingCard = ({ booking, onCancel }: BookingCardProps) => {
+  const {showAddReview} = useSelector(
+    (state:RootState) => state.toogleAllReviewsReducer
+  )
+  const dispatch: AppDispatch = useDispatch();
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -184,10 +192,17 @@ const BookingCard = ({ booking, onCancel, onMessage }: BookingCardProps) => {
 
         <div className="flex gap-3">
           <button
-            onClick={onMessage}
+            onClick={
+              ()=>{
+                // add the hotel id in the state
+                dispatch(setHotelId(booking.hotelId));
+                //write logic to show the add review card
+                dispatch(flipAddReview(showAddReview));
+              }
+            }
             className="flex-1 bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
           >
-            Message Host
+            Add Review
           </button>
           <button
             onClick={handleCancellation}

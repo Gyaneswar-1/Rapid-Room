@@ -200,7 +200,7 @@ model Review {
   parkingRating       Int      @default(5)
   createdAt           DateTime @default(now())
 
-  @@unique([userId, hotelId])
+  
 }
 
 model Images {

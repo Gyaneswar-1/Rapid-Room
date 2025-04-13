@@ -1,39 +1,55 @@
-import type React from "react"
-import { useState } from "react"
-import { useForm, Controller } from "react-hook-form"
-import { Key, MapPin, MessageSquare, MousePointer2, SprayCan, Tag, Car, Star, X } from "lucide-react"
-import { addReview } from "../../service/review/addReview"
-import { notifyError, notifySuccess } from "../../lib/Toast"
+import type React from "react";
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import {
+  Key,
+  MapPin,
+  MessageSquare,
+  MousePointer2,
+  SprayCan,
+  Tag,
+  Car,
+  Star,
+  X,
+} from "lucide-react";
+import { addReview } from "../../service/review/addReview";
+import { notifyError, notifySuccess } from "../../lib/Toast";
 
 type RatingFormData = {
-  hotelId: number
-  reviewComment: string
-  cleanlinessRating: number
-  accuracyRating: number
-  checkInRating: number
-  communicationRating: number
-  locationRating: number
-  priceRating: number
-  parkingRating: number
-}
+  hotelId: number;
+  reviewComment: string;
+  cleanlinessRating: number;
+  accuracyRating: number;
+  checkInRating: number;
+  communicationRating: number;
+  locationRating: number;
+  priceRating: number;
+  parkingRating: number;
+};
 
-interface AddRatingCardProps {
-  hotelId: number,
-  setShowAddHotelCard:()=>void
-}
+import { AppDispatch, RootState } from "../../store/store";
+import { flipAddReview,toogleAllReviews } from "../../store/reducers/showReviews.reducer";
+import { useDispatch, useSelector } from "react-redux";
 
-const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const AddRatingCard = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { showAddReview,hotelId } = useSelector(
+    (state: RootState) => state.toogleAllReviewsReducer
+  );
   
-  const { 
-    control, 
-    handleSubmit, 
-    setValue, 
-    formState: { errors }, 
-    watch 
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    watch,
   } = useForm<RatingFormData>({
     defaultValues: {
-      hotelId,
+      hotelId: hotelId,
       reviewComment: "",
       cleanlinessRating: 0,
       accuracyRating: 0,
@@ -42,64 +58,64 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
       locationRating: 0,
       priceRating: 0,
       parkingRating: 0,
-    }
+    },
   });
 
-  const handleRatingChange = (field: keyof Omit<RatingFormData, "hotelId" | "reviewComment">, value: number) => {
+  const handleRatingChange = (
+    field: keyof Omit<RatingFormData, "hotelId" | "reviewComment">,
+    value: number
+  ) => {
     setValue(field, value);
-  }
+  };
 
   const onSubmit = async (data: RatingFormData) => {
     try {
       setIsSubmitting(true);
+
       
-      // Calculate average rating from all categories
-      const ratings = [
-        data.cleanlinessRating,
-        data.accuracyRating,
-        data.checkInRating,
-        data.communicationRating,
-        data.locationRating,
-        data.priceRating,
-        data.parkingRating
-      ];
-      
-      const validRatings = ratings.filter(r => r > 0);
-      const avgRating = validRatings.length > 0 
-        ? validRatings.reduce((sum, rating) => sum + rating, 0) / validRatings.length 
-        : 0;
+
       
       const reviewData = {
-        hotelId: data.hotelId.toString(),
-        comment: data.reviewComment,
-        rating: avgRating,
-        // Include individual ratings
-        ratingDetails: {
-          cleanliness: data.cleanlinessRating,
-          accuracy: data.accuracyRating,
-          checkIn: data.checkInRating,
-          communication: data.communicationRating,
-          location: data.locationRating,
-          price: data.priceRating,
-          parking: data.parkingRating
-        }
+        hotelId: hotelId,
+        reviewComment: data.reviewComment,
+        cleanlinessRating: data.cleanlinessRating,
+        accuracyRating: data.accuracyRating,
+        checkInRating: data.checkInRating,
+        communicationRating: data.communicationRating,
+        locationRating: data.locationRating,
+        priceRating: data.priceRating,
+        parkingRating: data.parkingRating,
       };
-      
-      const response = await addReview(reviewData);
-      
-      if (response.success) {
-        notifySuccess("Review submitted successfully!");
-        setShowAddHotelCard();
-      } else {
-        notifyError(response.message || "Failed to submit review");
+
+      console.log(reviewData);
+      //send data to backend for adding review
+      const res = await addReview(reviewData);
+      if(res.success === true){
+        notifySuccess("Review added");
+        setIsSubmitting(false);
+        //close the add review
+        dispatch(flipAddReview(showAddReview));
+        // navigate to the hotel
+        navigate(`/book-hotel?hotelId=${hotelId}`)
+        //open the all review
+        dispatch(toogleAllReviews(false));
+        return;
       }
+      else{
+        notifyError("Failed to add review");
+        setIsSubmitting(false);
+        dispatch(flipAddReview(showAddReview));
+        return;
+      }
+
     } catch (error) {
-      console.error("Error submitting review:", error);
+      
       notifyError("An error occurred while submitting your review");
+      //after error retrry
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   const StarRating = ({
     value,
@@ -107,10 +123,10 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
     label,
     icon,
   }: {
-    value: number
-    onChange: (value: number) => void
-    label: string
-    icon: React.ReactNode
+    value: number;
+    onChange: (value: number) => void;
+    label: string;
+    icon: React.ReactNode;
   }) => {
     return (
       <div className="flex items-center gap-3">
@@ -120,16 +136,27 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
             <span className="font-medium">{label}</span>
             <div className="flex">
               {[1, 2, 3, 4, 5].map((star) => (
-                <button key={star} type="button" onClick={() => onChange(star)} className="focus:outline-none">
-                  <Star className={`h-5 w-5 ${star <= value ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => onChange(star)}
+                  className="focus:outline-none"
+                >
+                  <Star
+                    className={`h-5 w-5 ${
+                      star <= value
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                  />
                 </button>
               ))}
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -137,7 +164,10 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
         <button
           type="button"
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-          onClick={() => setShowAddHotelCard()}
+          onClick={() => {
+            //write logic to close the add review card
+            dispatch(flipAddReview(showAddReview));
+          }}
           disabled={isSubmitting}
         >
           <X className="h-6 w-6" />
@@ -147,7 +177,10 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-6">
-              <label htmlFor="reviewComment" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="reviewComment"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Your Review
               </label>
               <Controller
@@ -158,7 +191,11 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
                   <textarea
                     id="reviewComment"
                     rows={4}
-                    className={`w-full px-3 py-2 border ${errors.reviewComment ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400`}
+                    className={`w-full px-3 py-2 border ${
+                      errors.reviewComment
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400`}
                     placeholder="Share your experience..."
                     {...field}
                     required
@@ -166,21 +203,27 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
                 )}
               />
               {errors.reviewComment && (
-                <p className="mt-1 text-sm text-red-500">{errors.reviewComment.message}</p>
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.reviewComment.message}
+                </p>
               )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4 mb-8">
               <StarRating
                 value={watch("cleanlinessRating")}
-                onChange={(value) => handleRatingChange("cleanlinessRating", value)}
+                onChange={(value) =>
+                  handleRatingChange("cleanlinessRating", value)
+                }
                 label="Cleanliness"
                 icon={<SprayCan className="h-5 w-5 text-gray-700" />}
               />
 
               <StarRating
                 value={watch("accuracyRating")}
-                onChange={(value) => handleRatingChange("accuracyRating", value)}
+                onChange={(value) =>
+                  handleRatingChange("accuracyRating", value)
+                }
                 label="Accuracy"
                 icon={<MousePointer2 className="h-5 w-5 text-gray-700" />}
               />
@@ -194,14 +237,18 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
 
               <StarRating
                 value={watch("communicationRating")}
-                onChange={(value) => handleRatingChange("communicationRating", value)}
+                onChange={(value) =>
+                  handleRatingChange("communicationRating", value)
+                }
                 label="Communication"
                 icon={<MessageSquare className="h-5 w-5 text-gray-700" />}
               />
 
               <StarRating
                 value={watch("locationRating")}
-                onChange={(value) => handleRatingChange("locationRating", value)}
+                onChange={(value) =>
+                  handleRatingChange("locationRating", value)
+                }
                 label="Location"
                 icon={<MapPin className="h-5 w-5 text-gray-700" />}
               />
@@ -234,7 +281,7 @@ const AddRatingCard = ({ hotelId, setShowAddHotelCard }: AddRatingCardProps) => 
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddRatingCard
+export default AddRatingCard;
