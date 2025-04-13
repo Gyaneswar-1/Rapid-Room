@@ -33,6 +33,7 @@ import WhyChooseUs from "../pages/WhyChooseUs";
 import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import TermsAndConditions from "../pages/TermsAndConditions";
+import Loader from "../components/Loader";
 
 function RouterHandler() {
   const AdminRedirect = () => {
@@ -46,7 +47,7 @@ function RouterHandler() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AdminRedirect />} />
+          <Route path="/" element={<AdminRedirect />} loader/>
 
           <Route path="/home" element={<Home />} />
           <Route path="/comeingsoon" element={<ComeingSoon />} />
@@ -89,7 +90,7 @@ function RouterHandler() {
               <Route index element={<HostDashboard />} />
               <Route path="hotels" element={<HostedHotels />} />
               <Route path="reservations" element={<ReservationsPage />} />
-              <Route path="earnings" element={<EarningsPage />} />
+              <Route path="occupancy" element={<EarningsPage />} />
               <Route path="guests" element={<GuestsPage />} />
             </Route>
           </Route>

@@ -21,9 +21,6 @@ function Card({ hotelName, perNight, country, city, onclick, image, overalRating
       onClick={onclick}
     >
       <div className="relative w-full aspect-[4/3] overflow-hidden">
-        <button className="absolute top-3 right-3 z-10 p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 transition-colors">
-          <FaHeart className="text-rose-500 hover:text-rose-600 text-xl" />
-        </button>
         <img
           src={
             image

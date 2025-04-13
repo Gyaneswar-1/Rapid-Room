@@ -19,7 +19,7 @@ const GuestInfo = ({
             alt={fullName}
             width={56}
             height={56}
-            className="object-cover"
+            className="object-cover h-full w-full"
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xl font-semibold">

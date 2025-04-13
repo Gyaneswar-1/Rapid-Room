@@ -8,7 +8,12 @@ export const getHostEarnings = async (req: Request | any, res: Response | any) =
     try {
         const hotelStats = await prisma.hotels.findMany({
             where: {
-                hostId: hostId
+                hostId: hostId,
+                Payments: {
+                    some: {
+                        status: "success"
+                    }
+                }
             },
             select: {
                 id: true,
@@ -22,7 +27,8 @@ export const getHostEarnings = async (req: Request | any, res: Response | any) =
                 Reserved: {
                     select: {
                         amountPaid: true,
-                        ReservationStatus: true
+                        ReservationStatus: true,
+                        paymentStatus: true
                     }
                 },
                 address:{
@@ -44,9 +50,9 @@ export const getHostEarnings = async (req: Request | any, res: Response | any) =
                 0
             );
             
-            const occupiedRooms = hotel.Reserved.filter(
-                reservation => reservation.ReservationStatus === "active" || 
-                               reservation.ReservationStatus === "pending"
+            const occupiedRooms = hotel.Reserved.filter(reservation => reservation.paymentStatus === "success" &&
+                (reservation.ReservationStatus === "active" || 
+                               reservation.ReservationStatus === "pending")
             ).length;
             
             const occupancyRate = hotel.numberOfRooms ? 

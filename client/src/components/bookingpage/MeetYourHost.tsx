@@ -29,7 +29,7 @@ const MeetYourHost = ({
                 alt={fullName}
                 width={80}
                 height={80}
-                className="object-cover"
+                className="object-cover h-full w-full"
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center text-2xl font-semibold">

@@ -20,7 +20,7 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
     { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
     { name: "Hotels", href: "/dashboard/hotels", icon: BuildingIcon },
     { name: "Reservations", href: "/dashboard/reservations", icon: CalendarIcon },
-    { name: "Earnings", href: "/dashboard/earnings", icon: IndianRupee },
+    { name: "Occupancy", href: "/dashboard/occupancy", icon: IndianRupee },
     { name: "Guests", href: "/dashboard/guests", icon: UsersRound },
   ]
 

@@ -589,7 +589,7 @@ const AddHotelForm = () => {
                   </div>
 
                   {/* Room Number */}
-                  <div>
+                  {/* <div>
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
                       <FaBuilding className="text-teal-600" />
                       Room Number
@@ -607,7 +607,7 @@ const AddHotelForm = () => {
                         {errors.roomNumber.message}
                       </p>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* Guests */}
                   <div>

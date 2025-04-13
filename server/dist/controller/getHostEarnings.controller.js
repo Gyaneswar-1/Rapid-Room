@@ -6,7 +6,12 @@ export const getHostEarnings = async (req, res) => {
     try {
         const hotelStats = await prisma.hotels.findMany({
             where: {
-                hostId: hostId
+                hostId: hostId,
+                Payments: {
+                    some: {
+                        status: "success"
+                    }
+                }
             },
             select: {
                 id: true,
@@ -20,7 +25,8 @@ export const getHostEarnings = async (req, res) => {
                 Reserved: {
                     select: {
                         amountPaid: true,
-                        ReservationStatus: true
+                        ReservationStatus: true,
+                        paymentStatus: true
                     }
                 },
                 address: {
@@ -34,8 +40,9 @@ export const getHostEarnings = async (req, res) => {
         const formattedHotelStats = hotelStats.map(hotel => {
             const completedReservations = hotel.Reserved.filter(reservation => reservation.ReservationStatus === "active");
             const totalEarnings = completedReservations.reduce((sum, reservation) => sum + (reservation.amountPaid || 0), 0);
-            const occupiedRooms = hotel.Reserved.filter(reservation => reservation.ReservationStatus === "active" ||
-                reservation.ReservationStatus === "pending").length;
+            const occupiedRooms = hotel.Reserved.filter(reservation => reservation.paymentStatus === "success" &&
+                (reservation.ReservationStatus === "active" ||
+                    reservation.ReservationStatus === "pending")).length;
             const occupancyRate = hotel.numberOfRooms ?
                 (occupiedRooms / hotel.numberOfRooms) * 100 : 0;
             return {

@@ -28,13 +28,12 @@ export default function EarningsPage() {
   }, []);
 
 
-
   return (
     <div className="flex h-screen bg-gray-50">
       <main className="flex-1 overflow-y-auto p-4 md:p-6">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Earnings</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Occupancy</h1>
             <p className="text-gray-600 mt-1">
               Track your earnings and payouts
             </p>
