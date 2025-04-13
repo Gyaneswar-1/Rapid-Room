@@ -79,10 +79,10 @@ export const getHostTodayCheckins = async (req, res) => {
                 checkIn: booking.checkIn,
                 checkOut: booking.checkOut,
                 numberOfDays: numberOfDays,
-                reservationsDuration: numberOfDays,
-                paymentStatus: booking.payment?.status || "pending",
-                reservationStatus: booking.ReservationStatus || "pending",
-                amountPaid: booking.payment?.amount || booking.amountPaid || 0,
+                reservationsDuration: booking.reservationsDuration || numberOfDays,
+                paymentStatus: booking.paymentStatus || "pending",
+                reservationStatus: booking.ReservationStatus || "pending", // Use the field name from schema
+                amountPaid: booking.amountPaid || booking.payment?.amount || 0,
                 // Nested objects to match the interface
                 hotel: {
                     hotelName: booking.hotel?.hotelName,

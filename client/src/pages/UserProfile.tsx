@@ -415,7 +415,7 @@ export default function ProfilePage() {
 
               <div className="p-6 space-y-4">
                 <Link
-                  to="/profile/security/password"
+                  to="/profile/security/reset-password"
                   className="flex justify-between items-center py-2 px-3 hover:bg-gray-50 rounded-md transition-colors"
                 >
                   <div className="flex items-center">
