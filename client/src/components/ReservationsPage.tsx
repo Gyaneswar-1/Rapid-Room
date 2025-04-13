@@ -4,41 +4,48 @@ import { useState, useEffect } from "react"
 import { getHostReservations } from "../service/manageHostData/getHostReservations"
 import ReservationDetailCard from "../components/ReservationDetailCard"
 
-interface ReservationInterface {
-  ReservationStatus: "active" | "pending" | "cancled" | string
-  amountPaid: number
-  checkIn: string // ISO date string
-  checkOut: string // ISO date string
-  hotel: {
-    hotelName: string
-    id: number
-    images: {
-      imageUrl: string
-    }[]
-    perNight: number
-  }
-  id: number
-  payment: {
-    amount: number
-    id: number
-    paymentDate: string // ISO date string
-    paymentMethod: "UPI" | string // Allowing string for other payment methods
-    status: "success" | string // Allowing string for other statuses
-  }
-  paymentStatus: "success" | "pending" | string
-  reservationsDuration: number
-  room: {
-    id: number
-    roomNumber: number
-  }
-  user: {
-    id: number
-    fullName: string
-    email: string
-    profileImage: string
-  }
+interface Image {
+  id: number;
+  imageUrl: string;
+  hotelId: number;
 }
 
+interface Hotel {
+  hotelName: string;
+  images: Image[];
+}
+
+interface Room {
+  id: number;
+  isReserved: boolean;
+  roomNumber: number;
+  hotelId: number;
+}
+
+interface User {
+  fullName: string;
+  profileImage: string;
+  email: string;
+}
+
+interface Payment {
+  amount: number;
+  paymentDate: string;
+}
+
+interface ReservationInterface {
+  id: number;
+  checkIn: string;
+  checkOut: string;
+  amountPaid: number;
+  reservationsDuration: number;
+  ReservationStatus: 'active' | 'pending';
+  paymentStatus: 'success' | 'pending';
+  room: Room;
+  hotel: Hotel;
+  user: User;
+  payment: Payment;
+}
 export default function ReservationsPage() {
   const [activeTab, setActiveTab] = useState("all")
   const [reservations, setReservations] = useState<ReservationInterface[]>([])
@@ -159,11 +166,10 @@ export default function ReservationsPage() {
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <h1 className="text-2xl font-bold tracking-tight">Reservations</h1>
             <div className="flex items-center gap-2">
-              <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                Export
-              </button>
-              <button className="px-3 py-1.5 text-sm bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                Add Reservation
+              <button className="px-3 py-1.5 text-sm bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2" onClick={()=>{
+                location.reload()
+              }}>
+                Refresh
               </button>
             </div>
           </div>
@@ -320,9 +326,6 @@ export default function ReservationsPage() {
                           className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
                         >
                           View
-                        </button>
-                        <button className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                          Message
                         </button>
                       </div>
                     </div>

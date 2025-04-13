@@ -17,28 +17,33 @@ export const getHostAllReservations = async (req: Request | any, res: Response |
                 }
             },
             select: {
-                id: true,//
-                checkIn: true,//
-                checkOut: true,//
-                amountPaid: true,//
-                reservationsDuration: true,//
-                ReservationStatus: true,//
-                paymentStatus: true,//
+                id: true,
+                checkIn: true,
+                checkOut: true,
+                amountPaid: true,
+                reservationsDuration: true,
+                ReservationStatus: true,
+                paymentStatus: true,
+                room: true,
                 hotel: {
                     select: {
                         hotelName: true,
+                        images:{
+                            take:1
+                        }
                     }
                 },
                 user: {
                     select: {
                         fullName: true,
                         profileImage: true,
-                        email:true,
+                        email: true,
                     }
                 },
                 payment: {
                     select: {
                         amount: true,
+                        paymentDate: true, // Added payment date
                     }
                 }
             },

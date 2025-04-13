@@ -1,21 +1,50 @@
 import { useEffect, useRef } from "react";
 
-interface BookingInteraface {
-  bookingId: number;
-  checkIn: string; // ISO date string
-  checkOut: string; // ISO date string
-  guestEmail: string;
-  guestName: string;
-  guestProfile: string; // URL to profile image
-  numberOfDays: number;
-  paymentStatus: string;
+interface Image {
+  id: number;
+  imageUrl: string;
+  hotelId: number;
+}
+
+interface Hotel {
+  hotelName: string;
+  images: Image[];
+}
+
+interface Room {
+  id: number;
+  isReserved: boolean;
   roomNumber: number;
-  hotelImage:string;
-  hotelName:string;
+  hotelId: number;
+}
+
+interface User {
+  fullName: string;
+  profileImage: string;
+  email: string;
+}
+
+interface Payment {
+  amount: number;
+  paymentDate: string;
+}
+
+interface ReservationInterface {
+  id: number;
+  checkIn: string;
+  checkOut: string;
+  amountPaid: number;
+  reservationsDuration: number;
+  ReservationStatus: 'active' | 'pending';
+  paymentStatus: 'success' | 'pending';
+  room: Room;
+  hotel: Hotel;
+  user: User;
+  payment: Payment;
 }
 
 interface ReservationDetailCardProps {
-  reservation: BookingInteraface | null;
+  reservation: ReservationInterface;
   onClose: () => void;
 }
 
@@ -110,9 +139,12 @@ export default function ReservationDetailCard({
 
   if (!reservation) return null;
 
-  const statusDetails = getStatusDetails(reservation.paymentStatus);
-  const totalNights = reservation.numberOfDays || 0;
-  const perNight = 500;
+  const statusDetails = getStatusDetails(reservation.ReservationStatus);
+  const totalNights = reservation.reservationsDuration || 0;
+  const perNight = reservation.amountPaid / totalNights || 0;
+  
+  // Get the first hotel image if available
+  const hotelImage = reservation.hotel?.images?.[0]?.imageUrl || "/placeholder.svg";
 
   return (
     <div className="fixed inset-0 backdrop-brightness-60 backdrop-blur-xl bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -154,7 +186,7 @@ export default function ReservationDetailCard({
             <span className="font-medium">
               Reservation {statusDetails.label}
             </span>
-            <span className="text-sm">ID: #{reservation.bookingId}</span>
+            <span className="text-sm">ID: #{reservation.id}</span>
           </div>
 
           {/* Hotel and room info */}
@@ -162,21 +194,21 @@ export default function ReservationDetailCard({
             <div className="w-full md:w-1/3">
               <div className="aspect-video rounded-lg overflow-hidden bg-gray-100">
                 <img
-                  src={reservation.hotelImage || "/placeholder.svg"}
-                  alt={"Hotel"}
+                  src={hotelImage}
+                  alt={reservation.hotel?.hotelName || "Hotel"}
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
             <div className="w-full md:w-2/3">
               <h3 className="text-xl font-bold text-gray-900 mb-2">
-                {reservation.hotelName}
+                {reservation.hotel?.hotelName || "Hotel"}
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Room Number</p>
                   <p className="font-medium">
-                    {reservation.roomNumber || "N/A"}
+                    {reservation.room?.roomNumber || "N/A"}
                   </p>
                 </div>
                 <div>
@@ -202,7 +234,7 @@ export default function ReservationDetailCard({
                 <div>
                   <p className="text-sm text-gray-500">Total Amount</p>
                   <p className="font-medium">
-                    {formatCurrency(500 * totalNights || 0)}
+                    {formatCurrency(reservation.amountPaid || 0)}
                   </p>
                 </div>
               </div>
@@ -216,15 +248,15 @@ export default function ReservationDetailCard({
             </h4>
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
-                {reservation.guestProfile ? (
+                {reservation.user?.profileImage ? (
                   <img
-                    src={reservation.guestProfile || "/placeholder.svg"}
-                    alt={reservation.guestName || "Guest"}
+                    src={reservation.user.profileImage}
+                    alt={reservation.user?.fullName || "Guest"}
                     className="h-full w-full object-cover"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-600 font-medium">
-                    {reservation.guestName
+                    {reservation.user?.fullName
                       ?.split(" ")
                       .map((n) => n[0])
                       .join("")
@@ -235,10 +267,10 @@ export default function ReservationDetailCard({
               </div>
               <div>
                 <p className="font-medium text-gray-900">
-                  {reservation.guestName || "Guest"}
+                  {reservation.user?.fullName || "Guest"}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {reservation.guestEmail || "No email"}
+                  {reservation.user?.email || "No email"}
                 </p>
               </div>
             </div>
@@ -257,7 +289,7 @@ export default function ReservationDetailCard({
               <div>
                 <p className="text-sm text-gray-500">Payment Date</p>
                 <p className="font-medium">
-                  {formatDate(reservation.checkIn || "")}
+                  {formatDate(reservation.payment?.paymentDate || reservation.checkIn || "")}
                 </p>
               </div>
               <div>
@@ -277,7 +309,7 @@ export default function ReservationDetailCard({
               <div>
                 <p className="text-sm text-gray-500">Amount Paid</p>
                 <p className="font-medium">
-                  {formatCurrency(500 * totalNights || 0)}
+                  {formatCurrency(reservation.amountPaid || reservation.payment?.amount || 0)}
                 </p>
               </div>
             </div>
@@ -294,13 +326,13 @@ export default function ReservationDetailCard({
                   {formatCurrency(perNight)} × {totalNights} nights
                 </p>
                 <p className="font-medium">
-                  {formatCurrency(perNight * totalNights)}
+                  {formatCurrency(reservation.amountPaid || 0)}
                 </p>
               </div>
               <div className="flex justify-between pt-2 border-t border-gray-200">
                 <p className="font-semibold">Total</p>
                 <p className="font-semibold">
-                  {formatCurrency(500 * totalNights || 0)}
+                  {formatCurrency(reservation.amountPaid || 0)}
                 </p>
               </div>
             </div>

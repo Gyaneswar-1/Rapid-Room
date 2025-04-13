@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import { getHostStats } from "../../../service/manageHostData/getHostStats";
 import SetUserDataToStore from "../../../service/userdata/SetDataToStore";
+import { userStoreType } from "../../../store/reducers/user.reducers";
 import EarningsOverview from "../components/analytics/EarningsOverview";
 import { useEffect, useState } from "react";
+import { RootState } from "../../../store/store";
 
 interface HotelStatsDataInterface {
   totalRevenue: {
@@ -32,7 +35,12 @@ interface HotelStatsDataInterface {
 }
 
 export default function HostDashboard() {
-  const [hotelStats, setHotelStats] = useState<HotelStatsDataInterface | null>(null);
+  const [hotelStats, setHotelStats] = useState<HotelStatsDataInterface | null>(
+    null
+  );
+  const { fullName }: userStoreType = useSelector(
+    (state: RootState) => state.userReducer
+  );
 
   useEffect(() => {
     const fetchHostStats = async () => {
@@ -59,16 +67,14 @@ export default function HostDashboard() {
   return (
     <div className="flex h-screen bg-gray-50">
       <SetUserDataToStore />
-
       <main className="flex-1 overflow-y-auto p-4 md:p-6">
         <div className="max-w-7xl mx-auto space-y-6">
-          {/* Page Title */}
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Host Dashboard</h1>
             <p className="text-gray-600 mt-1">
-              Welcome back,{" "}
+              Welcome back,
               <span className="font-bold text-teal-800 text-lg">
-                {hostData.name}
+                {fullName}
               </span>
               . Here's an overview of your hosting activity.
             </p>
@@ -85,7 +91,6 @@ export default function HostDashboard() {
                   <div className="text-2xl font-bold">
                     {hotelStats?.totalRevenue?._sum?.hostAmount || 0}
                   </div>
-                  <p className="text-xs text-gray-500">+15% from last month</p>
                 </div>
                 <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
                   <div className="flex flex-row items-center justify-between pb-2">
@@ -93,8 +98,9 @@ export default function HostDashboard() {
                       Bookings
                     </h3>
                   </div>
-                  <div className="text-2xl font-bold">{hotelStats?.TotalBookings || 0}</div>
-                  <p className="text-xs text-gray-500">+8% from last month</p>
+                  <div className="text-2xl font-bold">
+                    {hotelStats?.TotalBookings || 0}
+                  </div>
                 </div>
                 <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
                   <div className="flex flex-row items-center justify-between pb-2">
@@ -105,7 +111,6 @@ export default function HostDashboard() {
                   <div className="text-2xl font-bold">
                     {hotelStats?.OccupancyRate?._avg?.numberOfRooms || 0}%
                   </div>
-                  <p className="text-xs text-gray-500">+5% from last month</p>
                 </div>
                 <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
                   <div className="flex flex-row items-center justify-between pb-2">
@@ -113,8 +118,9 @@ export default function HostDashboard() {
                       Average Rating
                     </h3>
                   </div>
-                  <div className="text-2xl font-bold">{hotelStats?.averageRating || 0}</div>
-                  <p className="text-xs text-gray-500">+0.2 from last month</p>
+                  <div className="text-2xl font-bold">
+                    {hotelStats?.averageRating || 0}
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,7 +129,10 @@ export default function HostDashboard() {
             totalEarnings={hotelStats?.totalRevenue?._sum?.hostAmount || 0}
             pendingPayouts={hostData.pendingPayouts}
             totalReservations={hostData.totalReservations}
-            activeListings={hostData.activeListings} monthlyPayments={[]} averageRating={0}          />
+            activeListings={hostData.activeListings}
+            monthlyPayments={hotelStats?.monthlyPayments || []}
+            averageRating={hotelStats?.averageRating || 0}
+          />
         </div>
       </main>
     </div>

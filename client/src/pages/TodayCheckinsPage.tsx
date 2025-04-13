@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import ReservationDetailCard from "../components/ReservationDetailCard"
-import { Link } from "react-router-dom"
 import { getTodayCheckins } from "../service/manageHostData/getTodayCheckins"
 
 interface BookingInteraface {
@@ -30,7 +29,6 @@ export default function TodayCheckinsPage() {
         const response = await getTodayCheckins()
         console.log(response);
         if (response.success) {
-          // Filter for today's check-ins
           const todayCheckins = filterTodayCheckins(response.data || [])
           setReservations(todayCheckins)
           setError("")
@@ -146,33 +144,15 @@ export default function TodayCheckinsPage() {
         <div className="max-w-7xl mx-auto space-y-6">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
-              <div className="flex items-center gap-2">
-                <Link to="/reservations" className="text-teal-600 hover:text-teal-700 font-medium flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-1"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  Back to All Reservations
-                </Link>
-              </div>
               <h1 className="text-2xl font-bold tracking-tight mt-2">Today's Check-ins</h1>
               <p className="text-gray-500 mt-1">
                 {getTodayDate()} • Current time: {getCurrentTime()}
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                Export List
-              </button>
-              <button className="px-3 py-1.5 text-sm bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+              <button className="px-3 py-1.5 text-sm bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2" onClick={()=>{
+                location.reload()
+              }}>
                 Refresh
               </button>
             </div>
@@ -237,10 +217,6 @@ export default function TodayCheckinsPage() {
 
                       {/* Check-in details */}
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:flex-1 mt-3 md:mt-0">
-                        <div>
-                          <div className="text-xs uppercase font-medium text-gray-500">Check-in Time</div>
-                          <div className="text-sm font-medium">{formatTime(reservation.checkIn)}</div>
-                        </div>
                         <div>
                           <div className="text-xs uppercase font-medium text-gray-500">Check-out Date</div>
                           <div className="text-sm font-medium">{formatDate(reservation.checkOut)}</div>
