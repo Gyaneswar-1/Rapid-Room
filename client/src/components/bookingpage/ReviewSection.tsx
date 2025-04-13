@@ -1,9 +1,12 @@
 import { Star } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 
 //state management
 import { AppDispatch, RootState } from "../../store/store";
 import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
+import AddRatingCard from "./AddRatingCard";
+import { useState } from "react";
 
 type Review = {
   id: number;
@@ -25,6 +28,9 @@ const ReviewSection = ({ overalRating, totalReviews, reviews }: reviewType) => {
     (state: RootState) => state.toogleAllReviewsReducer
   );
   const dispatch: AppDispatch = useDispatch();
+  const [showAddHotelCard, setShowAddHotelCard] = useState(false);
+  const [searchParams] = useSearchParams();
+  const hotelId = searchParams.get("hotelId");
 
   return (
     <div className="py-6 border-b border-gray-200">
@@ -82,14 +88,32 @@ const ReviewSection = ({ overalRating, totalReviews, reviews }: reviewType) => {
         ))}
       </div>
 
-      <button
-        className="mt-6 px-4 py-2 border border-gray-900 rounded-md font-medium hover:bg-gray-50"
-        onClick={() => {
-          dispatch(toogleAllReviews(showAllReview));
-        }}
-      >
-        Show all {totalReviews} reviews
-      </button>
+      <div className=" flex gap-3">
+        <button
+          className="mt-6 px-4 py-2 border border-gray-900 rounded-md font-medium hover:bg-gray-50"
+          onClick={() => {
+            dispatch(toogleAllReviews(showAllReview));
+          }}
+        >
+          Show all {totalReviews} reviews
+        </button>
+        <button
+          className="mt-6 px-4 py-2 border border-teal-600 bg-teal-600 rounded-md font-medium text-white hover:bg-teal-700"
+          onClick={() => {
+            setShowAddHotelCard(true);
+          }}
+        >
+          Add
+        </button>
+      </div>
+      {
+        showAddHotelCard && (
+          <AddRatingCard 
+            hotelId={Number(hotelId)} 
+            setShowAddHotelCard={() => setShowAddHotelCard(false)} 
+          />
+        )
+      }
     </div>
   );
 };

@@ -25,7 +25,7 @@ import { setHotelIdForCheckIn } from "../store/reducers/checkIn.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
 import { useNavigate } from "react-router-dom";
-
+import AmenitiesSection from "../components/bookingpage/AmenitiesSection";
 
 export default function BookingPage() {
   const location = useLocation();
@@ -54,8 +54,21 @@ export default function BookingPage() {
     totalReviews,
     overalRating,
     guestAllowed,
-    address = { city: "", state: "", country: "", latitude: "", longitude: "", street: "" },
-    host = { fullName: "", profileImage: "", hostExperience: 0, hostRating: 0, hostResponseRate: 0 },
+    address = {
+      city: "",
+      state: "",
+      country: "",
+      latitude: "",
+      longitude: "",
+      street: "",
+    },
+    host = {
+      fullName: "",
+      profileImage: "",
+      hostExperience: 0,
+      hostRating: 0,
+      hostResponseRate: 0,
+    },
     description,
     reviews = [],
   } = useSelector((state: RootState) => state.singleHotelReducer);
@@ -87,7 +100,6 @@ export default function BookingPage() {
   }
 
   return (
-    
     <>
       <Navbar show={true} />
       <div className="min-h-screen bg-white md:py-14">
@@ -116,7 +128,29 @@ export default function BookingPage() {
               />
 
               <HotelDescription description={description} />
-
+              <AmenitiesSection
+                hasWifi={true}
+                hasTV={true}
+                hasKitchen={true}
+                hasBalcony={true}
+                hasWorkspace={true}
+                hasWashingMachine={true}
+                hasGarden={true}
+                hasParking={true}
+                hasAirConditioning={true}
+                hasDiningArea={true}
+                hasPool={true}
+                hasHotTub={true}
+                hasFirepit={true}
+                hasBBQGrill={true}
+                hasPoolTable={true}
+                hasExerciseEquipment={true}
+                hasOutdoorShower={true}
+                hasSmokeAlarm={true}
+                hasFirstAidKit={true}
+                hasFireExtinguisher={true}
+                hasAccessibility={true}
+              />
               <RatingSection
                 accuracy={reviews[0]?.accuracyRating || 0}
                 checkIn={reviews[0]?.checkInRating || 0}

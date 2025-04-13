@@ -21,7 +21,6 @@ AdminRouter.route("/hotels/:hotelId/reject").put(admin_rejectHotel);
 
 AdminRouter.route("/users").get(admin_getAllUsers);
 
-
 AdminRouter.route("/host").get(admin_getAllHosts);
 AdminRouter.route("/host/:userId/approve").put(admin_approveHost);
 AdminRouter.route("/host/:userId/reject").put(admin_rejectHost);

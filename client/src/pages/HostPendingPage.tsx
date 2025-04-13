@@ -1,9 +1,12 @@
 import { FaHourglassHalf, FaCheckCircle, FaEnvelope } from "react-icons/fa";
+import Navbar from "../components/Navbar/Navbar";
 
 function HostPendingPage() {
   return (
+    <>
+    <Navbar show={false}/>
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8  mt-12">
         <div className="text-center">
           <FaHourglassHalf className="mx-auto text-yellow-500 text-6xl mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -46,32 +49,11 @@ function HostPendingPage() {
             </div>
           </div>
         </div>
-
-        <div className="border-t border-gray-200 pt-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
-            What happens next?
-          </h2>
-          <ul className="list-disc pl-5 text-gray-600 mb-6 space-y-2">
-            <li>
-              You'll receive an email notification once your application is
-              approved.
-            </li>
-            <li>
-              After approval, you'll be able to list your properties and start
-              hosting.
-            </li>
-            <li>
-              You may be contacted if additional information is needed for your
-              application.
-            </li>
-          </ul>
-        </div>
-
-        <div className="bg-blue-50 p-4 rounded-lg flex items-center">
-          <FaEnvelope className="text-blue-500 mr-3 text-xl" />
+        <div className="bg-teal-50 p-4 rounded-lg flex items-center">
+          <FaEnvelope className="text-teal-500 mr-3 text-xl" />
           <div>
-            <p className="text-blue-700 font-medium">Have questions?</p>
-            <p className="text-blue-600">
+            <p className="text-teal-700 font-medium">Have questions?</p>
+            <p className="text-teal-600">
               Contact our support team at{" "}
               <a href="mailto:support@rapidroom.com" className="underline">
                 support@rapidroom.com
@@ -81,6 +63,7 @@ function HostPendingPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

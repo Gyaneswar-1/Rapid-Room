@@ -81,8 +81,7 @@ function RouterHandler() {
             </Route>
             <Route
               path="dashboard"
-              element={<IsHost element={<HostLayout />} />}
-            >
+              element={<IsHost element={<HostLayout />} />}>
               <Route index element={<HostDashboard />} />
               <Route path="hotels" element={<HostedHotels />} />
               <Route path="reservations" element={<ReservationsPage />} />
