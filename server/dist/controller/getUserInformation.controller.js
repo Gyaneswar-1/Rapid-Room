@@ -2,7 +2,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import prisma from "../db/db.config.js";
 export const getUserInformation = async (req, res) => {
-    console.log(req.user.id);
     try {
         const userInformation = await prisma.users.findUnique({
             where: {
@@ -35,7 +34,6 @@ export const getUserInformation = async (req, res) => {
                 status: true
             },
         });
-        console.log(userInformation);
         if (!userInformation) {
             return res
                 .status(404)

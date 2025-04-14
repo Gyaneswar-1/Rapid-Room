@@ -1,4 +1,4 @@
-import { Edit, Loader, Star, Trash, X } from "lucide-react";
+import { Edit, Eye, Loader, Star, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getHostHotels } from "../../../../service/manageHostData/getHostHotels";
@@ -148,10 +148,10 @@ export function HostedHotels() {
                   {hotel.bookedRoomsPercentage}
                 </div>
                 <div className="mt-3 flex gap-2">
-                  <button className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-                    <Edit className="mr-1 h-4 w-4" />
-                    Edit
-                  </button>
+                  <Link to={`/book-hotel?hotelId=${hotel.id}`} className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                    <Eye  className="mr-1 h-4 w-4" />
+                    View
+                  </Link>
                   <button 
                     onClick={() => setHotelToDelete(hotel.id)}
                     className="flex-1 flex items-center justify-center px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-red-600 hover:bg-red-50 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"

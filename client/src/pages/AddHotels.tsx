@@ -349,6 +349,7 @@ const AddHotelForm = () => {
   // Function to validate section before moving to next
   const validateSection = async (
     currentSection: string,
+    nextSection: string
   ) => {
     let fieldsToValidate: (keyof FormFields)[] = [];
 

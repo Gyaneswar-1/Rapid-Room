@@ -2,7 +2,7 @@ import {
   HomeIcon,
   BuildingIcon,
   CalendarIcon,
-  MarsIcon,
+  CircleX ,
   IndianRupee,
   TicketCheck
 } from "lucide-react"
@@ -39,14 +39,14 @@ export function HostSidebar({ isSidebarOpen, setIsSidebarOpen }: HostSidebarProp
         }`}
       >
         <div className="h-full flex flex-col">
-          <div className="h-4 flex items-center justify-between px-4">
+          <div className="h-4 flex items-center justify-between mt-5 px-4">
             <button
               type="button"
               className="text-gray-500 hover:text-gray-600 md:hidden"
               onClick={() => setIsSidebarOpen(false)}
             >
               <span className="sr-only">Close sidebar</span>
-              <MarsIcon className="h-6 w-6" aria-hidden="true" />
+              <CircleX className="h-6 w-6 text-red-950" aria-hidden="true" />
             </button>
           </div>
 
