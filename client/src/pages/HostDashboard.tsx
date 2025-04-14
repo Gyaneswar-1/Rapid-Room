@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import { motion } from "framer-motion";
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
+import Footer from "../components/Navbar/Footer";
 
 export default function HostLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -72,6 +73,7 @@ export default function HostLayout() {
           </main>
         </div>
       </div>
+          <Footer/>
     </div>
   );
 }

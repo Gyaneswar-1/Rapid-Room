@@ -49,21 +49,21 @@ export default function AboutUs() {
   const teamMembers = [
     {
       name: "Bibek",
-      role: "Lead Devloper",
-      image: "/placeholder.svg?height=150&width=150",
-      link:""
+      role: "",
+      image: "https://media.licdn.com/dms/image/v2/D4E35AQEBGVQMzfTbrQ/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1738214435919?e=1745211600&v=beta&t=ePU5qiEx-VoR32-BLglqRed6Ezkxwq7KYG1WNmt2Mi0",
+      link:"https://www.linkedin.com/in/bibek-samal/"
     },
     {
       name: "Gyaneswar Rout",
-      role: "2nd Lead Dev",
+      role: "",
       image: "https://gyaneswar.me/GyaneswarME.jpg",
       link:"https://gyaneswar.me"
     },
     {
-      name: "Michael Rodriguez",
-      role: "Lead Developer",
+      name: "Arpita Biswal",
+      role: "",
       image: "/placeholder.svg?height=150&width=150",
-      link:""
+      link:"https://www.instagram.com/p/CzDatyTSdZdeUlEfAP8CdoYeySB6n00O-V0hLk0/"
     },
     {
       name: "Emily Patel",

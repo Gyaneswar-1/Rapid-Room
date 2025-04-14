@@ -4,6 +4,8 @@ import { Star, X } from "lucide-react";
 import { AppDispatch, RootState } from "../../store/store";
 import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
+import { AiOutlineDelete } from "react-icons/ai";
+import { notifyError, notifyInfo, notifySuccess, notifyWarn } from "../../lib/Toast";
 
 type Review = {
   id: number;
@@ -156,27 +158,36 @@ const AllReviews = ({
                   key={review.id}
                   className="border-b border-gray-100 pb-6 last:border-0"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-full overflow-hidden">
-                      {review.avatar ? (
-                        <img
-                          src={review.avatar}
-                          alt={review.author}
-                          width={40}
-                          height={40}
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center text-base font-semibold">
-                          {review.author.charAt(0).toUpperCase()}
-                        </div>
-                      )}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3 mb-3 ">
+                      <div className="h-10 w-10 rounded-full overflow-hidden">
+                        {review.avatar ? (
+                          <img
+                            src={review.avatar}
+                            alt={review.author}
+                            className="object-cover h-full w-full"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-base font-semibold">
+                            {review.author.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-medium">{review.author}</p>
+                        <p className="text-sm text-gray-500">{review.date}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">{review.author}</p>
-                      <p className="text-sm text-gray-500">{review.date}</p>
-                    </div>
+                    <button className="text-xl cursor-pointer text-red-500" onClick={()=>{
+                      notifyWarn("Not set up yet !")
+                      notifySuccess("Not set up yet !")
+                      notifyError("Not set up yet !")
+                      notifyInfo("Not set up yet !")
+                    }}>
+                      <AiOutlineDelete />
+                    </button>
                   </div>
+
                   <div className="flex items-center gap-1 mb-2">
                     {[...Array(5)].map((_, i) => (
                       <Star

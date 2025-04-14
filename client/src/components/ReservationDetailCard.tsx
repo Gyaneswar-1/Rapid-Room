@@ -70,8 +70,16 @@ export default function ReservationDetailCard({
   };
 
   // Map reservation status to display status and color
-  const getStatusDetails = (status: string) => {
-    switch (status.toLowerCase()) { // Add toLowerCase() for case-insensitive comparison
+  const getStatusDetails = (status: string | undefined) => {
+    if (!status) {
+      return {
+        label: "Unknown",
+        bgColor: "bg-gray-100",
+        textColor: "text-gray-800",
+      };
+    }
+    
+    switch (status.toLowerCase()) {
       case "active":
         return {
           label: "Confirmed",

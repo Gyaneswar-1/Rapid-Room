@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getHostHotels } from "../../../../service/manageHostData/getHostHotels";
 import { deleteHotel } from "../../../../service/manageHostData/deleteHotel";
 import { notifyError, notifySuccess } from "../../../../lib/Toast";
+import { BiError } from "react-icons/bi";
 
 interface HotelsDataInterface {
   address: {
@@ -13,14 +14,12 @@ interface HotelsDataInterface {
   bookedRoomsPercentage: number;
   hotelName: string;
   id: number;
-  images: images[];
+  images: string;
   ratingCount: number;
-  reviews: [];
+  reviews: any[]; // Using any[] for now, consider creating a proper Review interface
   status: "APPROVED" | "PENDING" | "REJECTED";
 }
-interface images {
-  url: string;
-}
+
 
 export function HostedHotels() {
   const [loader, showLoader] = useState(false);
@@ -73,6 +72,14 @@ export function HostedHotels() {
     return (
       <div className="flex w-full h-full items-center justify-center">
         <Loader className="animate-spin h-10 w-10" />
+      </div>
+    );
+  }
+  if(error){
+    return (
+      <div className="flex flex-col w-full h-full items-center justify-center text-red-600">
+        <BiError className=" h-40 w-40 text-red-600" />
+        <p>Oh no Something Went wrong</p>
       </div>
     );
   }
@@ -133,7 +140,7 @@ export function HostedHotels() {
                     </span>
                   </div>
                   <span className="text-sm text-gray-500">
-                    ({hotel.reviews} reviews)
+                    ({hotel.reviews.length} reviews)
                   </span>
                 </div>
                 <div className="mt-2 text-sm">

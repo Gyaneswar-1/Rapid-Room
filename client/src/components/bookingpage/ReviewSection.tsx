@@ -1,12 +1,9 @@
 import { Star } from "lucide-react";
 
-
 //state management
 import { AppDispatch, RootState } from "../../store/store";
 import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
-
-
 
 type Review = {
   id: number;
@@ -27,10 +24,8 @@ const ReviewSection = ({ overalRating, totalReviews, reviews }: reviewType) => {
   const { showAllReview } = useSelector(
     (state: RootState) => state.toogleAllReviewsReducer
   );
+  
   const dispatch: AppDispatch = useDispatch();
-  
-  
-  
 
   return (
     <div className="py-6 border-b border-gray-200">
@@ -56,9 +51,7 @@ const ReviewSection = ({ overalRating, totalReviews, reviews }: reviewType) => {
                   <img
                     src={review.avatar}
                     alt={review.author}
-                    width={40}
-                    height={40}
-                    className="object-cover"
+                    className="object-cover h-full w-full"
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center text-base font-semibold">
@@ -97,9 +90,7 @@ const ReviewSection = ({ overalRating, totalReviews, reviews }: reviewType) => {
         >
           Show all {totalReviews} reviews
         </button>
-        
       </div>
-      
     </div>
   );
 };

@@ -6,29 +6,35 @@ export const getuserData = async () => {
     const response = await axios.get(`${API}/user/getinfo`, {
       withCredentials: true,
     });
+    console.log("User data response:", response);
+    
     if (response.data.success === true) {
+      const userData = response.data.data;
+      
+      const address = userData.address || {};
+      
       return {
         success: true,
-        id: response.data.data.id,
-        email: response.data.data.email,
-        fullName: response.data.data.fullName,
-        phoneNumber: response.data.data.phoneNumber,
-        profileImage: response.data.data.profileImage,
-        GovID: response.data.data.GovID,
-        isHost: response.data.data.isHost,
-        createdAt: response.data.data.createdAt,
-        hostExperience: response.data.data.hostExperience,
-        hostRating: response.data.data.hostRating,
-        hostResponseRate: response.data.data.hostResponseRate,
-        street: response.data.data.address.street,
-        city: response.data.data.address.city,
-        state: response.data.data.address.state,
-        zipCode: response.data.data.address.zipCode,
-        country: response.data.data.address.country,
-        latitude: response.data.data.address.latitude,
-        longitude: response.data.data.address.longitude,
-        status: response.data.data.status,
-        upiID: response.data.data.upiID, // Added upiID here
+        id: userData.id,
+        email: userData.email,
+        fullName: userData.fullName,
+        phoneNumber: userData.phoneNumber,
+        profileImage: userData.profileImage,
+        GovID: userData.GovID,
+        isHost: userData.isHost,
+        createdAt: userData.createdAt,
+        hostExperience: userData.hostExperience,
+        hostRating: userData.hostRating,
+        hostResponseRate: userData.hostResponseRate,
+        street: address.street || "",
+        city: address.city || "",
+        state: address.state || "",
+        zipCode: address.zipCode || "",
+        country: address.country || "",
+        latitude: address.latitude || null,
+        longitude: address.longitude || null,
+        status: userData.status,
+        upiID: userData.upiID || "", 
       };
     }
     return {
@@ -36,6 +42,7 @@ export const getuserData = async () => {
       data: null,
     };
   } catch (error) {
+    console.error("Error fetching user data:", error);
     return {
       success: false,
       data: null,

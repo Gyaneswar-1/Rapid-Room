@@ -7,6 +7,7 @@ export const getUserInformation = async (
     req: Request | any,
     res: Response | any,
 ) => {
+    
     try {
         const userInformation = await prisma.users.findUnique({
             where: {
@@ -41,8 +42,8 @@ export const getUserInformation = async (
         });
         if (!userInformation) {
             return res
-                .status(404)
-                .json(
+            .status(404)
+            .json(
                     new ApiError(
                         false,
                         {},
