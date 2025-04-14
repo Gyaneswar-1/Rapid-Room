@@ -124,8 +124,8 @@ export default function BookingPage() {
   return (
     <>
       <Navbar show={true} />
-      <div className="min-h-screen bg-white md:py-14">
-        <main className="container mx-auto py-6 px-1 sm:px-10 pt-14 md:px-26">
+      <div className="min-h-screen bg-white md:py-14 ">
+        <main className="container md:mx-auto py-6 px-1 sm:px-10 pt-14 md:px-26">
           <TopSection
             type={hotelName}
             overalRating={overalRating}

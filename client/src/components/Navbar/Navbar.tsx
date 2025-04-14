@@ -17,7 +17,7 @@ function Navbar({ show }: NavbarProps) {
   return (
     <div className="fixed w-full bg-white z-50">
       <div className="py-2 ">
-        <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-4 px-4">
+        <div className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-4 px-2">
           <div className="flex items-center justify-between gap-3 md:gap-0">
             <div
               className="flex items-center gap-2 cursor-pointer transition hover:opacity-80"

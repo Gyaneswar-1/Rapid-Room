@@ -3,8 +3,8 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import HostSidebar from "@/components/host/host-sidebar"
-import HostHeader from "@/components/host/host-header"
+import HostSidebar from "../components/analytics/HostSidebar"
+import HostHeader from "../components/analytics/HostHeader"
 
 export default function HostLayout({
   children,
@@ -34,17 +34,13 @@ export default function HostLayout({
     }
   }, [])
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
+
 
   return (
     <div className="flex h-screen bg-gray-50">
       <HostSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
       <div className="flex flex-col flex-1 overflow-hidden">
         <HostHeader
-          hostName="John Smith"
-          hostAvatar="/placeholder.svg?height=40&width=40"
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />

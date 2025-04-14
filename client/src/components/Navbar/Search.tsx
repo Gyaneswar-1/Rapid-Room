@@ -37,7 +37,7 @@ function Search() {
       <div className="flex items-center justify-center bg-white rounded-full border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-200 p-1">
         <input
           type="text"
-          className="flex-grow px-4 py-2 text-sm bg-transparent outline-none placeholder-gray-400 rounded-full"
+          className="flex-grow md:px-4 md:py-2 text-sm bg-transparent outline-none placeholder-gray-400 rounded-full"
           placeholder="Search destinations..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
@@ -45,7 +45,7 @@ function Search() {
 
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center justify-center cursor-pointer px-3 py-2 mr-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors duration-200"
+          className="flex items-center justify-center cursor-pointer md:px-3 py-2 mr-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors duration-200"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

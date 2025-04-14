@@ -36,7 +36,7 @@ export default function HotelsView() {
   async function getHotels() {
     try {
       setLoading(true);
-      const response = await admin_getAllHotels(1, 100);
+      const response = await admin_getAllHotels(1, 10000);
       setHotels(response.data);
     } catch (error) {
       console.error(error);
@@ -61,7 +61,6 @@ export default function HotelsView() {
 
   // Function to handle approval/rejection
   const handleAction = (updatedHotel: HotelInterface) => {
-    // Update the hotels array with the updated hotel
     setHotels((prevHotels) =>
       prevHotels.map((hotel) =>
         hotel.id === updatedHotel.id ? updatedHotel : hotel

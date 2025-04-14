@@ -73,14 +73,14 @@ function RouterHandler() {
             <Route path="profile">
               <Route index element={<UserProfile />} />
               <Route path="edit" element={<EditProfilePage />} />
-              <Route path="wishlist" element={<WishlistPage />} />
-              <Route path="bookings" element={<UserBookings />} />
               <Route path="security">
                 <Route path="password" />
                 <Route path="delete-account" element={<DeleteAccount />} />
                 <Route path="reset-password" element={<ResetPasswordPage />} />
               </Route>
             </Route>
+              <Route path="wishlist" element={<WishlistPage />} />
+              <Route path="bookings" element={<UserBookings />} />
             <Route
               path="dashboard"
               element={<IsHost element={<HostLayout />} />}>

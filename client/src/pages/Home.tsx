@@ -48,7 +48,6 @@ function Home() {
   const [showLoader, setShowLoader] = useState(true)
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const [page,setPage] = useState(1)
   
   const categoryParam = searchParams.get('category')
 
@@ -62,7 +61,7 @@ function Home() {
 
   useEffect(() => {
     if(!hasHotelsArray){
-      getHotels(1, 100)
+      getHotels(1, 10000)
       .then(async (res) => {
         if (res.success === true) {
           setShowLoader(false)

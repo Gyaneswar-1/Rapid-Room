@@ -1,7 +1,6 @@
 
 
 import { Menu } from "lucide-react"
-import { useLocation } from "react-router-dom"
 
 interface HeaderProps {
   isMobile: boolean
@@ -10,26 +9,8 @@ interface HeaderProps {
 }
 
 export default function Header({ isMobile, isSidebarOpen, setIsSidebarOpen }: HeaderProps) {
-  const { pathname } = useLocation();
 
   // Get page title based on current path
-  const getPageTitle = () => {
-    if (pathname.startsWith("/admin")) {
-      switch (pathname) {
-        case "/admin/hotels":
-          return "Hotel Management";
-        case "/admin/hosts":
-          return "Host Verification";
-        case "/admin/users":
-          return "User Management";
-        case "/admin/settings":
-          return "Settings";
-        default:
-          return "Admin Dashboard";
-      }
-    }
-    return "Dashboard";
-  };
 
   return (
     <header className="bg-white shadow-sm z-10">

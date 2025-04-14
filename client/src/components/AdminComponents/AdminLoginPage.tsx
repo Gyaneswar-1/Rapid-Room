@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { RainbowIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiLeftArrow } from "react-icons/bi";
 import MainLogo from "client/src/assets/images/MainLogo.png";
@@ -42,9 +41,9 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
+        <div className="text-center">"lucide lucide-circle-help w-6 h-6"
           <div className="flex justify-center">
-              <img src={MainLogo} className="h-10 w-12" />
+              <img src={MainLogo} className="h-10 w-10" />
           </div>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
             RapidRoom Admin

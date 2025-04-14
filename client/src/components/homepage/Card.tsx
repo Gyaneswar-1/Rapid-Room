@@ -1,7 +1,4 @@
-
-
 import { IoStar } from "react-icons/io5"
-import { FaHeart } from "react-icons/fa6"
 import { motion } from "motion/react"
 
 function Card({ hotelName, perNight, country, city, onclick, image, overalRating }: any) {

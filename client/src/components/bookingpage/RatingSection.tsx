@@ -83,7 +83,7 @@ const RatingSection = ({cleanliness,accuracy,checkIn,communication,location,valu
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">Communication</span>
+                      <span className="font-medium">Comm</span>
                       <span className="text-sm text-gray-500">
                         {communication}
                       </span>

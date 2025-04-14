@@ -69,7 +69,7 @@ export default function AdminDashboard() {
 
   async function getHotels() {
     try {
-      const response = await getAdminHotels(1, 10);
+      const response = await getAdminHotels(1, 10000);
       console.log("ressss", response.data);
       setHotels(response.data);
     } catch (error) {

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom"
-import { CiHeart, CiMail, CiSearch, CiUser } from "react-icons/ci"
+import { CiHeart,  CiSearch, CiUser } from "react-icons/ci"
 import { FaRegKissWinkHeart } from "react-icons/fa"
+import { BookMarkedIcon } from "lucide-react"
 
 function BottomNav() {
   return (
@@ -19,7 +20,7 @@ function BottomNav() {
         </NavLink>
 
         <NavLink
-          to="/profile/wishlist"
+          to="/wishlist"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
               isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
@@ -31,7 +32,7 @@ function BottomNav() {
         </NavLink>
 
         <NavLink
-          to="/tips"
+          to="/comeingsoon"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
               isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
@@ -43,15 +44,15 @@ function BottomNav() {
         </NavLink>
 
         <NavLink
-          to="/messages"
+          to="/bookings"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center w-full py-1 px-2 rounded-lg transition-colors ${
               isActive ? "text-primary font-medium" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             }`
           }
         >
-          <CiMail className="text-2xl" />
-          <span className="text-xs mt-1">Messages</span>
+          <BookMarkedIcon className="text-2xl" />
+          <span className="text-xs mt-1">Bookings</span>
         </NavLink>
 
         <NavLink

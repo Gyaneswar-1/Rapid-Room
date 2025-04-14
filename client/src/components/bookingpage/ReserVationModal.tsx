@@ -73,12 +73,7 @@ export default function ReservationModal({
     return `${year}-${month}-${day}`;
   };
 
-  const parseDateString = (dateStr: string): Date => {
-    const [day, month, year] = dateStr
-      .split("-")
-      .map((num) => parseInt(num, 10));
-    return new Date(year, month - 1, day);
-  };
+
 
   const calculateNights = (): number => {
     if (!selectedCheckIn || !selectedCheckOut) return 0;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Search, Filter, ChevronDown, Loader } from "lucide-react";
+import { Search, Loader } from "lucide-react";
 import HostsTabs from "./HostsTabs";
 import HostsTable from "./HostsTable";
 import Pagination from "../ui/Pagination";

@@ -5,8 +5,7 @@ import googleLogo from "../../assets/icons/google.logo.png";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { signupTypeFrontend } from "@bibek-samal/traveltrove";
 import { signupManual } from "../../service/exportServices";
-import { useNavigate } from "react-router-dom";
-import { notifyError, notifySuccess } from "../../lib/Toast";
+import { notifyError } from "../../lib/Toast";
 import { setEmail } from "../../store/reducers/email.reducer";
 
 // State management
@@ -33,7 +32,6 @@ const handleFacebookLogin = () => {
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -44,7 +42,7 @@ const Signup = () => {
     (state: RootState) => state.showAuthCardReducer
   );
   const dispatch: AppDispatch = useDispatch();
-  const { email } = useSelector((state: RootState) => state.emailReducer);
+  // const { email } = useSelector((state: RootState) => state.emailReducer);
 
   // React-hook form actions
   const {

@@ -3,7 +3,6 @@ import { addWishlist } from "../../service/wishlist/addWishlist";
 import { useParams, useSearchParams } from "react-router-dom";
 import { removeWishlist } from "../../service/wishlist/removeWishlist";
 import { notifyError, notifySuccess } from "../../lib/Toast";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toogleIsWishListed } from "../../store/reducers/singleHotel.reducer";
 
@@ -102,6 +101,8 @@ const TopSection = ({
   })
   .catch(err => {
     notifySuccess("Failed to copy the link")
+    console.log(err);
+    
   });
         }}
         >

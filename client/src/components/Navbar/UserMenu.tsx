@@ -136,7 +136,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                 <>
                   <MenuItem
                     onClick={() => {
-                      navigate("/messages");
+                      navigate("/comeingsoon");
                       setIsOpen(false);
                     }}
                     label="Messages"
@@ -144,7 +144,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
-                      navigate("/profile/bookings");
+                      navigate("/bookings");
                       setIsOpen(false);
                     }}
                     label="My Bookings"
@@ -152,7 +152,7 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                   />
                   <MenuItem
                     onClick={() => {
-                      navigate("/profile/wishlist");
+                      navigate("/wishlist");
                       setIsOpen(false);
                     }}
                     label="Wishlist"

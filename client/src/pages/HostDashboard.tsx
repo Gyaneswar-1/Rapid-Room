@@ -35,7 +35,7 @@ export default function HostLayout() {
   if (showAnimation) {
     return (
       <>
-        {/* <SetUserDataToStore /> */}
+        <SetUserDataToStore />
         <motion.div
           className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-primary"
           initial={{ opacity: 1 }}

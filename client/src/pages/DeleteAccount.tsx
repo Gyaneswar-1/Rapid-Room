@@ -48,7 +48,7 @@ function DeleteAccount() {
   return (
     <div className=''>
       <Navbar show={false} />
-      <div className="container mx-auto py-8 px-4 max-w-3xl pt-16">
+      <div className="container mx-auto  px-4 max-w-3xl py-16">
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-2xl font-bold text-red-600 flex items-center">
             <Trash2 className="mr-2" size={24} />

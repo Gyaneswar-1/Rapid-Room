@@ -1,11 +1,9 @@
-
-
 import type React from "react"
 
 import { useState } from "react"
-import HostSidebar from "@/components/host/host-sidebar"
-import HostHeader from "@/components/host/host-header"
-import { notifySuccess } from "@/lib/Toast"
+import HostSidebar from "../components/analytics/HostSidebar"
+import HostHeader from "../components/analytics/HostHeader"
+import { notifySuccess } from "../../../lib/Toast"
 
 export default function HostSettingsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
@@ -68,8 +66,6 @@ export default function HostSettingsPage() {
       <HostSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <HostHeader
-          hostName={hostData.name}
-          hostAvatar={hostData.avatar}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />

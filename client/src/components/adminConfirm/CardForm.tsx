@@ -12,9 +12,9 @@ import StateSelector from "./cardFromComponents/StateSelector"
 import CitySelector from "./cardFromComponents/CitySelector"
 import InputField from "./cardFromComponents/InputField"
 import CountrySelector from "./cardFromComponents/CountrySelector"
-import { setUserCity, setUserCountry, setUserGovId, setUserIsHost, setUserPhoneNumber, setUserState, setUserStreet, setUserZipCode, userStoreType } from "../../store/reducers/user.reducers"
-import { AppDispatch, RootState } from "../../store/store"
-import { useDispatch, useSelector } from "react-redux"
+import { setUserCity, setUserCountry, setUserGovId, setUserIsHost, setUserPhoneNumber, setUserState, setUserStreet, setUserZipCode } from "../../store/reducers/user.reducers"
+import { AppDispatch } from "../../store/store"
+import { useDispatch } from "react-redux"
 
 type Inputs = {
   phoneNumber: string

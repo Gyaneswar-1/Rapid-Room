@@ -224,7 +224,7 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 mb-12">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -232,10 +232,10 @@ export default function EditProfilePage() {
             <div className="flex items-center">
               <Link
                 to="/profile"
-                className="text-gray-500 hover:text-gray-900 flex items-center"
+                className="text-gray-500 hover:text-gray-900 flex items-center "
               >
                 <ArrowLeft className="h-5 w-5 mr-2" />
-                Back to Profile
+                <p className="hidden md:block">Back to Profile</p>
               </Link>
             </div>
             <h1 className="text-lg font-medium text-gray-900">Edit Profile</h1>

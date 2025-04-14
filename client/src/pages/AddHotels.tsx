@@ -349,7 +349,6 @@ const AddHotelForm = () => {
   // Function to validate section before moving to next
   const validateSection = async (
     currentSection: string,
-    nextSection: string
   ) => {
     let fieldsToValidate: (keyof FormFields)[] = [];
 
@@ -449,8 +448,6 @@ const AddHotelForm = () => {
   const safetyItems = allAmenities.filter((item) => item.category === "safety");
 
   // Watch form values
-  const latitude = watch("latitude");
-  const longitude = watch("longitude");
 
   // Count selected amenities
   const selectedAmenitiesCount = allAmenities.filter(

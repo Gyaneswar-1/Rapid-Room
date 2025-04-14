@@ -32,7 +32,7 @@ export default function UsersView() {
     try {
       setLoading(true);
       setError(false); // Reset error state on new request
-      const response = await admin_getAllUsers(1, 10);
+      const response = await admin_getAllUsers(1, 10000);
   
       if (response && response.success) {
         setUserData(response.data.users);

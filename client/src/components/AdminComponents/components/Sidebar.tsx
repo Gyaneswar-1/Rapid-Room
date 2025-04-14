@@ -1,4 +1,4 @@
-import { Users, Building2, Settings, LogOut, X, RainbowIcon, BarChart3, UserRoundCheck, CreditCard } from "lucide-react"
+import { Users, Building2,  LogOut, X,  BarChart3, UserRoundCheck, CreditCard } from "lucide-react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import MainLogo from "client/src/assets/images/MainLogo.png";
 

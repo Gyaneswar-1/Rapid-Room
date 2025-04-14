@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Heart, Star, MapPin, X, ChevronRight, Loader2 } from "lucide-react";
+import { Heart,  MapPin, ChevronRight, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { getWishlists } from "../service/wishlist/getWishlists";
 import Navbar from "../components/Navbar/Navbar";
@@ -27,7 +27,6 @@ interface HotelInterface {
 export default function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState<HotelInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWishlistData = async () => {
@@ -46,10 +45,10 @@ export default function WishlistPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50  mb-12">
       <Navbar show={false} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-22">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">My Wishlist</h1>

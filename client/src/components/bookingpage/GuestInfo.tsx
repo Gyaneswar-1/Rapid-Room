@@ -12,7 +12,7 @@ const GuestInfo = ({
 }: hostInfoType) => {
   return (
     <div className="flex items-center gap-4 mb-6">
-      <div className="h-14 w-14 rounded-full overflow-hidden">
+      <div className="md:h-14 h-12 w-14 rounded-full overflow-hidden">
         {profileImage ? (
           <img
             src={profileImage}
@@ -28,7 +28,7 @@ const GuestInfo = ({
         )}
       </div>
       <div>
-        <p className="text-lg font-medium">
+        <p className="md:text-lg font-medium">
           {roomType} hosted by {fullName}
         </p>
         <p className="text-gray-500">{numberOfGuests} guests</p>
