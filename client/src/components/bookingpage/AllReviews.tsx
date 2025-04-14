@@ -6,6 +6,9 @@ import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineDelete } from "react-icons/ai";
 import { notifyError, notifyInfo, notifySuccess, notifyWarn } from "../../lib/Toast";
+// Import the deleteReview service
+import { deleteReview } from "../../service/review/deleteReview";
+import { useState } from "react";
 
 type Review = {
   id: number;
@@ -14,6 +17,7 @@ type Review = {
   content: string;
   rating: number;
   avatar: string;
+  hotelId: number;
 };
 
 type typeAllReview = {
@@ -43,6 +47,34 @@ const AllReviews = ({
     (state: RootState) => state.toogleAllReviewsReducer
   );
   const dispatch: AppDispatch = useDispatch();
+  const [isDeleting, setIsDeleting] = useState<number | null>(null);
+
+  // Handle review deletion
+  const handleDeleteReview = async (reviewId: number, hotelId: number) => {
+    if (!hotelId) {
+      notifyError("Hotel ID is missing. Cannot delete review.");
+      return;
+    }
+    
+    try {
+      setIsDeleting(reviewId);
+      console.log("Deleting review:", { rid: reviewId, hid: hotelId });
+      const response = await deleteReview({ hid: hotelId, rid: reviewId });
+      
+      if (response.success) {
+        notifySuccess("Review deleted successfully!");
+        // Refresh reviews or update UI accordingly
+        // If reviews need to be refreshed, consider adding a callback prop like onReviewDeleted
+      } else {
+        notifyError(response.message || "Failed to delete review");
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      notifyError("An error occurred while deleting the review");
+    } finally {
+      setIsDeleting(null);
+    }
+  };
 
   return (
     <div className="fixed inset-0  bg-black/40 shadow-xl backdrop-blur-md z-50 flex items-center justify-center p-4">
@@ -178,13 +210,15 @@ const AllReviews = ({
                         <p className="text-sm text-gray-500">{review.date}</p>
                       </div>
                     </div>
-                    <button className="text-xl cursor-pointer text-red-500" onClick={()=>{
-                      notifyWarn("Not set up yet !")
-                      notifySuccess("Not set up yet !")
-                      notifyError("Not set up yet !")
-                      notifyInfo("Not set up yet !")
-                    }}>
-                      <AiOutlineDelete />
+                    <button 
+                      className="text-xl cursor-pointer text-red-500" 
+                      onClick={() => handleDeleteReview(review.id, review.hotelId)}
+                      disabled={isDeleting === review.id}
+                    >
+                      {isDeleting === review.id ? 
+                        <span className="text-sm">Deleting...</span> : 
+                        <AiOutlineDelete />
+                      }
                     </button>
                   </div>
 

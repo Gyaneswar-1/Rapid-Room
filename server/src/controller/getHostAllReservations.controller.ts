@@ -42,6 +42,7 @@ export const getHostAllReservations = async (req: Request | any, res: Response |
                 },
                 payment: {
                     select: {
+                        id:true,
                         amount: true,
                         paymentDate: true, // Added payment date
                     }

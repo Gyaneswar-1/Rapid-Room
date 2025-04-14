@@ -22,6 +22,7 @@ export const getReview = async (req: Request | any, res: Response | any) => {
             include: {
                 user: {
                     select: {
+                        id:true,
                         fullName: true,
                         profileImage: true,
                     },

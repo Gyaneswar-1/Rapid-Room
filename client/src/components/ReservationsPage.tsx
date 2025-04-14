@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react"
 import { getHostReservations } from "../service/manageHostData/getHostReservations"
 import ReservationDetailCard from "../components/ReservationDetailCard"
@@ -29,6 +27,7 @@ interface User {
 }
 
 interface Payment {
+  id: number;  // Adding id field which is needed for refund processing
   amount: number;
   paymentDate: string;
 }
@@ -39,8 +38,8 @@ interface ReservationInterface {
   checkOut: string;
   amountPaid: number;
   reservationsDuration: number;
-  ReservationStatus: 'active' | 'pending';
-  paymentStatus: 'success' | 'pending';
+  ReservationStatus: 'active' | 'pending' | 'cancled';  // Added 'cancled' status
+  paymentStatus: 'success' | 'pending' | 'refund' | 'refunded';  // Added refund statuses
   room: Room;
   hotel: Hotel;
   user: User;

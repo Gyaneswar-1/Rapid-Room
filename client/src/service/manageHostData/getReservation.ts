@@ -5,7 +5,7 @@ import API from "../api";
 export const getHostReservations = async() => {
     try {
         const response = await axios.get(
-            `${API}/host/reservations`, {
+            `${API}/host/dashboard/reservations`, {
                 withCredentials: true
             }
         );

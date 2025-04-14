@@ -1,19 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { setReservationStatusRefunded } from "../service/manageHostData/setReservationStatusRefunded";
 
 interface BookingInteraface {
   id: number;
-  bookingId: number;
-  guestName: string;
-  guestEmail: string;
-  guestProfile: string;
-  hotelName: string;
-  hotelImage: string;
-  roomNumber: number;
+  bookingId?: number;
+  guestName?: string;
+  guestEmail?: string;
+  guestProfile?: string;
+  hotelName?: string;
+  hotelImage?: string;
+  roomNumber?: number;
   checkIn: string;
   checkOut: string;
-  numberOfDays: number;
+  numberOfDays?: number;
   paymentStatus: 'pending' | 'success' | 'failed' | 'refund' | 'refunded';
-  reservationStatus: 'pending' | 'active' | 'cancled'; // Match the enum in schema (with typo)
+  ReservationStatus: 'pending' | 'active' | 'cancled';
   amountPaid: number;
   reservationsDuration?: number;
   hotel?: {
@@ -29,6 +30,7 @@ interface BookingInteraface {
     profileImage?: string;
   };
   payment?: {
+    id?: number;
     paymentDate: string;
     amount: number;
   };
@@ -43,6 +45,9 @@ export default function ReservationDetailCard({
   onClose,
 }: ReservationDetailCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isRefunding, setIsRefunding] = useState(false);
+  const [refundSuccess, setRefundSuccess] = useState(false);
+  const [localPaymentStatus, setLocalPaymentStatus] = useState(reservation.paymentStatus);
 
   // Format date from ISO to readable format
   const formatDate = (dateString: string | number | Date): string => {
@@ -135,9 +140,43 @@ export default function ReservationDetailCard({
     };
   }, [onClose]);
 
+  // Handle refund process
+  const handleRefund = async () => {
+    // Get the payment ID from the reservation
+    const paymentId = reservation.payment?.id;
+    
+    if (!paymentId) {
+      alert("Payment ID not found. Cannot process refund.");
+      return;
+    }
+    
+    setIsRefunding(true);
+    try {
+      console.log("Processing refund for payment ID:", paymentId);
+      const response = await setReservationStatusRefunded(paymentId);
+      
+      if (response.success) {
+        console.log("Refund processed successfully:", response.data);
+        setRefundSuccess(true);
+        setLocalPaymentStatus('refunded');
+        setTimeout(() => {
+          setRefundSuccess(false);
+        }, 3000);
+      } else {
+        console.error("Refund processing failed:", response.message);
+        alert(response.message || "Failed to process refund");
+      }
+    } catch (error) {
+      console.error("Error processing refund:", error);
+      alert("An error occurred while processing the refund. Please check the console for more details.");
+    } finally {
+      setIsRefunding(false);
+    }
+  };
+
   if (!reservation) return null;
 
-  const statusDetails = getStatusDetails(reservation.reservationStatus);
+  const statusDetails = getStatusDetails(reservation.ReservationStatus);
   const totalNights = reservation.reservationsDuration || reservation.numberOfDays || 0;
   const perNight = totalNights > 0 ? (reservation.amountPaid / totalNights) : 0;
   
@@ -151,6 +190,9 @@ export default function ReservationDetailCard({
   
   // Get room information with fallbacks
   const roomNumber = reservation.room?.roomNumber || reservation.roomNumber || "N/A";
+
+  // Use the local state for payment status to allow UI updates without reloading
+  const currentPaymentStatus = localPaymentStatus || reservation.paymentStatus;
 
   return (
     <div className="fixed inset-0 backdrop-brightness-60 backdrop-blur-xl bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -185,6 +227,13 @@ export default function ReservationDetailCard({
         </div>
 
         <div className="p-6">
+          {/* Success message */}
+          {refundSuccess && (
+            <div className="mb-4 bg-green-100 p-4 rounded-md">
+              <p className="text-green-800 font-medium">Payment status successfully updated to refunded!</p>
+            </div>
+          )}
+          
           {/* Status banner */}
           <div
             className={`${statusDetails.bgColor} ${statusDetails.textColor} px-4 py-2 rounded-lg mb-6 flex items-center justify-between`}
@@ -300,17 +349,34 @@ export default function ReservationDetailCard({
               </div>
               <div>
                 <p className="text-sm text-gray-500">Payment Status</p>
-                <p
-                  className={`font-medium ${
-                    reservation.paymentStatus === "success"
-                      ? "text-green-600"
-                      : reservation.paymentStatus === "pending"
-                      ? "text-yellow-600"
-                      : "text-red-600"
-                  }`}
-                >
-                  {reservation.paymentStatus || "N/A"}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p
+                    className={`font-medium ${
+                      currentPaymentStatus === "success"
+                        ? "text-green-600"
+                        : currentPaymentStatus === "pending"
+                        ? "text-yellow-600"
+                        : currentPaymentStatus === "refund"
+                        ? "text-orange-600"
+                        : currentPaymentStatus === "refunded"
+                        ? "text-blue-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {currentPaymentStatus || "N/A"}
+                  </p>
+                  
+                  {/* Refund button - only show when status is "refund" */}
+                  {currentPaymentStatus === "refund" && (
+                    <button 
+                      onClick={handleRefund}
+                      disabled={isRefunding}
+                      className="ml-2 px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isRefunding ? "Processing..." : "Process Refund"}
+                    </button>
+                  )}
+                </div>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Amount Paid</p>
@@ -349,6 +415,17 @@ export default function ReservationDetailCard({
             <button className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
               Print Details
             </button>
+            
+            {/* Full-width refund button for mobile */}
+            {currentPaymentStatus === "refund" && (
+              <button 
+                onClick={handleRefund}
+                disabled={isRefunding}
+                className="w-full sm:hidden px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isRefunding ? "Processing Refund..." : "Process Refund"}
+              </button>
+            )}
           </div>
         </div>
       </div>
