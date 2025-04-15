@@ -11,11 +11,11 @@ export const deleteReview = async (req, res) => {
                 where: {
                     id: rid,
                     userId: req.user.id,
-                    hotelId: hid
+                    hotelId: hid,
                 },
                 select: {
                     overallRating: true,
-                }
+                },
             });
             if (!reviewToDelete) {
                 throw new Error("Review not found or you don't have permission to delete it");
@@ -33,14 +33,16 @@ export const deleteReview = async (req, res) => {
                     id: rid,
                     userId: req.user.id,
                     hotelId: hid,
-                }
+                },
             });
             // Calculate new total reviews and overall rating
             const newTotalReviews = hotel.totalReviews - 1;
             let newOverallRating = 0;
             if (newTotalReviews > 0) {
                 // Subtract the deleted review's rating from the total and recalculate
-                newOverallRating = Math.round((hotel.overalRating * hotel.totalReviews - reviewToDelete.overallRating) / newTotalReviews);
+                newOverallRating = Math.round((hotel.overalRating * hotel.totalReviews -
+                    reviewToDelete.overallRating) /
+                    newTotalReviews);
             }
             // Update hotel ratings
             const updatedHotel = await prisma.hotels.update({
@@ -52,18 +54,19 @@ export const deleteReview = async (req, res) => {
             });
             return [deletedReview, updatedHotel];
         });
-        return res
-            .status(200)
-            .json(new ApiResponse(true, {
+        return res.status(200).json(new ApiResponse(true, {
             deletedReview,
             hotelRating: {
                 totalReviews: updatedHotel.totalReviews,
                 overalRating: updatedHotel.overalRating,
-            }
+            },
         }, "Review deleted successfully and hotel ratings updated"));
     }
     catch (error) {
         console.error("Error deleting review:", error);
-        return res.status(500).json(new ApiError(false, { error: error?.message || error }, "Failed to delete review", error?.message || "An error occurred while deleting the review", 500));
+        return res
+            .status(500)
+            .json(new ApiError(false, { error: error?.message || error }, "Failed to delete review", error?.message ||
+            "An error occurred while deleting the review", 500));
     }
 };

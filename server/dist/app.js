@@ -19,10 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://rapid-room-client.onrender.com",
-    ],
+    origin: "*",
     credentials: true,
 }));
 app.use(cookieParser());
