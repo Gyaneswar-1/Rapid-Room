@@ -22,8 +22,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: 'https://rapidroom.tech', 
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+        origin: "*", 
         credentials: true,
     }),
 );
