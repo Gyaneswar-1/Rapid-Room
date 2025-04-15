@@ -16,7 +16,7 @@ interface BookingInteraface {
   checkOut: string;
   numberOfDays: number;
   paymentStatus: 'pending' | 'success' | 'failed' | 'refund' | 'refunded';
-  reservationStatus: 'pending' | 'active' | 'cancled';
+  ReservationStatus: 'pending' | 'active' | 'cancled';
   amountPaid: number;
   reservationsDuration?: number;
   hotel?: {
