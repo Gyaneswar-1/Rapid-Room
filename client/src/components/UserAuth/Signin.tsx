@@ -14,6 +14,7 @@ import {
   flipOtpverificaton,
   flipSignUp,
   flipSignin,
+  flipForgotPass
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail } from "../../store/reducers/email.reducer";
@@ -40,7 +41,7 @@ const Signin = () => {
   };
 
   // State management
-  const { showSignup, showSignin, showOtpVerificaton } = useSelector(
+  const { showSignup, showSignin, showOtpVerificaton,showForgotPass } = useSelector(
     (state: RootState) => state.showAuthCardReducer
   );
   const dispatch: AppDispatch = useDispatch();
@@ -202,12 +203,15 @@ const Signin = () => {
 
             {/* Forgot password link */}
             <div className="text-right">
-              <a
-                href="#"
+              <button
+                onClick={()=>{
+                  dispatch(flipSignin(showSignin));
+                  dispatch(flipForgotPass(showForgotPass));
+                }}
                 className="text-sm text-primary hover:text-primary hover:underline"
               >
                 Forgot password?
-              </a>
+              </button>
             </div>
 
             {/* Submit button */}

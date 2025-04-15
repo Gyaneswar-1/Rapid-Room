@@ -13,6 +13,7 @@ import ChangePasswordModal from "../UserAuth/ChangePasswordModal";
 import {
   flipSignin,
   flipSignUp,
+  flipForgotPass
 } from "../../store/reducers/showAuthCard.reducers";
 import UserMenu from "../Navbar/UserMenu";
 
@@ -22,7 +23,7 @@ export default function WelcomePageNavBar() {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const { showSignup, showSignin, showOtpVerificaton } = useSelector(
+  const { showSignup, showSignin, showOtpVerificaton,showForgotPass } = useSelector(
     (state: RootState) => state.showAuthCardReducer
   );
 
@@ -212,7 +213,7 @@ export default function WelcomePageNavBar() {
       {showSignin && <Signin />}
       {showSignup && <Signup />}
       {showOtpVerificaton && <OtpVerification />}
-      {true && <ChangePasswordModal></ChangePasswordModal>}
+      {showForgotPass && <ChangePasswordModal></ChangePasswordModal>}
     </header>
   );
 }

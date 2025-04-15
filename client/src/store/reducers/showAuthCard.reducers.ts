@@ -4,6 +4,7 @@ const initialState:any = {
     showSignup:false,
     showSignin: false,
     showOtpVerificaton: false,
+    showForgotPass: false,
 }
 
 export const showAuthCardSlice = createSlice({
@@ -19,9 +20,12 @@ export const showAuthCardSlice = createSlice({
       },
       flipOtpverificaton: (state, action) => {
         state.showOtpVerificaton = !action.payload
+      },
+      flipForgotPass:(state,action) =>{
+        state.showForgotPass = !action.payload;
       }
     },
   });
 
   export default showAuthCardSlice.reducer
-  export const {flipSignUp, flipSignin, flipOtpverificaton} = showAuthCardSlice.actions
+  export const {flipSignUp, flipSignin, flipOtpverificaton, flipForgotPass} = showAuthCardSlice.actions

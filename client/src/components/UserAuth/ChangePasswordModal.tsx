@@ -5,6 +5,17 @@ import { IoMdClose } from "react-icons/io";
 import { CiLock } from "react-icons/ci";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
+//state managnement
+import { AppDispatch, RootState } from "../../store/store";
+import {
+  flipOtpverificaton,
+  flipSignUp,
+  flipSignin,
+  flipForgotPass
+} from "../../store/reducers/showAuthCard.reducers";
+import { useDispatch, useSelector } from "react-redux";
+
+
 export default function ChangePasswordModal() {
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +23,11 @@ export default function ChangePasswordModal() {
   const [error, setError] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  //state management
+  const { showSignup, showSignin, showOtpVerificaton,showForgotPass } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
+  const dispatch: AppDispatch = useDispatch();
 
   // Handle OTP input change
   const handleOtpChange = (index: number, value: string) => {
@@ -85,9 +101,7 @@ export default function ChangePasswordModal() {
     console.log("Updating password", { newPassword, otp: otpString });
   };
 
-  const closeModal = () => {
-    console.log("Modal closed");
-  };
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -98,7 +112,12 @@ export default function ChangePasswordModal() {
       <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 ease-in-out">
         {/* Close button */}
         <button
-          onClick={closeModal}
+          onClick={
+            ()=>{
+              dispatch(flipForgotPass(showForgotPass));
+              dispatch(flipSignin(showSignin));
+            }
+          }
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
           aria-label="Close"
         >
@@ -197,7 +216,12 @@ export default function ChangePasswordModal() {
             {/* Cancel Button */}
             <button
               type="button"
-              onClick={closeModal}
+              onClick={
+                ()=>{
+                  dispatch(flipForgotPass(showForgotPass));
+                  dispatch(flipSignin(showSignin));
+                }
+              }
               className="w-full py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               Cancel
