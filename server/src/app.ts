@@ -24,11 +24,9 @@ app.use(
     cors({
         origin:[
             "http://localhost:5173",
-            "http://rapidroom.tech",
+            "https://rapidroom.tech",
         ],
         credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
     }),
 );
 app.use(cookieParser());
