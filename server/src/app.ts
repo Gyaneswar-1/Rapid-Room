@@ -22,10 +22,12 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: 'https://rapidroom.tech/',
+        origin: 'https://rapidroom.tech', 
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         credentials: true,
     }),
 );
+
 app.use(cookieParser());
 app.use(passport.initialize());
 
