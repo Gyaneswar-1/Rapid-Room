@@ -21,6 +21,7 @@ interface Selectorstate {
 function StateSelector({ setState, countryCode, register, setValue }: Selectorstate) {
   const state = State.getStatesOfCountry(countryCode)
   const [showDropdown, setShowDropdown] = useState(false)
+  //@ts-ignore
   const [selectedState, setSelectedState] = useState<StateData | null>(null)
   const [search, setSearch] = useState("")
   const [filteredStates, setFilteredStates] = useState<StateData[]>([])

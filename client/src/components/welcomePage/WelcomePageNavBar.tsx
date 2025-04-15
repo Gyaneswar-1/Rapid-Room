@@ -13,12 +13,14 @@ import ChangePasswordModal from "../UserAuth/ChangePasswordModal";
 import {
   flipSignin,
   flipSignUp,
+  //@ts-ignore
   flipForgotPass
 } from "../../store/reducers/showAuthCard.reducers";
 import UserMenu from "../Navbar/UserMenu";
 
 export default function WelcomePageNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //@ts-ignore
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);

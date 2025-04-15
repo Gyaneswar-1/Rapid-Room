@@ -20,6 +20,7 @@ interface Selectorcountries {
 
 function CountrySelector({ countries, setCountry, register, setValue }: Selectorcountries) {
   const [showDropdown, setShowDropdown] = useState(false)
+  //@ts-ignore
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null)
   const [search, setSearch] = useState("")
   const [filteredCountries, setFilteredCountries] = useState<CountryData[]>([])

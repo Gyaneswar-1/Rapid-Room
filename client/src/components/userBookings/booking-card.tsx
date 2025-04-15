@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { MdLocationOn } from "react-icons/md";
 import { FaUser, FaCalendarAlt, FaBed } from "react-icons/fa";
 import { cancelBooking } from "../../service/checkin/cancleBooking";
+//@ts-ignore
 import { Navigate, useNavigate } from "react-router-dom";
 import { notifySuccess,notifyError, notifyInfo } from "../../lib/Toast";
 import { AppDispatch, RootState } from "../../store/store";

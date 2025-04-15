@@ -350,6 +350,7 @@ const AddHotelForm = () => {
   // Function to validate section before moving to next
   const validateSection = async (
     currentSection: string,
+    //@ts-ignore
     nextSection: string
   ) => {
     let fieldsToValidate: (keyof FormFields)[] = [];

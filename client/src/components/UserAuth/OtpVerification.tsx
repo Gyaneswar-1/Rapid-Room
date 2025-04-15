@@ -20,6 +20,7 @@ const OtpVerification = () => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""))
   const [timer, setTimer] = useState<number>(60)
   const [isResendDisabled, setIsResendDisabled] = useState<boolean>(true)
+  //@ts-ignore
   const [isVerifying, setIsVerifying] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])

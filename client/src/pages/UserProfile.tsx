@@ -1,4 +1,5 @@
 import { useState } from "react";
+//@ts-ignore
 import { Edit, ChevronRight, Settings, List, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";

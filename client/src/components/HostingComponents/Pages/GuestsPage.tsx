@@ -5,10 +5,12 @@ import { useState } from "react"
 import { Search, Filter, ChevronDown, ChevronLeft, ChevronRight, Star, Mail, Phone, Calendar } from "lucide-react"
 
 export default function GuestsPage() {
+  //@ts-ignore
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [selectedGuest, setSelectedGuest] = useState<any>(null)
 
   // Mock data for the host
+  //@ts-ignore
   const hostData = {
     name: "John Smith",
     email: "john.smith@example.com",

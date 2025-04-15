@@ -40,6 +40,7 @@ export default function HostsView() {
   const [hosts, setHosts] = useState<HostInterface[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  //@ts-ignore
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 

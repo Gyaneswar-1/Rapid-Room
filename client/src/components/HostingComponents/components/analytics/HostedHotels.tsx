@@ -1,4 +1,4 @@
-import { Edit, Eye, Loader, Star, Trash, X } from "lucide-react";
+import {  Eye, Loader, Star, Trash, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getHostHotels } from "../../../../service/manageHostData/getHostHotels";

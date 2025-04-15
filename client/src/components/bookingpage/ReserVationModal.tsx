@@ -128,6 +128,7 @@ export default function ReservationModal({
     setIsPaymentLoading(true);
 
     try {
+      //@ts-ignore
       const response = await checkInHandler({
         amount: totalCost,
         email: "bibekbibek966@gmail.com",

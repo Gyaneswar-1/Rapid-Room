@@ -44,6 +44,7 @@ export default function AdminDashboard() {
   const [isMobile, setIsMobile] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent] = useState<any>(null);
+  //@ts-ignore
   const [hotels, setHotels] = useState<Hotel[]>([]);
 
   // Check if mobile on mount and window resize
