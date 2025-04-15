@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { CiLock } from "react-icons/ci";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { MdEmail } from "react-icons/md";
 
 //state managnement
 import { AppDispatch, RootState } from "../../store/store";
@@ -11,12 +12,12 @@ import {
   flipOtpverificaton,
   flipSignUp,
   flipSignin,
-  flipForgotPass
+  flipForgotPass,
 } from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
 
-
 export default function ChangePasswordModal() {
+  const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
@@ -24,10 +25,15 @@ export default function ChangePasswordModal() {
   const [otpSent, setOtpSent] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   //state management
-  const { showSignup, showSignin, showOtpVerificaton,showForgotPass } = useSelector(
-    (state: RootState) => state.showAuthCardReducer
-  );
+  const { showSignup, showSignin, showOtpVerificaton, showForgotPass } =
+    useSelector((state: RootState) => state.showAuthCardReducer);
   const dispatch: AppDispatch = useDispatch();
+
+  // Email validation
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   // Handle OTP input change
   const handleOtpChange = (index: number, value: string) => {
@@ -73,24 +79,30 @@ export default function ChangePasswordModal() {
 
   // Handle send OTP
   const handleSendOTP = () => {
+    // Validate email
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
     if (newPassword.length < 8) {
       setError("Password must be at least 8 characters");
       return;
     }
 
-    console.log("Sending OTP for password change", { newPassword });
+    console.log("Sending OTP for password change", { email, newPassword });
     setOtpSent(true);
     setError("");
+  };
+
+  // Handle edit credentials (go back from OTP to email/password)
+  const handleEditCredentials = () => {
+    setOtpSent(false);
   };
 
   // Handle update password
   const handleUpdatePassword = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (newPassword.length < 8) {
-      setError("Password must be at least 8 characters");
-      return;
-    }
 
     const otpString = otp.join("");
     if (otpString.length !== 6) {
@@ -98,10 +110,8 @@ export default function ChangePasswordModal() {
       return;
     }
 
-    console.log("Updating password", { newPassword, otp: otpString });
+    console.log("Updating password", { email, newPassword, otp: otpString });
   };
-
-  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -112,12 +122,10 @@ export default function ChangePasswordModal() {
       <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 ease-in-out">
         {/* Close button */}
         <button
-          onClick={
-            ()=>{
-              dispatch(flipForgotPass(showForgotPass));
-              dispatch(flipSignin(showSignin));
-            }
-          }
+          onClick={() => {
+            dispatch(flipForgotPass(showForgotPass));
+            dispatch(flipSignin(showSignin));
+          }}
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
           aria-label="Close"
         >
@@ -131,11 +139,18 @@ export default function ChangePasswordModal() {
               <CiLock className="text-teal-600 text-3xl" />
             </div>
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
-              Change Password
+              {otpSent ? "Verify OTP" : "Change Password"}
             </h1>
-            <p className="text-gray-500 text-sm">
-              Enter your new password and verify with OTP
-            </p>
+            {otpSent ? (
+              <p className="text-gray-500 text-sm">
+                We've sent a verification code to{" "}
+                <span className="font-medium">{email}</span>
+              </p>
+            ) : (
+              <p className="text-gray-500 text-sm">
+                Enter your email, new password and verify with OTP
+              </p>
+            )}
           </div>
 
           {error && (
@@ -145,40 +160,72 @@ export default function ChangePasswordModal() {
           )}
 
           <form onSubmit={handleUpdatePassword} className="space-y-6">
-            {/* New Password Input with Eye Toggle */}
-            <div>
-              <label
-                htmlFor="newPassword"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                New Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="newPassword"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                  placeholder="Enter your new password"
-                />
-                <button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                >
-                  {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                </button>
-              </div>
-              <p className="text-xs text-gray-500 mt-1">
-                Password must be at least 8 characters long
-              </p>
-            </div>
+            {/* Show email and password fields only when OTP is not sent */}
+            {!otpSent && (
+              <>
+                {/* Email Input */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      placeholder="Enter your email address"
+                    />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                      <MdEmail size={18} />
+                    </span>
+                  </div>
+                </div>
 
-            {/* OTP Input */}
+                {/* New Password Input with Eye Toggle */}
+                <div>
+                  <label
+                    htmlFor="newPassword"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    New Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="newPassword"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      placeholder="Enter your new password"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      {showPassword ? (
+                        <FiEyeOff size={18} />
+                      ) : (
+                        <FiEye size={18} />
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Password must be at least 8 characters long
+                  </p>
+                </div>
+              </>
+            )}
+
+            {/* OTP Input - only show when OTP is sent */}
             {otpSent && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Enter the 6-digit OTP
                 </label>
                 <div className="flex justify-between gap-2">
@@ -196,6 +243,15 @@ export default function ChangePasswordModal() {
                     />
                   ))}
                 </div>
+
+                {/* Option to edit email/password */}
+                <button
+                  type="button"
+                  onClick={handleEditCredentials}
+                  className="mt-3 text-sm font-medium text-teal-600 hover:text-teal-700 hover:underline"
+                >
+                  Edit Email & Password
+                </button>
               </div>
             )}
 
@@ -203,9 +259,11 @@ export default function ChangePasswordModal() {
             <button
               type={otpSent ? "submit" : "button"}
               onClick={otpSent ? undefined : handleSendOTP}
-              disabled={newPassword.length < 8}
+              disabled={
+                !otpSent && (!validateEmail(email) || newPassword.length < 8)
+              }
               className={`w-full py-3 px-4 bg-teal-600 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
-                newPassword.length < 8
+                !otpSent && (!validateEmail(email) || newPassword.length < 8)
                   ? "opacity-60 cursor-not-allowed"
                   : "hover:bg-teal-700"
               }`}
@@ -216,12 +274,10 @@ export default function ChangePasswordModal() {
             {/* Cancel Button */}
             <button
               type="button"
-              onClick={
-                ()=>{
-                  dispatch(flipForgotPass(showForgotPass));
-                  dispatch(flipSignin(showSignin));
-                }
-              }
+              onClick={() => {
+                dispatch(flipForgotPass(showForgotPass));
+                dispatch(flipSignin(showSignin));
+              }}
               className="w-full py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               Cancel
