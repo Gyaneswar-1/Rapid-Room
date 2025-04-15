@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: ["https://rapidroom.tech/"],
+        origin: 'https://rapidroom.tech/',
         credentials: true,
     }),
 );
