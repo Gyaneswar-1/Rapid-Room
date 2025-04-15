@@ -59,7 +59,7 @@ interface HotelState {
     priceRating: number;
     parkingRating: number;
     user: {
-      email:string;
+      email: string;
       fullName: string;
       profileImage: string;
     };
@@ -183,10 +183,25 @@ export const singleHotelSlice = createSlice({
         images: data.images,
       };
     },
-    toogleIsWishListed:(state,action) => {
+    toogleIsWishListed: (state, action) => {
       state.isWishlisted = !action.payload;
-    }
+    },
+    updateTotalReviewCount: (state, action) => {
+      state.totalReviews = action.payload;
+    },
+    removeReview: (state, action) => {
+      const reviewIdToRemove = action.payload;
+      state.reviews = state.reviews.filter(
+        (review) => review.id !== reviewIdToRemove
+      );
+      state.totalReviews = Math.max(0, state.totalReviews - 1);
+    },
   },
 });
-export const { setAllHotelData,toogleIsWishListed } = singleHotelSlice.actions;
+export const {
+  setAllHotelData,
+  toogleIsWishListed,
+  updateTotalReviewCount,
+  removeReview,
+} = singleHotelSlice.actions;
 export default singleHotelSlice.reducer;

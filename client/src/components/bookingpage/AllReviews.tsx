@@ -9,6 +9,7 @@ import { notifyError, notifySuccess } from "../../lib/Toast";
 import { deleteReview } from "../../service/review/deleteReview";
 import { useState } from "react";
 import { userStoreType } from "../../store/reducers/user.reducers";
+import { removeReview } from "../../store/reducers/singleHotel.reducer";
 
 /**
  * Review interface with proper ID structure
@@ -96,7 +97,13 @@ const AllReviews = ({
           (review) => review.reviewId !== reviewId
         );
         setReviews(updatedReviews);
-        setLocalTotalReviews((prev) => Math.max(0, prev - 1));
+
+        // Update local state
+        const newTotalReviews = Math.max(0, localTotalReviews - 1);
+        setLocalTotalReviews(newTotalReviews);
+
+        // Update global state in Redux store
+        dispatch(removeReview(reviewId));
       } else {
         notifyError(response.message || "Failed to delete review");
       }
