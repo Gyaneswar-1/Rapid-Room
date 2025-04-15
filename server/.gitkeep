@@ -11,6 +11,7 @@ JWT_SECRET=okok
 EXPIRY_TIME=11d
 
 DATABASE_URL="postgresql://postgres:@Gyana87356@localhost:5432/TravelTrove?schema=public"
+DATABASE_URL="postgresql://neondb_owner:npg_mD1Qhc5OHbSl@ep-sparkling-tree-a1fn92f4-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
 
 CLOUDE_NAME=dhhsuoxfz
 API_KEY=535525677415792
