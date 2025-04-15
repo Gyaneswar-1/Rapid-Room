@@ -70,7 +70,7 @@ export default function WishlistPage() {
               Start exploring hotels and save your favorites here.
             </p>
             <Link
-              to="/"
+              to="/home"
               className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600"
             >
               Explore Hotels <ChevronRight className="h-4 w-4 ml-1" />
