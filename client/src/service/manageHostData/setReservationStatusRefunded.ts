@@ -7,7 +7,7 @@ export const setReservationStatusRefunded = async (paymentId: number) => {
     
     // Update the endpoint to match the route in HostDashboard.routes.ts
     const response = await axios.post(
-      `${API}/host/dashboard/reservations-refunded`,
+      `${API}/host/reservations-refunded`,
       { paymentId },
       {
         withCredentials: true

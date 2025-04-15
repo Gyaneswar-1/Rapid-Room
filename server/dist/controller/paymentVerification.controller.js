@@ -74,7 +74,7 @@ export async function paymentVerification(req, res) {
             });
         });
         //navigate to the booking page
-        return res.redirect("http://localhost:5173/profile/bookings");
+        return res.redirect("http://localhost:5173/bookings");
     }
     catch (error) {
         //cancel the reservation, navigate to the error page
