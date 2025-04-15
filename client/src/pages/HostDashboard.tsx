@@ -74,6 +74,7 @@ export default function HostLayout() {
         </div>
       </div>
           <Footer/>
+          
     </div>
   );
 }

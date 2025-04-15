@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { Link } from "react-router-dom"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 export default function TermsAndConditions() {
   const [activeSection, setActiveSection] = useState<string | null>("introduction")
@@ -475,6 +476,7 @@ export default function TermsAndConditions() {
           </div>
         </div>
       </div>
+       <SetUserDataToStore/>
     </div>
   )
 }

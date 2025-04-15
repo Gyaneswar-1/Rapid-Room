@@ -10,6 +10,7 @@ import MyBookingsSkeleton from "../components/userBookings/MyBookingsSkeliton";
 import getUserBookings from "../service/checkin/getUserBookings";
 import { Calendar, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 export default function UserBookings() {
   const dispatch = useDispatch();
@@ -120,6 +121,7 @@ export default function UserBookings() {
         {/* do conditional rendering of the review add section */}
         {showAddReview ? <AddRatingCard></AddRatingCard> : null}
       </div>
+       <SetUserDataToStore/>
     </>
   );
 }

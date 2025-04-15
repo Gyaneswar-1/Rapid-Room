@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Eye, EyeOff, CheckCircle, AlertCircle } from "lucide-react"
 import { Link } from "react-router-dom"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("")
@@ -254,6 +255,7 @@ export default function ResetPasswordPage() {
           </div>
         </div>
       </motion.div>
+       <SetUserDataToStore/>
     </div>
   )
 }

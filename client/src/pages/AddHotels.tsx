@@ -32,6 +32,7 @@ import {
 import Navbar from "../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 // Define form field types with boolean amenities
 type FormFields = {
@@ -1344,6 +1345,7 @@ const AddHotelForm = () => {
           </div>
         </div>
       </div>
+       <SetUserDataToStore/>
     </>
   );
 };

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Search, MessageCircle } from "lucide-react"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 // Mock data for host conversations
 const hostConversations = [
@@ -146,6 +147,7 @@ export default function MessageHost() {
           </div>
         </div>
       </main>
+       <SetUserDataToStore/>
     </div>
   )
 }

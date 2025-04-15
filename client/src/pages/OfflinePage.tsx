@@ -1,4 +1,5 @@
 import { IoCloudOfflineOutline } from "react-icons/io5";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 function OfflinePage() {
   return (
@@ -17,6 +18,7 @@ function OfflinePage() {
           <IoCloudOfflineOutline   />
         </div>
       </section>
+       <SetUserDataToStore/>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { FaTimesCircle, FaEnvelope, FaRedo } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 function HostRejectedPage() {
   return (
@@ -95,6 +96,7 @@ function HostRejectedPage() {
         </div>
       </div>
     </div>
+     <SetUserDataToStore/>
     </>
   );
 }

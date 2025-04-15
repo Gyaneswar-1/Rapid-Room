@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getWishlists } from "../service/wishlist/getWishlists";
 import Navbar from "../components/Navbar/Navbar";
 import { motion } from "framer-motion";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 interface HotelInterface {
   id: number;
@@ -84,6 +85,7 @@ export default function WishlistPage() {
           </div>
         )}
       </div>
+       <SetUserDataToStore/>
     </div>
   );
 }

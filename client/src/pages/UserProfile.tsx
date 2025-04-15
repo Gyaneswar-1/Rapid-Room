@@ -285,6 +285,7 @@ export default function ProfilePage() {
       <div className="py-12">
         <Footer />
       </div>
+       
     </div>
   );
 }

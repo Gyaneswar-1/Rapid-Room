@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 function ErrorPage() {
   const navigate = useNavigate();
   return (
@@ -18,6 +19,7 @@ function ErrorPage() {
           Go Back Home
         </a>
       </div>
+       <SetUserDataToStore/>
     </div>
   );
 }

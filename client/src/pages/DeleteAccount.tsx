@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar/Navbar';
 import { deleteUserAccount } from '../service/userdata/deleteUserAccount';
 import { useNavigate } from 'react-router-dom';
 import { notifyError } from '../lib/Toast';
+import SetUserDataToStore from '../service/userdata/SetDataToStore';
 
 function DeleteAccount() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -164,6 +165,7 @@ function DeleteAccount() {
           </div>
         </div>
       </div>
+       <SetUserDataToStore/>
     </div>
   );
 }

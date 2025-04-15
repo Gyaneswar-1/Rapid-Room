@@ -1,6 +1,7 @@
 import { Shield, Clock, CreditCard } from "lucide-react"
 import Navbar from "../components/Navbar/Navbar"
 import Footer from "../components/Navbar/Footer"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 export default function WhyChooseUs() {
   return (
@@ -190,6 +191,7 @@ export default function WhyChooseUs() {
       </main>
 
       <Footer />
+       <SetUserDataToStore/>
     </div>
   )
 }
