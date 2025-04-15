@@ -16,11 +16,10 @@ export default function UserBookings() {
   const bookingsData = useSelector(
     (state: RootState) => state.bookingsReducer.bookings
   );
-  const {showAddReview} = useSelector(
-    (state:RootState) => state.toogleAllReviewsReducer
-  )
-  
-  
+  const { showAddReview } = useSelector(
+    (state: RootState) => state.toogleAllReviewsReducer
+  );
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function UserBookings() {
       setIsLoading(true); // Set loading to true before fetching
       try {
         const response = await getUserBookings();
-        console.log("Here is the bookings data",response.data)
+        console.log("Here is the bookings data", response.data);
         if (response.success) {
           dispatch(setBookings(response.data));
         }
@@ -43,8 +42,6 @@ export default function UserBookings() {
     dispatch(setBookings([]));
     fetchBookings();
   }, [dispatch]);
-
-  
 
   const handleCancelBooking = (id: number) => {
     // Update the bookings data to reflect the cancellation
@@ -81,16 +78,19 @@ export default function UserBookings() {
           {isLoading ? (
             <MyBookingsSkeleton />
           ) : bookingsData.length === 0 ? (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="bg-white rounded-lg p-8 shadow text-center max-w-2xl mx-auto"
             >
               <Calendar className="h-16 w-16 mx-auto text-primary mb-4 opacity-70" />
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">You don't have any bookings yet</h2>
+              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+                You don't have any bookings yet
+              </h2>
               <p className="text-gray-500 mb-6">
-                Explore our collection of amazing properties and book your next stay!
+                Explore our collection of amazing properties and book your next
+                stay!
               </p>
               <Link
                 to="/home"
