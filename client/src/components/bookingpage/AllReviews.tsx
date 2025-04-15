@@ -1,26 +1,40 @@
 import { Star, X } from "lucide-react";
-
 //state management
 import { AppDispatch, RootState } from "../../store/store";
 import { toogleAllReviews } from "../../store/reducers/showReviews.reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineDelete } from "react-icons/ai";
-import { notifyError, notifyInfo, notifySuccess, notifyWarn } from "../../lib/Toast";
+import { notifyError, notifySuccess } from "../../lib/Toast";
 // Import the deleteReview service
 import { deleteReview } from "../../service/review/deleteReview";
 import { useState } from "react";
+import { userStoreType } from "../../store/reducers/user.reducers";
 
-type Review = {
-  id: number;
+/**
+ * Review interface with proper ID structure
+ * @property {number} userId - ID of the user who wrote the review
+ * @property {number} reviewId - Unique ID of the review itself
+ * @property {number} hotelId - ID of the hotel being reviewed
+ * @property {string} email - Email of the reviewer (for permission checking)
+ */
+interface ReviewInterface {
+  userId: number;
+  reviewId: number;
+  hotelId: number;
+  email: string;
   author: string;
   date: string;
   content: string;
   rating: number;
   avatar: string;
-  hotelId: number;
-};
+}
 
-type typeAllReview = {
+/**
+ * Props interface for AllReviews component with proper ID structure
+ */
+interface AllReviewsProps {
+  reviewId: number;
+  hotelId: number;
   totalReviews: number;
   overall: number;
   cleanliness: number;
@@ -29,10 +43,12 @@ type typeAllReview = {
   communication: number;
   value: number;
   location: number;
-  reviews: Review[];
-};
+  reviews: ReviewInterface[];
+  onReviewDeleted?: (reviewId: number) => void;
+}
 
 const AllReviews = ({
+  hotelId,
   accuracy,
   checkIn,
   cleanliness,
@@ -41,30 +57,46 @@ const AllReviews = ({
   overall,
   totalReviews,
   value,
-  reviews,
-}: typeAllReview) => {
+  reviews: initialReviews,
+}: AllReviewsProps) => {
+  // Local state to manage reviews after deletion
+  const [reviews, setReviews] = useState<ReviewInterface[]>(initialReviews);
+  const [localTotalReviews, setLocalTotalReviews] =
+    useState<number>(totalReviews);
+
+  const { email }: userStoreType = useSelector(
+    (state: RootState) => state.userReducer
+  );
   const { showAllReview } = useSelector(
     (state: RootState) => state.toogleAllReviewsReducer
   );
   const dispatch: AppDispatch = useDispatch();
   const [isDeleting, setIsDeleting] = useState<number | null>(null);
 
-  // Handle review deletion
+  /**
+   * Handle review deletion with local state update
+   * @param reviewId - ID of the review to delete
+   * @param hotelId - ID of the hotel the review belongs to
+   */
   const handleDeleteReview = async (reviewId: number, hotelId: number) => {
-    if (!hotelId) {
-      notifyError("Hotel ID is missing. Cannot delete review.");
+    if (!hotelId || !reviewId) {
+      notifyError("Review ID or Hotel ID is missing. Cannot delete review.");
       return;
     }
-    
+
     try {
       setIsDeleting(reviewId);
-      console.log("Deleting review:", { rid: reviewId, hid: hotelId });
       const response = await deleteReview({ hid: hotelId, rid: reviewId });
-      
+
       if (response.success) {
         notifySuccess("Review deleted successfully!");
-        // Refresh reviews or update UI accordingly
-        // If reviews need to be refreshed, consider adding a callback prop like onReviewDeleted
+
+        // Update local state to reflect the deletion
+        const updatedReviews = reviews.filter(
+          (review) => review.reviewId !== reviewId
+        );
+        setReviews(updatedReviews);
+        setLocalTotalReviews((prev) => Math.max(0, prev - 1));
       } else {
         notifyError(response.message || "Failed to delete review");
       }
@@ -81,7 +113,7 @@ const AllReviews = ({
       <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white z-10">
           <h2 className="text-xl font-semibold">
-            All Reviews ({totalReviews})
+            All Reviews ({localTotalReviews})
           </h2>
           <button
             onClick={() => {
@@ -101,10 +133,11 @@ const AllReviews = ({
                 <span className="text-xl font-semibold">{overall}</span>
                 <span>·</span>
                 <span className="text-xl font-semibold">
-                  {totalReviews} reviews
+                  {localTotalReviews} reviews
                 </span>
               </div>
 
+              {/* Rating bars */}
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <span className="w-24 text-sm">Cleanliness</span>
@@ -185,58 +218,69 @@ const AllReviews = ({
             </div>
 
             <div className="space-y-8">
-              {reviews.map((review: any) => (
-                <div
-                  key={review.id}
-                  className="border-b border-gray-100 pb-6 last:border-0"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3 mb-3 ">
-                      <div className="h-10 w-10 rounded-full overflow-hidden">
-                        {review.avatar ? (
-                          <img
-                            src={review.avatar}
-                            alt={review.author}
-                            className="object-cover h-full w-full"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-base font-semibold">
-                            {review.author.charAt(0).toUpperCase()}
-                          </div>
-                        )}
+              {reviews.length > 0 ? (
+                reviews.map((review) => (
+                  <div
+                    key={review.reviewId}
+                    className="border-b border-gray-100 pb-6 last:border-0"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3 mb-3 ">
+                        <div className="h-10 w-10 rounded-full overflow-hidden">
+                          {review.avatar ? (
+                            <img
+                              src={review.avatar}
+                              alt={review.author}
+                              className="object-cover h-full w-full"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-base font-semibold">
+                              {review.author.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-medium">{review.author}</p>
+                          <p className="text-sm text-gray-500">{review.date}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium">{review.author}</p>
-                        <p className="text-sm text-gray-500">{review.date}</p>
-                      </div>
+                      {email === review.email ? (
+                        <button
+                          className="text-xl cursor-pointer text-red-500"
+                          onClick={() =>
+                            handleDeleteReview(review.reviewId, hotelId)
+                          }
+                          disabled={isDeleting === review.reviewId}
+                        >
+                          {isDeleting === review.reviewId ? (
+                            <span className="text-sm">Deleting...</span>
+                          ) : (
+                            <AiOutlineDelete />
+                          )}
+                        </button>
+                      ) : null}
                     </div>
-                    <button 
-                      className="text-xl cursor-pointer text-red-500" 
-                      onClick={() => handleDeleteReview(review.id, review.hotelId)}
-                      disabled={isDeleting === review.id}
-                    >
-                      {isDeleting === review.id ? 
-                        <span className="text-sm">Deleting...</span> : 
-                        <AiOutlineDelete />
-                      }
-                    </button>
-                  </div>
 
-                  <div className="flex items-center gap-1 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-3 w-3 ${
-                          i < review.rating
-                            ? "fill-current text-yellow-500"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
+                    <div className="flex items-center gap-1 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-3 w-3 ${
+                            i < review.rating
+                              ? "fill-current text-yellow-500"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-gray-700">{review.content}</p>
                   </div>
-                  <p className="text-gray-700">{review.content}</p>
+                ))
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  No reviews available
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

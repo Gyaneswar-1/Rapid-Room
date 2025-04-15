@@ -65,6 +65,7 @@ export const getHotelById = async (req, res) => {
                 },
                 reviews: {
                     select: {
+                        id: true,
                         userId: true,
                         reviewComment: true,
                         overallRating: true,
@@ -79,6 +80,7 @@ export const getHotelById = async (req, res) => {
                             select: {
                                 fullName: true,
                                 profileImage: true,
+                                email: true,
                                 address: {
                                     select: {
                                         country: true,

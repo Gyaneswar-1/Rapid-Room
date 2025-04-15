@@ -47,6 +47,7 @@ interface HotelState {
     profileImage: string;
   };
   reviews: Array<{
+    id: number;
     userId: number;
     reviewComment: string;
     overallRating: number;
@@ -58,6 +59,7 @@ interface HotelState {
     priceRating: number;
     parkingRating: number;
     user: {
+      email:string;
       fullName: string;
       profileImage: string;
     };

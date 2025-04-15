@@ -43,7 +43,7 @@ export default function BookingPage() {
   const { showReservatonModel } = useSelector(
     (state: RootState) => state.toogleShowReseveModelReducer
   );
-  
+
   const {
     images = [],
     roomType,
@@ -69,7 +69,7 @@ export default function BookingPage() {
     },
     description,
     reviews = [],
-    amenities={
+    amenities = {
       hasParking: false,
       hasPool: false,
       hasWifi: false,
@@ -104,6 +104,7 @@ export default function BookingPage() {
       getSingleHotelInformation(id)
         .then((res) => {
           if (res.success) {
+            console.log(res.data);
             dispatch(setAllHotelData(res.data));
             setShowSkeliton(false);
           } else {
@@ -226,15 +227,20 @@ export default function BookingPage() {
 
         {showAllReview && (
           <AllReviews
-          accuracy={reviews[0]?.accuracyRating || 0}
-          checkIn={reviews[0]?.checkInRating || 0}
-          cleanliness={reviews[0]?.cleanlinessRating || 0}
-          communication={reviews[0]?.communicationRating || 0}
-          location={reviews[0]?.locationRating || 0}
-          value={reviews[0]?.priceRating || 0}
-          overall={overalRating}
+            hotelId={id}
+            reviewId={reviews[0]?.id || 0}
+            accuracy={reviews[0]?.accuracyRating || 0}
+            checkIn={reviews[0]?.checkInRating || 0}
+            cleanliness={reviews[0]?.cleanlinessRating || 0}
+            communication={reviews[0]?.communicationRating || 0}
+            location={reviews[0]?.locationRating || 0}
+            value={reviews[0]?.priceRating || 0}
+            overall={overalRating}
             reviews={reviews.map((review) => ({
-              id: review.userId,
+              userId: review.userId,
+              reviewId: review.id,
+              hotelId: id,
+              email: review.user.email,
               author: review.user.fullName,
               date: new Date().toLocaleDateString(),
               content: review.reviewComment,
@@ -242,7 +248,6 @@ export default function BookingPage() {
               avatar: review.user.profileImage,
             }))}
             totalReviews={totalReviews}
-            
           />
         )}
 

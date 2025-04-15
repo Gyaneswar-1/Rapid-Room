@@ -10,7 +10,7 @@ const reviewRouter = Router();
 
 reviewRouter.route("/add").post(authMiddleware, createReview);
 reviewRouter.route("/get").get(authMiddleware, getReview);
-reviewRouter.route("/delete").delete(authMiddleware, deleteReview);
+reviewRouter.route("/delete").post(authMiddleware, deleteReview);
 reviewRouter.route("/edit").put(authMiddleware, editReview);
 reviewRouter.route("/get-rating").post(authMiddleware,getOverallRatings);
 
