@@ -11,6 +11,7 @@ import { userLogout } from "../controller/userLogout.controller.js";
 import { createAdmin } from "../controller/createAdmin.controller.js";
 import {cancleReservation} from "../controller/cancelReservatin.controller.js"
 import {getMyBookings} from "../controller/getMyBookings.controller.js"
+import {updatePassword} from "../controller/updatePassword.controller.js"
 
 const userRouter = Router();
 
@@ -26,6 +27,10 @@ userRouter.route("/signup").post(
 );
 
 userRouter.route("/login").post(userLogin);
+userRouter.route("/update-pass").post(updatePassword)
+
+
+
 userRouter.route("/delete").delete(authMiddleware,deleteUser);
 userRouter.route("/logout").get(authMiddleware,userLogout);
 userRouter.route("/create-admin").post(authMiddleware,createAdmin);
