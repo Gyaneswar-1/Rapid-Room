@@ -197,14 +197,14 @@ function UserMenu({ showRapidYourRoom }: UserMenuProps) {
                     onClick={() => {
                       dispatch(flipSignin(showSignin));
                     }}
-                    label="Sign up"
+                    label="Log in"
                     icons={BsBoxArrowInLeft}
                   />
                   <MenuItem
                     onClick={() => {
                       dispatch(flipSignUp(showSignup));
                     }}
-                    label="Log in"
+                    label="Sign up"
                     icons={BsSignpostSplit}
                   />
                 </>

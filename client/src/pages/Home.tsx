@@ -15,7 +15,7 @@ import { flipSignin } from "../store/reducers/showAuthCard.reducers"
 
 import Signin from "../components/UserAuth/Signin"
 import Signup from "../components/UserAuth/Signup"
-
+import OtpVerification from "../components/UserAuth/OtpVerification"
 
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
@@ -52,7 +52,7 @@ function Home() {
   const categoryParam = searchParams.get('category')
 
   const { hotels,hasHotelsArray } = useSelector((state: RootState) => state.hotelReducer)
-  const { showSignup, showSignin } = useSelector((state: RootState) => state.showAuthCardReducer)
+  const { showSignup, showSignin,showOtpVerificaton } = useSelector((state: RootState) => state.showAuthCardReducer)
   const { search } = useSelector((state: RootState) => state.searchReducer)
 
   const dispatch: AppDispatch = useDispatch()
@@ -166,6 +166,7 @@ function Home() {
 
       {showSignin && <Signin />}
       {showSignup && <Signup />}
+      {showOtpVerificaton && <OtpVerification />}
       <SetUserDataToStore/>
     </div>
   )
