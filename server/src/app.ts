@@ -22,10 +22,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin:[
-            "http://localhost:5173",
-            "https://rapidroom.tech",
-        ],
+        origin: ["https://rapidroom.tech/"],
         credentials: true,
     }),
 );
@@ -88,7 +85,7 @@ app.use("/api/v1/user", paymentRoute);
 app.use("/api/v1/image", uploadRoutes);
 
 //email verification
-app.use("/api/v1",emailRouter);
+app.use("/api/v1", emailRouter);
 
 //payment router
 
