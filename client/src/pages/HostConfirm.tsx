@@ -22,6 +22,7 @@ function AdminConfirm() {
         <TermsSection/>
         <ConfirmButton />
       </div>
+      
     </div>
   );
 }

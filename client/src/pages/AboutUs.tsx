@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar/Navbar"
 // import Footer from "../components/Navbar/Footer"
 import { useState } from "react"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 export default function AboutUs() {
   const [activeTab, setActiveTab] = useState("mission")
@@ -257,6 +258,7 @@ export default function AboutUs() {
           </button>
         </div>
       </div>
+       <SetUserDataToStore/>
     </div>
   )
 }

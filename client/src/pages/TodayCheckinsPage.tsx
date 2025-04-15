@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import ReservationDetailCard from "../components/ReservationDetailCard"
 import { getTodayCheckins } from "../service/manageHostData/getTodayCheckins"
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 interface BookingInteraface {
   id: number;
@@ -341,6 +342,7 @@ export default function TodayCheckinsPage() {
       {selectedReservation && (
         <ReservationDetailCard reservation={selectedReservation} onClose={handleCloseDetailCard} />
       )}
+       <SetUserDataToStore/>
     </div>
   )
 }

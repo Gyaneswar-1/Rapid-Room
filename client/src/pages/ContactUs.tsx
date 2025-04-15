@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import Navbar from "../components/Navbar/Navbar"
+import SetUserDataToStore from "../service/userdata/SetDataToStore"
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -330,6 +331,7 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
+       <SetUserDataToStore/>
     </div>
   )
 }

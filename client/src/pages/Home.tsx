@@ -18,6 +18,7 @@ import Signup from "../components/UserAuth/Signup"
 import OtpVerification from "../components/UserAuth/OtpVerification"
 
 import SetUserDataToStore from "../service/userdata/SetDataToStore";
+import ChangePasswordModal from "../components/UserAuth/ChangePasswordModal"
 
 interface Address {
   city: string
@@ -52,7 +53,7 @@ function Home() {
   const categoryParam = searchParams.get('category')
 
   const { hotels,hasHotelsArray } = useSelector((state: RootState) => state.hotelReducer)
-  const { showSignup, showSignin,showOtpVerificaton } = useSelector((state: RootState) => state.showAuthCardReducer)
+  const { showSignup, showSignin,showOtpVerificaton,showForgotPass } = useSelector((state: RootState) => state.showAuthCardReducer)
   const { search } = useSelector((state: RootState) => state.searchReducer)
 
   const dispatch: AppDispatch = useDispatch()
@@ -167,6 +168,7 @@ function Home() {
       {showSignin && <Signin />}
       {showSignup && <Signup />}
       {showOtpVerificaton && <OtpVerification />}
+       {showForgotPass && <ChangePasswordModal></ChangePasswordModal>}
       <SetUserDataToStore/>
     </div>
   )

@@ -1,5 +1,6 @@
 import { FaHourglassHalf, FaCheckCircle, FaEnvelope } from "react-icons/fa";
 import Navbar from "../components/Navbar/Navbar";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 function HostPendingPage() {
   return (
@@ -63,6 +64,7 @@ function HostPendingPage() {
         </div>
       </div>
     </div>
+     <SetUserDataToStore/>
     </>
   );
 }

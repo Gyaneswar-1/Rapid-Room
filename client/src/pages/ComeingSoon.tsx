@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import SetUserDataToStore from "../service/userdata/SetDataToStore";
 
 const ComeingSoon = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const ComeingSoon = () => {
           This feature is not implemented yet! comeing soon.....
         </p>
       </div>
+       <SetUserDataToStore/>
     </div>
   );
 };

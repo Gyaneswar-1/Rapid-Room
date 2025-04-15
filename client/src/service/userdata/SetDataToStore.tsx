@@ -36,7 +36,12 @@ export default function SetUserDataToStore() {
   );
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    if (!hasDataInStore) {
+    const isLoggedIn = localStorage.getItem("loggedin");
+    
+    if(isLoggedIn === "false" || !isLoggedIn){
+      return;
+    }
+    else if(!hasDataInStore) {
       getuserData()
         .then((data) => {
           if (data.success === true) {
