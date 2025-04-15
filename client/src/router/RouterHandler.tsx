@@ -33,7 +33,7 @@ import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import TermsAndConditions from "../pages/TermsAndConditions";
 import TodayCheckinsPage from "../pages/TodayCheckinsPage";
-import ResetPasswordPage from "../pages/ResetPasswordPage";
+
 
 function RouterHandler() {
   const AdminRedirect = () => {
@@ -76,7 +76,6 @@ function RouterHandler() {
               <Route path="security">
                 <Route path="password" />
                 <Route path="delete-account" element={<DeleteAccount />} />
-                <Route path="reset-password" element={<ResetPasswordPage />} />
               </Route>
             </Route>
               <Route path="wishlist" element={<WishlistPage />} />

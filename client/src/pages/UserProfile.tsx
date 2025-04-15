@@ -256,27 +256,7 @@ export default function ProfilePage() {
                 </h2>
               </div>
 
-              <div className="p-6 space-y-4">
-                <Link
-                  to="/profile/security/reset-password"
-                  className="flex justify-between items-center py-2 px-3 hover:bg-gray-50 rounded-md transition-colors"
-                >
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center mr-3">
-                      <Settings className="h-4 w-4 text-teal-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">
-                        Change Password
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        otp varification requied
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-gray-400" />
-                </Link>
-              </div>
+              
               <div className="p-6 space-y-4">
                 <Link
                   to="/profile/security/delete-account"

@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import Signin from "../UserAuth/Signin";
 import Signup from "../UserAuth/Signup";
 import OtpVerification from "../UserAuth/OtpVerification";
+import ChangePasswordModal from "../UserAuth/ChangePasswordModal";
 
 import {
   flipSignin,
@@ -211,6 +212,7 @@ export default function WelcomePageNavBar() {
       {showSignin && <Signin />}
       {showSignup && <Signup />}
       {showOtpVerificaton && <OtpVerification />}
+      {true && <ChangePasswordModal></ChangePasswordModal>}
     </header>
   );
 }
