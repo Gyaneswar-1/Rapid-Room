@@ -1,0 +1,17 @@
+import { Router } from "express";
+import { getHostStats } from "../controller/getHostStats.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { isAdminMiddleware } from "../middleware/isAdmin.middleware.js";
+import { getHostHotels } from "../controller/getHostHotels.controller.js";
+import { getHostAllReservations } from "../controller/getHostAllReservations.controller.js";
+import { getHostEarnings } from "../controller/getHostEarnings.controller.js";
+import { getHostTodayCheckins } from "../controller/getHostTodayCheckin.controller.js";
+import setHostReservationPaymentStatusRefunded from "../controller/setHostReservationpaymentStatusRefunded.controller.js";
+const hostdashboard = Router();
+hostdashboard.route("/stats").get(authMiddleware, isAdminMiddleware, getHostStats);
+hostdashboard.route("/hotels").get(authMiddleware, isAdminMiddleware, getHostHotels);
+hostdashboard.route("/reservations").get(authMiddleware, isAdminMiddleware, getHostAllReservations);
+hostdashboard.route("/reservations-refunded").post(authMiddleware, isAdminMiddleware, setHostReservationPaymentStatusRefunded);
+hostdashboard.route("/earnings").get(authMiddleware, isAdminMiddleware, getHostEarnings);
+hostdashboard.route("/today-checkin").get(authMiddleware, isAdminMiddleware, getHostTodayCheckins);
+export default hostdashboard;

@@ -1,42 +1,66 @@
 import type React from "react";
-
 import { useState, useRef } from "react";
+// Icons
 import { IoMdClose } from "react-icons/io";
 import { CiLock } from "react-icons/ci";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdEmail } from "react-icons/md";
-
-//state managnement
+// Services and APIs
+import { updatePass } from "../../service/userAuth/updatePassService";
+import axios from "axios";
+import API from "../../service/api";
+// State management
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  flipOtpverificaton,
-  flipSignUp,
-  flipSignin,
-  flipForgotPass,
-} from "../../store/reducers/showAuthCard.reducers";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  flipForgotPass,
+  flipSignin,
+} from "../../store/reducers/showAuthCard.reducers";
+import { setEmail } from "../../store/reducers/email.reducer";
+// Utils
+import { notifyError, notifySuccess } from "../../lib/Toast";
 
+/**
+ * ChangePasswordModal Component
+ * Handles the password reset flow with email, new password, and OTP verification
+ */
 export default function ChangePasswordModal() {
-  const [email, setEmail] = useState("");
+  // Form state
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [error, setError] = useState("");
   const [otpSent, setOtpSent] = useState(false);
+  // Loading states
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+
+  // References for OTP input fields
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  //state management
-  const { showSignup, showSignin, showOtpVerificaton, showForgotPass } =
-    useSelector((state: RootState) => state.showAuthCardReducer);
+
+  // Redux state and dispatch
+  const { showSignin, showForgotPass } = useSelector(
+    (state: RootState) => state.showAuthCardReducer
+  );
+  const { email } = useSelector((state: RootState) => state.emailReducer);
   const dispatch: AppDispatch = useDispatch();
 
-  // Email validation
-  const validateEmail = (email: string) => {
+  /**
+   * Validates email format
+   * @param email - Email to validate
+   * @returns boolean indicating if email is valid
+   */
+  const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  // Handle OTP input change
-  const handleOtpChange = (index: number, value: string) => {
+  /**
+   * Handles OTP input change and manages focus between fields
+   * @param index - Index of the current OTP input
+   * @param value - Input value
+   */
+  const handleOtpChange = (index: number, value: string): void => {
     // Only allow numbers
     if (!/^\d*$/.test(value)) return;
 
@@ -51,19 +75,23 @@ export default function ChangePasswordModal() {
     }
   };
 
-  // Handle key press for backspace
+  /**
+   * Handles keyboard navigation in OTP fields
+   */
   const handleKeyDown = (
     index: number,
     e: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       // Focus previous input when backspace is pressed on empty input
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  // Handle paste event
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  /**
+   * Handles paste event for OTP
+   */
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text/plain").trim();
 
@@ -77,44 +105,105 @@ export default function ChangePasswordModal() {
     }
   };
 
-  // Handle send OTP
-  const handleSendOTP = () => {
-    // Validate email
+  /**
+   * Handles sending OTP to user email
+   */
+  const handleSendOTP = async (): Promise<void> => {
+    // Form validation
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
+      notifyError("Please enter a valid email address");
       return;
     }
 
     if (newPassword.length < 8) {
-      setError("Password must be at least 8 characters");
+      notifyError("Password must be at least 8 characters");
       return;
     }
 
-    console.log("Sending OTP for password change", { email, newPassword });
-    setOtpSent(true);
-    setError("");
+    setIsSendingOtp(true);
+
+    try {
+      const otpRes = await axios.post(`${API}/send-otp`, { email: email });
+      console.log("Here is the optres", otpRes);
+      if (otpRes.data.success) {
+        notifySuccess("OTP sent successfully");
+        setOtpSent(true);
+      } else {
+        notifyError("Failed to send OTP");
+      }
+    } catch (error) {
+      console.log("catch erro", error);
+      notifyError("Failed to send OTP");
+      dispatch(setEmail(""));
+      dispatch(flipForgotPass(showForgotPass));
+      dispatch(flipSignin(showSignin));
+    } finally {
+      setIsSendingOtp(false);
+      setError("");
+    }
   };
 
-  // Handle edit credentials (go back from OTP to email/password)
-  const handleEditCredentials = () => {
+  /**
+   * Handles returning to email/password screen from OTP screen
+   */
+  const handleEditCredentials = (): void => {
     setOtpSent(false);
   };
 
-  // Handle update password
-  const handleUpdatePassword = (e: React.FormEvent) => {
+  /**
+   * Handles password update with OTP verification
+   */
+  const handleUpdatePassword = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
+    // Join OTP digits to create a single string
     const otpString = otp.join("");
+
     if (otpString.length !== 6) {
-      setError("Please enter the complete 6-digit OTP");
+      setError("Please enter all 6 digits of the OTP");
+      return;
+    }
+    if (!newPassword || newPassword === "") {
+      notifyError("Failed to update pass");
+      dispatch(flipForgotPass(showForgotPass));
+      dispatch(flipSignin(showSignin));
       return;
     }
 
-    console.log("Updating password", { email, newPassword, otp: otpString });
+    setIsUpdatingPassword(true);
+
+    try {
+      const res = await updatePass(email, otpString, newPassword);
+
+      if (res.success) {
+        notifySuccess("Password updated successfully");
+        dispatch(setEmail(""));
+        dispatch(flipForgotPass(showForgotPass));
+        dispatch(flipSignin(showSignin));
+      } else {
+        notifyError("Password update failed");
+        return;
+      }
+    } catch (error) {
+      notifyError("Password update failed");
+    } finally {
+      setIsUpdatingPassword(false);
+    }
   };
 
-  const togglePasswordVisibility = () => {
+  /**
+   * Toggles password visibility
+   */
+  const togglePasswordVisibility = (): void => {
     setShowPassword(!showPassword);
+  };
+
+  /**
+   * Handles modal closing
+   */
+  const handleClose = (): void => {
+    dispatch(flipForgotPass(showForgotPass));
+    dispatch(flipSignin(showSignin));
   };
 
   return (
@@ -122,10 +211,7 @@ export default function ChangePasswordModal() {
       <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 ease-in-out">
         {/* Close button */}
         <button
-          onClick={() => {
-            dispatch(flipForgotPass(showForgotPass));
-            dispatch(flipSignin(showSignin));
-          }}
+          onClick={handleClose}
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
           aria-label="Close"
         >
@@ -153,6 +239,7 @@ export default function ChangePasswordModal() {
             )}
           </div>
 
+          {/* Error display */}
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
               {error}
@@ -175,8 +262,7 @@ export default function ChangePasswordModal() {
                     <input
                       type="email"
                       id="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => dispatch(setEmail(e.target.value))}
                       className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                       placeholder="Enter your email address"
                     />
@@ -255,30 +341,44 @@ export default function ChangePasswordModal() {
               </div>
             )}
 
-            {/* Dynamic Button */}
+            {/* Action Button */}
             <button
               type={otpSent ? "submit" : "button"}
               onClick={otpSent ? undefined : handleSendOTP}
               disabled={
-                !otpSent && (!validateEmail(email) || newPassword.length < 8)
+                (!otpSent &&
+                  (!validateEmail(email) || newPassword.length < 8)) ||
+                isSendingOtp ||
+                isUpdatingPassword
               }
               className={`w-full py-3 px-4 bg-teal-600 text-white font-medium rounded-lg shadow transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ${
-                !otpSent && (!validateEmail(email) || newPassword.length < 8)
+                (!otpSent &&
+                  (!validateEmail(email) || newPassword.length < 8)) ||
+                isSendingOtp ||
+                isUpdatingPassword
                   ? "opacity-60 cursor-not-allowed"
                   : "hover:bg-teal-700"
               }`}
             >
-              {otpSent ? "Update Password" : "Send OTP"}
+              {otpSent
+                ? isUpdatingPassword
+                  ? "Updating..."
+                  : "Update Password"
+                : isSendingOtp
+                ? "Sending OTP..."
+                : "Send OTP"}
             </button>
 
             {/* Cancel Button */}
             <button
               type="button"
-              onClick={() => {
-                dispatch(flipForgotPass(showForgotPass));
-                dispatch(flipSignin(showSignin));
-              }}
-              className="w-full py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
+              onClick={handleClose}
+              disabled={isSendingOtp || isUpdatingPassword}
+              className={`w-full py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200 ${
+                isSendingOtp || isUpdatingPassword
+                  ? "opacity-60 cursor-not-allowed"
+                  : ""
+              }`}
             >
               Cancel
             </button>
