@@ -122,7 +122,7 @@ export default function HotelsTable({
                 {hotel.address?.city || "N/A"}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                ${hotel.perNight || "N/A"}
+              ₹{hotel.perNight || "N/A"}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {hotel.createdAt
@@ -197,7 +197,7 @@ export default function HotelsTable({
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Price per Night</p>
-                <p className="text-sm text-gray-900">${selectedHotel.perNight}</p>
+                <p className="text-sm text-gray-900">₹{selectedHotel.perNight}</p> 
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-500">Submission Date</p>

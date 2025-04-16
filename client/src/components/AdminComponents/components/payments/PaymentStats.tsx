@@ -33,7 +33,7 @@ export default function PaymentStats({ data }: PaymentStatsProps) {
   const stats = [
     {
       title: "Total Revenue",
-      value: `$${data.topCards.TotalRevenue.toLocaleString()}`,
+      value: `₹${data.topCards.TotalRevenue.toLocaleString()}`,
       change: "+15%", // You might want to calculate this dynamically in the future
       period: "vs last month",
       icon: <DollarSign className="w-6 h-6" />,
@@ -41,7 +41,7 @@ export default function PaymentStats({ data }: PaymentStatsProps) {
     },
     {
       title: "Platform Fees",
-      value: `$${data.topCards.PlatformFees.toLocaleString()}`,
+      value: `₹${data.topCards.PlatformFees.toLocaleString()}`,
       change: "+12%",
       period: "vs last month",
       icon: <Percent className="w-6 h-6" />,
