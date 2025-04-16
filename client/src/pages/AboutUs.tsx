@@ -49,10 +49,10 @@ export default function AboutUs() {
   // Team members
   const teamMembers = [
     {
-      name: "Bibek",
+      name: "Bibek Samal",
       role: "",
-      image: "https://media.licdn.com/dms/image/v2/D4E35AQEBGVQMzfTbrQ/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1738214435919?e=1745211600&v=beta&t=ePU5qiEx-VoR32-BLglqRed6Ezkxwq7KYG1WNmt2Mi0",
-      link:"https://www.linkedin.com/in/bibek-samal/"
+      image: "https://avatars.githubusercontent.com/u/123635446?s=400&u=19ef3f1cdf4e61fd76e98726c4502787572a9a22&v=4",
+      link:"https://bibeksamal.me"
     },
     {
       name: "Gyaneswar Rout",
@@ -61,22 +61,22 @@ export default function AboutUs() {
       link:"https://gyaneswar.me"
     },
     {
+      name: "Rajat Kumar Sahoo",
+      role: "",
+      image: "https://imgs.search.brave.com/2CzWUdLpc0Y132N9e2QM7D2kOTlY23z6yQ0PPhaEkYY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/bWFucy1mYWNlLWZs/YXQtc3R5bGVfOTAy/MjAtMjg3Ny5qcGc_/c2VtdD1haXNfaHli/cmlkJnc9NzQw",
+      link:""
+    },
+    {
       name: "Arpita Biswal",
       role: "",
-      image: "/placeholder.svg?height=150&width=150",
-      link:"https://www.instagram.com/p/CzDatyTSdZdeUlEfAP8CdoYeySB6n00O-V0hLk0/"
+      image: "/arpita.jpg",
+      link:"https://www.linkedin.com/in/arpita-biswal-643797257/"
     },
     {
-      name: "Emily Patel",
-      role: "UI/UX Designer",
-      image: "/placeholder.svg?height=150&width=150",
-      link:""
-    },
-    {
-      name: "Emily Patel",
-      role: "UI/UX Designer",
-      image: "/placeholder.svg?height=150&width=150",
-      link:""
+      name: "Sangita Sahoo",
+      role: "",
+      image: "/sangita.jpeg",
+      link:"https://www.linkedin.com/in/sangita-sahoo-771193345/"
     },
   ]
 

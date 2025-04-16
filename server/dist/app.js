@@ -10,29 +10,19 @@ import uploadRoutes from "./routes/upload.routes.js";
 import { emailRouter } from "./routes/emailVerification.route.js";
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
-// Define allowed origins
-const allowedOrigins = [
-    "http://localhost:5173",
-    "https://rapid-room-client.onrender.com",
-];
-//razorpay instance
 export const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY,
     key_secret: process.env.RAZORPAY_SECREATE,
 });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Remove duplicate urlencoded middleware
-// app.use(express.urlencoded({ extended: true }));
-// Updated CORS configuration
 app.use(cors({
     origin: [
+        "*",
         "http://localhost:5173",
-        "https://rapid-room-client.onrender.com",
+        "https://rapidroom.tech",
     ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 app.use(cookieParser());
 app.use(passport.initialize());
