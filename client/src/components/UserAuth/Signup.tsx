@@ -20,13 +20,13 @@ import axios from "axios";
 import API from "../../service/api";
 
 const handleGoogleLogin = () => {
-  window.open("http://localhost:3000/api/v1/auth/google", "_self");
   localStorage.setItem("loggedin", "true");
+  window.open(`${API}/auth/google`, "_self");
 };
 
 const handleFacebookLogin = () => {
-  window.open("http://localhost:3000/api/v1/auth/facebook", "_self");
   localStorage.setItem("loggedin", "true");
+  window.open(`${API}/auth/facebook`, "_self");
 };
 
 const Signup = () => {
