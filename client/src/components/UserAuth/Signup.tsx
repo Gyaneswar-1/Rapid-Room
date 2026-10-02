@@ -62,27 +62,20 @@ const Signup = () => {
       // set islogedin true
       try {
         dispatch(setEmail(res.email));
-        const otpRes = await axios.post(`${API}/send-otp`,{
-          email: res.email
-        })
-        console.log("Here is the opt res",otpRes)
-        if(otpRes.data.success === true){
-          //open the otp pannel
+        const otpRes = await axios.post(`${API}/send-otp`, {
+          email: res.email,
+        });
+        console.log("Here is the otp res", otpRes);
+        if (otpRes.data.success === true) {
+          //open the otp panel
           dispatch(flipOtpverificaton(showOtpVerificaton));
         }
-
-
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
-        notifyError("Error in otp verification")
+        notifyError(error?.response?.data?.message || "Error in OTP verification");
       }
-      
 
-
-      // localStorage.setItem("loggedin", "true");
-      // setShowLoader(false);
-      // navigate("/home");
-      // notifySuccess("Welcome to RapidRoom!");
+      setShowLoader(false);
       dispatch(flipSignUp(showSignup));
     } else {
       notifyError(res.message);

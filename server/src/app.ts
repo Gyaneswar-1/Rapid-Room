@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -8,6 +9,12 @@ import Razorpay from "razorpay";
 import paymentRoute from "./routes/payment.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import { emailRouter } from "./routes/emailVerification.route.js";
+
+// Enable BigInt serialization for JSON.stringify / Express res.json
+(BigInt.prototype as any).toJSON = function () {
+    const int = Number(this);
+    return Number.isSafeInteger(int) ? int : this.toString();
+};
 
 const app = express();
 const morganFormat = ":method :url :status :response-time ms";
@@ -22,9 +29,13 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin:[
-            "*",
+        origin: [
             "http://localhost:5173",
+            "http://localhost:5174",
+            "http://localhost:3000",
+            "http://127.0.0.1:5173",
+            "http://127.0.0.1:5174",
+            
             "https://rapidroom.tech",
         ],
         credentials: true,

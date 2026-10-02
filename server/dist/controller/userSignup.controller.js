@@ -12,20 +12,13 @@ export const userSignup = async (req, res) => {
         profileImage: req.files && req.files.profileImage
             ? req.files.profileImage[0]
             : undefined,
-        isHost: req.body.isHost === "true" ? true : false,
+        isHost: req.body.isHost === "true" || req.body.isHost === true,
         state: req.body.state,
         street: req.body.street,
         city: req.body.city,
         zipCode: req.body.zipCode,
         country: req.body.country,
     };
-    // zod input validation
-    // const isValid = SignupSchema.safeParse(userData);
-    // if (isValid.success === false) {
-    //     return res
-    //         .status(400)
-    //         .json(new ApiError(false, {}, "No", "input's are invalid", 400));
-    // }
     const { fullName, email, password, isHost, state, street, city, zipCode, country, } = userData;
     // doing the signup
     try {
@@ -35,9 +28,31 @@ export const userSignup = async (req, res) => {
             },
         });
         if (userExists !== null) {
+            // If already verified, inform user
+            if (userExists.isEmailVerified) {
+                return res
+                    .status(400)
+                    .json(new ApiResponse(false, {}, "User exists", "User already exists with this email. Please sign in.", 400));
+            }
+            // If user exists but is not verified yet, allow updating details to proceed with OTP verification
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const updatedUser = await prisma.users.update({
+                where: { email: email },
+                data: {
+                    fullName: fullName || userExists.fullName,
+                    password: hashedPassword,
+                    isHost: isHost,
+                },
+            });
+            const token = jwt.sign({ id: updatedUser.id, email: updatedUser.email }, process.env.JWT_SECRET);
+            res.cookie("token", `Bearer ${token}`, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "None",
+            });
             return res
-                .status(500)
-                .json(new ApiResponse(false, {}, "User exists", "User already exists", 500));
+                .status(200)
+                .json(new ApiResponse(true, { email: updatedUser.email }, "success", "User registration pending OTP verification", 200));
         }
         //upload image to cloudinary
         const imageUrl = await upLoadOnCloudinary(req.files &&
@@ -56,17 +71,16 @@ export const userSignup = async (req, res) => {
                 isHost: isHost,
                 address: {
                     create: {
-                        state: state,
-                        street: street,
-                        city: city,
-                        zipCode: zipCode,
-                        country: country,
+                        state: state || null,
+                        street: street || null,
+                        city: city || null,
+                        zipCode: zipCode || null,
+                        country: country || null,
                     },
                 },
             },
         });
-        const token = await jwt.sign(//no token expairation
-        { id: result.id, email: result.email }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: result.id, email: result.email }, process.env.JWT_SECRET);
         res.cookie("token", `Bearer ${token}`, {
             httpOnly: true,
             secure: true,
@@ -74,14 +88,12 @@ export const userSignup = async (req, res) => {
         });
         return res
             .status(200)
-            .json(new ApiResponse(true, { email: result.email }, "success", "User signed up", 200));
+            .json(new ApiResponse(true, { email: result.email }, "success", "User signed up successfully", 200));
     }
     catch (error) {
+        console.error("userSignup error:", error);
         return res
             .status(500)
-            .json(new ApiError(false, {}, "Error", "User F**ked up", 500));
-    }
-    finally {
-        prisma.$disconnect();
+            .json(new ApiError(false, {}, "Error", error?.message || "User registration failed", 500));
     }
 };

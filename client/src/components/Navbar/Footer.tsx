@@ -248,12 +248,14 @@ function Footer() {
                 </li>
 
                 <li>
-                  <Link
-                    to="/admin-login"
+                  <a
+                    href="http://localhost:5174"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    Admin Login
-                  </Link>
+                    Admin Portal
+                  </a>
                 </li>
 
                 <li>

@@ -3,13 +3,14 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import prisma from "../db/db.config.js";
 
 export const getAllHotels = async (req: Request | any, res: Response | any) => {
-    const { page, limit } = req.query;
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const limit = Math.max(1, Number(req.query.limit) || 10);
     const offset = (page - 1) * limit;
 
     try {
         const hotels = await prisma.hotels.findMany({
             skip: Number(offset),
-            take: parseInt(limit),
+            take: limit,
             select: {
                 id: true,
                 hotelName: true,
@@ -53,8 +54,8 @@ export const getAllHotels = async (req: Request | any, res: Response | any) => {
                     pagination: {
                         totalHotels,
                         totalPages,
-                        currentPage: parseInt(page),
-                        pageSize: parseInt(limit),
+                        currentPage: page,
+                        pageSize: limit,
                     },
                 },
                 "success",

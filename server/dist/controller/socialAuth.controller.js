@@ -5,7 +5,7 @@ export const googleAuthCallback = (req, res) => {
         sameSite: "None",
         maxAge: 100 * 365 * 24 * 60 * 60 * 1000,
     });
-    res.redirect("http://localhost:5173/home");
+    res.redirect("https://rapidroom.tech");
 };
 export const facebookAuthCallback = (req, res) => {
     res.cookie("token", `Bearer ${req.user}`, {
@@ -14,5 +14,5 @@ export const facebookAuthCallback = (req, res) => {
         sameSite: "None",
         maxAge: 100 * 365 * 24 * 60 * 60 * 1000,
     });
-    res.redirect("http://localhost:5173/home");
+    res.redirect("https://rapidroom.tech");
 };

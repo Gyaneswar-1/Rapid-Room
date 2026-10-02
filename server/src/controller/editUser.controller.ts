@@ -47,6 +47,17 @@ export const editUser = async (req: Request | any, res: Response | any) => {
                     throw new Error("User not found");
                 }
 
+                // Helper function to safely parse BigInt values
+                const parseBigIntField = (val: any, fallback: bigint | null) => {
+                    if (val === undefined) return fallback;
+                    if (val === null || val === "") return null;
+                    try {
+                        return BigInt(val);
+                    } catch {
+                        return fallback;
+                    }
+                };
+
                 // Update user profile
                 const updatedUser = await prisma.users.update({
                     where: {
@@ -55,8 +66,8 @@ export const editUser = async (req: Request | any, res: Response | any) => {
                     data: {
                         fullName: name || existingUser.fullName,
                         email: email || existingUser.email,
-                        phoneNumber: phone || existingUser.phoneNumber,
-                        GovID: govId || existingUser.GovID,
+                        phoneNumber: parseBigIntField(phone, existingUser.phoneNumber),
+                        GovID: parseBigIntField(govId, existingUser.GovID),
                         profileImage: profileImage || existingUser.profileImage,
                         upiID: upiId || existingUser.upiID, // Add UPI ID to the update operation
                     },
@@ -121,9 +132,18 @@ export const editUser = async (req: Request | any, res: Response | any) => {
                 id: transaction.user.id,
                 fullName: transaction.user.fullName,
                 email: transaction.user.email,
-                phoneNumber: transaction.user.phoneNumber,
+                phoneNumber:
+                    transaction.user.phoneNumber !== null &&
+                    transaction.user.phoneNumber !== undefined
+                        ? Number(transaction.user.phoneNumber)
+                        : null,
                 profileImage: transaction.user.profileImage,
-                govId: transaction.user.GovID,
+                govId:
+                    transaction.user.GovID !== null &&
+                    transaction.user.GovID !== undefined
+                        ? Number(transaction.user.GovID)
+                        : null,
+                upiId: transaction.user.upiID,
             },
             address: transaction.address,
         };

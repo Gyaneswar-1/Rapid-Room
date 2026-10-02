@@ -10,14 +10,24 @@ export default async function signupManual(data: signupTypeFrontend){
             withCredentials:true
         });
 
-        if(res.data.success === true){
-            return {success: true, message: res.data.message?res.data.message: "User successfully Register", email: res.data.data.email}
+        if (res.data.success === true) {
+            return {
+                success: true,
+                message: res.data.message || "User successfully registered",
+                email: res.data.data.email,
+            };
         }
 
-        return{success:false, message:res.data.message?res.data.message: "User registration fail"}
-        
-    } catch (error) {
-        
-        return{success: false, message:"user registration fail"};
+        return {
+            success: false,
+            message: res.data.message || "User registration failed",
+        };
+    } catch (error: any) {
+        const message =
+            error?.response?.data?.message ||
+            error?.response?.data?.error ||
+            error?.message ||
+            "User registration failed";
+        return { success: false, message };
     }
 }

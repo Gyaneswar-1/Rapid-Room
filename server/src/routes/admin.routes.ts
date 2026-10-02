@@ -9,11 +9,18 @@ import { admin_rejectHost } from "../controller/admin_rejectHost.js";
 import { admin_getAnalysis } from "../controller/admin_getAnalysis.js";
 import { admin_paymentDashboard } from "../controller/admin_paymentDashboard.js";
 import { admin_getAllPayments } from "../controller/admin_getAllPayments.js";
+import {
+    adminLogin,
+    adminMe,
+    adminLogout,
+} from "../controller/adminLogin.controller.js";
 
 const AdminRouter = Router();
 
-
-
+// Admin Authentication routes
+AdminRouter.route("/login").post(adminLogin);
+AdminRouter.route("/me").get(adminMe);
+AdminRouter.route("/logout").post(adminLogout);
 // Hotel management routes
 AdminRouter.route("/hotels").get(admin_getAllHotels);
 AdminRouter.route("/hotels/:hotelId/approve").put(admin_approveHotel);

@@ -27,78 +27,90 @@ export const sendMail = async (req: Request | any, res: Response | any) => {
     }
 
     try {
-        
         const { email } = req.body;
+
+        const user = await prisma.users.findUnique({
+            where: { email: email },
+        });
+
+        if (!user) {
+            return res.status(404).json(
+                new ApiError(
+                    false,
+                    {},
+                    "Failed",
+                    "User not found with this email",
+                    404,
+                ),
+            );
+        }
+
         // generate the otp
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        console.log(process.env.JWTS)
-        //generate the jwt token for otp sequrity
-        const otpToken = await jwt.sign(
+
+        // Log OTP to terminal
+        console.log(`\n======================================================`);
+        console.log(`🔑 [RapidRoom OTP] Verification OTP for ${email}: ${otp}`);
+        console.log(`======================================================\n`);
+
+        // generate the jwt token for otp security
+        const otpToken = jwt.sign(
             {
                 email: email,
                 otp: otp,
             },
             process.env.JWT_SECRET!,
         );
-    
-        // send the opt to the user email
-        const emailRes = await sendEmail({to:email, subject:"Welcome to RapidRoom Here is you otp", text:otp});
-        if(emailRes){
 
-            const dbRes = await prisma.users.update({
-                where: {
-                    email: email
-                },
-                data:{
-                    otpToken:otpToken
-                }
-            })
+        // Store the otpToken in the database so OTP is valid
+        await prisma.users.update({
+            where: {
+                email: email,
+            },
+            data: {
+                otpToken: otpToken,
+            },
+        });
 
-            if(dbRes){
-                return res.status(200).json(
-                    new ApiResponse(
-                        true,
-                        {},
-                        "Success",
-                        "Successfully send the opt to ther client",
-                        200
-                    )
-                )
-            }
-
-            
+        // Send the otp to the user email
+        let emailSent = false;
+        try {
+            await sendEmail({
+                to: email,
+                subject: "Welcome to RapidRoom - Your Verification OTP",
+                text: `Welcome to RapidRoom!\n\nYour verification OTP is: ${otp}\n\nPlease enter this OTP to complete your registration.\n\nThank you!`,
+            });
+            emailSent = true;
+            console.log(`📧 [RapidRoom OTP] OTP email sent successfully to ${email}`);
+        } catch (emailErr: any) {
+            console.error(`⚠️ [RapidRoom OTP] Failed to send email via SMTP to ${email}:`, emailErr?.message || emailErr);
         }
 
+        return res.status(200).json(
+            new ApiResponse(
+                true,
+                { emailSent },
+                "Success",
+                emailSent
+                    ? "Successfully sent the OTP to your email and printed to terminal"
+                    : "OTP generated and printed to terminal (email delivery failed)",
+                200,
+            ),
+        );
+    } catch (error: any) {
+        console.error("Error in sendOtp controller:", error);
         return res
             .status(400)
             .json(
                 new ApiError(
                     false,
-                    {},
+                    { error: error?.message || error },
                     "Failed",
-                    "Failed to send theo otp",
-                    400,
-                ),
-            );
-
-        //store the otp in the user data base
-    } catch (error) {
-        console.log(error)
-        return res
-            .status(400)
-            .json(
-                new ApiError(
-                    false,
-                    {error: error},
-                    "Failed",
-                    "Failed to send theo otp in send otp controller",
+                    "Failed to process OTP in send otp controller",
                     400,
                 ),
             );
     }
-    
-
-
 };
 
 

@@ -1,17 +1,22 @@
+import "dotenv/config";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import jwt from "jsonwebtoken";
 import prisma from "../db/db.config.js";
 
-passport.use(
-    "google",
-    new GoogleStrategy(
-        {
-            clientID: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            callbackURL: "http://localhost:3000/api/v1/google/callback",
-        },
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+if (googleClientId && googleClientSecret) {
+    passport.use(
+        "google",
+        new GoogleStrategy(
+            {
+                clientID: googleClientId,
+                clientSecret: googleClientSecret,
+                callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/api/v1/google/callback",
+            },
         async (
             accessToken: string,
             refreshToken: string,
@@ -59,17 +64,24 @@ passport.use(
         },
     ),
 );
+} else {
+    console.warn("⚠️ Google OAuth credentials not found in environment variables. Google OAuth is disabled.");
+}
 
 // Facebook Strategy
-passport.use(
-    "facebook",
-    new FacebookStrategy(
-        {
-            clientID: process.env.FB_APP_ID!,
-            clientSecret: process.env.FB_APP_SECRET!,
-            callbackURL: "http://localhost:3000/api/v1/facebook/callback",
-            profileFields: ["id", "displayName", "photos", "emails"],
-        },
+const facebookAppId = process.env.FB_APP_ID;
+const facebookAppSecret = process.env.FB_APP_SECRET;
+
+if (facebookAppId && facebookAppSecret) {
+    passport.use(
+        "facebook",
+        new FacebookStrategy(
+            {
+                clientID: facebookAppId,
+                clientSecret: facebookAppSecret,
+                callbackURL: process.env.FB_CALLBACK_URL || "http://localhost:3000/api/v1/facebook/callback",
+                profileFields: ["id", "displayName", "photos", "emails"],
+            },
         async (
             accessToken: string,
             refreshToken: any,
@@ -119,5 +131,8 @@ passport.use(
         },
     ),
 );
+} else {
+    console.warn("⚠️ Facebook OAuth credentials not found in environment variables. Facebook OAuth is disabled.");
+}
 
 export default passport;
